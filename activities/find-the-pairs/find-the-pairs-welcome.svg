@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+  <!-- Scattered pairs cards, showing face-up and face-down cards -->
+
+  <!-- Card 1 face-down (back, rotated left) -->
+  <g transform="translate(30,40) rotate(-15)">
+    <rect x="0" y="0" width="60" height="80" rx="6" ry="6" fill="#5588cc" stroke="#3366aa" stroke-width="2"/>
+    <rect x="4" y="4" width="52" height="72" rx="4" ry="4" fill="none" stroke="#7aaaee" stroke-width="1.5"/>
+  </g>
+
+  <!-- Card 2 face-down, slightly overlapping -->
+  <g transform="translate(80,20) rotate(-5)">
+    <rect x="0" y="0" width="60" height="80" rx="6" ry="6" fill="#5588cc" stroke="#3366aa" stroke-width="2"/>
+    <rect x="4" y="4" width="52" height="72" rx="4" ry="4" fill="none" stroke="#7aaaee" stroke-width="1.5"/>
+  </g>
+
+  <!-- Card 3 face-up with cat picture -->
+  <g transform="translate(155,25) rotate(5)">
+    <rect x="0" y="0" width="60" height="80" rx="6" ry="6" fill="white" stroke="#888" stroke-width="2"/>
+    <!-- Simple cat silhouette -->
+    <ellipse cx="30" cy="48" rx="16" ry="18" fill="#c8a46a"/>
+    <ellipse cx="30" cy="30" rx="12" ry="13" fill="#c8a46a"/>
+    <!-- ears -->
+    <polygon points="20,22 17,10 28,20" fill="#c8a46a"/>
+    <polygon points="40,22 43,10 32,20" fill="#c8a46a"/>
+    <!-- eyes -->
+    <ellipse cx="25" cy="29" rx="3" ry="3" fill="#4a3010"/>
+    <ellipse cx="35" cy="29" rx="3" ry="3" fill="#4a3010"/>
+    <!-- nose -->
+    <ellipse cx="30" cy="35" rx="2" ry="1.5" fill="#d06080"/>
+  </g>
+
+  <!-- Card 4 face-up with fish picture -->
+  <g transform="translate(230,15) rotate(-8)">
+    <rect x="0" y="0" width="60" height="80" rx="6" ry="6" fill="white" stroke="#888" stroke-width="2"/>
+    <!-- Simple fish -->
+    <ellipse cx="30" cy="42" rx="18" ry="11" fill="#6699cc"/>
+    <!-- tail -->
+    <polygon points="12,42 4,32 4,52" fill="#4477aa"/>
+    <!-- eye -->
+    <circle cx="42" cy="39" r="3" fill="white"/>
+    <circle cx="42" cy="39" r="1.5" fill="#222"/>
+    <!-- fins -->
+    <ellipse cx="30" cy="33" rx="8" ry="5" fill="#4477aa" opacity="0.6"/>
+  </g>
+
+  <!-- Card 5 face-down -->
+  <g transform="translate(305,30) rotate(12)">
+    <rect x="0" y="0" width="60" height="80" rx="6" ry="6" fill="#5588cc" stroke="#3366aa" stroke-width="2"/>
+    <rect x="4" y="4" width="52" height="72" rx="4" ry="4" fill="none" stroke="#7aaaee" stroke-width="1.5"/>
+  </g>
+
+  <!-- Second row -->
+
+  <!-- Card 6 face-up with orange (matching) -->
+  <g transform="translate(55,110) rotate(8)">
+    <rect x="0" y="0" width="60" height="80" rx="6" ry="6" fill="white" stroke="#888" stroke-width="2"/>
+    <!-- Orange circle -->
+    <circle cx="30" cy="42" r="22" fill="#e87020"/>
+    <!-- Highlights -->
+    <ellipse cx="22" cy="30" rx="7" ry="5" fill="#f0a040" opacity="0.5"/>
+    <!-- Leaf -->
+    <ellipse cx="30" cy="18" rx="4" ry="8" fill="#44aa44" transform="rotate(-20,30,18)"/>
+  </g>
+
+  <!-- Card 7 face-down -->
+  <g transform="translate(130,100) rotate(-6)">
+    <rect x="0" y="0" width="60" height="80" rx="6" ry="6" fill="#5588cc" stroke="#3366aa" stroke-width="2"/>
+    <rect x="4" y="4" width="52" height="72" rx="4" ry="4" fill="none" stroke="#7aaaee" stroke-width="1.5"/>
+  </g>
+
+  <!-- Card 8 face-up with cat (matching pair) -->
+  <g transform="translate(200,105) rotate(4)">
+    <rect x="0" y="0" width="60" height="80" rx="6" ry="6" fill="white" stroke="#007700" stroke-width="3"/>
+    <!-- Simple cat silhouette (same as card 3 — matched pair) -->
+    <ellipse cx="30" cy="48" rx="16" ry="18" fill="#c8a46a"/>
+    <ellipse cx="30" cy="30" rx="12" ry="13" fill="#c8a46a"/>
+    <polygon points="20,22 17,10 28,20" fill="#c8a46a"/>
+    <polygon points="40,22 43,10 32,20" fill="#c8a46a"/>
+    <ellipse cx="25" cy="29" rx="3" ry="3" fill="#4a3010"/>
+    <ellipse cx="35" cy="29" rx="3" ry="3" fill="#4a3010"/>
+    <ellipse cx="30" cy="35" rx="2" ry="1.5" fill="#d06080"/>
+  </g>
+
+  <!-- Card 9 face-down -->
+  <g transform="translate(277,112) rotate(-10)">
+    <rect x="0" y="0" width="60" height="80" rx="6" ry="6" fill="#5588cc" stroke="#3366aa" stroke-width="2"/>
+    <rect x="4" y="4" width="52" height="72" rx="4" ry="4" fill="none" stroke="#7aaaee" stroke-width="1.5"/>
+  </g>
+</svg>

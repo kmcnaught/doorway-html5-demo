@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doorway Online Activities — Demo</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 980px; margin: 60px auto; padding: 0 20px;
+      color: #222; line-height: 1.5;
+    }
+    h1 { margin-bottom: 0.5em; }
+    .intro { color: #555; margin-bottom: 2em; }
+    a { color: #0066cc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .card-grid { list-style: none; padding: 0; margin: 0;
+      display: grid; grid-template-columns: 1fr; gap: 1.25em; }
+    .card {
+      display: flex; gap: 1.25em; align-items: flex-start;
+      padding: 1em; border: 1px solid #e6e6e6; border-radius: 8px;
+      background: #fff;
+    }
+    .card-thumb {
+      flex: 0 0 280px; display: block;
+      border: 1px solid #ddd; border-radius: 4px; overflow: hidden;
+      line-height: 0;
+    }
+    .card-thumb img { display: block; width: 100%; height: auto; }
+    .card-body { flex: 1 1 auto; min-width: 0; }
+    .card-body h2 { margin: 0 0 0.4em; font-size: 1.15em; }
+    .card-body h2 a { color: #0066cc; }
+    .card-body p { margin: 0; color: #444; }
+
+    @media (max-width: 640px) {
+      .card { flex-direction: column; }
+      .card-thumb { flex-basis: auto; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Doorway Online Activities</h1>
+  <p class="intro">A preview of accessible learning activities — work in progress.</p>
+
+  <ul class="card-grid">
+    <li class="card">
+      <a class="card-thumb" href="activities/add-and-subtract/add-and-subtract.html" aria-hidden="true" tabindex="-1">
+        <img src="welcome-thumbnails/add-and-subtract.png" alt="" loading="lazy" width="800" height="450">
+      </a>
+      <div class="card-body">
+        <h2><a href="activities/add-and-subtract/add-and-subtract.html">Add and Subtract to 10</a></h2>
+        <p>Practise addition and subtraction in the range 1–10, using on-screen number blocks. Number Bonds and subtraction can be reinforced and tested.</p>
+      </div>
+    </li>
+    <li class="card">
+      <a class="card-thumb" href="activities/find-the-pairs/find-the-pairs.html" aria-hidden="true" tabindex="-1">
+        <img src="welcome-thumbnails/find-the-pairs.png" alt="" loading="lazy" width="800" height="450">
+      </a>
+      <div class="card-body">
+        <h2><a href="activities/find-the-pairs/find-the-pairs.html">Find the Pairs</a></h2>
+        <p>Classic “find the pairs” game (pelmanism) with up to 18 cards and a range of 24 different images with speech support. Vary the difficulty by choosing between 6 and 18 cards. One and two switch scanning is supported.</p>
+      </div>
+    </li>
+    <li class="card">
+      <a class="card-thumb" href="activities/count-me-in/count-me-in.html" aria-hidden="true" tabindex="-1">
+        <img src="welcome-thumbnails/count-me-in.png" alt="" loading="lazy" width="800" height="450">
+      </a>
+      <div class="card-body">
+        <h2><a href="activities/count-me-in/count-me-in.html">Count Me In</a></h2>
+        <p>Familiarise learners with numbers to 20, 50 and 100 and the stations of the times tables. Reinforce learners’ understanding of two digit numbers and their relationships. In Times Tables Stations learners count on to build the patterns that underpin the times tables.</p>
+      </div>
+    </li>
+  </ul>
+</body>
+</html>

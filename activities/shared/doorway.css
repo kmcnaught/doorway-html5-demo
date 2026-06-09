@@ -1,0 +1,714 @@
+/** Doorway Online learning activities.
+  * General style sheet
+  * Copyright (c) Roger Spooner 2017
+  * Based on features of Flash-based web site doorwayonline.org.uk
+  */
+
+div.doorway_application, div.doorway_fullscreen_div {
+    font-family: "Jotter Primary", sans-serif;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Full Screen area */
+div.doorway_fullscreen_div:-webkit-full-screen, div.doorway_fullscreen_div:-moz-full-screen, div.doorway_fullscreen_div:-ms-fullscreen, div.doorway_fullscreen_div:fullscreen {
+    width: 100vw;
+    height: 100vh;
+}
+
+div.doorway_aspect_outer_div {
+    width: 100%;
+    height: 100%;
+    max-width: 177.78vh;
+    max-height: 56.25vw;
+    position: relative;
+}
+
+div.doorway_aspect_div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2vw;
+    /* font-size should be changed by JavaScript to be relative to width,
+       but vw (viewport width) will do so long as the window is not too wide.
+       There seems to be no font-size measure that is relative to the parent
+       container size. Font sizes are relative to the parent's font size.
+     */
+     user-select: none;
+     -moz-user-select: none;
+     -webkit-user-select: none;
+     -ms-user-select: none;
+}
+
+/* Paragraphs in Doorway are not prose. Simplify layout */
+p, h1, h2, h3, h4 {
+    margin: 0.1em;
+	font-weight: normal;
+}
+
+p
+{
+	line-height: 1.5;	
+}
+
+h1, h2, h3, h4
+{
+	line-height: 1.2;
+}
+
+h1
+{
+	font-size: 2em;
+}
+
+h2
+{
+	font-size: 1.5em;
+}
+
+h3
+{
+	font-size: 1.2em;
+}
+
+
+body, html {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+@font-face {
+    font-family: "Jotter Primary";
+    src: url("jotter-primary.ttf");
+}
+
+/* Main (brief) instructions to the end user */
+#dwInstructionHeader {
+    text-align: center;
+    font-size: 200%;
+}
+
+.doorway_logo {
+    position: absolute;
+    width: 2em;
+    top: 0.5em;
+    right: 0.5em;
+}
+
+.doorway_logo a {
+    display: block;
+    width: 100%;
+}
+
+.doorway_logo img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.doorway_welcome {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+	width: inherit;
+	height: inherit;
+}
+
+/* div.welcome_image  is sized in each activity */
+
+div.welcome_image img
+{
+    width: 100%;
+    height: 100%;
+}
+
+.version_number
+{
+    /* color: darkgray; */
+    position: absolute;
+    bottom: 0.5em;
+    left: 0;
+    font-size: 60%;
+    user-select: text;
+    -moz-user-select: text;
+    -webkit-user-select: text;
+    -ms-user-select: text;
+}
+
+.sub_title
+{
+    padding: 1em;
+}
+
+.copyright_message
+{
+    padding: 0em;
+}
+
+.activity_description
+{
+  font-size: 60%;
+  margin-top: 0;
+}
+
+/* Landmark wrapper — transparent to the flex layout of dwAspectDiv */
+div.doorway_aspect_div > main {
+    display: contents;
+}
+
+/** Teacher navigation features that should not detract from the game play */
+
+#dwNavigationHeader {
+    text-align: left;
+    color: #bbbbbb;
+    position: absolute;
+    height: 1.2em;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 10;
+}
+
+/** Pop-up to tell the user they've done something right */
+.well_done_message {
+    position: absolute;
+    /* height: 15%; */
+    left: 40%;
+    top: 45%;
+    font-size: 150%;
+    background-color: white;
+    vertical-align: middle;
+    border: 0.2em solid orange;
+    border-radius: 0.5em;
+}
+
+.well_done_message p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+#dwWellDoneNextButton {
+    left: 40em;
+    top: 23em;
+    width: 7em;
+    height: 3.5em;
+    position: absolute;
+    border-radius: 25%;
+}
+
+#dwWellDoneNextButton img {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.hidden_panel, div#dwMainActivityArea .hidden_panel {
+    display: none;
+}
+
+.shown_panel {
+    display: inline-block;
+}
+
+button {
+    font-size: 100%;
+	flex-basis: max-content;
+}
+
+.teacher_button {
+    border: 0.1em solid white;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 0.1em;
+    margin: 0.1em;
+    height: 2em;
+    width: 3em;
+    border-radius: 0.5em;
+}
+
+.teacher_button img {
+    width: 100%;
+    height: 100%;
+}
+
+/* The form wrapper gets the absolute position; the inner div fills it. */
+form.user_options {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 1.5em);
+    top: 1.5em;
+    left: 0;
+    overflow-y: auto;
+}
+
+/* Outer option groups: padding + left-aligned content for a consistent layout
+   across activities. The body sets text-align:center for the activity area;
+   inside an option group, all labels, radios, and helper text are left-aligned
+   regardless. The page heading (.title_message) and the submit pencil button
+   sit OUTSIDE the option groups and remain centred. */
+form.user_options fieldset.options_group {
+    padding: 0.6em 1.5em 0.9em;
+    text-align: left;
+}
+
+/* Inner control fieldsets (radio groups inside an options_group) — strip default
+   fieldset border/padding so they sit cleanly in a CSS grid cell. */
+form.user_options fieldset.options_group fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Sub-panel revealed by a radio toggle (typically wired via this.wireVisibleWhen).
+   Bordered, light background to distinguish from the parent option group. */
+.dw-scan-subpanel {
+    margin-top: 0.5em;
+    padding: 0.5em 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 0.4em;
+    background: #f8f8f8;
+}
+
+/* Italic info note inside a sub-panel (e.g. "Blocks are always used in scanning mode."). */
+.dw-scan-note {
+    margin: 0.5em 0 0;
+    font-size: 0.7em;
+    font-style: italic;
+    color: #555;
+}
+
+div.user_options {
+    width: 100%;
+    height: 100%;
+}
+
+div.darkened_panel {
+    background: white;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.01;
+    top: 0;
+}
+
+/*div.user_options .user_options_form {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+}
+*/
+
+div.user_options div.options_group {
+    /* border: 0.1em solid CornflowerBlue; */
+    margin: 0.5em;
+	margin-left: 1em;
+	margin-right: 1em;
+	height: 18em;
+    position: relative;
+    text-align: left;
+	justify-content: space-between;
+}
+
+/*noinspection CssOptimizeSimilarProperties*/
+div.user_options h3.options_group_title {
+    position: relative;
+    top: -1em;
+    left: 1em;
+    text-align: left;
+    background-color: white;
+    display: inline;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 100%;
+    font-weight: normal;
+
+}
+
+div.user_options .options_layout_grid tr td {
+    text-align: center;
+    margin: 0.1em;
+    padding: 0.1em;
+    position: relative;
+}
+
+.options_layout_grid p, .options_layout_grid td {
+    margin: 0;
+}
+
+table.options_layout_grid {
+    margin-top: -1em;
+}
+
+table {
+    /* using tables should not change font size */
+    font-size: 100%;
+}
+
+div.user_options label.user_options_radio {
+    border: 0.1em solid grey;
+    margin: 0.1em;
+    padding: 0.1em;
+    border-radius: 0.5em;
+    display: inline-block;
+}
+
+input[type="radio"]:checked + label.user_options_radio {
+    background-color: chartreuse;
+}
+
+input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+}
+
+input[type="radio"]:focus + label {
+    outline: 0.5vw dotted black;
+    outline-offset: 0.1em;
+}
+
+/* Apple Safari on iOS 12 draws a dark background on the <input>s */
+input
+{
+	background: transparent;
+	border-style: none;
+}
+
+/* Apple Safari on iOS 12 doesn't seem to do keyboard navigation at all :-( */
+/* input:focus
+{
+	border-style: auto;
+}
+*/
+
+:focus
+{
+	outline: 0.5vw dotted black;
+	outline-offset: 0.1em;
+}
+
+.scan_highlight {
+    box-shadow: 0 0 0 0.5em gold;
+}
+
+input:hover,
+button:hover,
+label:hover,
+option:hover
+{
+	background: rgb(128,128,128,0.2);
+}
+
+
+div.user_options select {
+    display: none;
+}
+
+/* Custom checkbox: <input class="dw-check-input"> immediately followed by <label class="dw-check-label"> */
+input.dw-check-input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 1.3em;
+    height: 1.3em;
+    margin: 0;
+}
+
+.dw-check-label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.15em 0.3em 0.15em 0.1em;
+    cursor: pointer;
+    user-select: none;
+}
+
+.dw-check-label::before {
+    content: '';
+    width: 1.2em;
+    height: 1.2em;
+    border: 0.13em solid #555;
+    border-radius: 0.2em;
+    background: white;
+    transform: rotate(-1.5deg);
+    flex-shrink: 0;
+}
+
+input.dw-check-input:checked + .dw-check-label::before {
+    background: #d0f0d0;
+    border-color: #2a6e2a;
+}
+
+input.dw-check-input:checked + .dw-check-label::after {
+    content: '';
+    position: absolute;
+    left: 0.53em;
+    top: calc(50% - 0.45em);
+    width: 0.35em;
+    height: 0.75em;
+    border-right: 0.14em solid #2a5a2a;
+    border-bottom: 0.14em solid #2a5a2a;
+    transform: rotate(45deg);
+}
+
+input.dw-check-input:focus + .dw-check-label::before {
+    outline: 0.3vw dotted black;
+    outline-offset: 0.15em;
+}
+
+/* Subtitle line below a dw-check-label — a sibling <span> linked via aria-describedby
+   on the <input>, so screen readers read the main label and the description separately
+   instead of one run-on accessible name. Indented to align with the label text. */
+.dw-check-subtitle {
+    display: block;
+    padding-left: 1.7em;
+    font-size: 0.7em;
+    color: #555;
+    line-height: 1.1;
+    margin-top: -0.05em;
+}
+
+/* Toggle grid: multi-select item picker using visually-hidden checkboxes + styled labels.
+   Use when selecting items from a set (e.g. which letters to practise).
+   For named boolean settings, use dw-check-input / dw-check-label instead.
+
+   Required structure — checkbox immediately followed by label as siblings:
+     <div class="dw-toggle-grid">
+       <input type="checkbox" name="..." value="x" id="item-x">
+       <label for="item-x" class="dw-toggle-btn">x</label>
+       ...
+     </div>
+
+   Size and font-family may be overridden per activity. */
+.dw-toggle-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3em;
+}
+
+.dw-toggle-grid input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+}
+
+.dw-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4em;
+    height: 2.4em;
+    font-size: 1.2em;
+    border: 2px solid #aaa;
+    border-radius: 0.3em;
+    background: #f8f8f8;
+    cursor: pointer;
+    user-select: none;
+}
+
+.dw-toggle-btn:hover {
+    background: #e0e8ff;
+    border-color: #66a;
+}
+
+.dw-toggle-grid input[type="checkbox"]:focus + .dw-toggle-btn {
+    outline: 0.2em solid #0066cc;
+    outline-offset: 0.1em;
+}
+
+.dw-toggle-grid input[type="checkbox"]:checked + .dw-toggle-btn {
+    background: #4488cc;
+    color: #fff;
+    border-color: #226;
+    font-weight: bold;
+}
+
+.dw-toggle-grid input[type="checkbox"]:disabled + .dw-toggle-btn {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+div.user_options .spinner_display {
+    display: inline-block;
+    border: 1px solid #bbbbbb;
+    border-radius: 0.5em;
+    margin: 0.1em;
+    padding: 0.2em;
+    font-size: 100%;
+    min-width: 3em;
+}
+
+
+.button_div, button {
+    border: 0.1em solid grey;
+    padding: 0.2em;
+    border-radius: 0.5em;
+    background: none;
+    min-width: 1.5em;
+    font-family: inherit;
+    display: inline-block;
+}
+
+.main_button {
+    /* font-size: 120%; */
+    background: #ddeeee;
+	color: black;
+    padding-left: 0.4em;
+	padding-right: 0.4em;
+    margin: 0.1em;
+    border-radius: 0.5em;
+    font-family: Jotter Primary, sans-serif;
+	width: max-content;
+	height: max-content;
+	align-self: center;
+	font-size: 1.2em;
+}
+
+.pencil_btn {
+    background: url(./pencil-right.svg) no-repeat center / 100% 100%;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    color: #000;
+    font-family: 'Jotter Primary', sans-serif;
+    font-size: 1.4em;
+    height: 1.85em;
+    min-width: 5em;
+    padding: 0 1.4em 0 0.4em;
+    line-height: 1.85em;
+    text-align: center;
+}
+.pencil_btn:hover {
+    background-image: url(./pencil-right-hover.svg);
+}
+.pencil_btn[data-pencil-dir="left"] {
+    background-image: url(./pencil-left.svg);
+    padding: 0 0.4em 0 1.4em;
+}
+.pencil_btn[data-pencil-dir="left"]:hover {
+    background-image: url(./pencil-left-hover.svg);
+}
+.pencil_btn:disabled,
+.pencil_btn[disabled] {
+    opacity: 0.4;
+}
+
+.bg_theme_black .main_button
+{
+    background: #002266;
+	color: white;
+}
+
+table.score_sheet {
+    font-size: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td.score_sheet_results, th.score_sheet_results {
+    border-bottom: 0.1em solid darkgrey;
+}
+
+td.score_sheet_star, th.score_sheet_star, .score_sheet_star img {
+    border: hidden;
+    width: 1.6em;
+    height: 1.6em;
+}
+
+.version_embed, .version_embed embed {
+    color: #bbbbbb;
+    display: block;
+    width: 300px;
+    height: 50px;
+}
+
+input.two_divs_check[type="checkbox"] ~ .checked_on,
+input.two_divs_check[type="checkbox"] ~ label .checked_on
+{
+    display: inline-block;
+}
+
+input.two_divs_check[type="checkbox"]:checked ~ .checked_off,
+input.two_divs_check[type="checkbox"]:checked ~ label .checked_off
+{
+    display: none;
+}
+
+input.two_divs_check[type="checkbox"]:not(:checked) ~ .checked_on,
+input.two_divs_check[type="checkbox"]:not(:checked) ~ label .checked_on
+{
+    display: none;
+}
+
+input.two_divs_check[type="checkbox"]:not(:checked) ~ .checked_off,
+input.two_divs_check[type="checkbox"]:not(:checked) ~ label .checked_off
+{
+    display: inline-block;
+}
+
+input.two_divs_check[type="checkbox"]
+{
+    width: 100%;
+    height: 2em;
+	margin: 0;
+    position: absolute;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+}
+
+label.two_divs_check
+{
+	display:inline-block;
+}
+
+fieldset.invisible_fieldset
+{
+	border: none;
+	padding: 0;
+}
+
+fieldset.invisible_fieldset legend
+{
+	display: none;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

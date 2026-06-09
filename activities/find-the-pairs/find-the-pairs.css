@@ -1,0 +1,357 @@
+/* Doorway Find the Pairs — activity styles.
+   1em = 1/50th of activity width (set by doorway.js onResize).
+   All sizing in em; no px except borders.
+*/
+
+/* --- Welcome screen --- */
+
+.doorway_welcome h1.title_message {
+    font-size: 2em;
+    text-align: center;
+    margin: 0.3em 0 0.1em;
+    flex-shrink: 0;
+}
+
+.welcome_image {
+    width: 92%;
+    max-width: 44em;
+    height: 16em;
+    margin: 0.3em auto 0.2em;
+    flex-shrink: 0;
+    position: relative;
+}
+
+/* Scattered card display on welcome screen.
+   Fixed-width container centred inside .welcome_image. */
+.ftp-welcome-cards {
+    position: relative;
+    width: 34em;
+    height: 14em;
+    margin: 0.5em auto 0;
+}
+
+/* Base card style for welcome cards */
+.ftp-wc {
+    position: absolute;
+    width: 5.8em;
+    height: 7.5em;
+    border: 0.15em solid #888;
+    border-radius: 0.5em;
+    background: #fff;
+    box-shadow: 0.15em 0.15em 0.5em rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.ftp-wc img {
+    width: 85%;
+    height: 85%;
+    object-fit: contain;
+}
+
+/* Welcome and activity-screen card backs both use the extracted Flash sprite
+   (svgs/sprite_39 → ./card-back.svg). Sized 100% of the card so the lavender
+   field meets the card border; the SVG already includes its own dark outline. */
+.ftp-wc-back {
+    width: 100%;
+    height: 100%;
+    background: url(./card-back.svg) no-repeat center / 100% 100%;
+    border-radius: 0.3em;
+}
+
+/* 15 cards: 4 pairs (hen, orange, fish, cat) + 1 apple + 6 face-down.
+   Row 1 (back, z=1): 8 cards at top ≈ 0–0.8em, left step 4em.
+   Row 2 (front, z=2): 7 cards at top ≈ 6–6.5em, left step 4em, offset 2em. */
+.ftp-wc-1  { left:  0em;   top: 0.5em;  transform: rotate(-12deg); z-index: 1; }
+.ftp-wc-2  { left:  4em;   top: 0em;    transform: rotate(5deg);   z-index: 1; }
+.ftp-wc-3  { left:  8em;   top: 0.8em;  transform: rotate(-7deg);  z-index: 1; }
+.ftp-wc-4  { left: 12em;   top: 0.2em;  transform: rotate(3deg);   z-index: 1; }
+.ftp-wc-5  { left: 16em;   top: 0.6em;  transform: rotate(11deg);  z-index: 1; }
+.ftp-wc-6  { left: 20em;   top: 0.1em;  transform: rotate(-5deg);  z-index: 1; }
+.ftp-wc-7  { left: 24em;   top: 0.4em;  transform: rotate(8deg);   z-index: 1; }
+.ftp-wc-8  { left: 28em;   top: 0.3em;  transform: rotate(-4deg);  z-index: 1; }
+.ftp-wc-9  { left:  2em;   top: 6.5em;  transform: rotate(7deg);   z-index: 2; }
+.ftp-wc-10 { left:  6em;   top: 6em;    transform: rotate(-4deg);  z-index: 2; }
+.ftp-wc-11 { left: 10em;   top: 6.5em;  transform: rotate(9deg);   z-index: 2; }
+.ftp-wc-12 { left: 14em;   top: 6.2em;  transform: rotate(-6deg);  z-index: 2; }
+.ftp-wc-13 { left: 18em;   top: 6.5em;  transform: rotate(5deg);   z-index: 2; }
+.ftp-wc-14 { left: 22em;   top: 6em;    transform: rotate(-8deg);  z-index: 2; }
+.ftp-wc-15 { left: 26em;   top: 6.4em;  transform: rotate(4deg);   z-index: 2; }
+
+/* --- Options form layout ---
+   The shared CSS targets div.options_group / h3.options_group_title.
+   Here we make the semantic fieldset/legend equivalents look the same,
+   and use flex so the groups fill the available screen height.
+*/
+
+/* The inner div.user_options is position:absolute 100%×100% (doorway.css).
+   Give it flex layout so fieldsets and button share vertical space. */
+#dwUserOptions .user_options {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 0.3em 0.5em 0.5em; /* top: shared doorway.css offsets div.user_options by 1.5em */
+    gap: 0.4em;
+    overflow: hidden;
+}
+
+#dwUserOptions h1.title_message {
+    flex-shrink: 0;
+    margin: 0 0 0.2em;
+    font-size: 1.5em;
+}
+
+fieldset.options_group {
+    border: 0.1em solid CornflowerBlue;
+    margin: 0;
+    padding: 0 1em 0.5em;
+    flex: 1;
+    min-height: 0;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+legend.options_group_title {
+    font-size: 100%;
+    font-weight: normal;
+    padding: 0 0.5em;
+    color: inherit;
+}
+
+/* Wrapper div: push content down from the legend */
+.options_group_body {
+    padding-top: 0.8em;
+}
+
+/* Inner control fieldsets (radio pairs) have no visual border */
+.options_group fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* --- Options grid layout (replaces legacy <table class="options_layout_grid">) --- */
+
+.ftp-activity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1.5em;
+    row-gap: 1em;
+    align-items: start;
+}
+
+.ftp-scan-onoff {
+    display: flex;
+    gap: 0.3em;
+    margin-top: 0.4em;
+}
+
+.ftp-scan-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1.5em;
+    align-items: start;
+}
+
+/* Stop the flex-column layout from stretching the pencil start button to fill
+   the form width (the SVG background scales 100% 100%, so a wide button shows
+   a flat rectangle with no visible pencil tip). align-self:center keeps it at
+   intrinsic width so the SVG renders with its natural aspect. */
+#dwUserOptions .pencil_btn {
+    flex-shrink: 0;
+    align-self: center;
+}
+
+/* --- Screen layout --- */
+
+/* Higher specificity to ensure hidden_panel beats ftp-screen's display:flex */
+.ftp-screen.hidden_panel {
+    display: none;
+}
+
+.ftp-screen {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 2em 1em 1em; /* top clears navigation header (~1.2em) */
+    gap: 0.5em;
+}
+
+/* --- Card grid --- */
+
+.ftp-card-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-height: 0;
+    padding: 0.5em 0;
+}
+
+.ftp-card-row {
+    display: flex;
+    gap: 0.5em;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 0;
+    min-height: 0;
+}
+
+/* Flip card system. Cards keep their target size (7.15em × 9.75em) when the
+   row count is small, but shrink to fit when 3-row configs (12/14/16/18 cards)
+   would otherwise overflow the viewport. `flex: 1` on rows shares the grid
+   height evenly; `aspect-ratio` + `max-*` on cards lets them shrink while
+   preserving proportion and never exceeding the original size. */
+.ftp-card {
+    aspect-ratio: 7.15 / 9.75;
+    height: 100%;
+    width: auto;
+    max-height: 9.75em;
+    max-width: 7.15em;
+    cursor: pointer;
+    perspective: 600px;
+    border-radius: 0.5em;
+    flex-shrink: 0;
+}
+
+.ftp-card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease;
+}
+
+.ftp-card.ftp-flipped .ftp-card-inner,
+.ftp-card.ftp-matched .ftp-card-inner {
+    transform: rotateY(180deg);
+}
+
+.ftp-card-down,
+.ftp-card-up {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 0.5em;
+    border: 2px solid #888;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.ftp-card-down {
+    background: url(./card-back.svg) no-repeat center / 100% 100%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ftp-card-up {
+    transform: rotateY(180deg);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ftp-card-up img {
+    width: 88%;
+    height: 88%;
+    object-fit: contain;
+}
+
+.ftp-card.ftp-matched .ftp-card-up {
+    border-color: #007700;
+    border-width: 3px;
+}
+
+.ftp-card:focus-visible,
+.ftp-card:hover {
+    outline: 0.3em solid #ffaa00;
+    outline-offset: 0.1em;
+    border-radius: 0.5em;
+}
+
+/* --- Well done overlay --- */
+
+.ftp-welldone-overlay {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%) scale(0.9);
+    background: #ffffcc;
+    border: 2px solid #ccaa00;
+    border-radius: 0.8em;
+    padding: 1em 2em;
+    text-align: center;
+    z-index: 10;
+    opacity: 0;
+}
+
+/* Fade-in + gentle pop when the overlay is revealed. Triggered by the
+   .ftp-welldone-visible class added after the final pair is matched. */
+.ftp-welldone-overlay.ftp-welldone-visible {
+    animation: ftp-welldone-reveal 0.6s ease-out forwards;
+}
+
+@keyframes ftp-welldone-reveal {
+    0%   { opacity: 0; transform: translateX(-50%) scale(0.7); }
+    60%  { opacity: 1; transform: translateX(-50%) scale(1.05); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1.00); }
+}
+
+.ftp-welldone-text {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* --- Results screen --- */
+
+.ftp-congrat-text {
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    padding-top: 1em;
+}
+
+.ftp-stats {
+    text-align: center;
+    margin: 0.5em 0;
+}
+
+.ftp-stat-text {
+    font-size: 1.5em;
+    margin: 0.2em 0;
+}
+
+/* --- Navigation --- */
+
+.ftp-activity-nav {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    padding-top: 0.5em;
+}
+
+/* --- Scan highlight --- */
+
+
+/* --- Reduced motion --- */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

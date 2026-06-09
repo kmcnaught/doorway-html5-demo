@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   viewBox="-5 -65.5 110 131"
+   version="1.1"
+   id="backarrow"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="back-arrow.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill-opacity:1;stroke-width:5px;fill:#aaaaaa;stroke:#666666"
+       d="M 0,0 100,60 80,0 100,-60 0,0 Z"
+       sodipodi:nodetypes="ccccc" />
+  </g>
+</svg>

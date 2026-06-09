@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="../shared/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../shared/doorway.css">
+    <link rel="stylesheet" type="text/css" href="find-the-pairs.css">
+    <script src="find-the-pairs.min.js"></script>
+    <title>Doorway Find the Pairs</title>
+</head>
+<body id="bodyId" onload="FindThePairs_init();">
+<div id="dwWholeApp" class="doorway_application">
+    <div id="dwFullScreenDiv" class="doorway_fullscreen_div">
+        <div id="dwAspectOuterDiv" class="doorway_aspect_outer_div">
+            <div id="dwAspectDiv" class="doorway_aspect_div">
+
+                <div id="dwLiveRegion" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+                <!-- Navigation header -->
+                <nav id="dwNavigationHeader" class="navigation_header" data-i18nkey-aria-label="nav.toolbar.label">
+                    <button type="button" class="teacher_button hidden_panel" id="dwOptionsButton" data-i18nkey-aria-label="nav.settings.label">
+                        <img src="../shared/settings.svg" width="100%" height="100%" alt="Options">
+                    </button>
+                    <button type="button" class="teacher_button" id="dwFullScreenButton" data-i18nkey-aria-label="nav.fullscreen.label">
+                        <img src="../shared/full-screen.svg" width="100%" height="100%" alt="Fullscreen">
+                    </button>
+
+                </nav>
+                <main>
+
+                <!-- Welcome screen -->
+                <div id="dwWelcomeScreen" class="doorway_welcome">
+                    <div class="doorway_logo">
+                        <a href="http://www.doorwayonline.org.uk/">
+                            <img src="../shared/doorwayLogo.svg" alt="Doorway Online">
+                        </a>
+                    </div>
+                    <h1 class="title_message" data-i18nkey="find-the-pairs.welcome.title">Find the Pairs</h1>
+                    <div class="welcome_image" aria-hidden="true">
+                        <div class="ftp-welcome-cards">
+                            <!-- Row 1 (back): face-down, hen, face-down, orange, face-down, fish, face-down, cat -->
+                            <div class="ftp-wc ftp-wc-1"><div class="ftp-wc-back"></div></div>
+                            <div class="ftp-wc ftp-wc-2"><img src="../pictures/hen.svg" alt=""></div>
+                            <div class="ftp-wc ftp-wc-3"><div class="ftp-wc-back"></div></div>
+                            <div class="ftp-wc ftp-wc-4"><img src="../pictures/orange.svg" alt=""></div>
+                            <div class="ftp-wc ftp-wc-5"><div class="ftp-wc-back"></div></div>
+                            <div class="ftp-wc ftp-wc-6"><img src="../pictures/fish.svg" alt=""></div>
+                            <div class="ftp-wc ftp-wc-7"><div class="ftp-wc-back"></div></div>
+                            <div class="ftp-wc ftp-wc-8"><img src="../pictures/cat.svg" alt=""></div>
+                            <!-- Row 2 (front): cat, face-down, apple, fish, face-down, hen, orange -->
+                            <div class="ftp-wc ftp-wc-9"><img src="../pictures/cat.svg" alt=""></div>
+                            <div class="ftp-wc ftp-wc-10"><div class="ftp-wc-back"></div></div>
+                            <div class="ftp-wc ftp-wc-11"><img src="../pictures/apple.svg" alt=""></div>
+                            <div class="ftp-wc ftp-wc-12"><img src="../pictures/fish.svg" alt=""></div>
+                            <div class="ftp-wc ftp-wc-13"><div class="ftp-wc-back"></div></div>
+                            <div class="ftp-wc ftp-wc-14"><img src="../pictures/hen.svg" alt=""></div>
+                            <div class="ftp-wc ftp-wc-15"><img src="../pictures/orange.svg" alt=""></div>
+                        </div>
+                    </div>
+                    <h2 class="sub_title" data-i18nkey="find-the-pairs.welcome.subtitle">Match the pairs of pictures</h2>
+                    <button id="dwButtonToOptions" class="pencil_btn" data-i18nkey="doorway.btn.enter">enter</button>
+                </div>
+
+                <!-- Options screen -->
+                <form name="options_form" id="dwUserOptions" class="hidden_panel user_options">
+                    <div class="user_options">
+                        <h1 class="title_message" data-i18nkey="find-the-pairs.options.heading">Options</h1>
+
+                        <fieldset class="options_group game_options">
+                            <legend class="options_group_title" data-i18nkey="find-the-pairs.options.activity">Activity</legend>
+                            <div class="options_group_body">
+                            <div class="ftp-activity-grid">
+                                <div class="ftp-activity-cell">
+                                    <p data-i18nkey="find-the-pairs.options.num-cards">Number of Cards</p>
+                                    <div class="spinner_select" id="ftp_num_cards_spinner">
+                                        <button type="button" class="spinner_down" id="ftp_num_cards_spin_down" aria-label="Fewer cards" data-i18nkey-aria-label="find-the-pairs.options.num-cards.decrease">-</button>
+                                        <select name="ftp_num_cards" id="ftp_num_cards_sel">
+                                            <option value="6">6</option>
+                                            <option value="8" selected>8</option>
+                                            <option value="10">10</option>
+                                            <option value="12">12</option>
+                                            <option value="14">14</option>
+                                            <option value="16">16</option>
+                                            <option value="18">18</option>
+                                        </select>
+                                        <div class="spinner_display button_div" id="ftp_num_cards_display">8</div>
+                                        <button type="button" class="spinner_up" id="ftp_num_cards_spin_up" aria-label="More cards" data-i18nkey-aria-label="find-the-pairs.options.num-cards.increase">+</button>
+                                    </div>
+                                </div>
+                                <div class="ftp-activity-cell">
+                                    <p data-i18nkey="find-the-pairs.options.reveal-time">Reveal Time (seconds)</p>
+                                    <div class="spinner_select" id="ftp_turn_time_spinner">
+                                        <button type="button" class="spinner_down" id="ftp_turn_time_spin_down" aria-label="Less time to look" data-i18nkey-aria-label="find-the-pairs.options.turn-time.decrease">-</button>
+                                        <select name="ftp_turn_time" id="ftp_turn_time_sel">
+                                            <option value="1000">1</option>
+                                            <option value="2000" selected>2</option>
+                                            <option value="3000">3</option>
+                                            <option value="4000">4</option>
+                                            <option value="5000">5</option>
+                                            <option value="6000">6</option>
+                                            <option value="7000">7</option>
+                                            <option value="8000">8</option>
+                                        </select>
+                                        <div class="spinner_display button_div" id="ftp_turn_time_display">2</div>
+                                        <button type="button" class="spinner_up" id="ftp_turn_time_spin_up" aria-label="More time to look" data-i18nkey-aria-label="find-the-pairs.options.turn-time.increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="options_group">
+                            <legend class="options_group_title" data-i18nkey="find-the-pairs.options.audio.legend">Audio</legend>
+                            <input type="radio" name="audio_mode" value="webspeech" id="radio-audio-webspeech" checked>
+                            <label for="radio-audio-webspeech" class="user_options_radio button_div" data-i18nkey="find-the-pairs.options.audio.speech">Speech (text to speech)</label>
+                            <input type="radio" name="audio_mode" value="recorded" id="radio-audio-recorded">
+                            <label for="radio-audio-recorded" class="user_options_radio button_div" data-i18nkey="find-the-pairs.options.audio.recorded">Recorded audio</label>
+                            <input type="radio" name="audio_mode" value="none" id="radio-audio-none">
+                            <label for="radio-audio-none" class="user_options_radio button_div" data-i18nkey="find-the-pairs.options.audio.none">No audio</label>
+                        </fieldset>
+
+                        <fieldset class="options_group accessibility_options">
+                            <legend class="options_group_title" data-i18nkey="find-the-pairs.options.accessibility.legend">Accessibility: Switch scanning</legend>
+                            <div class="ftp-scan-onoff">
+                                <input type="radio" name="enable_scanning" value="true" id="radio-scanning-on">
+                                <label for="radio-scanning-on" class="user_options_radio button_div" data-i18nkey="find-the-pairs.options.scan-on">On</label>
+                                <input type="radio" name="enable_scanning" value="false" id="radio-scanning-off" checked>
+                                <label for="radio-scanning-off" class="user_options_radio button_div" data-i18nkey="find-the-pairs.options.scan-off">Off</label>
+                            </div>
+
+                            <!-- Scan sub-panel (shown only when scanning is On) -->
+                            <div id="ftpScanSubPanel" class="hidden_panel dw-scan-subpanel">
+                                <div class="ftp-scan-grid">
+                                    <fieldset class="ftp-scan-switches">
+                                        <legend class="sr-only" data-i18nkey="find-the-pairs.options.switches.legend">Number of switches</legend>
+                                        <input type="radio" name="ftp_scan_mode" value="1" id="radio-scan-mode-1" checked>
+                                        <label for="radio-scan-mode-1" class="user_options_radio button_div" data-i18nkey="find-the-pairs.options.one-switch">One Switch</label>
+                                        <input type="radio" name="ftp_scan_mode" value="2" id="radio-scan-mode-2">
+                                        <label for="radio-scan-mode-2" class="user_options_radio button_div" data-i18nkey="find-the-pairs.options.two-switch">Two Switch</label>
+                                    </fieldset>
+                                    <div class="ftp-scan-delay-cell">
+                                        <p id="ftp-scan-delay-label" data-i18nkey="find-the-pairs.options.scan-speed">Scan Speed (seconds)</p>
+                                        <div class="spinner_select" id="scan_delay_spinner">
+                                            <button type="button" class="spinner_down" id="scan_delay_spin_down" aria-label="Shorter scan delay" data-i18nkey-aria-label="spinner.scan-delay.decrease">-</button>
+                                            <select name="scan_delay" id="scan_delay_sel" aria-labelledby="ftp-scan-delay-label">
+                                                <option value="1000">1</option>
+                                                <option value="1500">1.5</option>
+                                                <option value="2000" selected>2</option>
+                                                <option value="2500">2.5</option>
+                                                <option value="3000">3</option>
+                                                <option value="3500">3.5</option>
+                                                <option value="4000">4</option>
+                                                <option value="4500">4.5</option>
+                                                <option value="5000">5</option>
+                                            </select>
+                                            <div class="spinner_display button_div" id="scan_delay_display">2</div>
+                                            <button type="button" class="spinner_up" id="scan_delay_spin_up" aria-label="Longer scan delay" data-i18nkey-aria-label="spinner.scan-delay.increase">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <button type="button" id="dwSubmitUserOptions" class="pencil_btn" data-i18nkey="doorway.btn.start">start</button>
+                    </div>
+                </form>
+
+                <!-- Audio elements -->
+                <audio src="audio/amazing.wav" preload="auto" id="audioAmazing"></audio>
+                <audio src="audio/fantastic.wav" preload="auto" id="audioFantastic"></audio>
+                <audio src="audio/great.wav" preload="auto" id="audioGreat"></audio>
+                <audio src="audio/welldone.wav" preload="auto" id="audioWelldone"></audio>
+                <audio src="audio/findthepairs.wav" preload="auto" id="audioFindthepairs"></audio>
+                <audio src="audio/apple.wav" preload="auto" id="audioApple"></audio>
+                <audio src="audio/book.wav" preload="auto" id="audioBook"></audio>
+                <audio src="audio/box.wav" preload="auto" id="audioBox"></audio>
+                <audio src="audio/cap.wav" preload="auto" id="audioCap"></audio>
+                <audio src="audio/cat.wav" preload="auto" id="audioCat"></audio>
+                <audio src="audio/dog.wav" preload="auto" id="audioDog"></audio>
+                <audio src="audio/elephant.wav" preload="auto" id="audioElephant"></audio>
+                <audio src="audio/fan.wav" preload="auto" id="audioFan"></audio>
+                <audio src="audio/fish.wav" preload="auto" id="audioFish"></audio>
+                <audio src="audio/foot.wav" preload="auto" id="audioFoot"></audio>
+                <audio src="audio/hat.wav" preload="auto" id="audioHat"></audio>
+                <audio src="audio/hen.wav" preload="auto" id="audioHen"></audio>
+                <audio src="audio/key.wav" preload="auto" id="audioKey"></audio>
+                <audio src="audio/kite.wav" preload="auto" id="audioKite"></audio>
+                <audio src="audio/man.wav" preload="auto" id="audioMan"></audio>
+                <audio src="audio/orange.wav" preload="auto" id="audioOrange"></audio>
+                <audio src="audio/pig.wav" preload="auto" id="audioPig"></audio>
+                <audio src="audio/rat.wav" preload="auto" id="audioRat"></audio>
+                <audio src="audio/shell.wav" preload="auto" id="audioShell"></audio>
+                <audio src="audio/sock.wav" preload="auto" id="audioSock"></audio>
+                <audio src="audio/sun.wav" preload="auto" id="audioSun"></audio>
+                <audio src="audio/umbrella.wav" preload="auto" id="audioUmbrella"></audio>
+                <audio src="audio/violin.wav" preload="auto" id="audioViolin"></audio>
+                <audio src="audio/zip.wav" preload="auto" id="audioZip"></audio>
+
+                <!-- Activity screen -->
+                <div id="dwActivityScreen" class="hidden_panel ftp-screen">
+                    <h1 class="sr-only" data-i18nkey="find-the-pairs.welcome.title">Find the Pairs</h1>
+                    <div id="ftpCardGrid" class="ftp-card-grid" aria-label="Card grid" data-i18nkey-aria-label="find-the-pairs.activity.card-grid-aria"></div>
+
+                    <div id="ftpWellDoneOverlay" class="ftp-welldone-overlay hidden_panel" aria-live="polite">
+                        <p class="ftp-welldone-text" data-i18nkey="find-the-pairs.activity.welldone">Well done!</p>
+                    </div>
+
+                    <div class="ftp-activity-nav">
+                        <button type="button" id="ftpResultsBtn" class="main_button hidden_panel" data-i18nkey="find-the-pairs.btn.results">Results &#8594;</button>
+                    </div>
+                </div>
+
+                <!-- Results screen -->
+                <div id="dwResultsScreen" class="hidden_panel ftp-screen">
+                    <p id="ftpCongratText" class="ftp-congrat-text" aria-live="polite"></p>
+                    <div class="ftp-stats">
+                        <p id="ftpStatCards" class="ftp-stat-text"></p>
+                        <p id="ftpStatTurns" class="ftp-stat-text"></p>
+                    </div>
+                    <div class="ftp-activity-nav">
+                        <button type="button" id="ftpPlayAgainBtn" class="main_button" data-i18nkey="find-the-pairs.btn.play-again">Play again</button>
+                    </div>
+                </div>
+
+                <!-- Shared framework elements -->
+                <div id="dwMainApp" style="display:none;"></div>
+                <div id="dwDarkenedPanel" class="darkened_panel hidden_panel"></div>
+                <div id="dwWellDone" class="well_done_message hidden_panel">
+                    <p class="instruction_message"></p>
+                </div>
+
+            </main>
+            </div><!-- doorway_aspect_div -->
+        </div><!-- doorway_aspect_outer_div -->
+    </div><!-- doorway_fullscreen_div -->
+</div><!-- doorway_application -->
+</body>
+</html>

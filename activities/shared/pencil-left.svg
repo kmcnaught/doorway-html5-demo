@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="4.5 15.5 117.5 41" preserveAspectRatio="none"
+     aria-hidden="true" focusable="false">
+  <g transform="translate(126.5,0) scale(-1,1)">
+    <g transform="matrix(1.0, 0.0, 0.0, 1.0, 2.15, 18.35)">
+      <use xlink:href="#body" width="94.25" height="45.15"/>
+      <use xlink:href="#nib" transform="matrix(0.8237, 0.0, 0.0, 1.0445, 14.45, -0.7)" width="42.1" height="41.45"/>
+    </g>
+  </g>
+  <defs>
+    <g id="body">
+      <path d="M4.95 -0.25 L90.65 -2.0 91.05 -1.75 Q89.4 4.6 89.05 10.2 88.65 15.75 89.0 22.65 89.35 29.5 91.3 35.7 L90.95 35.85 4.8 37.85 Q3.05 32.1 2.5 25.4 2.1 19.05 2.75 12.3 L2.75 12.25 Q2.85 10.45 3.1 8.6 L2.75 11.3 Q3.0 7.7 3.7 3.85 L4.85 -0.2 4.55 1.2 4.95 -0.2 4.95 -0.25"
+            fill="#b4e9ad" fill-rule="evenodd" stroke="none"/>
+      <path d="M91.3 35.7 L90.95 35.85 4.8 37.85 Q3.05 32.1 2.5 25.4 2.1 19.05 2.75 12.3 L2.75 12.25 Q2.85 10.45 3.1 8.6 L2.75 11.3 Q3.0 7.7 3.7 3.85 L4.85 -0.2 4.55 1.2 4.95 -0.2 4.95 -0.25 90.65 -2.0 91.05 -1.75"
+            fill="none" stroke="#00aa1a" stroke-linecap="square" stroke-linejoin="round" stroke-width="4.0"/>
+    </g>
+    <g id="nib">
+      <path d="M112.65 25.7 Q108.55 17.5 112.65 9.25 L127.6 17.75 112.65 25.7"
+            fill="#333333" fill-rule="evenodd" stroke="none"/>
+      <path d="M112.65 25.7 L93.8 35.7 Q90.4 29.5 89.8 22.65 89.2 15.75 89.9 10.2 90.5 4.6 93.35 -1.75 L112.65 9.25 Q108.55 17.5 112.65 25.7"
+            fill="#d3937c" fill-rule="evenodd" stroke="none"/>
+      <path d="M112.65 25.7 Q108.55 17.5 112.65 9.25"
+            fill="none" stroke="#333333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.0"/>
+      <path d="M112.65 9.25 L93.35 -1.75 Q90.5 4.6 89.9 10.2 89.2 15.75 89.8 22.65 90.4 29.5 93.8 35.7 L112.65 25.7 127.6 17.75 112.65 9.25"
+            fill="none" stroke="#333333" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.0"/>
+    </g>
+  </defs>
+</svg>

@@ -1,0 +1,10 @@
+/* For version.html which is embedded. For development mainly. */
+body
+{
+  font-size: 14px;
+  line-height: 8px;
+  color: #88aaaa;
+  font-family: sans-serif;
+  text-align: center;
+  overflow: hidden;
+}

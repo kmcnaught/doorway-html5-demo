@@ -1,0 +1,62 @@
+<svg id="aas-welcome" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470 175" aria-hidden="true">
+  <!-- Add and Subtract welcome illustration: a number line showing 4 + 5 = 9 -->
+  <!-- viewBox 470×175; number line x=50–420 (37px/unit × 10 = 370px), centred in 430px panel -->
+  <!-- Block colours match Flash no4.svg (green: #5fdc7e / #167638) and no5.svg (red: #f11212 / #790000) -->
+  <defs>
+    <style>
+      #aas-welcome .eq-text { font-family: "Jotter Primary", sans-serif; font-size: 22px; fill: #222; }
+      #aas-welcome .nl-label { font-family: "Jotter Primary", sans-serif; font-size: 16px; fill: #222; }
+      #aas-welcome .nl-answer { font-family: "Jotter Primary", sans-serif; font-size: 22px; font-weight: bold; fill: #222; }
+    </style>
+  </defs>
+
+  <!-- Light blue background panel -->
+  <rect x="20" y="10" width="430" height="155" rx="8" fill="#dce8f8"/>
+
+  <!-- Equation label — centred in viewBox -->
+  <text x="235" y="40" text-anchor="middle" class="eq-text" font-weight="bold">4 + 5 = 9</text>
+
+  <!-- Number line track: x=50 (pos 0) to x=420 (pos 10), 37px per unit. Black, slightly thicker. -->
+  <line x1="50" y1="100" x2="420" y2="100" stroke="#000" stroke-width="3"/>
+
+  <!-- Green bar (4 units, spans pos 0→4, x=50–198) with unit dividers.
+       Each unit = 37×37 (square), bottom-aligned to number-line track at y=100. -->
+  <rect x="50" y="63" width="148" height="37" fill="#5fdc7e" stroke="#167638" stroke-width="2"/>
+  <line x1="87"  y1="63" x2="87"  y2="100" stroke="#167638" stroke-width="2"/>
+  <line x1="124" y1="63" x2="124" y2="100" stroke="#167638" stroke-width="2"/>
+  <line x1="161" y1="63" x2="161" y2="100" stroke="#167638" stroke-width="2"/>
+
+  <!-- Red bar (5 units, spans pos 4→9, x=198–383) with unit dividers.
+       Each unit = 37×37 (square), bottom-aligned to number-line track at y=100. -->
+  <rect x="198" y="63" width="185" height="37" fill="#f11212" stroke="#790000" stroke-width="2"/>
+  <line x1="235" y1="63" x2="235" y2="100" stroke="#790000" stroke-width="2"/>
+  <line x1="272" y1="63" x2="272" y2="100" stroke="#790000" stroke-width="2"/>
+  <line x1="309" y1="63" x2="309" y2="100" stroke="#790000" stroke-width="2"/>
+  <line x1="346" y1="63" x2="346" y2="100" stroke="#790000" stroke-width="2"/>
+
+  <!-- Tick marks 0–10 at x = 50 + n×37. Black, matched to track. -->
+  <line x1="50"  y1="97" x2="50"  y2="107" stroke="#000" stroke-width="2"/>
+  <line x1="87"  y1="97" x2="87"  y2="107" stroke="#000" stroke-width="2"/>
+  <line x1="124" y1="97" x2="124" y2="107" stroke="#000" stroke-width="2"/>
+  <line x1="161" y1="97" x2="161" y2="107" stroke="#000" stroke-width="2"/>
+  <line x1="198" y1="97" x2="198" y2="107" stroke="#000" stroke-width="2"/>
+  <line x1="235" y1="97" x2="235" y2="107" stroke="#000" stroke-width="2"/>
+  <line x1="272" y1="97" x2="272" y2="107" stroke="#000" stroke-width="2"/>
+  <line x1="309" y1="97" x2="309" y2="107" stroke="#000" stroke-width="2"/>
+  <line x1="346" y1="97" x2="346" y2="107" stroke="#000" stroke-width="2"/>
+  <line x1="383" y1="97" x2="383" y2="107" stroke="#000" stroke-width="2"/>
+  <line x1="420" y1="97" x2="420" y2="107" stroke="#000" stroke-width="2"/>
+
+  <!-- Labels 0–10 at x = 50 + n×37. Label '9' is the answer: larger and bold. -->
+  <text x="50"  y="122" text-anchor="middle" class="nl-label">0</text>
+  <text x="87"  y="122" text-anchor="middle" class="nl-label">1</text>
+  <text x="124" y="122" text-anchor="middle" class="nl-label">2</text>
+  <text x="161" y="122" text-anchor="middle" class="nl-label">3</text>
+  <text x="198" y="122" text-anchor="middle" class="nl-label">4</text>
+  <text x="235" y="122" text-anchor="middle" class="nl-label">5</text>
+  <text x="272" y="122" text-anchor="middle" class="nl-label">6</text>
+  <text x="309" y="122" text-anchor="middle" class="nl-label">7</text>
+  <text x="346" y="122" text-anchor="middle" class="nl-label">8</text>
+  <text x="383" y="126" text-anchor="middle" class="nl-answer">9</text>
+  <text x="420" y="122" text-anchor="middle" class="nl-label">10</text>
+</svg>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="../shared/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../shared/doorway.css">
+    <link rel="stylesheet" type="text/css" href="count-me-in.css">
+    <script type="module" src="./count-me-in.js"></script>
+    <title>Doorway Count Me In (debug)</title>
+</head>
+<body id="bodyId" onload="CountMeIn_init();">
+<div id="dwWholeApp" class="doorway_application">
+    <div id="dwFullScreenDiv" class="doorway_fullscreen_div">
+        <div id="dwAspectOuterDiv" class="doorway_aspect_outer_div">
+            <div id="dwAspectDiv" class="doorway_aspect_div">
+
+                <div id="dwLiveRegion" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+                <!-- Navigation header -->
+                <nav id="dwNavigationHeader" class="navigation_header" data-i18nkey-aria-label="nav.toolbar.label">
+                    <button type="button" class="teacher_button hidden_panel" id="dwOptionsButton" data-i18nkey-aria-label="nav.settings.label">
+                        <img src="../shared/settings.svg" width="100%" height="100%" alt="Options">
+                    </button>
+                    <button type="button" class="teacher_button" id="dwFullScreenButton" data-i18nkey-aria-label="nav.fullscreen.label">
+                        <img src="../shared/full-screen.svg" width="100%" height="100%" alt="Fullscreen">
+                    </button>
+
+                </nav>
+                <main>
+
+                <!-- Welcome screen -->
+                <div id="dwWelcomeScreen" class="doorway_welcome">
+                    <h1 class="title_message">
+                        <div class="doorway_logo">
+                            <a href="http://www.doorwayonline.org.uk/">
+                                <img src="../shared/doorwayLogo.svg" alt="Doorway Online">
+                            </a>
+                        </div>
+                    </h1>
+                    <h2 data-i18nkey="count-me-in.welcome.title">Count Me In</h2>
+                    <div class="welcome_image">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 230" role="img" aria-hidden="true">
+                            <!-- Row 1: numbers 1–10 -->
+                            <rect x="37"  y="17"  width="56" height="56" fill="#ffb0b0" stroke="none"/>
+                            <rect x="107" y="17"  width="56" height="56" fill="#a4e1ff" stroke="none"/>
+                            <rect x="177" y="17"  width="56" height="56" fill="#ffb0b0" stroke="#2a9300" stroke-width="7"/>
+                            <rect x="247" y="17"  width="56" height="56" fill="#a4e1ff" stroke="none"/>
+                            <rect x="317" y="17"  width="56" height="56" fill="#ffb0b0" stroke="none"/>
+                            <rect x="387" y="17"  width="56" height="56" fill="#a4e1ff" stroke="#2a9300" stroke-width="7"/>
+                            <rect x="457" y="17"  width="56" height="56" fill="#ffb0b0" stroke="none"/>
+                            <rect x="527" y="17"  width="56" height="56" fill="#a4e1ff" stroke="none"/>
+                            <rect x="597" y="17"  width="56" height="56" fill="#ffb0b0" stroke="#2a9300" stroke-width="7"/>
+                            <rect x="667" y="17"  width="56" height="56" fill="#a4e1ff" stroke="none"/>
+                            <!-- Row 2: numbers 11–20 -->
+                            <rect x="37"  y="87"  width="56" height="56" fill="#ffb0b0" stroke="none"/>
+                            <rect x="107" y="87"  width="56" height="56" fill="#a4e1ff" stroke="#2a9300" stroke-width="7"/>
+                            <rect x="177" y="87"  width="56" height="56" fill="#ffb0b0" stroke="none"/>
+                            <rect x="247" y="87"  width="56" height="56" fill="#a4e1ff" stroke="none"/>
+                            <rect x="317" y="87"  width="56" height="56" fill="#ffb0b0" stroke="#2a9300" stroke-width="7"/>
+                            <rect x="387" y="87"  width="56" height="56" fill="#a4e1ff" stroke="none"/>
+                            <rect x="457" y="87"  width="56" height="56" fill="#ffb0b0" stroke="none"/>
+                            <rect x="527" y="87"  width="56" height="56" fill="#a4e1ff" stroke="#2a9300" stroke-width="7"/>
+                            <rect x="597" y="87"  width="56" height="56" fill="#ffb0b0" stroke="none"/>
+                            <rect x="667" y="87"  width="56" height="56" fill="#a4e1ff" stroke="none"/>
+                            <!-- Row 3: numbers 21–30 -->
+                            <rect x="37"  y="157" width="56" height="56" fill="#ffb0b0" stroke="#2a9300" stroke-width="7"/>
+                            <rect x="107" y="157" width="56" height="56" fill="#a4e1ff" stroke="none"/>
+                            <rect x="177" y="157" width="56" height="56" fill="#ffb0b0" stroke="none"/>
+                            <rect x="247" y="157" width="56" height="56" fill="#a4e1ff" stroke="#2a9300" stroke-width="7"/>
+                            <rect x="317" y="157" width="56" height="56" fill="#ffb0b0" stroke="none"/>
+                            <rect x="387" y="157" width="56" height="56" fill="#a4e1ff" stroke="none"/>
+                            <rect x="457" y="157" width="56" height="56" fill="#ffb0b0" stroke="#2a9300" stroke-width="7"/>
+                            <rect x="527" y="157" width="56" height="56" fill="#a4e1ff" stroke="none"/>
+                            <rect x="597" y="157" width="56" height="56" fill="#ffb0b0" stroke="none"/>
+                            <rect x="667" y="157" width="56" height="56" fill="#a4e1ff" stroke="#2a9300" stroke-width="7"/>
+                            <g font-family="Jotter Primary, sans-serif" font-weight="bold" font-size="26" text-anchor="middle">
+                                <text x="65"  y="56">1</text>
+                                <text x="135" y="56">2</text>
+                                <text x="205" y="56">3</text>
+                                <text x="275" y="56">4</text>
+                                <text x="345" y="56">5</text>
+                                <text x="415" y="56">6</text>
+                                <text x="485" y="56">7</text>
+                                <text x="555" y="56">8</text>
+                                <text x="625" y="56">9</text>
+                                <text x="695" y="56">10</text>
+                                <text x="65"  y="126">11</text>
+                                <text x="135" y="126">12</text>
+                                <text x="205" y="126">13</text>
+                                <text x="275" y="126">14</text>
+                                <text x="345" y="126">15</text>
+                                <text x="415" y="126">16</text>
+                                <text x="485" y="126">17</text>
+                                <text x="555" y="126">18</text>
+                                <text x="625" y="126">19</text>
+                                <text x="695" y="126">20</text>
+                                <text x="65"  y="196">21</text>
+                                <text x="135" y="196">22</text>
+                                <text x="205" y="196">23</text>
+                                <text x="275" y="196">24</text>
+                                <text x="345" y="196">25</text>
+                                <text x="415" y="196">26</text>
+                                <text x="485" y="196">27</text>
+                                <text x="555" y="196">28</text>
+                                <text x="625" y="196">29</text>
+                                <text x="695" y="196">30</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <p class="welcome_description" data-i18nkey="count-me-in.welcome.description">Activities to familiarise learners with the stations of the times tables up to 10 and numbers to 20, 50 and 100.</p>
+                    <button id="dwButtonToOptions" class="pencil_btn" data-i18nkey="doorway.btn.enter">enter</button>
+                </div>
+
+                <!-- Mode selection screen -->
+                <div id="dwModeSelect" class="hidden_panel cmi-screen">
+                    <h1 class="cmi-screen-title" data-i18nkey="count-me-in.screen.choose">Choose an exercise</h1>
+                    <div class="cmi-mode-buttons">
+                        <button type="button" id="cmiModeHear" class="cmi-mode-btn main_button" data-i18nkey="count-me-in.btn.hear">Hear the Number</button>
+                        <button type="button" id="cmiModeFind" class="cmi-mode-btn main_button" data-i18nkey="count-me-in.btn.find">Find the Number</button>
+                        <button type="button" id="cmiModeStations" class="cmi-mode-btn main_button" data-i18nkey="count-me-in.btn.stations">Times Table Stations</button>
+                    </div>
+                </div>
+
+                <!-- Options screen -->
+                <form name="options_form" id="dwUserOptions" class="hidden_panel user_options">
+                    <div class="user_options">
+                        <h1 class="title_message" data-i18nkey="count-me-in.options.title">Options</h1>
+
+                        <!-- Hear / Find options (modes 1 and 2) -->
+                        <fieldset class="options_group game_options" id="cmiHearFindOptions">
+                            <legend class="options_group_title" data-i18nkey="count-me-in.options.range.legend">Choose a table</legend>
+                            <input type="radio" name="cmi_table_interval" value="2" id="radio-range-20" checked>
+                            <label for="radio-range-20" class="user_options_radio button_div" data-i18nkey="count-me-in.options.range.20">1 - 20</label>
+                            <input type="radio" name="cmi_table_interval" value="5" id="radio-range-50">
+                            <label for="radio-range-50" class="user_options_radio button_div" data-i18nkey="count-me-in.options.range.50">1 - 50</label>
+                            <input type="radio" name="cmi_table_interval" value="10" id="radio-range-100">
+                            <label for="radio-range-100" class="user_options_radio button_div" data-i18nkey="count-me-in.options.range.100">1 - 100</label>
+                        </fieldset>
+
+                        <!-- Times Table Stations options (mode 3) -->
+                        <fieldset class="options_group game_options hidden_panel" id="cmiStationsOptions">
+                            <legend class="options_group_title" data-i18nkey="count-me-in.options.interval.legend">Choose a times table</legend>
+                            <input type="radio" name="cmi_stations_interval" value="2" id="radio-interval-2" checked>
+                            <label for="radio-interval-2" class="user_options_radio button_div" data-i18nkey="count-me-in.options.interval.2">2</label>
+                            <input type="radio" name="cmi_stations_interval" value="3" id="radio-interval-3">
+                            <label for="radio-interval-3" class="user_options_radio button_div" data-i18nkey="count-me-in.options.interval.3">3</label>
+                            <input type="radio" name="cmi_stations_interval" value="4" id="radio-interval-4">
+                            <label for="radio-interval-4" class="user_options_radio button_div" data-i18nkey="count-me-in.options.interval.4">4</label>
+                            <input type="radio" name="cmi_stations_interval" value="5" id="radio-interval-5">
+                            <label for="radio-interval-5" class="user_options_radio button_div" data-i18nkey="count-me-in.options.interval.5">5</label>
+                            <input type="radio" name="cmi_stations_interval" value="6" id="radio-interval-6">
+                            <label for="radio-interval-6" class="user_options_radio button_div" data-i18nkey="count-me-in.options.interval.6">6</label>
+                            <input type="radio" name="cmi_stations_interval" value="7" id="radio-interval-7">
+                            <label for="radio-interval-7" class="user_options_radio button_div" data-i18nkey="count-me-in.options.interval.7">7</label>
+                            <input type="radio" name="cmi_stations_interval" value="8" id="radio-interval-8">
+                            <label for="radio-interval-8" class="user_options_radio button_div" data-i18nkey="count-me-in.options.interval.8">8</label>
+                            <input type="radio" name="cmi_stations_interval" value="9" id="radio-interval-9">
+                            <label for="radio-interval-9" class="user_options_radio button_div" data-i18nkey="count-me-in.options.interval.9">9</label>
+                            <input type="radio" name="cmi_stations_interval" value="10" id="radio-interval-10">
+                            <label for="radio-interval-10" class="user_options_radio button_div" data-i18nkey="count-me-in.options.interval.10">10</label>
+                        </fieldset>
+
+                        <fieldset class="options_group">
+                            <legend class="options_group_title" data-i18nkey="count-me-in.options.audio.legend">Audio</legend>
+                            <input type="radio" name="audio_mode" value="webspeech" id="radio-audio-webspeech" checked>
+                            <label for="radio-audio-webspeech" class="user_options_radio button_div" data-i18nkey="count-me-in.options.audio.speech">Speech (text to speech)</label>
+                            <input type="radio" name="audio_mode" value="recorded" id="radio-audio-recorded">
+                            <label for="radio-audio-recorded" class="user_options_radio button_div" data-i18nkey="count-me-in.options.audio.recorded">Recorded audio</label>
+                            <input type="radio" name="audio_mode" value="none" id="radio-audio-none">
+                            <label for="radio-audio-none" class="user_options_radio button_div" data-i18nkey="count-me-in.options.audio.none">No audio</label>
+                        </fieldset>
+
+                        <fieldset class="options_group accessibility_options">
+                            <legend class="options_group_title" data-i18nkey="count-me-in.options.accessibility.legend">Accessibility</legend>
+                            <div class="cmi-scan-onoff">
+                                <input type="radio" name="enable_scanning" value="true" id="radio-scanning-on">
+                                <label for="radio-scanning-on" class="user_options_radio button_div" data-i18nkey="count-me-in.options.scanning.on">On</label>
+                                <input type="radio" name="enable_scanning" value="false" id="radio-scanning-off" checked>
+                                <label for="radio-scanning-off" class="user_options_radio button_div" data-i18nkey="count-me-in.options.scanning.off">Off</label>
+                            </div>
+
+                            <!-- Scan sub-panel (shown only when scanning is On) -->
+                            <div id="cmiScanSubPanel" class="hidden_panel dw-scan-subpanel">
+                                <div class="cmi-scan-delay-row">
+                                    <p class="cmi-scan-delay-label" data-i18nkey="count-me-in.options.scan-speed.label">Scan speed (seconds)</p>
+                                    <div class="spinner_select" id="scan_delay_spinner">
+                                        <button type="button" class="spinner_down" id="scan_delay_spin_down" aria-label="Shorter scan delay" data-i18nkey-aria-label="spinner.scan-delay.decrease">-</button>
+                                        <select name="scan_delay" id="scan_delay_sel">
+                                            <option value="1000">1</option>
+                                            <option value="1500">1.5</option>
+                                            <option value="2000" selected>2</option>
+                                            <option value="2500">2.5</option>
+                                            <option value="3000">3</option>
+                                            <option value="3500">3.5</option>
+                                            <option value="4000">4</option>
+                                            <option value="4500">4.5</option>
+                                            <option value="5000">5</option>
+                                        </select>
+                                        <div class="spinner_display button_div" id="scan_delay_display">2</div>
+                                        <button type="button" class="spinner_up" id="scan_delay_spin_up" aria-label="Longer scan delay" data-i18nkey-aria-label="spinner.scan-delay.increase">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="cmi-options-nav">
+                            <button type="button" id="cmiOptionsBackBtn" class="cmi-back-btn" data-i18nkey="count-me-in.options.back">&#8592; Back</button>
+                            <button type="button" id="dwSubmitUserOptions" class="pencil_btn" data-i18nkey="doorway.btn.start">start</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Audio elements: special phrases -->
+                <audio src="audio/findthenumber.wav" preload="auto" id="cmiAudiofindthenumber"></audio>
+                <audio src="audio/pressanynumber.wav" preload="auto" id="cmiAudiopressanynumber"></audio>
+                <audio src="audio/countin.wav" preload="auto" id="cmiAudiocountin"></audio>
+                <audio src="audio/welldone.wav" preload="auto" id="cmiAudiowelldone"></audio>
+                <audio src="audio/type.wav" preload="auto" id="cmiAudiotype"></audio>
+
+                <!-- Audio elements: interval names (for "count in Xs") -->
+                <audio src="audio/2s.wav" preload="auto" id="cmiAudio2s"></audio>
+                <audio src="audio/3s.wav" preload="auto" id="cmiAudio3s"></audio>
+                <audio src="audio/4s.wav" preload="auto" id="cmiAudio4s"></audio>
+                <audio src="audio/5s.wav" preload="auto" id="cmiAudio5s"></audio>
+                <audio src="audio/6s.wav" preload="auto" id="cmiAudio6s"></audio>
+                <audio src="audio/7s.wav" preload="auto" id="cmiAudio7s"></audio>
+                <audio src="audio/8s.wav" preload="auto" id="cmiAudio8s"></audio>
+                <audio src="audio/9s.wav" preload="auto" id="cmiAudio9s"></audio>
+                <audio src="audio/10s.wav" preload="auto" id="cmiAudio10s"></audio>
+
+                <!-- Audio elements: individual numbers 1–20 -->
+                <audio src="audio/1.wav" preload="auto" id="cmiAudio1"></audio>
+                <audio src="audio/2.wav" preload="auto" id="cmiAudio2"></audio>
+                <audio src="audio/3.wav" preload="auto" id="cmiAudio3"></audio>
+                <audio src="audio/4.wav" preload="auto" id="cmiAudio4"></audio>
+                <audio src="audio/5.wav" preload="auto" id="cmiAudio5"></audio>
+                <audio src="audio/6.wav" preload="auto" id="cmiAudio6"></audio>
+                <audio src="audio/7.wav" preload="auto" id="cmiAudio7"></audio>
+                <audio src="audio/8.wav" preload="auto" id="cmiAudio8"></audio>
+                <audio src="audio/9.wav" preload="auto" id="cmiAudio9"></audio>
+                <audio src="audio/10.wav" preload="auto" id="cmiAudio10"></audio>
+                <audio src="audio/11.wav" preload="auto" id="cmiAudio11"></audio>
+                <audio src="audio/12.wav" preload="auto" id="cmiAudio12"></audio>
+                <audio src="audio/13.wav" preload="auto" id="cmiAudio13"></audio>
+                <audio src="audio/14.wav" preload="auto" id="cmiAudio14"></audio>
+                <audio src="audio/15.wav" preload="auto" id="cmiAudio15"></audio>
+                <audio src="audio/16.wav" preload="auto" id="cmiAudio16"></audio>
+                <audio src="audio/17.wav" preload="auto" id="cmiAudio17"></audio>
+                <audio src="audio/18.wav" preload="auto" id="cmiAudio18"></audio>
+                <audio src="audio/19.wav" preload="auto" id="cmiAudio19"></audio>
+                <audio src="audio/20.wav" preload="auto" id="cmiAudio20"></audio>
+
+                <!-- Audio elements: round tens 30–90 and 100 -->
+                <audio src="audio/30.wav" preload="auto" id="cmiAudio30"></audio>
+                <audio src="audio/40.wav" preload="auto" id="cmiAudio40"></audio>
+                <audio src="audio/50.wav" preload="auto" id="cmiAudio50"></audio>
+                <audio src="audio/60.wav" preload="auto" id="cmiAudio60"></audio>
+                <audio src="audio/70.wav" preload="auto" id="cmiAudio70"></audio>
+                <audio src="audio/80.wav" preload="auto" id="cmiAudio80"></audio>
+                <audio src="audio/90.wav" preload="auto" id="cmiAudio90"></audio>
+                <audio src="audio/100.wav" preload="auto" id="cmiAudio100"></audio>
+
+                <!-- Activity screen -->
+                <div id="dwActivityScreen" class="hidden_panel cmi-screen">
+                    <h1 class="sr-only" data-i18nkey="count-me-in.welcome.title">Count Me In</h1>
+                    <div class="cmi-activity-layout">
+
+                        <!-- Activity-screen top strip: always-on Found counter (mode 2),
+                             Repeat button (mode 3), Score toggle (mode 2), prompt-replay button. -->
+                        <div class="cmi-activity-topbar">
+                            <!-- Always-visible "Found: N" counter (mode 2 only) — matches Flash foundText/scoreCorrectText -->
+                            <div id="cmiFoundCounter" class="cmi-found-counter hidden_panel" role="status" aria-live="polite">
+                                <span class="cmi-found-label" data-i18nkey="count-me-in.score.found">Found:</span>
+                                <span id="cmiFoundCount">0</span>
+                            </div>
+                            <!-- Spacer pushes Repeat/Score to the right -->
+                            <div class="cmi-topbar-spacer"></div>
+                            <!-- Repeat button (mode 3 only, shown when sequence complete) -->
+                            <button type="button" id="cmiRepeatBtn" class="pencil_btn hidden_panel" data-i18nkey="doorway.btn.repeat">repeat</button>
+                            <!-- Score overlay toggle (mode 2 only) -->
+                            <button type="button" id="cmiScoreBtn" class="cmi-score-toggle-btn hidden_panel" aria-label="Show score" data-i18nkey="count-me-in.score.btn-label" data-i18nkey-aria-label="count-me-in.aria.score-btn">Score</button>
+                        </div>
+
+                        <!-- Guide text / instruction area -->
+                        <p id="cmiGuideText" class="cmi-guide-text"></p>
+
+                        <!-- Number grid (populated by JS) -->
+                        <div id="cmiNumberGrid" class="cmi-number-grid" aria-label="Number grid" data-i18nkey-aria-label="count-me-in.aria.number-grid"></div>
+
+                        <!-- Prompt-replay button (mouth icon) — re-plays the current mode's prompt audio.
+                             Flash: clicking the bottom-right mouth re-fires sayPressAnyNumber / sayFindTheNumber / sayCountIn. -->
+                        <button type="button" id="cmiReplayBtn" class="cmi-replay-btn" aria-label="Replay prompt" data-i18nkey-aria-label="count-me-in.aria.replay-btn">
+                            <img src="../shared/audio-on.svg" alt="" width="100%" height="100%">
+                        </button>
+
+                        <!-- Score overlay panel (mode 2 only) -->
+                        <div id="cmiScorePanel" class="cmi-score-panel hidden_panel" role="status" aria-label="Score" data-i18nkey-aria-label="count-me-in.aria.score-panel">
+                            <p><span class="cmi-score-label" data-i18nkey="count-me-in.score.correct">Correct:</span> <span id="cmiScoreCorrect">0</span></p>
+                            <p><span class="cmi-score-label" data-i18nkey="count-me-in.score.errors">Errors:</span> <span id="cmiScoreErrors">0</span></p>
+                            <p><span class="cmi-score-label" data-i18nkey="count-me-in.score.score">Score:</span> <span id="cmiScorePercent">-</span></p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Shared framework elements -->
+                <div id="dwMainApp" style="display:none;"></div>
+                <div id="dwDarkenedPanel" class="darkened_panel hidden_panel"></div>
+                <div id="dwWellDone" class="well_done_message hidden_panel">
+                    <p class="instruction_message"></p>
+                </div>
+
+            </main>
+            </div><!-- doorway_aspect_div -->
+        </div><!-- doorway_aspect_outer_div -->
+    </div><!-- doorway_fullscreen_div -->
+</div><!-- doorway_application -->
+</body>
+</html>

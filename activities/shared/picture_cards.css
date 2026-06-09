@@ -1,0 +1,181 @@
+/** Doorway Online Picture cards
+  * Copyright (c) Roger Spooner 2017
+  */
+
+.picture_card {
+    width: 7em;
+    height: 9em;
+    margin: 0.5em;
+    padding: 0;
+    text-align: center;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    border-radius: 1em;
+    will-change: transform;
+}
+
+.picture_card.in_play.flip_obverse_to_face, .picture_card.in_play.flip_face_to_obverse {
+    box-shadow: none;
+}
+
+.picture_card .obverse {
+    background-color: #969ced;
+    width: calc(100% - 0.4em);
+    height: calc(100% - 0.4em);
+    top: 0;
+    left: 0;
+    vertical-align: middle;
+    border-radius: 1em;
+    border: 0.2em solid black;
+}
+
+.picture_card .face {
+    background-color: white;
+    width: calc(100% - 0.4em);
+    height: calc(100% - 0.4em);
+    top: 0;
+    left: 0;
+    vertical-align: middle;
+    border-radius: 1em;
+    border: 0.2em solid black;
+}
+
+.picture_card img {
+    width: 90%;
+    height: 90%;
+}
+
+.card_size_1 {
+    font-size: 150%;
+}
+
+.card_size_2 {
+    font-size: 100%;
+}
+
+.card_size_3 {
+    font-size: 75%;
+}
+
+.card_size_4 {
+    font-size: 55%;
+}
+
+.picture_card.flip_obverse_to_face .obverse, .picture_card.flip_obverse_to_face .face {
+    /* need to name the animation (see below) */
+    animation-duration: 0.5s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-fill-mode: none;
+    animation-play-state: running;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.picture_card.flip_obverse_to_face .obverse {
+    animation-name: anim_flip_show_to_hide;
+}
+
+.picture_card.flip_obverse_to_face .face {
+    animation-name: anim_flip_hide_to_show;
+}
+
+.picture_card.flip_face_to_obverse .obverse, .picture_card.flip_face_to_obverse .face {
+    /* need to name the animation (see below) */
+    animation-duration: 0.5s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-fill-mode: none;
+    animation-play-state: running;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.picture_card.flip_face_to_obverse .obverse {
+    animation-name: anim_flip_hide_to_show;
+}
+
+.picture_card.flip_face_to_obverse .face {
+    animation-name: anim_flip_show_to_hide;
+}
+
+@keyframes anim_flip_show_to_hide {
+    0% {
+        transform: scaleX(1.0) scaleY(1.0);
+        animation-timing-function: ease-in;
+        opacity: 1.0;
+    }
+    50% {
+        opacity: 1.0;
+        transform: scaleX(0.0) scaleY(0.9);
+        animation-timing-function: linear;
+    }
+    50.1% {
+        opacity: 0.0;
+        transform: scaleX(0.0) scaleY(0.9);
+        animation-timing-function: ease-out;
+    }
+    100% {
+        transform: scaleX(-1.0) scaleY(1.0);
+        opacity: 0.0;
+    }
+}
+
+@keyframes anim_flip_hide_to_show {
+    0% {
+        transform: scaleX(-1.0) scaleY(1.0);
+        animation-timing-function: ease-in;
+        opacity: 0.0;
+    }
+    50% {
+        opacity: 0.0;
+        transform: scaleX(0.0) scaleY(0.9);
+        animation-timing-function: linear;
+    }
+    50.1% {
+        opacity: 1.0;
+        transform: scaleX(0.0) scaleY(0.9);
+        animation-timing-function: ease-out;
+    }
+    100% {
+        transform: scaleX(1.0) scaleY(1.0);
+        opacity: 1.0;
+    }
+}
+
+.grow_slam_wriggle {
+    animation-name: anim_grow_slam_wriggle;
+    animation-duration: 1s;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-fill-mode: both;
+    animation-play-state: running;
+}
+
+@keyframes anim_grow_slam_wriggle {
+    0% {
+        transform: scaleX(1.0) scaleY(1.0) rotate(0.0);
+        animation-timing-function: ease-in;
+    }
+    40% {
+        transform: scaleX(1.1) scaleY(1.1) rotate(15deg);
+        animation-timing-function: ease;
+    }
+    60% {
+        transform: scaleX(1.1) scaleY(1.1) rotate(-15deg);
+        animation-timing-function: ease;
+    }
+    80% {
+        transform: scaleX(1.2) scaleY(1.2) rotate(0deg);
+        animation-timing-function: ease;
+    }
+    100% {
+        transform: scaleX(1.0) scaleY(1.0) rotate(0.0);
+        animation-timing-function: ease-in;
+    }
+}
