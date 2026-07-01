@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="../shared/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../shared/doorway.css">
+    <link rel="stylesheet" type="text/css" href="supermarket.css">
+    <script type="module" src="./supermarket.js"></script>
+    <title>Doorway Supermarket (debug)</title>
+</head>
+<body id="bodyId" onload="Supermarket_init();">
+<div id="dwWholeApp" class="doorway_application">
+    <div id="dwFullScreenDiv" class="doorway_fullscreen_div">
+        <div id="dwAspectOuterDiv" class="doorway_aspect_outer_div">
+            <div id="dwAspectDiv" class="doorway_aspect_div">
+
+                <div id="dwLiveRegion" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+                <!-- Navigation header -->
+                <nav id="dwNavigationHeader" class="navigation_header" data-i18nkey-aria-label="nav.toolbar.label">
+                    <button type="button" class="teacher_button hidden_panel" id="dwOptionsButton" data-i18nkey-aria-label="nav.settings.label">
+                        <img src="../shared/settings.svg" width="100%" height="100%" alt="Options" aria-hidden="true">
+                    </button>
+                    <button type="button" class="teacher_button" id="dwFullScreenButton" data-i18nkey-aria-label="nav.fullscreen.label">
+                        <img src="../shared/full-screen.svg" width="100%" height="100%" alt="Fullscreen" aria-hidden="true">
+                    </button>
+
+                </nav>
+
+                <!-- Shared page header (banner landmark). Sibling of <main>, so
+                     <header> gets its implicit banner role. Content varies per
+                     screen via CSS visibility: logo shows on welcome; title
+                     shows on options; whole header hidden on activity. -->
+                <header class="dw-screen-header">
+                    <a href="http://www.doorwayonline.org.uk/" class="doorway_logo">
+                        <img src="../shared/doorwayLogo.svg" alt="Doorway Online">
+                    </a>
+                    <h1 class="title_message" tabindex="-1" data-i18nkey="options.heading">Options</h1>
+                </header>
+
+                <main>
+
+                <div id="dwWelcomeScreen" class="doorway_welcome">
+                    <div class="dw-welcome-body">
+                        <div class="dw-welcome-titles">
+                            <p class="dw-app-label" data-i18nkey="doorway.brand">Doorway</p>
+                            <h1 class="title_message" tabindex="-1" data-i18nkey="supermarket.welcome.title">Supermarket</h1>
+                        </div>
+                        <div class="welcome_image" role="img" aria-label="Shopping trolley and groceries on a supermarket conveyor belt">
+                            <div class="wimg-scene">
+                                <!-- Conveyor belt -->
+                                <img src="pictures/belt.svg" class="wimg-belt" alt="">
+                                <!-- Trolley (side-view perspective sprite — handle, basket, wheels).
+                                     Uses trolley-empty.svg (Flash sprite_381) which is the same
+                                     side-view trolley used on the shopping screen, so the welcome
+                                     scene and the shopping scene visually agree. -->
+                                <img src="pictures/trolley-empty.svg" class="wimg-trolley" alt="">
+                                <!-- Items inside the trolley basket. The basket opens to the
+                                     viewer's right with the items stacked inside it. -->
+                                <img src="pictures/itemBaked_Beans.svg" class="wimg-item wimg-beans" alt="">
+                                <img src="pictures/itemCereal.svg"      class="wimg-item wimg-cereal" alt="">
+                                <img src="pictures/itemNoodles.svg"     class="wimg-item wimg-noodles" alt="">
+                                <img src="pictures/itemJuice.svg"       class="wimg-item wimg-juice" alt="">
+                                <img src="pictures/itemPepper.svg"      class="wimg-item wimg-pepper" alt="">
+                                <!-- Trolley front-rails overlay (Flash sprite_365 "trollyFront").
+                                     Rendered AFTER the basket items so the wire rails sit on top of
+                                     the items, making them look enclosed in the basket. -->
+                                <img src="pictures/trollyFront.svg" class="wimg-trolley-front" alt="">
+                                <!-- Items on the conveyor belt -->
+                                <img src="pictures/itemCarrots.svg" class="wimg-item wimg-carrots" alt="">
+                                <img src="pictures/itemMilk.svg"    class="wimg-item wimg-milk" alt="">
+                                <!-- Checkout till.  The till's display shows the running total
+                                     in the Flash welcome (frame_02.as line 7: "£3.79"); the
+                                     value is overlaid in CSS over the till's black screen. -->
+                                <div class="wimg-till-group">
+                                    <img src="pictures/till.svg" class="wimg-till" alt="">
+                                    <span class="wimg-till-price">&#163;3.79</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form name="options_form" id="dwUserOptions" class="hidden_panel user_options">
+                    <div class="user_options">
+                        <p class="sm-options-description" data-i18nkey="supermarket.options.description">A shopping simulation where users can choose items, round prices and pay with notes and coins.</p>
+                        <fieldset class="options_group game_options">
+                            <legend class="options_group_title" data-i18nkey="supermarket.options.activity.legend">Activity</legend>
+                            <div class="sm-activity-grid">
+                                <div>
+                                    <input type="checkbox" class="dw-check-input" name="round_on" id="chk-round-on" checked>
+                                    <label for="chk-round-on" class="dw-check-label" data-i18nkey="supermarket.options.round-price">User Rounds Prices</label>
+                                </div>
+                                <fieldset>
+                                    <legend data-i18nkey="supermarket.options.money.legend">Money</legend>
+                                    <input type="radio" name="coin_option" value="coins" id="radio-coins">
+                                    <label for="radio-coins" class="user_options_radio button_div" data-i18nkey="supermarket.options.money.coins-notes">Notes and Coins</label>
+                                    <input type="radio" name="coin_option" value="notes" id="radio-notes" checked>
+                                    <label for="radio-notes" class="user_options_radio button_div" data-i18nkey="supermarket.options.money.notes-only">Notes</label>
+                                </fieldset>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="options_group game_options">
+                            <legend class="options_group_title" data-i18nkey="options.audio.legend">Audio</legend>
+                            <input type="radio" name="audio_mode" value="webspeech" id="radio-audio-webspeech">
+                            <label for="radio-audio-webspeech" class="user_options_radio button_div" data-i18nkey="options.audio.webspeech">Computer voice</label>
+                            <input type="radio" name="audio_mode" value="recorded" id="radio-audio-recorded" checked>
+                            <label for="radio-audio-recorded" class="user_options_radio button_div" data-i18nkey="options.audio.recorded">Recorded audio</label>
+                            <input type="radio" name="audio_mode" value="none" id="radio-audio-none">
+                            <label for="radio-audio-none" class="user_options_radio button_div" data-i18nkey="options.audio.none">No audio</label>
+                        </fieldset>
+
+                        <fieldset class="options_group accessibility_options">
+                            <legend class="options_group_title" data-i18nkey="accessibility.heading">Accessibility</legend>
+                            <div class="sm-scan-onoff">
+                                <p class="sm-scan-label" data-i18nkey="accessibility.scanning.label">Scanning</p>
+                                <input type="radio" name="enable_scanning" value="true" id="radio-scanning-on">
+                                <label for="radio-scanning-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.on">On</label>
+                                <input type="radio" name="enable_scanning" value="false" id="radio-scanning-off" checked>
+                                <label for="radio-scanning-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.off">Off</label>
+                            </div>
+                            <div id="smScanSubPanel" class="hidden_panel dw-scan-subpanel">
+                                <fieldset class="sm-scan-switches-cell">
+                                    <legend class="sr-only" data-i18nkey="accessibility.switches.label">Number of switches</legend>
+                                    <div class="sm-scan-switches">
+                                        <input type="radio" name="num_switches" value="2" id="radio-switches-2">
+                                        <label for="radio-switches-2" class="user_options_radio button_div" data-i18nkey="accessibility.switches.two">Two switch</label>
+                                        <input type="radio" name="num_switches" value="1" id="radio-switches-1" checked>
+                                        <label for="radio-switches-1" class="user_options_radio button_div" data-i18nkey="accessibility.switches.one">One switch (auto)</label>
+                                    </div>
+                                </fieldset>
+                                <div id="smScanDelayRow" class="sm-scan-delay-cell">
+                                    <p id="sm-scan-delay-label" data-i18nkey="accessibility.scan-delay.label">Scan delay (seconds)</p>
+                                    <div class="spinner_select" id="scan_delay_spinner">
+                                        <button type="button" class="spinner_down" id="scan_delay_spin_down" aria-label="Shorter scan delay" data-i18nkey-aria-label="accessibility.scan-delay.decrease">-</button>
+                                        <select name="scan_delay" id="scan_delay_sel" aria-labelledby="sm-scan-delay-label">
+                                            <option value="1000">1</option>
+                                            <option value="1500">1.5</option>
+                                            <option value="2000" selected>2</option>
+                                            <option value="2500">2.5</option>
+                                            <option value="3000">3</option>
+                                            <option value="3500">3.5</option>
+                                            <option value="4000">4</option>
+                                            <option value="4500">4.5</option>
+                                            <option value="5000">5</option>
+                                        </select>
+                                        <div class="spinner_display button_div" id="scan_delay_display">2</div>
+                                        <button type="button" class="spinner_up" id="scan_delay_spin_up" aria-label="Longer scan delay" data-i18nkey-aria-label="accessibility.scan-delay.increase">+</button>
+                                    </div>
+                                </div>
+                                <fieldset class="sm-scan-back-group">
+                                    <legend data-i18nkey="accessibility.scanback.legend">Scan back button</legend>
+                                    <input type="radio" name="sm_scan_back" value="true" id="radio-scanback-on">
+                                    <label for="radio-scanback-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.on">On</label>
+                                    <input type="radio" name="sm_scan_back" value="false" id="radio-scanback-off" checked>
+                                    <label for="radio-scanback-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.off">Off</label>
+                                </fieldset>
+                            </div>
+                        </fieldset>
+
+                    </div>
+                </form>
+
+
+
+                <div id="dwShoppingScreen" class="hidden_panel sm-screen">
+                    <h1 class="sr-only" tabindex="-1" data-i18nkey="supermarket.welcome.title">Supermarket</h1>
+                    <div class="sm-aisle-nav">
+                        <button id="smLeftAisleBtn" type="button" class="sm-nav-btn sm-nav-btn-prev" aria-label="Previous aisle" data-i18nkey-aria-label="supermarket.shopping.aisle-prev">
+                            <img src="pictures/arrow-left.svg" alt="" aria-hidden="true">
+                        </button>
+                        <div class="sm-aisle-sign">
+                            <img src="pictures/aisle-sign.svg" alt="" aria-hidden="true" class="sm-aisle-sign-bg">
+                            <h2 id="smAisleName" class="sm-aisle-name"></h2>
+                        </div>
+                        <button id="smRightAisleBtn" type="button" class="sm-nav-btn sm-nav-btn-next" aria-label="Next aisle" data-i18nkey-aria-label="supermarket.shopping.aisle-next">
+                            <img src="pictures/arrow-left.svg" alt="" aria-hidden="true">
+                        </button>
+                    </div>
+
+                    <div class="sm-shelves-wrap">
+                        <img src="pictures/shelves.svg" alt="" aria-hidden="true" class="sm-shelves-bg">
+                        <div id="smItemGrid" class="sm-item-grid" role="group" aria-label="Shelf items" data-i18nkey-aria-label="supermarket.shopping.shelf-aria"></div>
+                    </div>
+
+                    <div id="smRoundOverlay" class="hidden_panel sm-round-overlay" role="dialog" aria-labelledby="smRoundHeading">
+                        <h3 id="smRoundHeading" data-i18nkey="supermarket.round.heading">Round the item's price to the nearest pound.</h3>
+                        <div class="sm-round-itemrow">
+                            <p id="smRoundItemCost" class="sm-round-itemcost"></p>
+                            <!-- Item slot: receives a copy of the just-clicked product
+                                 sprite via _flyItem (drop target on landing).  Kept
+                                 empty when no item is being rounded so the slot
+                                 collapses out of the layout. -->
+                            <div id="smRoundItemSlot" class="sm-round-itemslot" aria-hidden="true"></div>
+                        </div>
+                        <div class="sm-round-value-row">
+                            <span id="smRoundNum" class="sm-round-value" aria-live="polite">£0</span>
+                        </div>
+                        <div class="sm-round-stepper">
+                            <button id="smRoundMinus" type="button" class="sm-stepper-btn" aria-label="Decrease" data-i18nkey-aria-label="supermarket.round.btn-decrease">−</button>
+                            <button id="smRoundPlus" type="button" class="sm-stepper-btn" aria-label="Increase" data-i18nkey-aria-label="supermarket.round.btn-increase">+</button>
+                            <button id="smRoundAdd" type="button" class="sm-round-add main_button" data-i18nkey="supermarket.round.btn-add">Add</button>
+                        </div>
+                        <p id="smRoundFeedback" class="sm-round-feedback" aria-live="polite"></p>
+                    </div>
+
+                    <div class="sm-trolly-area">
+                        <img src="pictures/trolley-empty.svg" alt="" aria-hidden="true" class="sm-trolly-bg">
+                        <h3 class="sm-trolly-heading sr-only" data-i18nkey="supermarket.shopping.trolley-heading">Trolley</h3>
+                        <ul id="smTrollyList" class="sm-trolly-list" aria-label="Trolley contents" data-i18nkey-aria-label="supermarket.shopping.trolley-aria"></ul>
+                        <p id="smTrollyTotal" class="sm-trolly-total"></p>
+                    </div>
+
+                    <div class="sm-screen-nav sm-shopping-footer">
+                        <p id="smShoppingHint" class="sm-shopping-hint hidden_panel" data-i18nkey="supermarket.shopping.pick-some">Pick some items.</p>
+                        <button id="smShoppingNext" type="button" class="pencil_btn" disabled data-i18nkey="supermarket.shopping.btn-checkout">Checkout</button>
+                    </div>
+                </div>
+
+                <div id="dwConveyorScreen" class="hidden_panel sm-screen sm-conveyor-screen">
+                    <div id="smConveyorScene" class="sm-conveyor-scene">
+                        <div class="sm-conveyor-text-block">
+                            <p id="smEstimateText" class="hidden_panel sm-estimate-text"></p>
+                            <p id="smTillTotal" class="sm-till-total" aria-live="polite"></p>
+                        </div>
+                        <img src="pictures/belt.svg" class="sm-conveyor-belt" alt="">
+                        <img src="pictures/till.svg" class="sm-conveyor-till" alt="">
+                        <div id="smConveyorArea" class="sm-conveyor" role="group" aria-label="Conveyor belt items" data-i18nkey-aria-label="supermarket.conveyor.aria"></div>
+                        <button id="smConveyorNext" type="button" class="pencil_btn hidden_panel sm-conveyor-next" data-i18nkey="doorway.btn.next">next</button>
+                    </div>
+                </div>
+
+                <div id="dwPaymentScreen" class="hidden_panel sm-screen">
+                    <h2 class="sr-only" data-i18nkey="supermarket.payment.title">Pay</h2>
+                    <p id="smCashierText" class="sm-cashier-text" aria-live="polite"></p>
+                    <!-- Stage E secondary cashier line. Flash frame_07 has
+                         two distinct text fields: cashierText (the "That's £X
+                         please" prompt) and cashierText2 (the "Thanks, here's
+                         your change." line that appears while the cluster is
+                         being delivered). Keeping them separate matches the
+                         Flash fade-in order. -->
+                    <p id="smCashierText2" class="sm-cashier-text2 hidden_panel" aria-live="polite"></p>
+
+                    <!-- Graphical payment scene, modelled after Flash frame_07:
+                         * counter band across the middle (drawn by CSS, see
+                           #dwPaymentScreen.sm-screen::after);
+                         * customer's hand at top-right fanning the bank of
+                           money the player can spend (id="smCashierHand");
+                         * customer's other hand at bottom-left holding a
+                           brown leather wallet with three note slots
+                           (id="smWallet"); coins placed by the player land
+                           on the counter (id="smTillArea"); notes tuck into
+                           the wallet slots (id="smWalletSlot1/2/3").
+                         The wallet/counter aren't labelled with text on the
+                         Flash screen, so ARIA on the interactive denominations
+                         themselves carries the meaning for assistive tech. -->
+                    <div class="sm-payment-scene">
+
+                        <!-- Customer hand at top-right with money fanned out.
+                             Uses Flash sprite_536 (customer-hand.svg) — the
+                             outstretched hand with long arm reaching down from
+                             top-right.  The fan of notes/coins is rendered as
+                             absolutely-positioned buttons inside
+                             #smWalletArea over the palm. -->
+                        <div class="sm-cashier-hand-group">
+                            <img src="pictures/customer-hand.svg" class="sm-cashier-hand-bg" alt="" aria-hidden="true">
+                            <div id="smWalletArea" class="sm-cashier-hand-money" role="group" aria-label="Money in your hand" data-i18nkey-aria-label="supermarket.payment.hand-aria"></div>
+                        </div>
+
+                        <!-- Counter "drop zone" — coins handed over land here -->
+                        <div id="smTillArea" class="sm-till-drop" role="group" aria-label="Money placed on the counter" data-i18nkey-aria-label="supermarket.payment.till-aria"></div>
+
+                        <!-- Stage E (post-payment) sprites — hidden during
+                             the coin-payment loop, revealed by the
+                             coin-sweep / change-delivery sequence in
+                             _runPaymentSuccess.
+
+                             smCashierHand: standalone gloved-hand sprite
+                             (Flash cashierHand). Used to sweep the coins
+                             off the counter and, in the change-owed
+                             branch, to re-enter holding the change cluster.
+
+                             smChangeCluster: the cashier's change pile
+                             (Flash changeClip). A single clickable button
+                             — the user picks it up as one unit (Flash-
+                             style). Greedy denomination coins/notes are
+                             rendered inside it by _buildChangeCluster. -->
+                        <img id="smCashierHand"
+                             src="pictures/cashier-hand.svg"
+                             class="sm-cashier-hand-sprite hidden_panel"
+                             alt=""
+                             aria-hidden="true">
+                        <button id="smChangeCluster"
+                                type="button"
+                                class="sm-change-cluster-btn hidden_panel"
+                                aria-label="Take your change"
+                                data-i18nkey-aria-label="supermarket.payment.change-cluster-aria"></button>
+
+                        <!-- Wallet at bottom-left held by the cashier's hand.
+                             Uses Flash sprite_549 (wallet-full.svg) which
+                             bundles the cashier hand + brown leather wallet
+                             into a single SVG.  Notes placed by the player
+                             tuck into one of the three wallet slots; each
+                             slot div is an overlay positioned above the
+                             corresponding leather divider in the SVG (Flash
+                             walletMask1/2/3 equivalents). -->
+                        <div class="sm-wallet-group">
+                            <img src="pictures/wallet-full.svg" class="sm-wallet-bg" alt="" aria-hidden="true">
+                            <div id="smWalletSlots" class="sm-wallet-slots"
+                                 role="group" aria-label="Notes in the wallet"
+                                 data-i18nkey-aria-label="supermarket.payment.wallet-aria">
+                                <div id="smWalletSlot1" class="sm-wallet-slot" data-slot="1"></div>
+                                <div id="smWalletSlot2" class="sm-wallet-slot" data-slot="2"></div>
+                                <div id="smWalletSlot3" class="sm-wallet-slot" data-slot="3"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Visually-hidden running total + feedback (kept for
+                         accessibility / screen-reader). Flash had no on-screen
+                         counter; the cashier's spoken prompt carries this. -->
+                    <p id="smCashierTotal" class="sr-only" aria-live="polite"></p>
+                    <p id="smPaymentFeedback" class="sm-payment-feedback" aria-live="assertive"></p>
+
+                    <div class="sm-screen-nav">
+                        <button id="smPaymentBackBtn" type="button" class="sm-back-btn" data-i18nkey="supermarket.payment.btn-back">&#8592; Back</button>
+                        <button id="smPaymentDone" type="button" class="pencil_btn" data-i18nkey="supermarket.payment.btn-done">Done</button>
+                        <button id="smPaymentNext" type="button" class="pencil_btn hidden_panel" data-i18nkey="doorway.btn.next">next</button>
+                    </div>
+                </div>
+
+                <div id="dwReceiptScreen" class="hidden_panel sm-screen">
+                    <div class="sm-receipt">
+                        <h2 class="sm-receipt-title" tabindex="-1" data-i18nkey="supermarket.receipt.title">Doorway Supermarket Receipt</h2>
+                        <table class="sm-receipt-table" aria-label="Shopping receipt" data-i18nkey-aria-label="supermarket.aria.receipt-table">
+                            <colgroup>
+                                <col class="sm-col-item">
+                                <col class="sm-col-price">
+                                <col class="sm-col-rounded">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th scope="col" data-i18nkey="supermarket.receipt.col-item">Item</th>
+                                    <th scope="col" data-i18nkey="supermarket.receipt.col-price">Price</th>
+                                    <th id="smReceiptEstHeader" scope="col" class="hidden_panel" data-i18nkey="supermarket.receipt.col-estimated">Rounded</th>
+                                </tr>
+                            </thead>
+                            <tbody id="smReceiptItems"></tbody>
+                            <tfoot>
+                                <tr><th scope="row" data-i18nkey="supermarket.receipt.total-label">Total:</th><td id="smReceiptTotal"></td><td id="smReceiptRoundTotal" class="sm-receipt-rounded"></td></tr>
+                                <tr><th scope="row" data-i18nkey="supermarket.receipt.cash-label">Cash:</th><td id="smReceiptTendered"></td><td></td></tr>
+                                <tr><th scope="row" data-i18nkey="supermarket.receipt.change-label">Change:</th><td id="smReceiptChange"></td><td></td></tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <fieldset id="smReceiptEval" class="sm-receipt-eval hidden_panel">
+                        <legend data-i18nkey="supermarket.receipt.eval-question">How well did you use rounding?</legend>
+                        <label class="sm-eval-option"><input type="radio" name="sm-receipt-eval" value="very-well"> <span data-i18nkey="supermarket.receipt.eval-very-well">Very well</span></label>
+                        <label class="sm-eval-option"><input type="radio" name="sm-receipt-eval" value="quite-well"> <span data-i18nkey="supermarket.receipt.eval-quite-well">Quite well</span></label>
+                        <label class="sm-eval-option"><input type="radio" name="sm-receipt-eval" value="could-better"> <span data-i18nkey="supermarket.receipt.eval-could-better">Could do better</span></label>
+                        <label class="sm-eval-option"><input type="radio" name="sm-receipt-eval" value="not-well"> <span data-i18nkey="supermarket.receipt.eval-not-well">Not very well</span></label>
+                    </fieldset>
+                    <div class="sm-screen-nav">
+                        <button id="smShopAgain" type="button" class="pencil_btn" data-i18nkey="supermarket.receipt.btn-shop-again">Repeat</button>
+                        <button id="smPrintBtn" type="button" class="main_button" data-i18nkey="supermarket.receipt.print">Print</button>
+                    </div>
+                    <p class="sm-print-hint" data-i18nkey="shared.print.hint">Tip: choose 'Save as PDF' in the print dialog to keep a digital copy.</p>
+                </div>
+
+                <!-- Recorded voice prompts (Flash Supermarket audio_source).
+                     Loaded when audio_mode === "recorded". Webspeech mode
+                     and "none" mode never touch these elements. -->
+                <audio src="audio/picksomeitems.mp3" preload="auto" id="smAudioPicksomeitems"></audio>
+                <audio src="audio/roundtheprice.mp3" preload="auto" id="smAudioRoundtheprice"></audio>
+                <audio src="audio/youestimated.mp3" preload="auto" id="smAudioYouestimated"></audio>
+                <audio src="audio/thetotalis.mp3" preload="auto" id="smAudioThetotalis"></audio>
+                <audio src="audio/thats.mp3" preload="auto" id="smAudioThats"></audio>
+                <audio src="audio/please.mp3" preload="auto" id="smAudioPlease"></audio>
+                <audio src="audio/thatsnotenough.mp3" preload="auto" id="smAudioNotenough"></audio>
+                <audio src="audio/youvegivenmetoomuch.mp3" preload="auto" id="smAudioToomuch"></audio>
+                <audio src="audio/haveyougotasmallernote.mp3" preload="auto" id="smAudioSmallernote"></audio>
+                <audio src="audio/heresyourchange.mp3" preload="auto" id="smAudioHeresyourchange"></audio>
+                <audio src="audio/thankssoon.mp3" preload="auto" id="smAudioThankssoon"></audio>
+                <audio src="audio/pound.mp3" preload="auto" id="smAudioPound"></audio>
+                <audio src="audio/pounds.mp3" preload="auto" id="smAudioPounds"></audio>
+                <audio src="audio/pence.mp3" preload="auto" id="smAudioPence"></audio>
+                <audio src="audio/beep.mp3" preload="auto" id="smAudioBeep"></audio>
+
+                <!-- Number clips 0–20 and tens 30–100 (used to compose prices
+                     and change amounts as "X pound(s)" / "Y pence" sequences) -->
+                <audio src="audio/0.mp3" preload="auto" id="smAudioN0"></audio>
+                <audio src="audio/1.mp3" preload="auto" id="smAudioN1"></audio>
+                <audio src="audio/2.mp3" preload="auto" id="smAudioN2"></audio>
+                <audio src="audio/3.mp3" preload="auto" id="smAudioN3"></audio>
+                <audio src="audio/4.mp3" preload="auto" id="smAudioN4"></audio>
+                <audio src="audio/5.mp3" preload="auto" id="smAudioN5"></audio>
+                <audio src="audio/6.mp3" preload="auto" id="smAudioN6"></audio>
+                <audio src="audio/7.mp3" preload="auto" id="smAudioN7"></audio>
+                <audio src="audio/8.mp3" preload="auto" id="smAudioN8"></audio>
+                <audio src="audio/9.mp3" preload="auto" id="smAudioN9"></audio>
+                <audio src="audio/10.mp3" preload="auto" id="smAudioN10"></audio>
+                <audio src="audio/11.mp3" preload="auto" id="smAudioN11"></audio>
+                <audio src="audio/12.mp3" preload="auto" id="smAudioN12"></audio>
+                <audio src="audio/13.mp3" preload="auto" id="smAudioN13"></audio>
+                <audio src="audio/14.mp3" preload="auto" id="smAudioN14"></audio>
+                <audio src="audio/15.mp3" preload="auto" id="smAudioN15"></audio>
+                <audio src="audio/16.mp3" preload="auto" id="smAudioN16"></audio>
+                <audio src="audio/17.mp3" preload="auto" id="smAudioN17"></audio>
+                <audio src="audio/18.mp3" preload="auto" id="smAudioN18"></audio>
+                <audio src="audio/19.mp3" preload="auto" id="smAudioN19"></audio>
+                <audio src="audio/20.mp3" preload="auto" id="smAudioN20"></audio>
+                <audio src="audio/30.mp3" preload="auto" id="smAudioN30"></audio>
+                <audio src="audio/40.mp3" preload="auto" id="smAudioN40"></audio>
+                <audio src="audio/50.mp3" preload="auto" id="smAudioN50"></audio>
+                <audio src="audio/60.mp3" preload="auto" id="smAudioN60"></audio>
+                <audio src="audio/70.mp3" preload="auto" id="smAudioN70"></audio>
+                <audio src="audio/80.mp3" preload="auto" id="smAudioN80"></audio>
+                <audio src="audio/90.mp3" preload="auto" id="smAudioN90"></audio>
+                <audio src="audio/100.mp3" preload="auto" id="smAudioN100"></audio>
+
+                <div id="dwMainApp" style="display:none;"></div>
+                <div id="dwDarkenedPanel" class="darkened_panel hidden_panel"></div>
+                <div id="dwWellDone" class="well_done_message hidden_panel">
+                    <p class="instruction_message"></p>
+                </div>
+
+            </main>
+
+            <!-- Shared page footer (contentinfo landmark). Sibling of <main>,
+                 so <footer> gets its implicit contentinfo role. Action buttons
+                 visibility per screen via CSS: enter on welcome; home+start on
+                 options; whole footer hidden on activity. -->
+            <footer class="dw-app-footer">
+                <div class="dw-action-footer">
+                    <button id="dwEnterButton" class="pencil_btn" data-i18nkey="doorway.btn.enter">enter</button>
+                    <button type="button" id="dwHomeButton" class="pencil_btn" data-pencil-dir="left" data-i18nkey="doorway.btn.home">home</button>
+                    <button type="button" id="dwSubmitUserOptions" class="pencil_btn" data-i18nkey="doorway.btn.start">start</button>
+                </div>
+                <p class="copyright_message" data-i18nkey="doorway.copyright">© CALL Scotland, University of Edinburgh 2026</p>
+            </footer>
+            </div><!-- doorway_aspect_div -->
+        </div><!-- doorway_aspect_outer_div -->
+    </div><!-- doorway_fullscreen_div -->
+</div><!-- doorway_application -->
+</body>
+</html>

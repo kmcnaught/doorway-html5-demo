@@ -1,0 +1,757 @@
+/* Doorway Odd and Even — activity styles.
+   1em = 1/50th of activity width (set by doorway.js onResize).
+   All sizing in em; no px except borders.
+*/
+
+/* =========================================================
+   Screen layout
+   ========================================================= */
+
+/* Higher specificity to ensure hidden_panel beats oe-screen's display:flex */
+.oe-screen.hidden_panel {
+    display: none;
+}
+
+.oe-screen {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 1.5em 1em 1em;
+    gap: 0.5em;
+}
+
+/* =========================================================
+   Welcome screen
+   ========================================================= */
+
+.welcome_image {
+    width: 100%;
+    max-width: 47em;
+    margin: 0 auto;
+}
+
+/* Welcome screen collage — positioned Flash sprites.
+   Using #dwWelcomeScreen prefix (specificity 1-1-0=110) to beat
+   doorway.css's "div.welcome_image img { width:100%; height:100% }" (0-1-2=12).
+   Hard-coded em width (47em = 94% of 50em activity width) avoids % resolution
+   ambiguity inside the flex column. */
+.oe-welcome-collage {
+    position: relative;
+    margin: 0 auto;
+    width: 47em;
+    max-width: 100%;
+    height: 14em;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Reset doorway.css default on all collage imgs */
+#dwWelcomeScreen .oe-welcome-collage img {
+    position: absolute;
+    width: auto;
+    height: auto;
+}
+
+/* Sprite positions — shared per-type props use low-specificity classes.
+   Heights use ".oe-welcome-collage .oe-wc-XX" (1-2-0=120) to beat the
+   img reset rule (1-1-1=111). */
+
+/* Shoes — top-left. Both shoes are the same SVG (no mirror), so they read
+   as two left feet. Positioned "off-step": one upper-right, one lower-left,
+   mirroring the Flash welcome's staggered pair. Spacing is half the
+   original stagger so the pair reads as one walking unit, not two
+   shoes left behind on a step. */
+.oe-wc-shoe-1 { top: 6.75%; left: 4.75%; }
+.oe-wc-shoe-2 { top: 10.25%; left: 0.25%; }
+#dwWelcomeScreen .oe-welcome-collage .oe-wc-shoe { height: 3.5em; }
+
+/* Ladybirds — centre, large.
+   Welcome-only colored variants (lb3-welcome.svg, lb8-welcome.svg) have
+   the body shape filled red/blue directly, so no CSS filter is needed.
+   Bodies nearly touch at the centre line, mirroring the Flash welcome
+   composition (halved from the original 24%/49% spread). */
+.oe-wc-lb-red  { top: 2%; left: 30%; }
+.oe-wc-lb-blue { top: 2%; left: 42.5%; }
+#dwWelcomeScreen .oe-welcome-collage .oe-wc-lb { height: 10em; }
+
+/* Houses thumbnail — top-right.
+   Three houses in a row, each with a coloured-door overlay showing the
+   house number. Mirrors Flash welcome's "house painting" preview. */
+.oe-wc-houses {
+    position: absolute;
+    top: 6%;
+    right: 1%;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.1em;
+    padding: 0.3em 0.4em;
+}
+.oe-wc-house {
+    position: relative;
+    display: block;
+}
+#dwWelcomeScreen .oe-welcome-collage .oe-wc-house img {
+    position: relative;
+    height: 3.3em;
+    width: auto;
+    display: block;
+    z-index: 2;
+}
+/* Door number sits BEHIND the house image (z-index: 1 vs img 2) so the
+   house outline overlaps any rectangle edges that extend beyond the
+   doorway opening. Shifted left 1px to align with the doorway centre. */
+.oe-wc-house-door {
+    position: absolute;
+    left: calc(50% - 1px);
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 55%;
+    height: 42%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: #000;
+    font-weight: bold;
+    font-size: 1.3em;
+    line-height: 1;
+    z-index: 1;
+}
+
+/* Number grid — bottom-left, shown as a CROP of a larger number table.
+   Inner 4×3 grid (numbers 1-4, 11-14, 21-24) is wider/taller than the
+   outer overflow:hidden window — so the user sees full cells 1,2,3 and
+   11,12,13 plus a sliver of 4/14 on the right and 21/22/23 below.
+   Colours follow odd→red / even→blue (not by row).
+   Cells separated by black 1px gridlines (gap shows parent's #000 bg);
+   no border on the outer container. */
+.oe-wc-numgrid {
+    position: absolute;
+    bottom: 6%;
+    left: 5%;
+    width: 5em;
+    height: 2.85em;
+    overflow: hidden;
+}
+.oe-wc-numgrid-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1.5em);
+    grid-auto-rows: 1.3em;
+    gap: 1px;
+    background: #000;
+}
+.oe-wc-numgrid span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9em;
+    color: #000;
+}
+/* Number-grid cell colours — desaturated to match the Flash welcome
+   sprite (sampled blue ≈ rgb(115,136,227)). The pure #1037ff used for
+   labels and leaves elsewhere is too saturated for a background with
+   black text — children couldn't read the digits at this size. */
+.oe-wc-odd  { background: #ef2938; }
+.oe-wc-even { background: #7388e3; }
+
+/* Coconut shy thumbnail — bottom-right.
+   Sky-blue panel containing three instances of coconutHolder.svg.
+   coconutHolder.svg renders a coconut (top-right), a blue post going down,
+   and a ground shadow that extends down-left. Each coconut sits in a
+   narrow overflow:hidden window with the SVG anchored top-right, which
+   crops away the shadow and most of the post — leaving "coconut on a
+   short post" reading. Middle coconut wrapper is taller so its head
+   sits higher in the panel. Mirrors Flash welcome's "coconut shy". */
+.oe-wc-cocos {
+    position: absolute;
+    bottom: 6%;
+    right: 1%;
+    width: 8.25em;
+    height: 5.5em;
+    background: #d4e6fb;
+    border-radius: 2px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    padding: 0 0.15em 0;
+    overflow: hidden;
+}
+#dwWelcomeScreen .oe-welcome-collage .oe-wc-coco {
+    position: relative;
+    width: 1.65em;
+    height: 3.63em;
+    overflow: hidden;
+    display: block;
+}
+#dwWelcomeScreen .oe-welcome-collage .oe-wc-coco-2 {
+    height: 4.62em;
+}
+#dwWelcomeScreen .oe-welcome-collage .oe-wc-coco img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5.06em;
+    height: auto;
+    display: block;
+}
+.oe-wc-coco-num {
+    position: absolute;
+    top: 1.27em;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 0.77em;
+    line-height: 1;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* =========================================================
+   Activity screen: shared nav bar
+   ========================================================= */
+
+.oe-activity-nav {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding-bottom: 0.5em;
+}
+
+.oe-instruction {
+    font-size: 1em;
+    margin: 0;
+    flex: 1;
+    text-align: center;
+}
+
+/* Inline highlight spans used by instruction text — let the translation
+   string colour the literal words "red"/"blue" (or whichever tokens the
+   locale uses) so the cue is portable across languages. */
+.oe-c-red  { color: #ef2938; font-weight: bold; }
+.oe-c-blue { color: #1037ff; font-weight: bold; }
+
+/* =========================================================
+   Sub-activity panels
+   ========================================================= */
+
+.oe-sub-activity {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.75em;
+    width: 100%;
+}
+
+.oe-sub-activity.hidden_panel {
+    display: none;
+}
+
+/* =========================================================
+   Options screen — activity picker tiles
+   =========================================================
+   Mirrors Flash options layout (frame_03): each sub-activity is a
+   card with a small picture above its label, arranged 3-up. The
+   tiles override the shared .user_options_radio inline-block look. */
+
+.oe-activity-picker {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5em;
+    border: none;
+    padding: 0;
+    max-width: 33em;
+    margin: 0 auto;
+}
+
+/* Hide the legend visually (it duplicates the page heading) */
+.oe-activity-picker > .options_group_title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+div.user_options label.user_options_radio.oe-activity-card {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.3em;
+    width: 9.5em;
+    height: 7em;
+    padding: 0.4em 0.3em 0.5em;
+    box-sizing: border-box;
+    background: #eaeaea;
+    border: 0.12em solid #888;
+    border-radius: 0.4em;
+    text-align: center;
+    cursor: pointer;
+    line-height: 1.05;
+}
+
+input[type="radio"]:checked + label.user_options_radio.oe-activity-card {
+    background: #b6f0a9;
+    border-color: #2a7;
+}
+
+.oe-activity-label {
+    font-size: 0.85em;
+    color: #000;
+}
+
+.oe-activity-icon {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.oe-activity-icon img {
+    display: block;
+}
+
+/* Pairing tile — two shoes side by side. Small positive margin so the
+   shoes sit just apart instead of overlapping. */
+.oe-activity-icon-shoes img {
+    width: 3em;
+    height: auto;
+    margin: 0 0.15em;
+}
+
+/* Ladybirds tile — one red (lb3.svg), one blue (lb8.svg).
+   lb3/lb8 SVGs already carry their colours, so no filter needed. */
+.oe-activity-icon-ladybirds {
+    gap: 0.3em;
+}
+.oe-ai-lb {
+    width: 3em;
+    height: auto;
+}
+
+/* Houses tile — three coloured-door houses in a row */
+.oe-activity-icon-houses {
+    gap: 0.05em;
+    align-items: flex-end;
+}
+.oe-ai-house {
+    position: relative;
+    display: inline-block;
+}
+.oe-ai-house img {
+    height: 2.6em;
+    width: auto;
+    display: block;
+    position: relative;
+    z-index: 2;
+}
+.oe-ai-house-door {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 55%;
+    height: 42%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: #000;
+    font-weight: bold;
+    font-size: 0.9em;
+    line-height: 1;
+    z-index: 1;
+}
+
+/* 100-square tile — mirrors welcome number-grid (.oe-wc-numgrid): a
+   4×3 inner grid cropped by an overflow:hidden window so the user
+   sees full cells 1-3 and 11-13 plus slivers of 4/14 and the row
+   21-24 below. Black gridlines come from the parent's #000 bg gap. */
+.oe-activity-icon-100sq {
+    flex: 0 0 auto;
+    width: 4.5em;
+    height: 2.85em;
+    overflow: hidden;
+    display: block;
+    margin: 0 auto;
+}
+.oe-ai-100sq-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1.4em);
+    grid-auto-rows: 1.2em;
+    gap: 1px;
+    background: #000;
+    padding: 0;
+}
+.oe-ai-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-weight: bold;
+    font-size: 0.85em;
+    line-height: 1;
+}
+/* Same desaturated palette as the welcome number-grid (.oe-wc-even) so
+   the picker card and welcome collage read as the same graphic. */
+.oe-ai-odd  { background: #ef2938; }
+.oe-ai-even { background: #7388e3; }
+
+/* Coconut tile — three coconut posts staggered. The SVG renders a
+   coconut at top-right plus a long post / shadow downward; we clip
+   to a small window so it reads as "coconut on a post". */
+.oe-activity-icon-coconut {
+    align-items: flex-end;
+    gap: 0.15em;
+}
+.oe-ai-coco {
+    position: relative;
+    width: 1.5em;
+    overflow: hidden;
+    display: inline-block;
+}
+.oe-ai-coco img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4.4em;
+    height: auto;
+}
+.oe-ai-coco-mid   { height: 3.5em; }
+.oe-ai-coco-left  { height: 2.7em; }
+.oe-ai-coco-right { height: 2.7em; }
+.oe-ai-coco-num {
+    position: absolute;
+    top: 1em;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 0.7em;
+    font-family: Arial, Helvetica, sans-serif;
+    z-index: 2;
+}
+
+/* =========================================================
+   Odd / Even colour conventions (used across all sub-activities)
+   Red = Odd, Blue = Even — always paired with text labels
+   ========================================================= */
+
+.oe-odd-btn,
+.oe-odd-leaf {
+    background-color: #ef2938;
+    color: #ffffff;
+    border: 2px solid #a01820;
+}
+
+.oe-even-btn,
+.oe-even-leaf {
+    background-color: #1037ff;
+    color: #ffffff;
+    border: 2px solid #0a25a0;
+}
+
+/* =========================================================
+   Scan highlight — consistent with all Doorway activities
+   ========================================================= */
+
+
+/* =========================================================
+   Feedback / result areas
+   =========================================================
+   Bubble graphic is the Flash messageCorrect.svg / messageIncorrect.svg
+   sprite, rendered as an <img> behind the dynamic text span. The sprite
+   is stripped of its baked text so the HTML5 parameterised feedback
+   reads against the bubble frame. */
+
+.oe-feedback {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    font-size: 1.4em;
+    text-align: center;
+    padding: 0;
+    /* Sized off the sprite's natural width (the <img> sets the bubble
+       height; the bubble background hugs whatever it is). max-width keeps
+       the bubble from running off the activity area for long messages. */
+    max-width: 90%;
+}
+
+/* Belt-and-braces: hidden_panel must beat the inline-flex above. The
+   shared .hidden_panel rule (display:none) has the same specificity, so
+   the later-defined rule wins — restate it locally to be safe. */
+.oe-feedback.hidden_panel {
+    display: none;
+}
+
+.oe-feedback-frame {
+    /* The sprite is rendered behind the text. Fits the bubble width;
+       the height stretches with the text so long messages still sit
+       inside the rounded rectangle. */
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* messageCorrect.svg & messageIncorrect.svg are rounded rectangles
+       with a black border and a drop shadow — `preserveAspectRatio: none`
+       lets the SVG stretch to whatever the text needs. */
+    object-fit: fill;
+}
+
+.oe-feedback-text {
+    position: relative;
+    z-index: 1;
+    padding: 0.45em 1.2em;
+    color: #000000;
+}
+
+.oe-result-text {
+    font-size: 1.3em;
+    text-align: center;
+}
+
+/* =========================================================
+   Congratulations overlay
+   =========================================================
+   Each sub-activity's end-state overlay is the Flash congratulations
+   clip (Awesome bubble + balloons) painted on top of the existing
+   scene. The card holds the bubble (messageCorrect frame with Flash-
+   faithful glyph copy from congratulations.svg) and the static
+   "Press back…" instruction; the balloons are real Flash sprites
+   (balloonYellow/Purple/Green) animated by .oe-balloon below.
+   Repeat button has been removed across all five sub-activities —
+   the end-state is celebration-only with Back via the host nav bar
+   as the only exit. */
+
+.oe-congratulations {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.5em;
+}
+
+.oe-congratulations.hidden_panel {
+    display: none;
+}
+
+.oe-congrats-text {
+    font-size: 1.2em;
+    text-align: center;
+    margin: 0;
+    color: #1a5276;
+    max-width: 90%;
+}
+
+/* House-painting end-state: overlay the painting scene rather than push
+   it aside (Flash frame_05.as:180 attachMovie of `congratulations` over
+   the existing scene). Balloons float up from the bottom edge. */
+.oe-house-congrats {
+    position: absolute;
+    inset: 0;
+    /* Extend the overlay upward over the activity-nav band so the
+       balloons rise past the top "Well done…" instruction rather than
+       stopping at the sub-activity boundary — matches the shoes
+       pattern. Pointer-events stay off so clicks on the host nav still
+       pass through. */
+    top: -3.5em;
+    z-index: 600;
+    pointer-events: none;  /* clicks pass through to balloons-free area; card re-enables */
+    display: block;
+    padding: 0;
+}
+.oe-house-congrats .oe-house-congrats-card {
+    position: absolute;
+    left: 50%;
+    /* Top biased into the upper third of the visible scene so the bubble
+       + Back pencil clear the painted houses below and the top
+       instruction band above — matches the shoes / ladybird / tutorial /
+       coconut end-state geometry. The wrapper is a positioning shell
+       only — no background or border — so the Flash congratulations
+       bubble (with its own black outline) reads as a single
+       speech-bubble rather than as a bubble nested inside an outer
+       card. */
+    top: 35%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6em;
+    pointer-events: auto;
+    max-width: 24em;
+    /* Bubble sits ahead of the painted scene so the message reads cleanly
+       over the houses rather than getting cropped. */
+    z-index: 2;
+}
+.oe-house-congrats .oe-balloons {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    pointer-events: none;
+    /* Balloons render above every other layer at the celebration moment
+       — Flash's congratulations clip attaches with a very high depth
+       (frame_05.as:180 → ≈ 100000). */
+    z-index: 700;
+}
+/* --- Flash balloon sprites (yellow / purple / green) ---
+   The shared celebration balloons are <img src="pictures/balloon{Yellow,
+   Purple,Green}.svg"> elements — the actual Flash congratulations sprites
+   (sprite_81/85/89) rather than CSS-drawn pills. Biased to the LEFT
+   (4/16/28%) and RIGHT (62/74/86%) of the central celebration card so
+   they don't cover the message. Each balloon rises from below the stage
+   and sways left/right as it travels; different durations + delays per
+   balloon keep the motion organic. Used by all five sub-activities;
+   the per-sub-activity congrats wrapper sets the .oe-balloons positioning
+   and the .oe-balloons container itself is `inset: 0` with z-index ≥ 700
+   so the balloons render above every other layer at the celebration
+   moment (mirrors Flash congratulations clip depth ≈ 100000). */
+.oe-balloon {
+    position: absolute;
+    width: 3.6em;
+    height: auto;
+    /* aspect-ratio matches the svg viewBox 92×184 so the balloon stays
+       proportioned even if a parent forces a different height. */
+    aspect-ratio: 92 / 184;
+    /* Rest position is at the bottom edge of the .oe-balloons container;
+       the rise keyframes start with a downward translateY that pushes
+       the balloon fully below the container (clipped by its
+       overflow:hidden) and end above the top edge. */
+    bottom: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: none;
+    /* Animation is declared on the visibility-gated selector below — keeping
+       it off the always-on rule ensures the keyframes restart from 0% (and
+       respect each balloon's positive animation-delay so it spawns offscreen)
+       every time the congrats overlay is revealed, rather than ticking
+       silently while the parent was display:none. */
+}
+
+/* Only run the rise-sway while the celebration overlay is visible. CSS
+   animations on descendants of a display:none ancestor do not progress,
+   and applying the animation declarations here (rather than on
+   .oe-balloon itself) means the animations start fresh at reveal time.
+   Per-balloon shorthand is used so each balloon's individual duration +
+   delay survive — declaring the shorthand once on .oe-balloon and the
+   delays via longhand on .oe-balloon-N would lose, because the shorthand
+   resets animation-delay to 0s implicitly. */
+.oe-congratulations:not(.hidden_panel) .oe-balloon-1 { animation: oe-balloon-rise-sway 4.6s linear 0s   infinite; }
+.oe-congratulations:not(.hidden_panel) .oe-balloon-2 { animation: oe-balloon-rise-sway 4.3s linear 0.7s infinite; }
+.oe-congratulations:not(.hidden_panel) .oe-balloon-3 { animation: oe-balloon-rise-sway 4.7s linear 1.4s infinite; }
+.oe-congratulations:not(.hidden_panel) .oe-balloon-4 { animation: oe-balloon-rise-sway 4.4s linear 0.3s infinite; }
+.oe-congratulations:not(.hidden_panel) .oe-balloon-5 { animation: oe-balloon-rise-sway 4.8s linear 1.0s infinite; }
+.oe-congratulations:not(.hidden_panel) .oe-balloon-6 { animation: oe-balloon-rise-sway 4.2s linear 1.8s infinite; }
+
+/* Bias positions to LEFT and RIGHT of the central card (which is at
+   ~50% horizontally) — keeps the celebration text uncovered. */
+.oe-balloon-1 { left: 4%;  }
+.oe-balloon-2 { left: 16%; }
+.oe-balloon-3 { left: 28%; }
+.oe-balloon-4 { left: 62%; }
+.oe-balloon-5 { left: 74%; }
+.oe-balloon-6 { left: 86%; }
+
+/* Rising sway: balloons enter fully below the activity area, rise at a
+   constant speed through it (linear timing + Y values spaced evenly in
+   proportion to time), and exit clear of the top edge. A subtle ±0.2em
+   horizontal drift and ±1deg tilt run on top of the steady rise.
+   Rest position is bottom:0 (set on .oe-balloon), so 0% pushes the
+   balloon fully below the container (clipped by .oe-balloons'
+   overflow:hidden) and 100% lifts it past the top. Distances are
+   sized for the tallest activity area on the 28em-tall stage. */
+@keyframes oe-balloon-rise-sway {
+    0%   { transform: translate(0,      8em)    rotate(-1deg); opacity: 0; }
+    8%   { transform: translate(0.1em,  4.6em)  rotate(-1deg); opacity: 1; }
+    25%  { transform: translate(0.2em, -2.5em)  rotate(1deg); }
+    50%  { transform: translate(-0.2em, -13em)  rotate(-1deg); }
+    75%  { transform: translate(0.2em, -23.5em) rotate(1deg); }
+    92%  { transform: translate(-0.1em, -30.6em) rotate(-1deg); opacity: 1; }
+    100% { transform: translate(0,     -34em)   rotate(0);     opacity: 0; }
+}
+
+/* =========================================================
+   Phase 5: animations
+   =========================================================
+   Information-bearing animations have a DOM/audio fallback so
+   reduced-motion mode keeps the outcome legible. Decorative
+   keyframes (paint drip, bunting flourish) are not implemented.
+*/
+
+@keyframes oe-feedback-reveal {
+    0%   { opacity: 0; transform: translateY(-0.3em); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.oe-feedback.oe-feedback-reveal {
+    animation: oe-feedback-reveal 0.4s ease-out;
+}
+/* --- Congratulations overlay reveal --- */
+.oe-congratulations:not(.hidden_panel) {
+    animation: oe-feedback-reveal 0.45s ease-out;
+}
+
+/* =========================================================
+   Options grid layout (replaces legacy <table class="options_layout_grid">)
+   ========================================================= */
+
+.oe-scan-onoff {
+    display: flex;
+    gap: 0.3em;
+    margin-top: 0.4em;
+}
+
+/* =========================================================
+   Reduced motion
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* =========================================================
+   Options-screen overrides for the flow-mode layout
+   =========================================================
+   Shared rules live in shared/doorway.css. These are activity-specific
+   refinements scoped to the options screen (body.dw-screen-options). */
+
+/* Scan sub-panel: switches + delay sit side by side at wide widths and stack
+   when there's no room. */
+body.dw-screen-options #oeScanSubPanel {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1.5em;
+    row-gap: 0.5em;
+    align-items: flex-start;
+}
+body.dw-screen-options #oeScanSubPanel.hidden_panel {
+    display: none;
+}
+body.dw-screen-options .oe-scan-switches-cell,
+body.dw-screen-options .oe-scan-delay-cell {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+body.dw-screen-options .oe-scan-delay-cell.hidden_panel {
+    display: none;
+}

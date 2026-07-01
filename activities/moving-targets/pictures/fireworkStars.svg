@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Firework explosion — pink/orange "star scatter" with 5-pointed stars
+  flung outwards from the centre. Used by launcher B (orange).
+  Replaces the broken Flash extracted SVG.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="mtFwStarCore" cx="0" cy="0" r="35" gradientUnits="userSpaceOnUse">
+      <stop offset="0"   stop-color="#ffeebb" stop-opacity="0.9"/>
+      <stop offset="0.4" stop-color="#ff7733" stop-opacity="0.55"/>
+      <stop offset="1"   stop-color="#cc3300" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Simple 5-point star at origin, radius 4 -->
+    <g id="mtStar">
+      <polygon points="0,-4 1.18,-1.24 4,-1.24 1.92,0.47 2.5,3.24 0,1.7 -2.5,3.24 -1.92,0.47 -4,-1.24 -1.18,-1.24"
+               fill="#ffd966" stroke="#ff3300" stroke-width="0.6" stroke-linejoin="round"/>
+    </g>
+  </defs>
+  <!-- Halo glow -->
+  <circle cx="0" cy="0" r="42" fill="url(#mtFwStarCore)"/>
+  <!-- Stars scattered in a ring + inner -->
+  <use href="#mtStar" x="0"   y="-38"/>
+  <use href="#mtStar" x="22"  y="-30"/>
+  <use href="#mtStar" x="36"  y="-12"/>
+  <use href="#mtStar" x="36"  y="12"/>
+  <use href="#mtStar" x="22"  y="30"/>
+  <use href="#mtStar" x="0"   y="38"/>
+  <use href="#mtStar" x="-22" y="30"/>
+  <use href="#mtStar" x="-36" y="12"/>
+  <use href="#mtStar" x="-36" y="-12"/>
+  <use href="#mtStar" x="-22" y="-30"/>
+  <!-- Inner ring -->
+  <use href="#mtStar" x="12"  y="-18"/>
+  <use href="#mtStar" x="18"  y="6"/>
+  <use href="#mtStar" x="-12" y="18"/>
+  <use href="#mtStar" x="-18" y="-6"/>
+  <!-- Bright pink centre -->
+  <circle cx="0" cy="0" r="5" fill="#ffaacc"/>
+</svg>

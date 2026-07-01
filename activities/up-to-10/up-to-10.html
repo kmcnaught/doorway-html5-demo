@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="../shared/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../shared/doorway.css">
+    <link rel="stylesheet" type="text/css" href="up-to-10.css">
+    <script src="up-to-10.min.js"></script>
+    <title>Doorway Up to 10</title>
+</head>
+<body id="bodyId" onload="UpTo10_init();">
+<div id="dwWholeApp" class="doorway_application">
+    <div id="dwFullScreenDiv" class="doorway_fullscreen_div">
+        <div id="dwAspectOuterDiv" class="doorway_aspect_outer_div">
+            <div id="dwAspectDiv" class="doorway_aspect_div">
+
+                <div id="dwLiveRegion" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+                <!-- Navigation header -->
+                <nav id="dwNavigationHeader" class="navigation_header" data-i18nkey-aria-label="nav.toolbar.label">
+                    <button type="button" class="teacher_button hidden_panel" id="dwOptionsButton" data-i18nkey-aria-label="nav.settings.label">
+                        <img src="../shared/settings.svg" width="100%" height="100%" alt="Options" aria-hidden="true">
+                    </button>
+                    <button type="button" class="teacher_button" id="dwFullScreenButton" data-i18nkey-aria-label="nav.fullscreen.label">
+                        <img src="../shared/full-screen.svg" width="100%" height="100%" alt="Fullscreen" aria-hidden="true">
+                    </button>
+
+                </nav>
+
+                <!-- Shared page header (banner landmark). Sibling of <main>, so
+                     <header> gets its implicit banner role. Content varies per
+                     screen via CSS visibility: logo shows on welcome; title
+                     shows on options; whole header hidden on activity. -->
+                <header class="dw-screen-header">
+                    <a href="http://www.doorwayonline.org.uk/" class="doorway_logo">
+                        <img src="../shared/doorwayLogo.svg" alt="Doorway Online">
+                    </a>
+                    <h1 class="title_message" tabindex="-1" data-i18nkey="options.heading">Options</h1>
+                </header>
+
+                <main>
+
+                <!-- Welcome screen -->
+                <div id="dwWelcomeScreen" class="doorway_welcome">
+                    <div class="dw-welcome-body">
+                        <div class="dw-welcome-titles">
+                            <p class="dw-app-label" data-i18nkey="doorway.brand">Doorway</p>
+                            <h1 class="title_message" tabindex="-1" data-i18nkey="up-to-10.welcome.title">Up to 10</h1>
+                        </div>
+                        <!-- Three groups of Flash-extracted picture objects, mirroring the original welcome screen -->
+                        <div class="welcome_image utt-welcome-groups" role="img" data-i18nkey-aria-label="up-to-10.aria.welcome-groups">
+                            <!-- Group 1: Footballs (4 balls in triangular layout) -->
+                            <div class="utt-welcome-group">
+                                <div class="utt-wobj utt-wobj-top-right">
+                                    <img src="pictures/football.svg" alt="">
+                                </div>
+                                <div class="utt-wobj utt-wobj-mid-left">
+                                    <img src="pictures/football.svg" alt="">
+                                    <span class="utt-wbadge">3</span>
+                                </div>
+                                <div class="utt-wobj utt-wobj-mid-right">
+                                    <img src="pictures/football.svg" alt="">
+                                </div>
+                                <div class="utt-wobj utt-wobj-bot-left">
+                                    <img src="pictures/football.svg" alt="">
+                                    <span class="utt-wbadge">2</span>
+                                </div>
+                                <div class="utt-wobj utt-wobj-bot-right">
+                                    <img src="pictures/football.svg" alt="">
+                                    <span class="utt-wbadge">1</span>
+                                </div>
+                            </div>
+                            <!-- Group 2: Apples (5 apples in 2×2 + 1 grid) -->
+                            <div class="utt-welcome-group">
+                                <div class="utt-wobj utt-wobj-top-left">
+                                    <img src="pictures/apple.svg" alt="">
+                                    <span class="utt-wbadge">1</span>
+                                </div>
+                                <div class="utt-wobj utt-wobj-top-right">
+                                    <img src="pictures/apple.svg" alt="">
+                                    <span class="utt-wbadge">2</span>
+                                </div>
+                                <div class="utt-wobj utt-wobj-mid-left">
+                                    <img src="pictures/apple.svg" alt="">
+                                    <span class="utt-wbadge">3</span>
+                                </div>
+                                <div class="utt-wobj utt-wobj-mid-right">
+                                    <img src="pictures/apple.svg" alt="">
+                                </div>
+                                <div class="utt-wobj utt-wobj-bot-center">
+                                    <img src="pictures/apple.svg" alt="">
+                                </div>
+                            </div>
+                            <!-- Group 3: Suns (4 suns scattered) -->
+                            <div class="utt-welcome-group">
+                                <div class="utt-wobj utt-wobj-top-left">
+                                    <img src="pictures/sun.svg" alt="">
+                                    <span class="utt-wbadge">1</span>
+                                </div>
+                                <div class="utt-wobj utt-wobj-top-right">
+                                    <img src="pictures/sun.svg" alt="">
+                                </div>
+                                <div class="utt-wobj utt-wobj-mid-center">
+                                    <img src="pictures/sun.svg" alt="">
+                                    <span class="utt-wbadge">3</span>
+                                </div>
+                                <div class="utt-wobj utt-wobj-bot-left">
+                                    <img src="pictures/sun.svg" alt="">
+                                    <span class="utt-wbadge">2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Options screen -->
+                <form name="options_form" id="dwUserOptions" class="hidden_panel user_options">
+                    <div class="user_options">
+                        <!-- Object layout (top): three pictogram radios with a row of three
+                             toggle checkboxes underneath, all inside the same fieldset. -->
+                        <fieldset class="options_group game_options utt-layout-fieldset">
+                            <legend class="options_group_title" data-i18nkey="up-to-10.options.layout.legend">Object Layout</legend>
+                            <div class="utt-layout-radios">
+                                <input type="radio" name="layout" value="1" id="radio-layout-1" checked>
+                                <label for="radio-layout-1" class="user_options_radio button_div utt-layout-radio">
+                                    <span class="utt-layout-pictogram" aria-hidden="true">
+                                        <svg viewBox="0 0 60 50" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                            <rect x="1" y="1" width="58" height="48" fill="none" stroke="#b3d1ff" stroke-width="2"/>
+                                            <!-- Build From Bottom: right col full (3 dots), left col mid+bot -->
+                                            <circle cx="24" cy="25" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                            <circle cx="24" cy="37" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                            <circle cx="38" cy="13" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                            <circle cx="38" cy="25" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                            <circle cx="38" cy="37" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                        </svg>
+                                    </span>
+                                    <span class="utt-layout-text" data-i18nkey="up-to-10.options.layout.1">Build From Bottom</span>
+                                </label>
+                                <input type="radio" name="layout" value="2" id="radio-layout-2">
+                                <label for="radio-layout-2" class="user_options_radio button_div utt-layout-radio">
+                                    <span class="utt-layout-pictogram" aria-hidden="true">
+                                        <svg viewBox="0 0 60 50" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                            <rect x="1" y="1" width="58" height="48" fill="none" stroke="#b3d1ff" stroke-width="2"/>
+                                            <!-- Build From Top: left col full (3 dots), right col top+mid -->
+                                            <circle cx="24" cy="13" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                            <circle cx="24" cy="25" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                            <circle cx="24" cy="37" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                            <circle cx="38" cy="13" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                            <circle cx="38" cy="25" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                        </svg>
+                                    </span>
+                                    <span class="utt-layout-text" data-i18nkey="up-to-10.options.layout.2">Build From Top</span>
+                                </label>
+                                <input type="radio" name="layout" value="3" id="radio-layout-3">
+                                <label for="radio-layout-3" class="user_options_radio button_div utt-layout-radio">
+                                    <span class="utt-layout-pictogram" aria-hidden="true">
+                                        <svg viewBox="0 0 60 50" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                            <rect x="1" y="1" width="58" height="48" fill="none" stroke="#b3d1ff" stroke-width="2"/>
+                                            <!-- Random: 5 dots scattered off-grid -->
+                                            <circle cx="14" cy="14" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                            <circle cx="32" cy="11" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                            <circle cx="46" cy="22" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                            <circle cx="22" cy="30" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                            <circle cx="40" cy="38" r="5" fill="#94b8f3" stroke="#1866e7" stroke-width="1.5"/>
+                                        </svg>
+                                    </span>
+                                    <span class="utt-layout-text" data-i18nkey="up-to-10.options.layout.3">Random</span>
+                                </label>
+                            </div>
+                            <div class="utt-layout-checks">
+                                <span class="utt-layout-check">
+                                    <input type="checkbox" class="dw-check-input" name="grid_enabled" id="check-grid-enabled" checked>
+                                    <label for="check-grid-enabled" class="dw-check-label" data-i18nkey="up-to-10.options.show-grid">Grid shown?</label>
+                                </span>
+                                <span class="utt-layout-check">
+                                    <input type="checkbox" class="dw-check-input" name="count_order" id="check-count-order" checked>
+                                    <label for="check-count-order" class="dw-check-label" data-i18nkey="up-to-10.options.count-in-order">Force counting in order?</label>
+                                </span>
+                                <span class="utt-layout-check utt-layout-check-with-note">
+                                    <input type="checkbox" class="dw-check-input" name="force_counters" id="check-force-counters" aria-describedby="utt-force-counters-note" checked>
+                                    <label for="check-force-counters" class="dw-check-label" data-i18nkey="up-to-10.options.force-counters">Force use of counters?</label>
+                                    <span id="utt-force-counters-note" class="utt-check-note" data-i18nkey="up-to-10.options.force-counters.note">(disabled in scanning mode)</span>
+                                </span>
+                            </div>
+                        </fieldset>
+
+                        <!-- Numbers to count to: 1-10 buttons inline + persistent inline help text -->
+                        <fieldset class="options_group game_options utt-numbers-fieldset">
+                            <legend class="options_group_title" data-i18nkey="up-to-10.options.numbers.legend">Numbers to count to (pick numbers to count up to)</legend>
+                            <div class="utt-numbers-row">
+                                <div class="dw-toggle-grid utt-number-toggles" id="uttNumberToggles">
+                                    <input type="checkbox" name="numberArray_0" id="check-num-1">
+                                    <label for="check-num-1" class="dw-toggle-btn">1</label>
+                                    <input type="checkbox" name="numberArray_1" id="check-num-2">
+                                    <label for="check-num-2" class="dw-toggle-btn">2</label>
+                                    <input type="checkbox" name="numberArray_2" id="check-num-3" checked>
+                                    <label for="check-num-3" class="dw-toggle-btn">3</label>
+                                    <input type="checkbox" name="numberArray_3" id="check-num-4" checked>
+                                    <label for="check-num-4" class="dw-toggle-btn">4</label>
+                                    <input type="checkbox" name="numberArray_4" id="check-num-5" checked>
+                                    <label for="check-num-5" class="dw-toggle-btn">5</label>
+                                    <input type="checkbox" name="numberArray_5" id="check-num-6" checked>
+                                    <label for="check-num-6" class="dw-toggle-btn">6</label>
+                                    <input type="checkbox" name="numberArray_6" id="check-num-7">
+                                    <label for="check-num-7" class="dw-toggle-btn">7</label>
+                                    <input type="checkbox" name="numberArray_7" id="check-num-8">
+                                    <label for="check-num-8" class="dw-toggle-btn">8</label>
+                                    <input type="checkbox" name="numberArray_8" id="check-num-9">
+                                    <label for="check-num-9" class="dw-toggle-btn">9</label>
+                                    <input type="checkbox" name="numberArray_9" id="check-num-10">
+                                    <label for="check-num-10" class="dw-toggle-btn">10</label>
+                                </div>
+                                <p id="uttNoNumbersWarning" class="utt-warning hidden_panel" data-i18nkey="up-to-10.options.no-numbers-warning">At least one number has to be selected.</p>
+                            </div>
+                        </fieldset>
+
+                        <!-- Number of Questions + Speed of Presentation, side by side -->
+                        <div class="utt-questions-speed-row">
+                            <fieldset class="options_group game_options">
+                                <legend class="options_group_title" data-i18nkey="up-to-10.options.num-questions.legend">Number of Questions</legend>
+                                <input type="radio" name="max_questions" value="5" id="radio-maxq-5">
+                                <label for="radio-maxq-5" class="user_options_radio button_div">5</label>
+                                <input type="radio" name="max_questions" value="10" id="radio-maxq-10" checked>
+                                <label for="radio-maxq-10" class="user_options_radio button_div">10</label>
+                                <input type="radio" name="max_questions" value="15" id="radio-maxq-15">
+                                <label for="radio-maxq-15" class="user_options_radio button_div">15</label>
+                                <input type="radio" name="max_questions" value="20" id="radio-maxq-20">
+                                <label for="radio-maxq-20" class="user_options_radio button_div">20</label>
+                            </fieldset>
+                            <fieldset class="options_group game_options">
+                                <legend class="options_group_title" data-i18nkey="up-to-10.options.fade.legend">Speed of Presentation</legend>
+                                <input type="radio" name="fade_length" value="0.001" id="radio-fade-none">
+                                <label for="radio-fade-none" class="user_options_radio button_div" data-i18nkey="up-to-10.options.fade.none">Instant</label>
+                                <input type="radio" name="fade_length" value="0.4" id="radio-fade-fast">
+                                <label for="radio-fade-fast" class="user_options_radio button_div" data-i18nkey="up-to-10.options.fade.fast">Fast</label>
+                                <input type="radio" name="fade_length" value="0.7" id="radio-fade-medium" checked>
+                                <label for="radio-fade-medium" class="user_options_radio button_div" data-i18nkey="up-to-10.options.fade.medium">Medium</label>
+                                <input type="radio" name="fade_length" value="1.2" id="radio-fade-slow">
+                                <label for="radio-fade-slow" class="user_options_radio button_div" data-i18nkey="up-to-10.options.fade.slow">Slow</label>
+                            </fieldset>
+                        </div>
+
+                        <fieldset class="options_group">
+                            <legend class="options_group_title" data-i18nkey="options.audio.legend">Audio</legend>
+                            <input type="radio" name="audio_mode" value="webspeech" id="radio-audio-webspeech">
+                            <label for="radio-audio-webspeech" class="user_options_radio button_div" data-i18nkey="options.audio.webspeech">Computer voice</label>
+                            <input type="radio" name="audio_mode" value="recorded" id="radio-audio-recorded" checked>
+                            <label for="radio-audio-recorded" class="user_options_radio button_div" data-i18nkey="options.audio.recorded">Recorded audio</label>
+                            <input type="radio" name="audio_mode" value="none" id="radio-audio-none">
+                            <label for="radio-audio-none" class="user_options_radio button_div" data-i18nkey="options.audio.none">No audio</label>
+                        </fieldset>
+
+                        <fieldset class="options_group accessibility_options">
+                            <legend class="options_group_title" data-i18nkey="accessibility.heading">Accessibility</legend>
+                            <div class="utt-scan-onoff">
+                                <p class="utt-scan-label" data-i18nkey="accessibility.scanning.label">Scanning</p>
+                                <input type="radio" name="enable_scanning" value="true" id="radio-scanning-on">
+                                <label for="radio-scanning-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.on">On</label>
+                                <input type="radio" name="enable_scanning" value="false" id="radio-scanning-off" checked>
+                                <label for="radio-scanning-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.off">Off</label>
+                            </div>
+                            <!-- Scan sub-panel: shown only when scanning is On -->
+                            <div id="uttScanSubPanel" class="hidden_panel dw-scan-subpanel">
+                                <fieldset id="uttScanModeCell" class="utt-scan-mode-cell">
+                                    <legend class="sr-only" data-i18nkey="accessibility.switches.label">Number of switches</legend>
+                                    <input type="radio" name="num_switches" value="2" id="radio-switches-2">
+                                    <label for="radio-switches-2" class="user_options_radio button_div" data-i18nkey="accessibility.switches.two">Two switch</label>
+                                    <input type="radio" name="num_switches" value="1" id="radio-switches-1" checked>
+                                    <label for="radio-switches-1" class="user_options_radio button_div" data-i18nkey="accessibility.switches.one">One switch (auto)</label>
+                                </fieldset>
+                                <div id="uttScanSpeedCell" class="utt-scan-speed-cell">
+                                    <p id="utt-scan-delay-label" data-i18nkey="accessibility.scan-delay.label">Scan delay (seconds)</p>
+                                    <div class="spinner_select" id="scan_delay_spinner">
+                                        <button type="button" class="spinner_down" id="scan_delay_spin_down" aria-label="Shorter scan delay" data-i18nkey-aria-label="accessibility.scan-delay.decrease">-</button>
+                                        <select name="scan_delay" id="scan_delay_sel" aria-labelledby="utt-scan-delay-label">
+                                            <option value="1000">1</option>
+                                            <option value="1500" selected>1.5</option>
+                                            <option value="2000">2</option>
+                                            <option value="2500">2.5</option>
+                                            <option value="3000">3</option>
+                                            <option value="3500">3.5</option>
+                                            <option value="4000">4</option>
+                                            <option value="4500">4.5</option>
+                                            <option value="5000">5</option>
+                                        </select>
+                                        <div class="spinner_display button_div" id="scan_delay_display">1.5</div>
+                                        <button type="button" class="spinner_up" id="scan_delay_spin_up" aria-label="Longer scan delay" data-i18nkey-aria-label="accessibility.scan-delay.increase">+</button>
+                                    </div>
+                                </div>
+                                <fieldset class="utt-scan-back-group">
+                                    <legend data-i18nkey="accessibility.scanback.legend">Scan back button</legend>
+                                    <input type="radio" name="utt_scan_back" value="true" id="radio-scanback-on">
+                                    <label for="radio-scanback-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.on">On</label>
+                                    <input type="radio" name="utt_scan_back" value="false" id="radio-scanback-off" checked>
+                                    <label for="radio-scanback-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.off">Off</label>
+                                </fieldset>
+                            </div>
+                        </fieldset>
+
+                    </div>
+                </form>
+
+                <!-- Audio elements: number counting (1–10) -->
+                <audio src="audio/1.wav" preload="auto" id="uttAudio1"></audio>
+                <audio src="audio/2.wav" preload="auto" id="uttAudio2"></audio>
+                <audio src="audio/3.wav" preload="auto" id="uttAudio3"></audio>
+                <audio src="audio/4.wav" preload="auto" id="uttAudio4"></audio>
+                <audio src="audio/5.wav" preload="auto" id="uttAudio5"></audio>
+                <audio src="audio/6.wav" preload="auto" id="uttAudio6"></audio>
+                <audio src="audio/7.wav" preload="auto" id="uttAudio7"></audio>
+                <audio src="audio/8.wav" preload="auto" id="uttAudio8"></audio>
+                <audio src="audio/9.wav" preload="auto" id="uttAudio9"></audio>
+                <audio src="audio/10.wav" preload="auto" id="uttAudio10"></audio>
+
+                <!-- Audio elements: question prompts -->
+                <audio src="audio/howmany.wav" preload="auto" id="uttAudioHowmany"></audio>
+                <audio src="audio/arethere.wav" preload="auto" id="uttAudioArethere"></audio>
+                <audio src="audio/counteach.wav" preload="auto" id="uttAudioCounteach"></audio>
+                <audio src="audio/watch.wav" preload="auto" id="uttAudioWatch"></audio>
+
+                <!-- Audio elements: feedback -->
+                <audio src="audio/correct.wav" preload="auto" id="uttAudioCorrect"></audio>
+                <audio src="audio/thereare.wav" preload="auto" id="uttAudioThereare"></audio>
+                <audio src="audio/thereis.wav" preload="auto" id="uttAudioThereis"></audio>
+                <audio src="audio/incorrectSound.wav" preload="auto" id="uttAudioIncorrect"></audio>
+
+                <!-- Audio elements: results -->
+                <audio src="audio/youhavefinished.wav" preload="auto" id="uttAudioFinished"></audio>
+
+                <!-- Audio elements: object names (singular) -->
+                <audio src="audio/apple.wav" preload="auto" id="uttAudioApple"></audio>
+                <audio src="audio/chick.wav" preload="auto" id="uttAudioChick"></audio>
+                <audio src="audio/football.wav" preload="auto" id="uttAudioFootball"></audio>
+                <audio src="audio/fox.wav" preload="auto" id="uttAudioFox"></audio>
+                <audio src="audio/hat.wav" preload="auto" id="uttAudioHat"></audio>
+                <audio src="audio/jug.wav" preload="auto" id="uttAudioJug"></audio>
+                <audio src="audio/kite.wav" preload="auto" id="uttAudioKite"></audio>
+                <audio src="audio/mug.wav" preload="auto" id="uttAudioMug"></audio>
+                <audio src="audio/orange.wav" preload="auto" id="uttAudioOrange"></audio>
+                <audio src="audio/shell.wav" preload="auto" id="uttAudioShell"></audio>
+                <audio src="audio/star.wav" preload="auto" id="uttAudioStar"></audio>
+                <audio src="audio/strawberry.wav" preload="auto" id="uttAudioStrawberry"></audio>
+                <audio src="audio/sun.wav" preload="auto" id="uttAudioSun"></audio>
+                <audio src="audio/tent.wav" preload="auto" id="uttAudioTent"></audio>
+                <audio src="audio/umbrella.wav" preload="auto" id="uttAudioUmbrella"></audio>
+
+                <!-- Audio elements: object names (plural) -->
+                <audio src="audio/apples.wav" preload="auto" id="uttAudioApples"></audio>
+                <audio src="audio/chicks.wav" preload="auto" id="uttAudioChicks"></audio>
+                <audio src="audio/footballs.wav" preload="auto" id="uttAudioFootballs"></audio>
+                <audio src="audio/foxes.wav" preload="auto" id="uttAudioFoxes"></audio>
+                <audio src="audio/hats.wav" preload="auto" id="uttAudioHats"></audio>
+                <audio src="audio/jugs.wav" preload="auto" id="uttAudioJugs"></audio>
+                <audio src="audio/kites.wav" preload="auto" id="uttAudioKites"></audio>
+                <audio src="audio/mugs.wav" preload="auto" id="uttAudioMugs"></audio>
+                <audio src="audio/oranges.wav" preload="auto" id="uttAudioOranges"></audio>
+                <audio src="audio/shells.wav" preload="auto" id="uttAudioShells"></audio>
+                <audio src="audio/stars.wav" preload="auto" id="uttAudioStars"></audio>
+                <audio src="audio/strawberrys.wav" preload="auto" id="uttAudioStrawberrys"></audio>
+                <audio src="audio/suns.wav" preload="auto" id="uttAudioSuns"></audio>
+                <audio src="audio/tents.wav" preload="auto" id="uttAudioTents"></audio>
+                <audio src="audio/umbrellas.wav" preload="auto" id="uttAudioUmbrellas"></audio>
+
+                <!-- Activity screen -->
+                <div id="dwActivityScreen" class="hidden_panel utt-screen">
+                    <h1 class="sr-only" tabindex="-1" data-i18nkey="up-to-10.welcome.title">Up to 10</h1>
+                    <div class="utt-activity-layout">
+
+                        <!-- Object display area -->
+                        <div id="uttObjectArea" class="utt-object-area" aria-label="Object area" data-i18nkey-aria-label="up-to-10.activity.object-area.aria">
+                            <!-- Objects and counter badges are dynamically inserted here by JS -->
+                        </div>
+
+                        <!-- Number line (slides in from below).
+                             Per Flash _root.numberLine, both questionText and tryagainText are
+                             children of the numberLine container — visually they sit inside the
+                             strip's white area, above the row of slot buttons. -->
+                        <div id="uttNumberLineWrapper" class="utt-number-line-wrapper hidden_panel">
+                            <div class="utt-number-line-labels">
+                                <p id="uttQuestionText" class="utt-question-text"></p>
+                                <p id="uttTryAgainText" class="utt-try-again hidden_panel" data-i18nkey="up-to-10.feedback.try-again">Try again.</p>
+                            </div>
+                            <div id="uttNumberLine" class="utt-number-line" role="group" aria-label="Choose how many" data-i18nkey-aria-label="up-to-10.activity.number-line.aria">
+                                <button type="button" class="utt-line-slot" data-slot="1" aria-label="1">1</button>
+                                <button type="button" class="utt-line-slot" data-slot="2" aria-label="2">2</button>
+                                <button type="button" class="utt-line-slot" data-slot="3" aria-label="3">3</button>
+                                <button type="button" class="utt-line-slot" data-slot="4" aria-label="4">4</button>
+                                <button type="button" class="utt-line-slot" data-slot="5" aria-label="5">5</button>
+                                <button type="button" class="utt-line-slot" data-slot="6" aria-label="6">6</button>
+                                <button type="button" class="utt-line-slot" data-slot="7" aria-label="7">7</button>
+                                <button type="button" class="utt-line-slot" data-slot="8" aria-label="8">8</button>
+                                <button type="button" class="utt-line-slot" data-slot="9" aria-label="9">9</button>
+                                <button type="button" class="utt-line-slot" data-slot="10" aria-label="10">10</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Results screen -->
+                <div id="dwResultsScreen" class="hidden_panel utt-screen">
+                    <h2 class="utt-screen-title" tabindex="-1" data-i18nkey="up-to-10.results.title">Results</h2>
+                    <table id="uttResultsTable" class="utt-results-table" aria-label="Results" data-i18nkey-aria-label="up-to-10.results.table.aria">
+                        <thead>
+                            <tr>
+                                <th scope="col" data-i18nkey="up-to-10.results.col.question">Question</th>
+                                <th scope="col" data-i18nkey="up-to-10.results.col.target">Target</th>
+                                <th scope="col" data-i18nkey="results.col.tries">Tries</th>
+                            </tr>
+                        </thead>
+                        <tbody id="uttResultsBody"></tbody>
+                    </table>
+                    <p id="uttScoreText" class="utt-score-text"></p>
+                    <div class="utt-action-buttons">
+                        <button type="button" id="uttRepeatBtn" class="pencil_btn" data-i18nkey="doorway.btn.repeat">repeat</button>
+                        <button type="button" id="uttPrintBtn" class="main_button" data-i18nkey="up-to-10.results.print">Print</button>
+                    </div>
+                    <p class="utt-print-hint" data-i18nkey="shared.print.hint">Tip: choose 'Save as PDF' in the print dialog to keep a digital copy.</p>
+                </div>
+
+                <!-- Shared framework elements -->
+                <div id="dwMainApp" style="display:none;"></div>
+                <div id="dwDarkenedPanel" class="darkened_panel hidden_panel"></div>
+                <div id="dwWellDone" class="well_done_message hidden_panel">
+                    <p class="instruction_message"></p>
+                </div>
+
+            </main>
+
+            <!-- Shared page footer (contentinfo landmark). Sibling of <main>,
+                 so <footer> gets its implicit contentinfo role. Action buttons
+                 visibility per screen via CSS: enter on welcome; home+start on
+                 options; whole footer hidden on activity. -->
+            <footer class="dw-app-footer">
+                <div class="dw-action-footer">
+                    <button id="dwEnterButton" class="pencil_btn" data-i18nkey="doorway.btn.enter">enter</button>
+                    <button type="button" id="dwHomeButton" class="pencil_btn" data-pencil-dir="left" data-i18nkey="doorway.btn.home">home</button>
+                    <button type="button" id="dwSubmitUserOptions" class="pencil_btn" data-i18nkey="doorway.btn.start">start</button>
+                </div>
+                <p class="copyright_message" data-i18nkey="doorway.copyright">© CALL Scotland, University of Edinburgh 2026</p>
+            </footer>
+            </div><!-- doorway_aspect_div -->
+        </div><!-- doorway_aspect_outer_div -->
+    </div><!-- doorway_fullscreen_div -->
+</div><!-- doorway_application -->
+</body>
+</html>

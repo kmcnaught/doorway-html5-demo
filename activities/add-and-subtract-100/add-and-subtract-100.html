@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="../shared/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../shared/doorway.css">
+    <link rel="stylesheet" type="text/css" href="add-and-subtract-100.css">
+    <script src="add-and-subtract-100.min.js"></script>
+    <title>Doorway Add and Subtract to 100</title>
+</head>
+<body id="bodyId" onload="AddAndSubtract100_init();">
+<div id="dwWholeApp" class="doorway_application">
+    <div id="dwFullScreenDiv" class="doorway_fullscreen_div">
+        <div id="dwAspectOuterDiv" class="doorway_aspect_outer_div">
+            <div id="dwAspectDiv" class="doorway_aspect_div">
+
+                <div id="dwLiveRegion" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+                <!-- Navigation header -->
+                <nav id="dwNavigationHeader" class="navigation_header" data-i18nkey-aria-label="nav.toolbar.label">
+                    <button type="button" class="teacher_button hidden_panel" id="dwOptionsButton" data-i18nkey-aria-label="nav.settings.label">
+                        <img src="../shared/settings.svg" width="100%" height="100%" alt="Options" aria-hidden="true">
+                    </button>
+                    <button type="button" class="teacher_button" id="dwFullScreenButton" data-i18nkey-aria-label="nav.fullscreen.label">
+                        <img src="../shared/full-screen.svg" width="100%" height="100%" alt="Fullscreen" aria-hidden="true">
+                    </button>
+
+                </nav>
+
+                <!-- Shared page header (banner landmark). Sibling of <main>, so
+                     <header> gets its implicit banner role. Content varies per
+                     screen via CSS visibility: logo shows on welcome; title
+                     shows on options; whole header hidden on activity. -->
+                <header class="dw-screen-header">
+                    <a href="http://www.doorwayonline.org.uk/" class="doorway_logo">
+                        <img src="../shared/doorwayLogo.svg" alt="Doorway Online">
+                    </a>
+                    <h1 class="title_message" tabindex="-1" data-i18nkey="options.heading">Options</h1>
+                </header>
+
+                <main>
+
+                <!-- Welcome screen — Flash composition: "77 in blocks". 7 tens
+                     side by side with numerals "7 7" above, and a unit-strip
+                     1–9 on the right with 7 of 10 lit. Mirrors frame_03.as
+                     selectColours() attaching un1..un10 + ten1.
+                     UNITS COLUMN: 3 dashed-outline empty cells at the TOP (9,8,7)
+                     followed by 7 solid orange cells (6,5,4,3,2,1,0) — orange
+                     stack sits at the bottom of the column. Number labels (0-9)
+                     align with the BOTTOM of each cell (the "line"), not the
+                     centre between lines. -->
+                <div id="dwWelcomeScreen" class="doorway_welcome">
+                    <div class="dw-welcome-body">
+                        <div class="dw-welcome-titles">
+                            <p class="dw-app-label" data-i18nkey="doorway.brand">Doorway</p>
+                            <h1 class="title_message" tabindex="-1" data-i18nkey="add-and-subtract-100.welcome.title">Add and Subtract to 100</h1>
+                        </div>
+                        <div class="welcome_image aat100-welcome-demo" role="img" data-i18nkey-aria-label="add-and-subtract-100.aria.welcome-blocks">
+                            <div class="aat100-welcome-rules">
+                                <div class="aat100-welcome-cross-row">
+                                    <div class="aat100-welcome-left-col">
+                                        <span class="aat100-welcome-numeral aat100-welcome-numeral-tens">7</span>
+                                        <!-- Tens row: 3 dashed phantoms + 7 solid blue bars = 10 cols total.
+                                             Overall block is approx square (10·W wide, ~10·W tall). -->
+                                        <div class="aat100-welcome-tens-col">
+                                            <div class="aat100-welcome-ten-phantom"></div>
+                                            <div class="aat100-welcome-ten-phantom"></div>
+                                            <div class="aat100-welcome-ten-phantom"></div>
+                                            <img src="pictures/tenBlue.svg" class="aat100-welcome-ten" alt="">
+                                            <img src="pictures/tenBlue.svg" class="aat100-welcome-ten" alt="">
+                                            <img src="pictures/tenBlue.svg" class="aat100-welcome-ten" alt="">
+                                            <img src="pictures/tenBlue.svg" class="aat100-welcome-ten" alt="">
+                                            <img src="pictures/tenBlue.svg" class="aat100-welcome-ten" alt="">
+                                            <img src="pictures/tenBlue.svg" class="aat100-welcome-ten" alt="">
+                                            <img src="pictures/tenBlue.svg" class="aat100-welcome-ten" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="aat100-welcome-right-col">
+                                        <span class="aat100-welcome-numeral aat100-welcome-numeral-units">7</span>
+                                        <!-- Units column: 10 rows from top to bottom 9..0.
+                                             3 dashed-empty at top (9,8,7), 7 solid orange below (6..0).
+                                             Number labels align with the BOTTOM of each cell so each
+                                             digit visually marks a line, not the gap between cells. -->
+                                        <div class="aat100-welcome-unitstack">
+                                            <div class="aat100-welcome-unit-row"><div class="aat100-welcome-unit-cell aat100-welcome-unit-empty"></div><span class="aat100-welcome-unit-label">9</span></div>
+                                            <div class="aat100-welcome-unit-row"><div class="aat100-welcome-unit-cell aat100-welcome-unit-empty"></div><span class="aat100-welcome-unit-label">8</span></div>
+                                            <div class="aat100-welcome-unit-row"><div class="aat100-welcome-unit-cell aat100-welcome-unit-empty"></div><span class="aat100-welcome-unit-label">7</span></div>
+                                            <div class="aat100-welcome-unit-row"><div class="aat100-welcome-unit-cell aat100-welcome-unit-lit"></div><span class="aat100-welcome-unit-label">6</span></div>
+                                            <div class="aat100-welcome-unit-row"><div class="aat100-welcome-unit-cell aat100-welcome-unit-lit"></div><span class="aat100-welcome-unit-label">5</span></div>
+                                            <div class="aat100-welcome-unit-row"><div class="aat100-welcome-unit-cell aat100-welcome-unit-lit"></div><span class="aat100-welcome-unit-label">4</span></div>
+                                            <div class="aat100-welcome-unit-row"><div class="aat100-welcome-unit-cell aat100-welcome-unit-lit"></div><span class="aat100-welcome-unit-label">3</span></div>
+                                            <div class="aat100-welcome-unit-row"><div class="aat100-welcome-unit-cell aat100-welcome-unit-lit"></div><span class="aat100-welcome-unit-label">2</span></div>
+                                            <div class="aat100-welcome-unit-row"><div class="aat100-welcome-unit-cell aat100-welcome-unit-lit"></div><span class="aat100-welcome-unit-label">1</span></div>
+                                            <div class="aat100-welcome-unit-row"><div class="aat100-welcome-unit-cell aat100-welcome-unit-lit"></div><span class="aat100-welcome-unit-label">0</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Options screen -->
+                <form name="options_form" id="dwUserOptions" class="hidden_panel user_options">
+                    <div class="user_options">
+
+                        <!-- Activity type + description -->
+                        <fieldset class="options_group game_options">
+                            <legend class="options_group_title" data-i18nkey="add-and-subtract-100.options.activity.legend">Activity</legend>
+                            <input type="radio" name="activity_type" value="explore" id="radio-act-explore" checked>
+                            <label for="radio-act-explore" class="user_options_radio button_div" data-i18nkey="add-and-subtract-100.options.activity.explore">Explore</label>
+                            <input type="radio" name="activity_type" value="makethenumber" id="radio-act-make">
+                            <label for="radio-act-make" class="user_options_radio button_div" data-i18nkey="add-and-subtract-100.options.activity.makethenumber">Make the Number</label>
+                            <input type="radio" name="activity_type" value="whatsthenumber" id="radio-act-whats">
+                            <label for="radio-act-whats" class="user_options_radio button_div" data-i18nkey="add-and-subtract-100.options.activity.whatsthenumber">What's the Number</label>
+                            <input type="radio" name="activity_type" value="sumswithblocks" id="radio-act-sums">
+                            <label for="radio-act-sums" class="user_options_radio button_div" data-i18nkey="add-and-subtract-100.options.activity.sumswithblocks">Sums with Blocks</label>
+                            <input type="radio" name="activity_type" value="writtensums" id="radio-act-written">
+                            <label for="radio-act-written" class="user_options_radio button_div" data-i18nkey="add-and-subtract-100.options.activity.writtensums">Written Sums</label>
+                            <!-- "Description: <updating text>" — prefix label stays static while
+                                 the second half live-updates from translations. Flash uses
+                                 descriptionBox.text for the dynamic part. -->
+                            <p class="aat100-activity-description" aria-live="polite">
+                                <span class="aat100-description-prefix" data-i18nkey="add-and-subtract-100.options.mode.description-prefix">Description:</span>
+                                <span id="aat100ActivityDescription" data-i18nkey="add-and-subtract-100.options.activity.description.explore">Explore numbers with tens and units.</span>
+                            </p>
+                            <!-- Learning / Assessment mode picker, embedded inside the Activity
+                                 fieldset block (visually matches Flash). The accessible
+                                 legend is "Mode" (visually hidden — divergence noted: Flash
+                                 has no semantic legend for this group). -->
+                            <fieldset id="aat100ModeGroup" class="aat100-mode-group">
+                                <legend class="sr-only" data-i18nkey="add-and-subtract-100.options.mode.legend">Mode</legend>
+                                <input type="radio" name="learning_mode" value="learning" id="radio-mode-learning" checked>
+                                <label for="radio-mode-learning" class="user_options_radio button_div" data-i18nkey="add-and-subtract-100.options.mode.learning">Learning</label>
+                                <input type="radio" name="learning_mode" value="assessment" id="radio-mode-assessment">
+                                <label for="radio-mode-assessment" class="user_options_radio button_div" data-i18nkey="add-and-subtract-100.options.mode.assessment">Assessment</label>
+                                <p id="aat100ModeDescription" class="aat100-mode-description" aria-live="polite"></p>
+                            </fieldset>
+                        </fieldset>
+
+                        <div class="aat100-activity-grid">
+                            <!-- Number of questions -->
+                            <fieldset id="aat100QuestionsGroup" class="options_group game_options">
+                                <legend class="options_group_title" data-i18nkey="add-and-subtract-100.options.questions.legend">Number of Questions</legend>
+                                <input type="radio" name="max_questions" value="5"  id="radio-q-5">
+                                <label for="radio-q-5"  class="user_options_radio button_div">5</label>
+                                <input type="radio" name="max_questions" value="10" id="radio-q-10" checked>
+                                <label for="radio-q-10" class="user_options_radio button_div">10</label>
+                                <input type="radio" name="max_questions" value="15" id="radio-q-15">
+                                <label for="radio-q-15" class="user_options_radio button_div">15</label>
+                                <input type="radio" name="max_questions" value="20" id="radio-q-20">
+                                <label for="radio-q-20" class="user_options_radio button_div">20</label>
+                            </fieldset>
+
+                            <!-- Number range -->
+                            <fieldset id="aat100RangeGroup" class="options_group game_options">
+                                <legend class="options_group_title" data-i18nkey="add-and-subtract-100.options.range.legend">Number Range</legend>
+                                <input type="checkbox" class="dw-check-input" name="range30" id="check-range30" checked>
+                                <label for="check-range30" class="dw-check-label" data-i18nkey="add-and-subtract-100.options.range.30">1–30</label>
+                                <input type="checkbox" class="dw-check-input" name="range50" id="check-range50" checked>
+                                <label for="check-range50" class="dw-check-label" data-i18nkey="add-and-subtract-100.options.range.50">30–50</label>
+                                <input type="checkbox" class="dw-check-input" name="range100" id="check-range100" checked>
+                                <label for="check-range100" class="dw-check-label" data-i18nkey="add-and-subtract-100.options.range.100">50–100</label>
+                            </fieldset>
+
+                            <!-- Operations (only for sums modes) -->
+                            <fieldset id="aat100OperationsGroup" class="options_group game_options">
+                                <legend class="options_group_title" data-i18nkey="add-and-subtract-100.options.operation.legend">Operation</legend>
+                                <input type="radio" name="plus_minus" value="plus" id="radio-pm-plus">
+                                <label for="radio-pm-plus" class="user_options_radio button_div" data-i18nkey="add-and-subtract-100.options.operation.add">Add</label>
+                                <input type="radio" name="plus_minus" value="minus" id="radio-pm-minus">
+                                <label for="radio-pm-minus" class="user_options_radio button_div" data-i18nkey="add-and-subtract-100.options.operation.minus">Subtract</label>
+                                <input type="radio" name="plus_minus" value="combo" id="radio-pm-combo" checked>
+                                <label for="radio-pm-combo" class="user_options_radio button_div" data-i18nkey="add-and-subtract-100.options.operation.combo">Both</label>
+                            </fieldset>
+
+                            <!-- Bridge ten -->
+                            <fieldset id="aat100BridgeGroup" class="options_group game_options">
+                                <legend class="options_group_title" data-i18nkey="add-and-subtract-100.options.advanced.legend">Advanced</legend>
+                                <input type="checkbox" class="dw-check-input" name="bridge_ten" id="check-bridge" checked>
+                                <label for="check-bridge" class="dw-check-label" data-i18nkey="add-and-subtract-100.options.bridge-ten.label">Bridge ten</label>
+                            </fieldset>
+
+                            <!-- Colour Set: left/right arrow buttons + visual swatch
+                                 (stacked tens-block + units-stack). Flash equivalent:
+                                 leftButton / rightButton + colourOptionsBox in frame_03.as
+                                 cycling 4 sets — see selectColours(). -->
+                            <fieldset id="aat100ColourGroup" class="options_group game_options">
+                                <legend class="options_group_title" data-i18nkey="add-and-subtract-100.options.colour.legend">Colour Set</legend>
+                                <div class="aat100-colour-picker">
+                                    <button type="button" id="aat100ColourPrev" class="aat100-colour-arrow"
+                                        data-i18nkey-aria-label="add-and-subtract-100.options.colour.prev"
+                                        aria-label="Previous colour set">&lt;</button>
+                                    <!-- Swatch: a single tens block beside a stack of 10 unit
+                                         squares (Flash colourOptionsBox composition). The unit
+                                         column is filled at runtime by _applyColourSet so the
+                                         active colour set propagates to all 10 cubes. -->
+                                    <div class="aat100-colour-swatch" id="aat100ColourSwatch" aria-hidden="true">
+                                        <img class="aat100-colour-swatch-ten"  id="aat100ColourSwatchTen"  src="pictures/tenBlue.svg" alt="">
+                                        <div class="aat100-colour-swatch-units" id="aat100ColourSwatchUnits"></div>
+                                    </div>
+                                    <button type="button" id="aat100ColourNext" class="aat100-colour-arrow"
+                                        data-i18nkey-aria-label="add-and-subtract-100.options.colour.next"
+                                        aria-label="Next colour set">&gt;</button>
+                                    <input type="hidden" name="colour_set" id="aat100ColourValue" value="1">
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <!-- Audio -->
+                        <fieldset class="options_group">
+                            <legend class="options_group_title" data-i18nkey="options.audio.legend">Audio</legend>
+                            <input type="radio" name="audio_mode" value="webspeech" id="radio-audio-webspeech">
+                            <label for="radio-audio-webspeech" class="user_options_radio button_div" data-i18nkey="options.audio.webspeech">Computer voice</label>
+                            <input type="radio" name="audio_mode" value="recorded" id="radio-audio-recorded" checked>
+                            <label for="radio-audio-recorded" class="user_options_radio button_div" data-i18nkey="options.audio.recorded">Recorded audio</label>
+                            <input type="radio" name="audio_mode" value="none" id="radio-audio-none">
+                            <label for="radio-audio-none" class="user_options_radio button_div" data-i18nkey="options.audio.none">No audio</label>
+                        </fieldset>
+
+                        <!-- Accessibility / Scanning -->
+                        <fieldset class="options_group accessibility_options">
+                            <legend class="options_group_title" data-i18nkey="accessibility.heading">Accessibility</legend>
+                            <div class="aat100-scan-onoff">
+                                <p class="aat100-scan-label" data-i18nkey="accessibility.scanning.label">Scanning</p>
+                                <input type="radio" name="enable_scanning" value="true" id="radio-scan-on">
+                                <label for="radio-scan-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.on">On</label>
+                                <input type="radio" name="enable_scanning" value="false" id="radio-scan-off" checked>
+                                <label for="radio-scan-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.off">Off</label>
+                            </div>
+                            <div id="aat100ScanSubPanel" class="hidden_panel dw-scan-subpanel">
+                                <fieldset class="aat100-scan-switches">
+                                    <legend class="sr-only" data-i18nkey="accessibility.switches.label">Number of switches</legend>
+                                    <input type="radio" name="num_switches" value="2" id="radio-switches-2">
+                                    <label for="radio-switches-2" class="user_options_radio button_div" data-i18nkey="accessibility.switches.two">Two switch</label>
+                                    <input type="radio" name="num_switches" value="1" id="radio-switches-1" checked>
+                                    <label for="radio-switches-1" class="user_options_radio button_div" data-i18nkey="accessibility.switches.one">One switch (auto)</label>
+                                </fieldset>
+
+                                <div id="aat100ScanDelayRow" class="aat100-scan-delay-row">
+                                    <p id="aat100-scan-delay-label" class="aat100-scan-delay-label" data-i18nkey="accessibility.scan-delay.label">Scan delay (seconds)</p>
+                                    <div class="spinner_select" id="scan_delay_spinner">
+                                        <button type="button" class="spinner_down" id="scan_delay_spin_down" data-i18nkey-aria-label="accessibility.scan-delay.decrease" aria-label="Shorter scan delay">-</button>
+                                        <select name="scan_delay" id="scan_delay_sel" aria-labelledby="aat100-scan-delay-label">
+                                            <option value="1000">1</option>
+                                            <option value="1500">1.5</option>
+                                            <option value="2000" selected>2</option>
+                                            <option value="2500">2.5</option>
+                                            <option value="3000">3</option>
+                                            <option value="3500">3.5</option>
+                                            <option value="4000">4</option>
+                                            <option value="4500">4.5</option>
+                                            <option value="5000">5</option>
+                                        </select>
+                                        <div class="spinner_display button_div" id="scan_delay_display">2</div>
+                                        <button type="button" class="spinner_up" id="scan_delay_spin_up" data-i18nkey-aria-label="accessibility.scan-delay.increase" aria-label="Longer scan delay">+</button>
+                                    </div>
+                                </div>
+
+                                <fieldset class="aat100-scan-back-group">
+                                    <legend data-i18nkey="accessibility.scanback.legend">Scan back button</legend>
+                                    <input type="radio" name="aat100_scan_back" value="true" id="radio-scanback-on">
+                                    <label for="radio-scanback-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.on">On</label>
+                                    <input type="radio" name="aat100_scan_back" value="false" id="radio-scanback-off" checked>
+                                    <label for="radio-scanback-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.off">Off</label>
+                                </fieldset>
+                            </div>
+                        </fieldset>
+
+                    </div>
+                </form>
+
+                <!-- Activity screen — new layout (see /workspace/up-1o-100-empty-slate.png).
+                     Top bar: back-pencil + Title (left), Question counter (right).
+                     Subtitle row: "Make N" with a small mouth icon to its right.
+                     Working area: t/u header band over a 2-column grid (tens|units)
+                     with vertical blue divider; left has 10 dashed phantom tens
+                     columns, right has a single dashed units column with 0-9 ruler.
+                     Below the grid: +/- buttons under tens, +/- buttons under units,
+                     Done in the bottom-right corner. -->
+                <div id="dwActivityScreen" class="hidden_panel aat100-screen">
+                    <h1 class="sr-only" tabindex="-1" data-i18nkey="add-and-subtract-100.welcome.title">Add and Subtract to 100</h1>
+
+                    <!-- Top bar: back-pencil + activity title (left), question counter
+                         (right). Instructions sit on a separate row beneath the title so
+                         they can wrap to 2 lines and clear the nav-bar icons. The
+                         mouth-replay icon is positioned absolutely above the t|u
+                         divider — matching Flash. -->
+                    <div class="aat100-top-row">
+                        <div class="aat100-top-left">
+                            <button type="button" id="aat100BackBtn" class="pencil_btn aat100-back-btn hidden_panel" data-pencil-dir="left" data-i18nkey="doorway.btn.back" aria-hidden="true" tabindex="-1">back</button>
+                            <h2 id="aat100ScreenTitle" class="aat100-screen-title" data-i18nkey="add-and-subtract-100.activity.title.makethenumber">Make the Number</h2>
+                        </div>
+                        <p id="aat100QuestionCounter" class="aat100-question-counter" aria-live="polite"></p>
+                    </div>
+                    <!-- Subtitle row: instruction text + replay-prompt mouth icon to
+                         its right (same row). Flash composition: instruction text
+                         sits to the left of a small mouth glyph that the user can
+                         press to replay the spoken prompt. -->
+                    <div class="aat100-subtitle-row">
+                        <p id="aat100Subtitle" class="aat100-subtitle" aria-live="polite"></p>
+                        <button type="button" id="aat100ReplayBtn" class="aat100-replay-btn aat100-replay-guide aat100-replay-inline"
+                            data-i18nkey-aria-label="add-and-subtract-100.activity.replay-prompt"
+                            aria-label="Replay instruction">
+                            <img src="pictures/mouth.png" alt="" width="100%" height="100%">
+                        </button>
+                    </div>
+
+                    <!-- SR-only instruction + sum text (still announced; not visible). -->
+                    <p id="aat100InstructText" class="sr-only" aria-live="polite"></p>
+                    <p id="aat100SumText" class="aat100-sum-text" aria-live="polite"></p>
+
+                    <!-- Working area: 2 columns (tens | units) with blue divider. -->
+                    <div class="aat100-work">
+
+                        <!-- Mouth-total: re-speaks the current running total. Placed
+                             ahead of the tens/units columns so keyboard tab reaches
+                             it before the block-builder +/− buttons (positioned over
+                             the central divider visually via CSS). -->
+                        <button type="button" id="aat100MouthTotal" class="aat100-replay-btn aat100-replay-total"
+                            data-i18nkey-aria-label="add-and-subtract-100.activity.say-total"
+                            aria-label="Say the total">
+                            <img src="pictures/mouth.png" alt="" width="100%" height="100%">
+                        </button>
+
+                        <!-- TENS column (left) -->
+                        <div class="aat100-work-col aat100-work-tens">
+                            <div class="aat100-tu-header" aria-hidden="true">t</div>
+
+                            <!-- Tens big-digit row. In What's the Number mode the [+][−]
+                                 reveal on the LEFT (outer) side of the digit so they line
+                                 up under the +/− that "controls" them (tens buttons sit
+                                 left of the divider). Digit hugs the central divider so
+                                 t-digit and u-digit read as a single two-digit number. -->
+                            <div id="aat100WtnTensRow" class="aat100-units-digit-row aat100-wtn-input-row">
+                                <button type="button" id="aat100WtnTensInc" class="aat100-block-btn aat100-wtn-input-btn hidden_panel"
+                                    data-i18nkey-aria-label="add-and-subtract-100.activity.number-input.increase-ten"
+                                    aria-label="Increase tens">+</button>
+                                <button type="button" id="aat100WtnTensDec" class="aat100-block-btn aat100-wtn-input-btn hidden_panel"
+                                    data-i18nkey-aria-label="add-and-subtract-100.activity.number-input.decrease-ten"
+                                    aria-label="Decrease tens">−</button>
+                                <div class="aat100-units-big-digit aat100-wtn-display" id="aat100WtnTensDisplay" data-i18nkey-aria-label="add-and-subtract-100.aria.tens" aria-label="Tens">0</div>
+                            </div>
+
+                            <!-- Tens digit-row left over from the old layout — kept here
+                                 only as an off-screen fallback. The running-tens digit
+                                 has been hoisted into aat100WtnTensRow above so both
+                                 t/u digits share the same baseline. -->
+                            <div class="aat100-tens-digit-row hidden_panel">
+                                <div class="aat100-digit-box aat100-digit-tens aat100-digit-running" id="aat100DigitTens" data-i18nkey-aria-label="add-and-subtract-100.aria.tens" aria-label="Tens">0</div>
+                            </div>
+
+                            <!-- 10 dashed phantom tens columns. Each column has 9 small
+                                 horizontal segments (the "lines" inside each ten); the
+                                 active tens column overlays them with live block images. -->
+                            <div class="aat100-tens-grid" aria-hidden="true">
+                                <div class="aat100-tens-slot"></div>
+                                <div class="aat100-tens-slot"></div>
+                                <div class="aat100-tens-slot"></div>
+                                <div class="aat100-tens-slot"></div>
+                                <div class="aat100-tens-slot"></div>
+                                <div class="aat100-tens-slot"></div>
+                                <div class="aat100-tens-slot"></div>
+                                <div class="aat100-tens-slot"></div>
+                                <div class="aat100-tens-slot"></div>
+                                <div class="aat100-tens-slot"></div>
+                                <!-- Active tens column overlay (absolute, matches grid). -->
+                                <div id="aat100TensCol" class="aat100-tens-col" aria-hidden="true"></div>
+                            </div>
+
+                            <!-- +/- under the tens column -->
+                            <div class="aat100-block-controls aat100-tens-controls">
+                                <button type="button" id="aat100PlusTen" class="aat100-block-btn"
+                                    data-i18nkey-aria-label="add-and-subtract-100.activity.add-ten"
+                                    aria-label="Add a ten">+</button>
+                                <button type="button" id="aat100MinusTen" class="aat100-block-btn"
+                                    data-i18nkey-aria-label="add-and-subtract-100.activity.remove-ten"
+                                    aria-label="Remove a ten">−</button>
+                            </div>
+                        </div>
+
+                        <!-- UNITS column (right) -->
+                        <div class="aat100-work-col aat100-work-units">
+                            <div class="aat100-tu-header" aria-hidden="true">u</div>
+
+                            <!-- Live "current units" big digit + WTN +/- on the RIGHT
+                                 (outer) side. Digit hugs the central divider so it sits
+                                 adjacent to the tens digit. mouthTotal sits earlier in
+                                 the DOM (above the tens controls) so keyboard tab
+                                 reaches it before the block-builder +/− buttons. -->
+                            <div class="aat100-units-digit-row">
+                                <div class="aat100-units-big-digit" id="aat100DigitUnits" data-i18nkey-aria-label="add-and-subtract-100.aria.units" aria-label="Units">0</div>
+                                <button type="button" id="aat100WtnUnitsInc" class="aat100-block-btn aat100-wtn-input-btn hidden_panel"
+                                    data-i18nkey-aria-label="add-and-subtract-100.activity.number-input.increase"
+                                    aria-label="Increase units">+</button>
+                                <button type="button" id="aat100WtnUnitsDec" class="aat100-block-btn aat100-wtn-input-btn hidden_panel"
+                                    data-i18nkey-aria-label="add-and-subtract-100.activity.number-input.decrease"
+                                    aria-label="Decrease units">−</button>
+                            </div>
+
+                            <div class="aat100-units-stack" id="aat100UnitsStack">
+                                <div class="aat100-units-col-wrapper">
+                                    <div id="aat100UnitsCol" class="aat100-units-col" aria-hidden="true"></div>
+                                    <div id="aat100GhostUnitsCol" class="aat100-ghost-units-col" aria-hidden="true"></div>
+                                </div>
+                                <!-- Ruler labels 9..0 aligned to BOTTOM of each cell (line),
+                                     not the gap between cells. -->
+                                <div class="aat100-units-numbers" aria-hidden="true">
+                                    <span>9</span><span>8</span><span>7</span><span>6</span><span>5</span>
+                                    <span>4</span><span>3</span><span>2</span><span>1</span><span>0</span>
+                                </div>
+                            </div>
+
+                            <!-- +/- under the units column -->
+                            <div class="aat100-block-controls aat100-units-controls">
+                                <button type="button" id="aat100PlusUnit" class="aat100-block-btn"
+                                    data-i18nkey-aria-label="add-and-subtract-100.activity.add-unit"
+                                    aria-label="Add a unit">+</button>
+                                <button type="button" id="aat100MinusUnit" class="aat100-block-btn"
+                                    data-i18nkey-aria-label="add-and-subtract-100.activity.remove-unit"
+                                    aria-label="Remove a unit">−</button>
+                            </div>
+                        </div>
+
+                    </div><!-- .aat100-work -->
+
+                    <!-- Done button — bottom-right of the activity screen. Positioned
+                         relative to .aat100-screen so it stays clear of the units
+                         +/- controls inside the work grid. -->
+                    <button type="button" id="aat100DoneBtn" class="main_button hidden_panel aat100-done-btn"
+                        data-i18nkey="add-and-subtract-100.activity.done">Done</button>
+
+                    <!-- Written sums columnar notation. Hidden unless writtensums
+                         mode is active. Three-row column matches Flash:
+                            tb1 ub1   ← nOne (set after Step 1)
+                          + tb2 ub2   ← nTwo (set after Step 1.5 — units, then
+                            ─────       after Step 3 — tens; operator symbol on
+                            tb3 ub3     the left below the divider line)
+                         Step 2 fills ub3 (the user's units guess once they've
+                         finished step 1.5). Step 4 fills tb3 (the tens guess).
+                         The +/- buttons inside .aat100-wsum-units-input drive
+                         the step-2 units guess (inputNumber in Flash); the
+                         .aat100-wsum-tens-input ones drive step-4 (inputNumberTen).
+                         All buttons hidden until the relevant step activates them. -->
+                    <div id="aat100WrittenDisplay" class="aat100-written-display hidden_panel" aria-hidden="true">
+                        <div class="aat100-written-row aat100-wsum-row1">
+                            <span class="aat100-written-op" aria-hidden="true">&nbsp;</span>
+                            <div class="aat100-digit-box aat100-digit-tens"  id="aat100Wb1Tens"  aria-hidden="true"></div>
+                            <div class="aat100-digit-box aat100-digit-units" id="aat100Wb1Units" aria-hidden="true"></div>
+                        </div>
+                        <div class="aat100-written-row aat100-wsum-row2">
+                            <span class="aat100-written-op" id="aat100WbOp" aria-hidden="true">+</span>
+                            <div class="aat100-digit-box aat100-digit-tens"  id="aat100Wb2Tens"  aria-hidden="true"></div>
+                            <div class="aat100-digit-box aat100-digit-units" id="aat100Wb2Units" aria-hidden="true"></div>
+                        </div>
+                        <div class="aat100-written-divider" aria-hidden="true"></div>
+                        <div class="aat100-written-row aat100-wsum-row3">
+                            <span class="aat100-written-op" aria-hidden="true">&nbsp;</span>
+                            <div class="aat100-wsum-tens-input">
+                                <button type="button" id="aat100WsumTensInc" class="aat100-digit-pm-btn hidden_panel"
+                                    data-i18nkey-aria-label="add-and-subtract-100.activity.number-input.increase-ten"
+                                    aria-label="Increase tens">+</button>
+                                <div class="aat100-digit-box aat100-digit-tens"  id="aat100Wb3Tens"  data-i18nkey-aria-label="add-and-subtract-100.aria.tens-guess" aria-label="Tens guess">0</div>
+                                <button type="button" id="aat100WsumTensDec" class="aat100-digit-pm-btn hidden_panel"
+                                    data-i18nkey-aria-label="add-and-subtract-100.activity.number-input.decrease-ten"
+                                    aria-label="Decrease tens">−</button>
+                            </div>
+                            <div class="aat100-wsum-units-input">
+                                <button type="button" id="aat100WsumUnitsInc" class="aat100-digit-pm-btn hidden_panel"
+                                    data-i18nkey-aria-label="add-and-subtract-100.activity.number-input.increase"
+                                    aria-label="Increase units">+</button>
+                                <div class="aat100-digit-box aat100-digit-units" id="aat100Wb3Units" data-i18nkey-aria-label="add-and-subtract-100.aria.units-guess" aria-label="Units guess">0</div>
+                                <button type="button" id="aat100WsumUnitsDec" class="aat100-digit-pm-btn hidden_panel"
+                                    data-i18nkey-aria-label="add-and-subtract-100.activity.number-input.decrease"
+                                    aria-label="Decrease units">−</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Legacy combined-number input (kept for screen-reader fall-through and
+                         the WTN "Check" button binding; the visible WTN input now lives
+                         inline above the t/u columns via aat100WtnTensRow + aat100WtnUnitsDec/Inc). -->
+                    <div id="aat100NumberInputArea" class="aat100-number-input-area hidden_panel" aria-hidden="true">
+                        <div class="aat100-number-input-controls">
+                            <button type="button" id="aat100NumberDec" class="aat100-block-btn"
+                                data-i18nkey-aria-label="add-and-subtract-100.activity.number-input.decrease"
+                                aria-label="Decrease number">−</button>
+                            <div id="aat100NumberDisplay" class="aat100-number-input-display">0</div>
+                            <button type="button" id="aat100NumberInc" class="aat100-block-btn"
+                                data-i18nkey-aria-label="add-and-subtract-100.activity.number-input.increase"
+                                aria-label="Increase number">+</button>
+                        </div>
+                        <button type="button" id="aat100NumberCheck" class="main_button"
+                            data-i18nkey="add-and-subtract-100.activity.check">Check</button>
+                    </div>
+
+                    <!-- Praise / feedback. -->
+                    <p id="aat100Praise" class="aat100-praise" aria-live="polite"></p>
+                    <p id="aat100Feedback" class="aat100-feedback" aria-live="assertive"></p>
+
+                    <div class="aat100-digit-box aat100-digit-total sr-only" id="aat100DigitTotal" aria-hidden="true">0</div>
+
+                </div><!-- activity screen -->
+
+                <!-- Results screen -->
+                <div id="dwResultsScreen" class="hidden_panel aat100-results-screen">
+                    <h2 class="aat100-results-title" tabindex="-1" data-i18nkey="add-and-subtract-100.results.title">How did you score?</h2>
+                    <div class="aat100-results-header">
+                        <span><span data-i18nkey="add-and-subtract-100.results.number-range">Number Range:</span> <span id="aat100ResultsRange"></span></span>
+                        <span><span data-i18nkey="add-and-subtract-100.results.number-questions">Number of Questions:</span> <span id="aat100ResultsCount"></span></span>
+                    </div>
+                    <table class="aat100-results-table" data-i18nkey-aria-label="add-and-subtract-100.aria.results-table" aria-label="Results">
+                        <thead>
+                            <tr>
+                                <th scope="col" data-i18nkey="add-and-subtract-100.results.col.question">Question Number</th>
+                                <th scope="col" data-i18nkey="add-and-subtract-100.results.col.sum">Target Number</th>
+                                <th scope="col" data-i18nkey="results.col.tries">Tries</th>
+                            </tr>
+                        </thead>
+                        <tbody id="aat100ResultsBody"></tbody>
+                    </table>
+                    <p id="aat100ScoreText" class="aat100-score-text"></p>
+                    <div class="aat100-results-actions">
+                        <button type="button" id="aat100RepeatBtn" class="pencil_btn" data-i18nkey="doorway.btn.repeat">repeat</button>
+                    </div>
+                </div>
+
+                <!-- Audio: numbers 0-100 -->
+                <audio src="audio/audio_numbers_0.mp3"   preload="auto" id="aat100Audio_audio_numbers_0_mp3"></audio>
+                <audio src="audio/audio_numbers_1.mp3"   preload="auto" id="aat100Audio_audio_numbers_1_mp3"></audio>
+                <audio src="audio/audio_numbers_2.mp3"   preload="auto" id="aat100Audio_audio_numbers_2_mp3"></audio>
+                <audio src="audio/audio_numbers_3.mp3"   preload="auto" id="aat100Audio_audio_numbers_3_mp3"></audio>
+                <audio src="audio/audio_numbers_4.mp3"   preload="auto" id="aat100Audio_audio_numbers_4_mp3"></audio>
+                <audio src="audio/audio_numbers_5.mp3"   preload="auto" id="aat100Audio_audio_numbers_5_mp3"></audio>
+                <audio src="audio/audio_numbers_6.mp3"   preload="auto" id="aat100Audio_audio_numbers_6_mp3"></audio>
+                <audio src="audio/audio_numbers_7.mp3"   preload="auto" id="aat100Audio_audio_numbers_7_mp3"></audio>
+                <audio src="audio/audio_numbers_8.mp3"   preload="auto" id="aat100Audio_audio_numbers_8_mp3"></audio>
+                <audio src="audio/audio_numbers_9.mp3"   preload="auto" id="aat100Audio_audio_numbers_9_mp3"></audio>
+                <audio src="audio/audio_numbers_10.mp3"  preload="auto" id="aat100Audio_audio_numbers_10_mp3"></audio>
+                <audio src="audio/audio_numbers_11.mp3"  preload="auto" id="aat100Audio_audio_numbers_11_mp3"></audio>
+                <audio src="audio/audio_numbers_12.mp3"  preload="auto" id="aat100Audio_audio_numbers_12_mp3"></audio>
+                <audio src="audio/audio_numbers_13.mp3"  preload="auto" id="aat100Audio_audio_numbers_13_mp3"></audio>
+                <audio src="audio/audio_numbers_14.mp3"  preload="auto" id="aat100Audio_audio_numbers_14_mp3"></audio>
+                <audio src="audio/audio_numbers_15.mp3"  preload="auto" id="aat100Audio_audio_numbers_15_mp3"></audio>
+                <audio src="audio/audio_numbers_16.mp3"  preload="auto" id="aat100Audio_audio_numbers_16_mp3"></audio>
+                <audio src="audio/audio_numbers_17.mp3"  preload="auto" id="aat100Audio_audio_numbers_17_mp3"></audio>
+                <audio src="audio/audio_numbers_18.mp3"  preload="auto" id="aat100Audio_audio_numbers_18_mp3"></audio>
+                <audio src="audio/audio_numbers_19.mp3"  preload="auto" id="aat100Audio_audio_numbers_19_mp3"></audio>
+                <audio src="audio/audio_numbers_20.mp3"  preload="auto" id="aat100Audio_audio_numbers_20_mp3"></audio>
+                <audio src="audio/audio_numbers_30.mp3"  preload="auto" id="aat100Audio_audio_numbers_30_mp3"></audio>
+                <audio src="audio/audio_numbers_40.mp3"  preload="auto" id="aat100Audio_audio_numbers_40_mp3"></audio>
+                <audio src="audio/audio_numbers_50.mp3"  preload="auto" id="aat100Audio_audio_numbers_50_mp3"></audio>
+                <audio src="audio/audio_numbers_60.mp3"  preload="auto" id="aat100Audio_audio_numbers_60_mp3"></audio>
+                <audio src="audio/audio_numbers_70.mp3"  preload="auto" id="aat100Audio_audio_numbers_70_mp3"></audio>
+                <audio src="audio/audio_numbers_80.mp3"  preload="auto" id="aat100Audio_audio_numbers_80_mp3"></audio>
+                <audio src="audio/audio_numbers_90.mp3"  preload="auto" id="aat100Audio_audio_numbers_90_mp3"></audio>
+                <audio src="audio/audio_numbers_100.mp3" preload="auto" id="aat100Audio_audio_numbers_100_mp3"></audio>
+                <!-- Audio: words -->
+                <audio src="audio/audio_words_welldone.mp3"              preload="auto" id="aat100Audio_audio_words_welldone_mp3"></audio>
+                <audio src="audio/audio_words_great.mp3"                 preload="auto" id="aat100Audio_audio_words_great_mp3"></audio>
+                <audio src="audio/audio_words_wonderful.mp3"             preload="auto" id="aat100Audio_audio_words_wonderful_mp3"></audio>
+                <audio src="audio/audio_words_super.mp3"                 preload="auto" id="aat100Audio_audio_words_super_mp3"></audio>
+                <audio src="audio/audio_words_brilliant.mp3"             preload="auto" id="aat100Audio_audio_words_brilliant_mp3"></audio>
+                <audio src="audio/audio_words_tryagain.mp3"              preload="auto" id="aat100Audio_audio_words_tryagain_mp3"></audio>
+                <audio src="audio/audio_words_explore.mp3"               preload="auto" id="aat100Audio_audio_words_explore_mp3"></audio>
+                <audio src="audio/audio_words_make.mp3"                  preload="auto" id="aat100Audio_audio_words_make_mp3"></audio>
+                <audio src="audio/audio_words_nowmake.mp3"               preload="auto" id="aat100Audio_audio_words_nowmake_mp3"></audio>
+                <audio src="audio/audio_words_firstmake.mp3"             preload="auto" id="aat100Audio_audio_words_firstmake_mp3"></audio>
+                <audio src="audio/audio_words_whatsthenumber.mp3"        preload="auto" id="aat100Audio_audio_words_whatsthenumber_mp3"></audio>
+                <audio src="audio/audio_words_thatis.mp3"                preload="auto" id="aat100Audio_audio_words_thatis_mp3"></audio>
+                <audio src="audio/audio_words_nowadd.mp3"                preload="auto" id="aat100Audio_audio_words_nowadd_mp3"></audio>
+                <audio src="audio/audio_words_addtheunitsfirst.mp3"      preload="auto" id="aat100Audio_audio_words_addtheunitsfirst_mp3"></audio>
+                <audio src="audio/audio_words_nowtakeaway.mp3"           preload="auto" id="aat100Audio_audio_words_nowtakeaway_mp3"></audio>
+                <audio src="audio/audio_words_takeawaytheunitsfirst.mp3" preload="auto" id="aat100Audio_audio_words_takeawaytheunitsfirst_mp3"></audio>
+                <audio src="audio/audio_words_howmanyunitsarethere.mp3"  preload="auto" id="aat100Audio_audio_words_howmanyunitsarethere_mp3"></audio>
+                <audio src="audio/audio_words_howmanytensarethere.mp3"   preload="auto" id="aat100Audio_audio_words_howmanytensarethere_mp3"></audio>
+                <audio src="audio/audio_words_add.mp3"                   preload="auto" id="aat100Audio_audio_words_add_mp3"></audio>
+                <audio src="audio/audio_words_takeaway.mp3"              preload="auto" id="aat100Audio_audio_words_takeaway_mp3"></audio>
+                <audio src="audio/audio_words_equals.mp3"                preload="auto" id="aat100Audio_audio_words_equals_mp3"></audio>
+
+                <!-- Shared framework elements -->
+                <div id="dwMainApp" style="display:none;"></div>
+                <div id="dwDarkenedPanel" class="darkened_panel hidden_panel"></div>
+                <div id="dwWellDone" class="well_done_message hidden_panel">
+                    <p class="instruction_message"></p>
+                </div>
+
+            </main>
+
+            <!-- Shared page footer (contentinfo landmark). Sibling of <main>,
+                 so <footer> gets its implicit contentinfo role. Action buttons
+                 visibility per screen via CSS: enter on welcome; home+start on
+                 options; whole footer hidden on activity. -->
+            <footer class="dw-app-footer">
+                <div class="dw-action-footer">
+                    <button id="dwEnterButton" class="pencil_btn" data-i18nkey="doorway.btn.enter">enter</button>
+                    <button type="button" id="dwHomeButton" class="pencil_btn" data-pencil-dir="left" data-i18nkey="doorway.btn.home">home</button>
+                    <button type="button" id="dwSubmitUserOptions" class="pencil_btn" data-i18nkey="doorway.btn.start">start</button>
+                </div>
+                <p class="copyright_message" data-i18nkey="doorway.copyright">© CALL Scotland, University of Edinburgh 2026</p>
+            </footer>
+            </div><!-- doorway_aspect_div -->
+        </div><!-- doorway_aspect_outer_div -->
+    </div><!-- doorway_fullscreen_div -->
+</div><!-- doorway_application -->
+</body>
+</html>

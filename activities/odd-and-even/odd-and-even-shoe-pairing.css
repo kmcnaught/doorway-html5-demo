@@ -1,0 +1,354 @@
+/* Doorway Odd and Even — Shoe pairing sub-activity styles.
+ * Carved out of odd-and-even.css to keep per-sub-activity CSS independent.
+ */
+/* =========================================================
+   Sub-activity A: Shoe pairing
+   =========================================================
+   Flash frame 4: white background, instruction box top-left,
+   5-shelf wooden bookcase (pos1–pos10) on right side
+   (x ≈ 35–41em, y ≈ 4.5–24em, 2-column pairs).
+   Shoes are placed/clicked in the left/centre area.
+*/
+
+#oeShoePairingArea {
+    background-color: #ffffff;
+    position: relative;
+    padding-right: 13em;
+    box-sizing: border-box;
+    /* Lock the pairing area to a fixed height so the absolutely-positioned
+       shelf (which spans top:0 → bottom:0) doesn't grow when answer-buttons
+       / feedback / retry stack into the column flow on the answer phase.
+       Previously the shelf — and every shoe in it — shifted downward at
+       each phase because each rack's flex 1 1 0 redistributed across the
+       taller container. */
+    height: 23em;
+    /* Tighter than the outer .oe-sub-activity 0.75em gap so the post-pair
+       answer stack (result → bubble → next/retry) fits without spilling
+       below the activity area. */
+    gap: 0.25em;
+}
+
+/* Final-question reading order — the DOM order keeps the answer-state stack
+   compact, but visually the user should see:
+     1. feedback bubble ("Correct!" / "Oops! Try again.")
+     2. result text     ("Press next to continue." / "Not quite — …")
+     3. next / retry button
+   Re-order the flex children explicitly so the cramped pile reads cleanly
+   top-to-bottom on the final shoe. Other elements use the default order:0. */
+#oeShoePairingArea #oeShoeFeedback { order: 10; margin-top: 0.4em; }
+#oeShoePairingArea #oeShoeResult   { order: 20; }
+#oeShoePairingArea #oeShoeAnswerBtns { order: 5; }
+#oeShoePairingArea #oeShoeNextBtn  { order: 30; align-self: center; margin-top: 0.5em; }
+#oeShoePairingArea #oeShoeRetryBtn { order: 30; }
+
+.oe-sub-header {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.oe-question-counter {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+/* Shoe grid — left/centre display area.
+   Flash colour: white with green instruction box border (#b4e9ad tint).
+   Shoes are absolutely positioned inside this box (semi-random scatter
+   set in JS, see _advance()). The grid stays a fixed-size container so
+   the layout doesn't reflow when one shoe is moved to the shelf
+   (previously a flex layout shifted every remaining shoe sideways
+   each time a shoe was removed). */
+.oe-shoe-grid {
+    position: relative;
+    /* Tall enough that the scattered shoes can use most of the stage's
+       vertical space rather than clustering in the upper half — JS
+       scatters within yMin/yMax percentages, so growing the container
+       directly grows the y-range the shoes can occupy. The container
+       itself is invisible (white border + background) so it reads as
+       the page rather than a panel. The result text overlays this
+       area at the same absolute y as before — see #oeShoeResult.
+       Reduced from 19em → 11em to free vertical space for the answer
+       buttons + bubble + retry stack that appears after pairing. Shoes
+       are top-anchored within yMin/yMax; shoe-pairing.js sets yMax
+       low enough that the 4.3em shoe button stays inside the box. */
+    min-height: 11em;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 0.3em;
+}
+
+/* Result text sits inline in the column flow once the shoes are placed.
+   The grid above it is short (11em) so this lands beneath the empty grid
+   rather than overlapping it — gives the "Press next/retry" instruction
+   a clear horizontal band of its own.
+
+   On the answer phase the result text doubles as the explicit instruction
+   ("Press next to continue.") that visually precedes the next button —
+   give it enough top margin so it's not crammed against the feedback
+   bubble above it. */
+#oeShoeResult {
+    margin: 0.4em 0 0.3em;
+    text-align: center;
+    font-size: 1.2em;
+    color: #1a5276;
+}
+
+.oe-shoe-grid .oe-shoe-btn {
+    position: absolute;
+}
+
+/* Shelf — reproduces the light-blue 3D bookcase visible in Flash frame 4.
+   Five rack boxes (.oe-rack) are stacked vertically; each holds a pair of
+   shoes. column-reverse makes the first rack in DOM order the visually
+   bottommost — JS fills shoes bottom-up rowwise. Each rack uses the Flash
+   shelfBox.svg (sprite_235, 239×152 — 3D box with perspective shelf
+   dividers and dark blue outline) stretched to fit the rack height. */
+.oe-shoe-shelf {
+    position: absolute;
+    right: 0.5em;
+    top: 0;
+    bottom: 0;
+    /* Narrower than before (was 12em) — Flash's bookcase reads as a slim
+       case relative to the grid; matching that proportion makes the
+       shoes inside it look the right size rather than swimming in space. */
+    width: 9.6em;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 0;
+    padding: 0;
+}
+
+.oe-rack {
+    flex: 1 1 0;
+    min-height: 0;
+    /* Two fixed half-slots (left / right) instead of a flex row — the first
+       shoe of a pair drops into its semantic half (left-foot → left, right-
+       foot → right) immediately, and its mate later lands in the opposite
+       half without bumping the first. Grid keeps the slots in place. */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+    justify-items: center;
+    /* Shoes in a pair sit close together but each occupies its own half. */
+    column-gap: 0;
+    padding: 0 0.35em;
+    background-image: url('pictures/shelfBox.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%;
+    /* Overlap adjacent racks so only the front rim of each shelf shows
+       between rows (matches the Flash bookcase, which is a single 3D
+       case with thin horizontal rim lines, not five stacked boxes).
+       Slightly tighter overlap (was -1.7em) brings the shelves a touch
+       closer together — the Flash case shows narrower rims. Reduced by
+       ~2px so the racks are spaced apart a touch more, exposing more
+       of each shelf's front rim. */
+    margin-bottom: -1.97em;
+}
+
+/* Each half-slot is a fixed grid column; shoes nudge slightly toward the
+   centre of the pair (right-foot shifts left, left-foot shifts right) so
+   the pair reads as a pair rather than as two isolated shoes. Also nudge
+   each shoe down by ~1/6 of its height — the original sat too high on
+   the shelf rim. */
+.oe-rack .oe-shoe-btn[data-side="left"]  {
+    grid-column: 1;
+    justify-self: end;
+    margin-right: -0.4em;
+    margin-bottom: -0.85em;
+}
+.oe-rack .oe-shoe-btn[data-side="right"] {
+    grid-column: 2;
+    justify-self: start;
+    margin-left: -0.4em;
+    margin-bottom: -0.85em;
+}
+
+/* Shoes paint above the shelf graphic (which is a background-image on the
+   rack). z-index needs a positioning context, hence position:relative. */
+.oe-rack .oe-shoe-btn {
+    position: relative;
+    z-index: 2;
+}
+.oe-rack:first-child {
+    /* column-reverse makes the first DOM child the bottommost visually,
+       so this rule removes the overlap for the bottom rack which has
+       no neighbour underneath it. */
+    margin-bottom: 0;
+}
+
+/* Shoes: preserve the native shoe.svg aspect ratio (94.65 × 108.9, slightly
+   taller than wide — Flash shoes look like real shoes from above). The
+   button is sized 20% larger than the pre-fix 3.6×3em (which both squished
+   the SVG horizontally and was too small relative to the Flash sprite). */
+.oe-shoe-btn {
+    width: 4.3em;
+    height: auto;
+    aspect-ratio: 94.65 / 108.9;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.oe-shoe-btn img {
+    width: 100%;
+    height: 100%;
+    /* object-fit:contain is belt-and-braces — the aspect-ratio on the
+       button already keeps it correct, but if a future caller forces a
+       different height the image still fits without squishing. */
+    object-fit: contain;
+    /* Sit transparent to pointer events so that even when one shoe's
+       transparent bounding box overlaps another's, the click reaches the
+       front-most shoe's button (rather than getting intercepted by an
+       adjacent <img>). */
+    pointer-events: none;
+}
+
+.oe-answer-buttons {
+    display: flex;
+    gap: 2.5em;
+    justify-content: center;
+    /* The pairing-result text above the odd/even pair should breathe a
+       little — too tight and the question-prompt and answer buttons
+       look squashed together on the final-shoe step. */
+    margin-top: 0.5em;
+}
+
+.oe-answer-buttons.hidden_panel {
+    display: none;
+}
+
+/* Near-square corners + bold label. The shared .oe-odd-btn /
+   .oe-even-btn rules in odd-and-even.css set the red/blue background
+   (Red = Odd, Blue = Even project convention); we only tighten the
+   geometry here. */
+.oe-answer-btn {
+    font-size: 1.4em;
+    padding: 0.4em 1.6em;
+    border-radius: 0.15em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0.1em 0.1em 0 rgba(0, 0, 0, 0.25);
+    transition: background-color 0.15s ease-out, filter 0.15s ease-out, outline 0.15s ease-out;
+}
+
+/* Hover/focus: take the saturated red/blue fill and drive it MUCH darker
+   (≈40% lightness) so the white label still reads clearly with high
+   contrast. The previous `brightness(1.1)` lightened the fill *toward*
+   white, killing the label legibility. The fill-specific overrides sit
+   on top of the shared .oe-odd-btn / .oe-even-btn rules in
+   odd-and-even.css (which paint the base red/blue). Gold focus ring
+   preserves the keyboard / switch-scan affordance. */
+.oe-answer-btn.oe-odd-btn:hover,
+.oe-answer-btn.oe-odd-btn:focus-visible {
+    background-color: #6b0009;
+    color: #ffffff;
+}
+.oe-answer-btn.oe-even-btn:hover,
+.oe-answer-btn.oe-even-btn:focus-visible {
+    background-color: #061a8a;
+    color: #ffffff;
+}
+.oe-answer-btn:hover,
+.oe-answer-btn:focus-visible {
+    outline: 0.2em solid gold;
+    outline-offset: 0.15em;
+}
+
+/* Flash retryButton sprite: gold disc-stack with the word "retry" sitting
+   on top. The same gold radial gradient as the ladybirds/house "done"
+   button, with proportions tightened toward a circle (taller/thinner)
+   and a black outline — the previous oval read as flat and gold-on-gold,
+   so the new disc shape + black ring lifts it off the white background. */
+.oe-shoe-retry-btn {
+    align-self: center;
+    font-family: 'Jotter Primary', sans-serif;
+    font-size: 1.3em;
+    /* Taller-than-wide disc — padding biases vertical so the shape reads
+       round rather than oval-flat. */
+    padding: 0.6em 0.95em;
+    border-radius: 50%;
+    border: 2px solid #000000;
+    background: radial-gradient(circle at 35% 30%, #fff19a 0%, #f1c40f 60%, #d4ac0d 100%);
+    color: #1a1a1a;
+    cursor: pointer;
+    box-shadow: 0.15em 0.15em 0 rgba(0, 0, 0, 0.25);
+    margin-top: 0.5em;
+    line-height: 1;
+}
+.oe-shoe-retry-btn:hover,
+.oe-shoe-retry-btn:focus-visible {
+    outline: 0.2em solid gold;
+    outline-offset: 0.15em;
+}
+.oe-shoe-retry-btn.hidden_panel {
+    display: none;
+}
+
+/* End-state overlay: empty shoebox is already on screen because
+   _showCongrats clears the grid + shelf children. The congrats card
+   ("Awesome! You finished it!" bubble + repeat button) sits centred on
+   top, with balloons rising behind it. Mirrors Flash frame_04.as:282
+   attachMovie of `congratulations` at fixed (_x:120, _y:180). */
+.oe-shoe-congrats {
+    position: absolute;
+    inset: 0;
+    /* Extend the overlay upward over the activity-nav band so the
+       balloons rise past the top "Well done…" instruction rather than
+       stopping at the sub-activity boundary. Pointer-events stay off,
+       so clicks on the host nav still pass through. */
+    top: -3.5em;
+    z-index: 600;
+    pointer-events: none;
+    display: block;
+    padding: 0;
+}
+.oe-shoe-congrats .oe-shoe-congrats-card {
+    position: absolute;
+    /* Re-centre horizontally relative to the activity area excluding the
+       right-hand padding (which hosts the empty shoebox shelf). The
+       overlay was extended upward by 3.5em (see .oe-shoe-congrats top
+       override), so this top:35% biases the bubble into the upper third
+       of the visible scene — clearing the empty shoebox below. The
+       wrapper is a positioning shell only — no background or border —
+       so the Flash congratulations bubble (messageCorrect.svg frame,
+       with its own black outline) reads as a single speech-bubble
+       rather than as a bubble nested inside an outer card. */
+    left: calc(50% - 6.5em);
+    top: 35%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6em;
+    pointer-events: auto;
+    /* Bubble sits ahead of the right-hand shelf so the message reads over
+       the empty shoebox rather than getting cropped by it. */
+    z-index: 2;
+    max-width: 24em;
+}
+.oe-shoe-congrats .oe-balloons {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    /* Balloons render above every other layer at the celebration moment
+       (shelf, shoes, nav) — Flash's congratulations clip attaches with
+       a very high depth (frame_04.as:282 → 100000). */
+    z-index: 700;
+}
+
+/* The Flash balloon-sprite styling (.oe-balloon image form, position
+   biases, and oe-balloon-rise-sway keyframes) now lives in the shared
+   odd-and-even.css — every sub-activity uses the same sprite-img
+   balloons. The earlier .oe-balloons-flash override block here is
+   gone; the wrapper class on the HTML has likewise been dropped. */
+
+/* --- Shoe pairing: shoe slides from grid to shelf ---
+   Mirrors Flash frame_04's Regular.easeOut Tween from grid to shelf
+   (frame_04.as lines 130-138). The DOM move is instant (appendChild),
+   then shoe-pairing.js applies a transient inline transform so the shoe
+   appears at its starting position and transitions back to zero — a
+   FLIP slide. No scale, so the shoe stays the same size throughout. */
+

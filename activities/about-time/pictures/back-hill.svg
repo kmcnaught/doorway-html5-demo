@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="49.963684mm"
+   height="10.354539mm"
+   viewBox="0 0 49.963684 10.354539"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="back-hill.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.0289352"
+     inkscape:cx="251.2306"
+     inkscape:cy="-332.86839"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="2872"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-38.629165,-236.5375)">
+    <path
+       style="fill:#59b040;fill-opacity:1;stroke:#000000;stroke-width:0.212142;stroke-dasharray:none;stroke-opacity:1"
+       d="m 38.905777,236.66051 c 0,0 9.04679,-0.0896 13.283641,0.14465 2.918951,0.16142 5.82837,0.48946 8.727183,0.8679 1.695168,0.22131 3.388187,0.47544 5.062703,0.81967 0.84383,0.17347 1.68397,0.37317 2.50726,0.62682 5.95776,1.83549 11.80989,4.03081 17.5508,6.46101 0.85397,0.36149 2.50726,1.20541 2.50726,1.20541 H 38.737019 Z"
+       id="path1"
+       sodipodi:nodetypes="csssssccc" />
+  </g>
+</svg>

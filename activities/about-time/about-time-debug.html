@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="../shared/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../shared/doorway.css">
+    <link rel="stylesheet" type="text/css" href="about-time.css">
+    <script type="module" src="./about-time.js"></script>
+    <title>Doorway About Time (debug)</title>
+</head>
+<body id="bodyId" onload="AboutTime_init();">
+<div id="dwWholeApp" class="doorway_application">
+    <div id="dwFullScreenDiv" class="doorway_fullscreen_div">
+        <div id="dwAspectOuterDiv" class="doorway_aspect_outer_div">
+            <div id="dwAspectDiv" class="doorway_aspect_div">
+
+                <div id="dwLiveRegion" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+                <!-- Navigation header (shown during activity and results screens) -->
+                <nav id="dwNavigationHeader" class="navigation_header" data-i18nkey-aria-label="nav.toolbar.label">
+                    <button type="button" class="teacher_button hidden_panel" id="dwOptionsButton" data-i18nkey-aria-label="nav.settings.label">
+                        <img src="../shared/settings.svg" width="100%" height="100%" alt="Options" aria-hidden="true">
+                    </button>
+                    <button type="button" class="teacher_button" id="dwFullScreenButton" data-i18nkey-aria-label="nav.fullscreen.label">
+                        <img src="../shared/full-screen.svg" width="100%" height="100%" alt="Fullscreen" aria-hidden="true">
+                    </button>
+
+                </nav>
+
+                <!-- Shared page header (banner landmark). Sibling of <main>, so
+                     <header> gets its implicit banner role. Content varies per
+                     screen via CSS visibility: logo shows on welcome; title
+                     shows on options; whole header hidden on activity. -->
+                <header class="dw-screen-header">
+                    <a href="http://www.doorwayonline.org.uk/" class="doorway_logo">
+                        <img src="../shared/doorwayLogo.svg" alt="Doorway Online">
+                    </a>
+                    <h1 class="title_message" tabindex="-1" data-i18nkey="options.heading">Options</h1>
+                </header>
+
+                <main>
+
+                <!-- Welcome screen -->
+                <div id="dwWelcomeScreen" class="doorway_welcome at-welcome">
+                    <div class="dw-welcome-body">
+                        <div class="dw-welcome-titles">
+                            <p class="dw-app-label" data-i18nkey="doorway.brand">Doorway</p>
+                            <h1 class="title_message" tabindex="-1" data-i18nkey="about-time.welcome.title">About Time</h1>
+                        </div>
+                        <div class="welcome_image" role="img" aria-label="Green alarm clock with bells" data-i18nkey-aria-label="about-time.aria.welcome-clock">
+                            <div class="at-welcome-clock-wrap">
+                                <img src="pictures/alarmClockBack.png" class="at-welcome-clock-img" alt="">
+                                <img src="pictures/clockFrontPage.png" class="at-welcome-face-img" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Options screen -->
+                <form name="options_form" id="dwUserOptions" class="hidden_panel at-options">
+                    <div class="at-options-inner">
+                        <fieldset class="options_group at-activity-group">
+                            <legend class="options_group_title" data-i18nkey="about-time.options.heading.activity">Activity</legend>
+                            <div class="at-activity-choices">
+                                <div class="at-activity-choice">
+                                    <input type="radio" name="at_activity" value="1" id="radio-activity-1" checked>
+                                    <label for="radio-activity-1" class="at-activity-label">
+                                        <span class="at-activity-thumb at-activity-thumb-passing" aria-hidden="true">
+                                            <img class="at-thumb-base" src="pictures/analogueScene.png" alt="">
+                                            <img class="at-thumb-overlay at-thumb-passing-clock" src="pictures/clockManual.png" alt="">
+                                        </span>
+                                        <span class="user_options_radio button_div at-activity-name" data-i18nkey="about-time.options.mode.time-passing">Time Passing</span>
+                                    </label>
+                                </div>
+                                <div class="at-activity-choice">
+                                    <input type="radio" name="at_activity" value="2" id="radio-activity-2">
+                                    <label for="radio-activity-2" class="at-activity-label">
+                                        <span class="at-activity-thumb at-activity-thumb-alarm" aria-hidden="true">
+                                            <img class="at-thumb-base at-thumb-alarm-analogue" src="pictures/analogueClockMenu.png" alt="">
+                                            <img class="at-thumb-base at-thumb-alarm-body" src="pictures/alarmClockBack.png" alt="">
+                                            <img class="at-thumb-overlay at-thumb-alarm-band" src="pictures/digitalAlarmClock.png" alt="">
+                                        </span>
+                                        <span class="user_options_radio button_div at-activity-name" data-i18nkey="about-time.options.mode.setting-clock">Setting the Clock</span>
+                                    </label>
+                                </div>
+                                <div class="at-activity-choice">
+                                    <input type="radio" name="at_activity" value="3" id="radio-activity-3">
+                                    <label for="radio-activity-3" class="at-activity-label">
+                                        <span class="at-activity-thumb at-activity-thumb-watch" aria-hidden="true">
+                                            <img class="at-thumb-watch-analogue" src="pictures/analogueMenu3.png" alt="">
+                                            <img class="at-thumb-watch-digital" src="pictures/digitalWatch.png" alt="">
+                                        </span>
+                                        <span class="user_options_radio button_div at-activity-name" data-i18nkey="about-time.options.mode.what-time">What time is it?</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="at-digital-row">
+                                <input type="checkbox" class="dw-check-input" name="at_digital" id="at-digital-check" checked>
+                                <label for="at-digital-check" class="dw-check-label" data-i18nkey="about-time.options.digital-clock">digital clock?</label>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="options_group">
+                            <legend class="options_group_title" data-i18nkey="about-time.options.heading.interval">Minimum Interval</legend>
+                            <input type="radio" name="at_interval" value="1" id="radio-int-1" checked>
+                            <label for="radio-int-1" class="user_options_radio button_div" data-i18nkey="about-time.options.interval.1min">1 minute</label>
+                            <input type="radio" name="at_interval" value="5" id="radio-int-5">
+                            <label for="radio-int-5" class="user_options_radio button_div" data-i18nkey="about-time.options.interval.5min">5 minutes</label>
+                            <input type="radio" name="at_interval" value="15" id="radio-int-15">
+                            <label for="radio-int-15" class="user_options_radio button_div" data-i18nkey="about-time.options.interval.15min">15 minutes</label>
+                            <input type="radio" name="at_interval" value="60" id="radio-int-60">
+                            <label for="radio-int-60" class="user_options_radio button_div" data-i18nkey="about-time.options.interval.1hour">1 hour</label>
+                        </fieldset>
+
+                        <fieldset class="options_group">
+                            <legend class="options_group_title" data-i18nkey="about-time.options.heading.questions">Number of Questions</legend>
+                            <input type="radio" name="at_questions" value="5" id="radio-q-5">
+                            <label for="radio-q-5" class="user_options_radio button_div">5</label>
+                            <input type="radio" name="at_questions" value="10" id="radio-q-10" checked>
+                            <label for="radio-q-10" class="user_options_radio button_div">10</label>
+                            <input type="radio" name="at_questions" value="15" id="radio-q-15">
+                            <label for="radio-q-15" class="user_options_radio button_div">15</label>
+                            <input type="radio" name="at_questions" value="20" id="radio-q-20">
+                            <label for="radio-q-20" class="user_options_radio button_div">20</label>
+                        </fieldset>
+
+                        <fieldset class="options_group">
+                            <legend class="options_group_title" data-i18nkey="options.audio.legend">Audio</legend>
+                            <input type="radio" name="audio_mode" value="webspeech" id="radio-audio-webspeech">
+                            <label for="radio-audio-webspeech" class="user_options_radio button_div" data-i18nkey="options.audio.webspeech">Computer voice</label>
+                            <input type="radio" name="audio_mode" value="recorded" id="radio-audio-recorded" checked>
+                            <label for="radio-audio-recorded" class="user_options_radio button_div" data-i18nkey="options.audio.recorded">Recorded audio</label>
+                            <input type="radio" name="audio_mode" value="none" id="radio-audio-none">
+                            <label for="radio-audio-none" class="user_options_radio button_div" data-i18nkey="options.audio.none">No audio</label>
+                        </fieldset>
+
+                        <fieldset class="options_group accessibility_options at-scan-group">
+                            <legend class="options_group_title" data-i18nkey="accessibility.heading">Accessibility</legend>
+                            <div class="at-scan-onoff">
+                                <p class="at-scan-label" data-i18nkey="accessibility.scanning.label">Scanning</p>
+                                <input type="radio" name="enable_scanning" value="true" id="radio-scan-on">
+                                <label for="radio-scan-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.on">On</label>
+                                <input type="radio" name="enable_scanning" value="false" id="radio-scan-off" checked>
+                                <label for="radio-scan-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.off">Off</label>
+                            </div>
+                            <!-- Scan sub-panel: shown only when scanning is On -->
+                            <div id="atScanSubPanel" class="hidden_panel dw-scan-subpanel">
+                                <fieldset class="at-scan-switches-cell">
+                                    <legend class="sr-only" data-i18nkey="accessibility.switches.label">Number of switches</legend>
+                                    <input type="radio" name="num_switches" value="2" id="radio-switches-2">
+                                    <label for="radio-switches-2" class="user_options_radio button_div" data-i18nkey="accessibility.switches.two">Two switch</label>
+                                    <input type="radio" name="num_switches" value="1" id="radio-switches-1" checked>
+                                    <label for="radio-switches-1" class="user_options_radio button_div" data-i18nkey="accessibility.switches.one">One switch (auto)</label>
+                                </fieldset>
+                                <div id="atScanDelayRow" class="at-scan-delay-cell">
+                                    <p id="at-scan-delay-label" data-i18nkey="accessibility.scan-delay.label">Scan delay (seconds)</p>
+                                    <div class="spinner_select" id="scan_delay_spinner">
+                                        <button type="button" class="spinner_down" id="scan_delay_spin_down" aria-label="Shorter scan delay" data-i18nkey-aria-label="accessibility.scan-delay.decrease">-</button>
+                                        <select name="scan_delay" id="scan_delay_sel" aria-labelledby="at-scan-delay-label">
+                                            <option value="1000">1</option>
+                                            <option value="1500">1.5</option>
+                                            <option value="2000" selected>2</option>
+                                            <option value="2500">2.5</option>
+                                            <option value="3000">3</option>
+                                            <option value="3500">3.5</option>
+                                            <option value="4000">4</option>
+                                            <option value="4500">4.5</option>
+                                            <option value="5000">5</option>
+                                        </select>
+                                        <div class="spinner_display button_div" id="scan_delay_display">2</div>
+                                        <button type="button" class="spinner_up" id="scan_delay_spin_up" aria-label="Longer scan delay" data-i18nkey-aria-label="accessibility.scan-delay.increase">+</button>
+                                    </div>
+                                </div>
+                                <fieldset class="at-scan-back-group">
+                                    <legend data-i18nkey="accessibility.scanback.legend">Scan back button</legend>
+                                    <input type="radio" name="at_scan_back" value="true" id="radio-scanback-on">
+                                    <label for="radio-scanback-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.on">On</label>
+                                    <input type="radio" name="at_scan_back" value="false" id="radio-scanback-off" checked>
+                                    <label for="radio-scanback-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.off">Off</label>
+                                </fieldset>
+                            </div>
+                        </fieldset>
+
+                    </div>
+                </form>
+
+                <!-- Debug-only time-jump panel: hidden in production HTML,
+                     shown on -debug.html pages. Sets userHours/userMinutes
+                     on the AboutTime instance (exposed as window.aboutTime)
+                     and re-renders the Time Passing scene so testing the
+                     morning-bus two-phase animation doesn't require
+                     clicking through the clock buttons 100+ times. -->
+                <div id="atDebugJumps" hidden style="position: fixed; top: 8px; right: 8px; z-index: 9999; background: rgba(255,255,255,0.95); border: 1px solid #999; border-radius: 4px; padding: 6px 8px; font: 12px system-ui; box-shadow: 0 2px 6px rgba(0,0,0,0.15); max-width: 200px;">
+                    <div style="margin-bottom: 4px; font-weight: 600; color: #333;">jump clock</div>
+                    <div style="margin-bottom: 4px;">
+                        <div style="font-size: 10px; color: #666; margin-bottom: 2px;">morning arrival</div>
+                        <button type="button" data-jump="07:57" style="margin: 2px;">07:57 appears</button>
+                        <button type="button" data-jump="08:00" style="margin: 2px;">08:00 at house</button>
+                        <button type="button" data-jump="08:09" style="margin: 2px;">08:09 at bend</button>
+                        <button type="button" data-jump="08:11" style="margin: 2px;">08:11 face+hill</button>
+                        <button type="button" data-jump="08:22" style="margin: 2px;">08:22 reappear</button>
+                        <button type="button" data-jump="08:25" style="margin: 2px;">08:25 full scale</button>
+                        <button type="button" data-jump="08:40" style="margin: 2px;">08:40 parked</button>
+                    </div>
+                    <div style="margin-bottom: 4px;">
+                        <div style="font-size: 10px; color: #666; margin-bottom: 2px;">home-time departure</div>
+                        <button type="button" data-jump="15:17" style="margin: 2px;">15:17 pull away</button>
+                        <button type="button" data-jump="15:21" style="margin: 2px;">15:21 turn up</button>
+                        <button type="button" data-jump="15:24" style="margin: 2px;">15:24 receding</button>
+                        <button type="button" data-jump="15:30" style="margin: 2px;">15:30 gap</button>
+                        <button type="button" data-jump="15:35" style="margin: 2px;">15:35 tiny distance</button>
+                    </div>
+                    <div>
+                        <button type="button" data-jump="06:00" style="margin: 2px;">06:00 reset</button>
+                        <button type="button" data-toggle-ruler="1" style="margin: 2px;">ruler</button>
+                    </div>
+                </div>
+
+                <!-- Activity screen -->
+                <div id="dwActivityScreen" class="hidden_panel at-activity-screen">
+                    <h1 class="sr-only" tabindex="-1" data-i18nkey="about-time.welcome.title">About Time</h1>
+
+                    <!-- MODE 1: Time Passing -->
+                    <div id="atTimePassing" class="at-mode hidden_panel">
+                        <!-- Day/night scene. Stacking back-to-front:
+                             1. Sky — inline SVG gradient in .at-scene-base.
+                             2. Sun — driven by --at-sun-x / --at-sun-y.
+                                Sits above the sky but *below* the hills so
+                                the horizon line occludes it at sunrise/sunset
+                                (matches the Flash composite).
+                             3. Back hill (traced SVG) — distant green ridge.
+                             4. Back road — winding lane behind the front hill.
+                             5. Front hill — near-ground darker green band.
+                             6. Front roads — pair of driveways in the foreground.
+                             7. Daytime sprites (house, tree, house-windows,
+                                milk, school, car, car-2, car-rear, bus,
+                                football, pupils, teachers, skipping).
+                                (Flash's `flag` sprite and driving `cars`
+                                MovieClip are baked into school.png / not
+                                used in the HTML5 port.)
+                             8. Dim overlay — dark-navy CSS wash, alpha driven
+                                by --at-dim-alpha (replaces Flash backgroundColour.png).
+                             9. Night overlay — nightImage.png (silhouettes +
+                                crescent moon), alpha driven by --at-night-alpha.
+                            10. Stars (above night overlay so they sparkle).
+                             Alphas + sun arc are set from JS _updateScene(). -->
+                        <div id="atScene" class="at-scene" aria-hidden="true">
+                            <svg class="at-scene-base" viewBox="0 0 800 280" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Sky gradient: light blue top → softer blue near horizon -->
+                                <defs>
+                                    <linearGradient id="at-sky-grad" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%"   stop-color="#9ed3f1"/>
+                                        <stop offset="60%"  stop-color="#bce0f6"/>
+                                        <stop offset="100%" stop-color="#dcefea"/>
+                                    </linearGradient>
+                                </defs>
+                                <rect id="atSkyRect" class="at-sky-rect" x="0" y="0" width="800" height="280" fill="url(#at-sky-grad)"/>
+                            </svg>
+                            <!-- Sun sits behind the hills so the horizon line occludes it
+                                 at sunrise/sunset. Position/scale not yet calibrated —
+                                 the JS-driven arc (--at-sun-x/--at-sun-y) still places it
+                                 sensibly for daytime; follow-up to align with the reference
+                                 time-of-day. -->
+                            <img class="at-sun" src="pictures/sun.png" alt="">
+                            <!-- Hill + road layers (traced from analogueScene.png via the
+                                 about-time-calibrate page; positions locked in against the
+                                 upscaled reference). Rendered as <img> so they darken with
+                                 the dim/night overlays like every other sprite. -->
+                            <img class="at-back-hill"   src="pictures/back-hill.svg"   alt="" aria-hidden="true">
+                            <img class="at-back-road"   src="pictures/back-road.svg"   alt="" aria-hidden="true">
+                            <img class="at-front-hill"  src="pictures/front-hill.svg"  alt="" aria-hidden="true">
+                            <img class="at-front-roads" src="pictures/front-roads.svg" alt="" aria-hidden="true">
+                            <img class="at-house" src="pictures/house.png" alt="">
+                            <!-- Small stylised tree beside the house (Flash scene
+                                 had a tree silhouette here). Pure inline SVG so it
+                                 darkens with the dim/night overlays just like the
+                                 painted sprites. -->
+                            <svg class="at-tree" viewBox="0 0 40 60" aria-hidden="true">
+                                <rect id="atTreeTrunk" class="at-tree-trunk" x="17" y="32" width="6" height="22" fill="#5a3a22"/>
+                                <ellipse id="atTreeCanopyOuter" class="at-tree-canopy-outer" cx="20" cy="24" rx="16" ry="18" fill="#3f7d3a"/>
+                                <ellipse id="atTreeCanopyInner" class="at-tree-canopy-inner" cx="20" cy="22" rx="12" ry="14" fill="#4a8e44"/>
+                            </svg>
+                            <img class="at-house-windows hidden_panel" id="atHouseWindows" src="pictures/windows.png" alt="">
+                            <img class="at-milk hidden_panel" id="atMilk" src="pictures/milk.png" alt="">
+                            <img class="at-school" id="atSchool" src="pictures/school.png" alt="">
+                            <!-- Parked cars by the school (car1 kerbside + car2 just
+                                 below on the road) and blue rear-view car parked
+                                 by the house driveway. atCarRear starts hidden;
+                                 JS toggles it via _updateScene based on time. -->
+                            <img class="at-car" id="atCar" src="pictures/car1.png" alt="">
+                            <img class="at-car-2" id="atCar2" src="pictures/car2.png" alt="">
+                            <img class="at-car-rear hidden_panel" id="atCarRear" src="pictures/carRear.png" alt="" aria-hidden="true">
+                            <!-- Bus sprites: JS shows exactly one at a time based on
+                                 the current frame in BUS_VARIANT_BY_FRAME. All five
+                                 share the same --at-bus-x / --at-bus-y so the swap
+                                 doesn't shift position. `atBus` is the side view
+                                 (48×26); the four perspective sprites are
+                                 narrower (23–25×26–28) and used for the corner
+                                 turn behind the school. -->
+                            <img class="at-bus hidden_panel" id="atBus" src="pictures/bus.png" alt="">
+                            <img class="at-bus at-bus-back hidden_panel" id="atBusBack" src="pictures/busBack.png" alt="">
+                            <img class="at-bus at-bus-front hidden_panel" id="atBusFront" src="pictures/busFront.png" alt="">
+                            <img class="at-bus at-bus-quarter hidden_panel" id="atBusQuarter" src="pictures/busQuarter1.png" alt="">
+                            <img class="at-bus at-bus-quarter-back hidden_panel" id="atBusQuarterBack" src="pictures/busQuarterBack.png" alt="">
+                            <img class="at-football hidden_panel" id="atFootball" src="pictures/football.png" alt="">
+                            <!-- After-school football scene reused near the house. Same
+                                 sprite strip, driven by JS during the same after-school
+                                 window. Starts hidden. -->
+                            <img class="at-football-home hidden_panel" id="atFootballHome" src="pictures/football.png" alt="" aria-hidden="true">
+                            <img class="at-pupils hidden_panel" id="atPupils" src="pictures/pupils.png" alt="">
+                            <!-- Individual pupil sprites near the playground. Start hidden;
+                                 JS should show them during play periods. Running pupil
+                                 uses pupil7running_0000..0086 as an animation strip;
+                                 pupil-run-anim and pupil-run-anim2 are the 2- and
+                                 8-frame Flash sub-clips. -->
+                            <img class="at-pupil-1 hidden_panel" id="atPupil1" src="pictures/pupil1.png" alt="" aria-hidden="true">
+                            <img class="at-pupil-2 hidden_panel" id="atPupil2" src="pictures/pupil2.png" alt="" aria-hidden="true">
+                            <img class="at-pupil-3 hidden_panel" id="atPupil3" src="pictures/pupil3.png" alt="" aria-hidden="true">
+                            <img class="at-pupil-6 hidden_panel" id="atPupil6" src="pictures/pupil6.png" alt="" aria-hidden="true">
+                            <img class="at-pupil-8 hidden_panel" id="atPupil8" src="pictures/pupil8.png" alt="" aria-hidden="true">
+                            <img class="at-pupil-running hidden_panel" id="atPupilRunning" src="pictures/pupil7running_0000.png" alt="" aria-hidden="true">
+                            <img class="at-pupil-run-anim hidden_panel" id="atPupilRunAnim" src="pictures/pupil7runAnim_0000.png" alt="" aria-hidden="true">
+                            <img class="at-pupil-run-anim2 hidden_panel" id="atPupilRunAnim2" src="pictures/pupil7runAnim2_0000.png" alt="" aria-hidden="true">
+                            <img class="at-teachers hidden_panel" id="atTeachers" src="pictures/teachers.png" alt="">
+                            <img class="at-skipping hidden_panel" id="atSkipping" src="pictures/skipping.png" alt="">
+                            <!-- Dim overlay — painted dark-navy via CSS background-color so
+                                 it darkens the sky to night (replacing Flash's
+                                 backgroundColour.png mid-grey wash, which CSS multiply
+                                 can't reproduce convincingly over a bright SVG sky). -->
+                            <div id="atDimOverlay" class="at-dim-overlay" aria-hidden="true"></div>
+                            <!-- Night overlay (crescent moon + silhouettes) — sits above everything else but the stars and sun. -->
+                            <img id="atNightOverlay" class="at-night-overlay" src="pictures/nightImage.png" alt="">
+                            <div class="at-stars">
+                                <span class="at-star at-star-1"></span>
+                                <span class="at-star at-star-2"></span>
+                                <span class="at-star at-star-3"></span>
+                                <span class="at-star at-star-4"></span>
+                                <span class="at-star at-star-5"></span>
+                                <span class="at-star at-star-6"></span>
+                                <span class="at-star at-star-7"></span>
+                                <span class="at-star at-star-8"></span>
+                                <span class="at-star at-star-9"></span>
+                                <span class="at-star at-star-10"></span>
+                                <span class="at-star at-star-11"></span>
+                                <span class="at-star at-star-12"></span>
+                                <span class="at-star at-star-13"></span>
+                                <span class="at-star at-star-14"></span>
+                                <span class="at-star at-star-15"></span>
+                            </div>
+                            <!-- Debug-only ruler overlay for calling out
+                                 precise positions in px / em. Toggled
+                                 by the "ruler" button in the debug panel;
+                                 hidden by default so production is clean.
+                                 Coord system: 0,0 top-left, scene is
+                                 800 × 224 px (= 50 × 14 em, 1em = 16px). -->
+                            <div class="at-debug-ruler" aria-hidden="true">
+                                <span class="tick tick-x" style="left: 0%">0px / 0em</span>
+                                <span class="tick tick-x" style="left: 10%">80px / 5em</span>
+                                <span class="tick tick-x" style="left: 20%">160px / 10em</span>
+                                <span class="tick tick-x" style="left: 30%">240px / 15em</span>
+                                <span class="tick tick-x" style="left: 40%">320px / 20em</span>
+                                <span class="tick tick-x" style="left: 50%">400px / 25em</span>
+                                <span class="tick tick-x" style="left: 60%">480px / 30em</span>
+                                <span class="tick tick-x" style="left: 70%">560px / 35em</span>
+                                <span class="tick tick-x" style="left: 80%">640px / 40em</span>
+                                <span class="tick tick-x" style="left: 90%">720px / 45em</span>
+                                <span class="tick tick-x" style="left: 100%; transform: translateX(-100%)">800px / 50em</span>
+                                <span class="tick tick-y" style="top: 0%">0px / 0em</span>
+                                <span class="tick tick-y" style="top: 14.286%">32px / 2em</span>
+                                <span class="tick tick-y" style="top: 28.571%">64px / 4em</span>
+                                <span class="tick tick-y" style="top: 42.857%">96px / 6em</span>
+                                <span class="tick tick-y" style="top: 57.143%">128px / 8em</span>
+                                <span class="tick tick-y" style="top: 71.429%">160px / 10em</span>
+                                <span class="tick tick-y" style="top: 85.714%">192px / 12em</span>
+                                <span class="tick tick-y" style="top: 100%; transform: translateY(-100%)">224px / 14em</span>
+                                <span class="readout">800 × 224 px (50 × 14 em, 1em = 16px)<br>minor grid = 1em / 16px</span>
+                            </div>
+                        </div>
+                        <!-- Digital clock overlay (top-right) — shown when digital option on -->
+                        <div id="atDigitalTP" class="at-digital-overlay hidden_panel" aria-hidden="true">
+                            <span id="atDigitalTPH" class="at-dig-h">12</span><span class="at-dig-colon">:</span><span id="atDigitalTPM" class="at-dig-m">00</span>
+                        </div>
+                        <!-- Analogue clock face with hands. The face SVG
+                             (pictures/clock-face.svg) is generated from
+                             extracted/About Time/svgs/source/clock-face.svg
+                             via scripts/utils/svg_text_to_path.py, which
+                             outlines the Jotter numerals to <path> so the
+                             SVG renders identically when embedded via <img>
+                             (no @font-face dependency). The face viewBox is
+                             286×284 with the clock circle centred at
+                             (143, 142). -->
+                        <div id="atClockTP" class="at-clock-tp" role="img" aria-label="Clock" data-i18nkey-aria-label="about-time.aria.clock" aria-live="polite">
+                            <img src="pictures/clock-face.svg" class="at-tp-clock-face" alt="" aria-hidden="true">
+                            <img src="pictures/hour-hand.svg"   class="at-hand at-hour-hand"   id="atTPHourHand"   alt="">
+                            <img src="pictures/minute-hand.svg" class="at-hand at-minute-hand" id="atTPMinuteHand" alt="">
+                            <img src="pictures/clock-centre.svg" class="at-tp-centre-cap" alt="" aria-hidden="true">
+                        </div>
+                        <!-- Time-as-words label under the clock. Populated by _renderTP.
+                             Placeholder em-dash shows before JS runs (locale-neutral). -->
+                        <div id="atTPTimeText" class="at-tp-time-text" aria-live="polite">—</div>
+                        <!-- Left column: minus buttons -->
+                        <div class="at-adj-col at-adj-left">
+                            <button type="button" id="atMinuteMinus"  class="at-adj-btn" data-i18nkey="about-time.activity.minus-1min">- 1 minute</button>
+                            <button type="button" id="atFiveMinus"    class="at-adj-btn" data-i18nkey="about-time.activity.minus-5min">- 5 minutes</button>
+                            <button type="button" id="atQuarterMinus" class="at-adj-btn" data-i18nkey="about-time.activity.minus-15min">- 15 minutes</button>
+                            <button type="button" id="atHourMinus"    class="at-adj-btn" data-i18nkey="about-time.activity.minus-1hour">- 1 hour</button>
+                        </div>
+                        <!-- Right column: plus buttons -->
+                        <div class="at-adj-col at-adj-right">
+                            <button type="button" id="atMinutePlus"  class="at-adj-btn" data-i18nkey="about-time.activity.plus-1min">+ 1 minute</button>
+                            <button type="button" id="atFivePlus"    class="at-adj-btn" data-i18nkey="about-time.activity.plus-5min">+ 5 minutes</button>
+                            <button type="button" id="atQuarterPlus" class="at-adj-btn" data-i18nkey="about-time.activity.plus-15min">+ 15 minutes</button>
+                            <button type="button" id="atHourPlus"    class="at-adj-btn" data-i18nkey="about-time.activity.plus-1hour">+ 1 hour</button>
+                        </div>
+                        <!-- Bottom bar: left cluster (Current Time + Reset),
+                             centred lips, right cluster (Play). Matches Flash
+                             layout. -->
+                        <div class="at-tp-bar">
+                            <div class="at-tp-bar-left">
+                                <button type="button" id="atCurrentTime" class="at-bar-btn" data-i18nkey="about-time.activity.current-time">Current Time</button>
+                                <button type="button" id="atReset"       class="at-bar-btn" data-i18nkey="about-time.activity.reset">Reset</button>
+                            </div>
+                            <button type="button" id="atMouthTP" class="at-mouth-btn at-tp-mouth" aria-label="Speak time" data-i18nkey-aria-label="about-time.aria.speak-time">
+                                <img src="pictures/mouth.png" alt="">
+                            </button>
+                            <div class="at-tp-bar-right">
+                                <button type="button" id="atPlayBtn" class="at-play-btn" data-i18nkey="about-time.activity.play">Play &#9654;</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODE 2: Setting the Clock -->
+                    <div id="atSettingClock" class="at-mode hidden_panel">
+                        <!-- Alarm clock with hands -->
+                        <div id="atAlarmWrap" class="at-alarm-wrap" aria-label="Clock" data-i18nkey-aria-label="about-time.aria.clock" aria-live="polite">
+                            <!-- Green analogue alarm body. Hidden via JS (#atAlarmImg) when
+                                 the digital option is on — matches Flash frame_05.as where
+                                 analogueClock._visible = false in digital mode. -->
+                            <img id="atAlarmImg" src="pictures/alarmClockBack.png" class="at-alarm-img" alt="">
+                            <!-- Canonical clock face SVG — same asset used by Time Passing.
+                                 Numerals and tick marks are baked into the SVG; no separate
+                                 numerals overlay is needed. JS toggles the `hidden_panel`
+                                 class on `.at-alarm-face-svg` to hide it in digital mode. -->
+                            <img src="pictures/clock-face.svg" class="at-alarm-face-svg" alt="" aria-hidden="true">
+                            <!-- Digital display (shown when digital option on) — overlays
+                                 the centre band of the analogue face (matches Flash).
+                                 Uses the shared digitalAlarmClock.png chrome sprite, the
+                                 same asset that renders the options-screen thumbnail. -->
+                            <div id="atDigitalBand" class="at-digital-band hidden_panel" aria-hidden="true">
+                                <img class="at-digital-band-img" src="pictures/digitalAlarmClock.png" alt="">
+                                <div class="at-digital-band-screen">
+                                    <div class="at-digital-band-inset">
+                                        <span id="atDigitalBandH" class="at-dig-h">12</span><span class="at-dig-colon">:</span><span id="atDigitalBandM" class="at-dig-m">00</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <img src="pictures/hour-hand.svg"   class="at-hand at-sc-hour-hand"   id="atSCHourHand"   alt="">
+                            <img src="pictures/minute-hand.svg" class="at-hand at-sc-minute-hand" id="atSCMinuteHand" alt="">
+                            <img src="pictures/clock-centre.svg" class="at-sc-centre-cap" alt="" aria-hidden="true">
+                        </div>
+                        <!-- Left column: minus buttons -->
+                        <div class="at-adj-col at-adj-left at-sc-adj-left">
+                            <button type="button" id="atSCMinuteMinus"  class="at-adj-btn" data-i18nkey="about-time.activity.minus-1min">- 1 minute</button>
+                            <button type="button" id="atSCFiveMinus"    class="at-adj-btn" data-i18nkey="about-time.activity.minus-5min">- 5 minutes</button>
+                            <button type="button" id="atSCQuarterMinus" class="at-adj-btn" data-i18nkey="about-time.activity.minus-15min">- 15 minutes</button>
+                            <button type="button" id="atSCHourMinus"    class="at-adj-btn" data-i18nkey="about-time.activity.minus-1hour">- 1 hour</button>
+                        </div>
+                        <!-- Right column: plus buttons -->
+                        <div class="at-adj-col at-adj-right at-sc-adj-right">
+                            <button type="button" id="atSCMinutePlus"  class="at-adj-btn" data-i18nkey="about-time.activity.plus-1min">+ 1 minute</button>
+                            <button type="button" id="atSCFivePlus"    class="at-adj-btn" data-i18nkey="about-time.activity.plus-5min">+ 5 minutes</button>
+                            <button type="button" id="atSCQuarterPlus" class="at-adj-btn" data-i18nkey="about-time.activity.plus-15min">+ 15 minutes</button>
+                            <button type="button" id="atSCHourPlus"    class="at-adj-btn" data-i18nkey="about-time.activity.plus-1hour">+ 1 hour</button>
+                        </div>
+                        <!-- Bottom bar -->
+                        <div class="at-sc-bar">
+                            <span class="at-set-label" data-i18nkey="about-time.activity.set-clock-to">Set the clock to</span>
+                            <span id="atTargetText" class="at-target-text"></span>
+                            <button type="button" id="atMouthSC" class="at-mouth-btn" aria-label="Speak target time" data-i18nkey-aria-label="about-time.aria.speak-target-time">
+                                <img src="pictures/mouth.png" alt="">
+                            </button>
+                            <button type="button" id="atCheckBtn" class="at-check-btn" data-i18nkey="about-time.activity.check">&#10003; check</button>
+                        </div>
+                    </div>
+
+                    <!-- MODE 3: What Time Is It? -->
+                    <div id="atWhatTime" class="at-mode hidden_panel">
+                        <div class="at-wt-left">
+                            <p class="at-wt-heading" data-i18nkey="about-time.activity.what-time-question">What time is it?</p>
+                            <div class="at-answer-row">
+                                <button type="button" id="atQButton1" class="at-answer-btn"></button>
+                                <button type="button" id="atMouth1" class="at-mouth-btn" aria-label="Hear option 1" data-i18nkey-aria-label="about-time.aria.hear-option-1">
+                                    <img src="pictures/mouth.png" alt="">
+                                </button>
+                            </div>
+                            <div class="at-answer-row">
+                                <button type="button" id="atQButton2" class="at-answer-btn"></button>
+                                <button type="button" id="atMouth2" class="at-mouth-btn" aria-label="Hear option 2" data-i18nkey-aria-label="about-time.aria.hear-option-2">
+                                    <img src="pictures/mouth.png" alt="">
+                                </button>
+                            </div>
+                            <div class="at-answer-row">
+                                <button type="button" id="atQButton3" class="at-answer-btn"></button>
+                                <button type="button" id="atMouth3" class="at-mouth-btn" aria-label="Hear option 3" data-i18nkey-aria-label="about-time.aria.hear-option-3">
+                                    <img src="pictures/mouth.png" alt="">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="at-wt-right">
+                            <!-- Analogue watch (default).
+                                 Uses the same canonical clock-face.svg as Time
+                                 Passing, with hour-hand.svg / minute-hand.svg
+                                 vector hands and the shared clock-centre.svg
+                                 cap. Numerals and tick marks are baked into
+                                 clock-face.svg. -->
+                            <div id="atWatchAnalogue" class="at-watch-analogue">
+                                <img src="pictures/watchBack.png" class="at-watch-back-img" alt="">
+                                <div class="at-watch-clock-overlay">
+                                    <img src="pictures/clock-face.svg" class="at-wt-face-svg" alt="" aria-hidden="true">
+                                    <img src="pictures/hour-hand.svg"   class="at-hand at-hour-hand"   id="atWTHourHand"   alt="">
+                                    <img src="pictures/minute-hand.svg" class="at-hand at-minute-hand" id="atWTMinuteHand" alt="">
+                                    <img src="pictures/clock-centre.svg" class="at-wt-centre-cap" alt="" aria-hidden="true">
+                                </div>
+                            </div>
+                            <!-- Digital watch (shown when digital option on) -->
+                            <div id="atWatchDigital" class="at-watch-digital hidden_panel">
+                                <img src="pictures/digitalWatch.png" class="at-digital-watch-img" alt="">
+                                <div class="at-digital-watch-display" aria-hidden="true">
+                                    <span id="atWTDigitalH" class="at-dig-h">12</span><span class="at-dig-colon">:</span><span id="atWTDigitalM" class="at-dig-m">00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feedback overlay (correct / incorrect / finished) -->
+                    <div id="atFeedback" class="at-feedback hidden_panel" role="status" aria-live="assertive" aria-atomic="true"></div>
+
+                </div>
+
+                <!-- Results screen -->
+                <div id="dwResultsScreen" class="hidden_panel at-results-screen">
+                    <div class="at-paper">
+                        <div class="at-paper-top">
+                            <h2 class="at-paper-title" tabindex="-1" data-i18nkey="about-time.results.title">About Time</h2>
+                            <div class="at-paper-fields">
+                                <label class="at-field-label" data-i18nkey="about-time.results.name">Name:</label>
+                                <input type="text" id="atResultsName" class="at-text-input">
+                                <label class="at-field-label" data-i18nkey="about-time.results.date">Date:</label>
+                                <input type="text" id="atResultsDate" class="at-text-input at-date-input">
+                            </div>
+                        </div>
+                        <table class="at-score-table" id="atScoreboard" aria-label="Time results" data-i18nkey-aria-label="about-time.aria.results-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" data-i18nkey="about-time.results.col.time">Time</th>
+                                    <th scope="col" data-i18nkey="results.col.tries">Tries</th>
+                                    <th scope="col" data-i18nkey="about-time.results.col.time">Time</th>
+                                    <th scope="col" data-i18nkey="results.col.tries">Tries</th>
+                                </tr>
+                            </thead>
+                            <tbody id="atScoreboardBody">
+                                <!-- populated by JS -->
+                            </tbody>
+                        </table>
+                        <div class="at-total-row">
+                            <span data-i18nkey="about-time.results.total">Total:</span>
+                            <span id="atScoreTotal"></span>
+                        </div>
+                    </div>
+                    <div class="at-results-nav">
+                        <button type="button" id="atPrintBtn" class="main_button" data-i18nkey="about-time.results.print">Print</button>
+                        <p class="at-print-hint" data-i18nkey="shared.print.hint">Tip: choose 'Save as PDF' in the print dialog to keep a digital copy.</p>
+                    </div>
+                </div>
+
+                <!-- Audio clips (recorded WAV files) -->
+                <div id="atAudioContainer" aria-hidden="true" style="display:none;">
+                    <!-- Numbers 1–20, 30, 40, 50, 60 -->
+                    <audio src="audio/1.wav"  preload="auto" id="at-audio-1"></audio>
+                    <audio src="audio/2.wav"  preload="auto" id="at-audio-2"></audio>
+                    <audio src="audio/3.wav"  preload="auto" id="at-audio-3"></audio>
+                    <audio src="audio/4.wav"  preload="auto" id="at-audio-4"></audio>
+                    <audio src="audio/5.wav"  preload="auto" id="at-audio-5"></audio>
+                    <audio src="audio/6.wav"  preload="auto" id="at-audio-6"></audio>
+                    <audio src="audio/7.wav"  preload="auto" id="at-audio-7"></audio>
+                    <audio src="audio/8.wav"  preload="auto" id="at-audio-8"></audio>
+                    <audio src="audio/9.wav"  preload="auto" id="at-audio-9"></audio>
+                    <audio src="audio/10.wav" preload="auto" id="at-audio-10"></audio>
+                    <audio src="audio/11.wav" preload="auto" id="at-audio-11"></audio>
+                    <audio src="audio/12.wav" preload="auto" id="at-audio-12"></audio>
+                    <audio src="audio/13.wav" preload="auto" id="at-audio-13"></audio>
+                    <audio src="audio/14.wav" preload="auto" id="at-audio-14"></audio>
+                    <audio src="audio/15.wav" preload="auto" id="at-audio-15"></audio>
+                    <audio src="audio/16.wav" preload="auto" id="at-audio-16"></audio>
+                    <audio src="audio/17.wav" preload="auto" id="at-audio-17"></audio>
+                    <audio src="audio/18.wav" preload="auto" id="at-audio-18"></audio>
+                    <audio src="audio/19.wav" preload="auto" id="at-audio-19"></audio>
+                    <audio src="audio/20.wav" preload="auto" id="at-audio-20"></audio>
+                    <audio src="audio/30.wav" preload="auto" id="at-audio-30"></audio>
+                    <audio src="audio/40.wav" preload="auto" id="at-audio-40"></audio>
+                    <audio src="audio/50.wav" preload="auto" id="at-audio-50"></audio>
+                    <audio src="audio/60.wav" preload="auto" id="at-audio-60"></audio>
+                    <!-- Time phrase words -->
+                    <audio src="audio/halfpast.wav"      preload="auto" id="at-audio-halfpast"></audio>
+                    <audio src="audio/incorrectSound.wav" preload="auto" id="at-audio-incorrectSound"></audio>
+                    <audio src="audio/its.wav"           preload="auto" id="at-audio-its"></audio>
+                    <audio src="audio/minute.wav"        preload="auto" id="at-audio-minute"></audio>
+                    <audio src="audio/minutes.wav"       preload="auto" id="at-audio-minutes"></audio>
+                    <audio src="audio/o.wav"             preload="auto" id="at-audio-o"></audio>
+                    <audio src="audio/oclock.wav"        preload="auto" id="at-audio-oclock"></audio>
+                    <audio src="audio/past.wav"          preload="auto" id="at-audio-past"></audio>
+                    <audio src="audio/past2.wav"         preload="auto" id="at-audio-past2"></audio>
+                    <audio src="audio/quarter.wav"       preload="auto" id="at-audio-quarter"></audio>
+                    <audio src="audio/quarterpast.wav"   preload="auto" id="at-audio-quarterpast"></audio>
+                    <audio src="audio/quarterto.wav"     preload="auto" id="at-audio-quarterto"></audio>
+                    <audio src="audio/settheclockto.wav" preload="auto" id="at-audio-settheclockto"></audio>
+                    <audio src="audio/to.wav"            preload="auto" id="at-audio-to"></audio>
+                    <audio src="audio/welldone.wav"        preload="auto" id="at-audio-welldone"></audio>
+                    <audio src="audio/whattimeisit.wav"  preload="auto" id="at-audio-whattimeisit"></audio>
+                    <audio src="audio/youhavefinished.wav" preload="auto" id="at-audio-youhavefinished"></audio>
+                </div>
+
+                <!-- Shared framework elements -->
+                <div id="dwMainApp" style="display:none;"></div>
+                <div id="dwDarkenedPanel" class="darkened_panel hidden_panel"></div>
+                <div id="dwWellDone" class="well_done_message hidden_panel">
+                    <p class="instruction_message"></p>
+                </div>
+
+            </main>
+
+            <!-- Shared page footer (contentinfo landmark). Sibling of <main>,
+                 so <footer> gets its implicit contentinfo role. Action buttons
+                 visibility per screen via CSS: enter on welcome; home+start on
+                 options; whole footer hidden on activity. -->
+            <footer class="dw-app-footer">
+                <div class="dw-action-footer">
+                    <button id="dwEnterButton" class="pencil_btn" data-i18nkey="doorway.btn.enter">enter</button>
+                    <button type="button" id="dwHomeButton" class="pencil_btn" data-pencil-dir="left" data-i18nkey="doorway.btn.home">home</button>
+                    <button type="button" id="dwSubmitUserOptions" class="pencil_btn" data-i18nkey="doorway.btn.start">start</button>
+                </div>
+                <p class="copyright_message" data-i18nkey="doorway.copyright">© CALL Scotland, University of Edinburgh 2026</p>
+            </footer>
+            </div><!-- doorway_aspect_div -->
+        </div><!-- doorway_aspect_outer_div -->
+    </div><!-- doorway_fullscreen_div -->
+</div><!-- doorway_application -->
+
+<!-- Debug-only: wire the time-jump buttons to the AboutTime instance.
+     Only exposed on -debug.html; production HTML is regenerated from this
+     file by grunt synchtml which copies the panel + this script verbatim,
+     but the show-guard below keeps it hidden unless the page path ends
+     with -debug.html. -->
+<script>
+(function () {
+    if (!location.pathname.endsWith('-debug.html')) return;
+    const panel = document.getElementById('atDebugJumps');
+    if (!panel) return;
+    panel.hidden = false;
+    panel.addEventListener('click', function (e) {
+        const jumpBtn = e.target.closest('button[data-jump]');
+        if (jumpBtn) {
+            const activity = window.dwMainActivity;
+            if (!activity) return;
+            const parts = jumpBtn.dataset.jump.split(':');
+            activity.userHours = Number(parts[0]);
+            activity.userMinutes = Number(parts[1]);
+            if (typeof activity._renderTP === 'function') activity._renderTP();
+            return;
+        }
+        const rulerBtn = e.target.closest('button[data-toggle-ruler]');
+        if (rulerBtn) {
+            const scene = document.getElementById('atScene');
+            if (scene) scene.classList.toggle('debug-ruler-on');
+        }
+    });
+})();
+</script>
+</body>
+</html>

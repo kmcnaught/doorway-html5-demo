@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:ffdec="https://www.free-decompiler.com/flash" xmlns:xlink="http://www.w3.org/1999/xlink" ffdec:objectType="frame" height="61.1px" width="64.75px" xmlns="http://www.w3.org/2000/svg">
+  <g transform="matrix(1.0, 0.0, 0.0, 1.0, -0.5, -0.5)">
+    <use ffdec:characterId="29" height="61.1" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="63.85" xlink:href="#morphshape0"/>
+    <use ffdec:characterId="30" height="60.4" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="64.55" xlink:href="#morphshape1"/>
+  </g>
+  <defs>
+    <g id="morphshape0">
+      <path d="M6.4 56.6 L60.25 5.5" fill="none" stroke="#ff0000" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.5019608" stroke-width="10.0"/>
+    </g>
+    <g id="morphshape1">
+      <path d="M5.5 6.2 L60.05 56.6" fill="none" stroke="#ff0000" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.5019608" stroke-width="10.0"/>
+    </g>
+  </defs>
+</svg>

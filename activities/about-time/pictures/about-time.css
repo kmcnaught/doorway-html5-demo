@@ -1,0 +1,1679 @@
+/* Doorway About Time — activity styles.
+   1em = 1/50th of activity width (set by doorway.js onResize).
+   Flash stage: 800×600. CSS container: 800×450 (y-scale 0.75).
+   Coordinate formulae:
+     css_left_em  = flash_x / 16
+     css_top_em   = flash_y × 0.75 / 16
+     css_width_em = flash_w / 16
+*/
+
+/* =========================================================
+   Welcome screen — flow mode chrome (shared header + footer)
+   ========================================================= */
+
+.at-welcome {
+    width: 100%;
+}
+
+/* Welcome illustration wraps the alarm clock. In flow mode the parent is
+   .dw-welcome-body which centres the trio vertically; the illustration uses
+   max-width/max-height to scale down on small viewports without distorting
+   the clock's aspect ratio. */
+body.dw-screen-welcome .at-welcome .welcome_image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 22em;
+    max-height: 60vh;
+    margin: 0.5em auto;
+}
+
+/* Clock container on welcome screen.
+   alarmClockBack.png is 387×432 (aspect 0.896:1).
+   Sized at 15.3em (= 18em × 0.85) so the welcome graphic is 15% smaller
+   than the previous render — better matches the Flash welcome proportions
+   where the clock occupies ~half the stage rather than dominating it. */
+.at-welcome-clock-wrap {
+    position: relative;
+    height: 15.3em;
+    max-height: 100%;
+    width: calc(15.3em * 387 / 432);  /* maintain alarm clock aspect ratio */
+    flex-shrink: 0;
+}
+
+.at-welcome-clock-img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;   /* same aspect ratio as image — no distortion */
+    display: block;
+}
+
+/* clockFrontPage.png (286×284) overlaid on the green circle of alarmClockBack.png.
+   Geometry is derived from pixel measurements of both assets so the face's
+   pivot dot lands on the green ring's optical centre.
+
+   Source measurements (via PIL on the PNG asset; see notes in the commit
+   that introduced this rule):
+     alarmClockBack.png (387×432):
+       green ring bbox     y=50..427  →  centre at y=238.5 → 55.21% of image height
+       green ring bbox x   x=4..381   →  centre at x=192.5 → 49.74% of image width
+     clockFrontPage.png (286×284):
+       dark ring bbox      y=1..282   →  ring centre at y=141.5 → 49.82% of face height
+       blue pivot dot      y=132..147 →  pivot centre at y=139.5 → 49.12% of face height
+
+   Wrap dimensions: height H = 15.3em, width = H × 387/432 (preserves alarm
+   aspect so alarmClockBack renders without distortion).
+
+   Face rendering: width:90% of wrap_w; height:auto preserves 284/286 aspect, so
+     face_render_h = 90% × wrap_w × 284/286
+                   = 90% × H × (387/432) × (284/286)
+                   ≈ 80.05% of wrap_h.
+
+   To place the face PIVOT on the green ring centre:
+     pivot_y_in_wrap = top + (139.5/284) × face_render_h
+                     = top + 0.4912 × 80.05%
+                     = top + 39.31%
+     target: pivot_y_in_wrap == 55.21%
+     therefore top = 55.21% − 39.31% = 15.90%.
+
+   Custom properties expose each measurement so the geometry can be tweaked
+   without re-deriving the maths. */
+.at-welcome-clock-wrap {
+    /* Asset measurements — change these if the source PNGs are re-cropped. */
+    --at-ring-centre-x-pct: 49.74;   /* green ring centre x / wrap_w */
+    --at-ring-centre-y-pct: 55.21;   /* green ring centre y / wrap_h */
+    /* Use the face's dark-ring centre (49.82% of face height) rather than the
+       blue pivot dot (49.12%) so the face sits geometrically centred inside
+       the green ring. The pivot is ~0.7% below the face's ring centre, so
+       anchoring on the pivot pushes the face slightly low; nudging the anchor
+       down to the ring centre lifts the face by the same amount. */
+    --at-face-pivot-y-pct: 49.82;    /* face ring centre y / face image height */
+
+    /* Face render size as fraction of wrap. width is the input (90%); height
+       follows the face image's 284/286 aspect and the wrap's 387/432 aspect:
+       face_h/wrap_h = face_w/wrap_w × (284/286) × (wrap_w/wrap_h)
+                     = 0.9 × 0.9930 × (387/432)
+                     ≈ 0.8005. */
+    --at-face-w-pct: 90;
+    --at-face-h-pct: 80.05;
+}
+
+/* Descendant selector (specificity 0,2,0) beats doorway.css's
+   `div.welcome_image img` (specificity 0,1,1) which would otherwise force
+   width:100%; height:100% on the face overlay. */
+.at-welcome-clock-wrap .at-welcome-face-img {
+    position: absolute;
+    width: calc(var(--at-face-w-pct) * 1%);
+    height: auto;
+    /* top = ring_centre_y − pivot_y_in_face × face_h
+       (all in % of wrap; pivot_y_in_face is a fraction of face_h) */
+    top: calc(
+        (var(--at-ring-centre-y-pct) * 1%)
+        - (var(--at-face-pivot-y-pct) / 100 * var(--at-face-h-pct) * 1%)
+    );
+    /* left = ring_centre_x − pivot_x_in_face × face_w. Face pivot x ≈ 49.65%
+       of face width (clockFrontPage measurements: pivot x centre = 142/286).
+       For the symmetric case 49.65 × 0.9 ≈ 44.69 → left ≈ 49.74 − 44.69 = 5.05%.
+       Use simple `5%` since the value is dominated by the chosen face width
+       (90%) and is visually indistinguishable. */
+    left: 5%;
+    transform: none;
+    pointer-events: none;
+}
+
+/* =========================================================
+   Options screen
+   ========================================================= */
+
+.at-options {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Legacy aspect-locked layout (un-migrated screens / browsers) keeps the
+   internal scroll context so the form fits the 16:9 letterbox. In flow mode
+   the page-level <html> handles scroll and the page-level sticky footer
+   relies on no intermediate scroll context being created here. */
+body.dw-aspect-locked .at-options {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.at-options.hidden_panel {
+    display: none;
+}
+
+.at-options-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+    padding: 0.5em 1em;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Activity group: 3 thumbnails + buttons in a row that wraps to 2 or 1
+   columns when the viewport can't fit all three side-by-side. */
+.at-activity-choices {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.8em 1em;
+    justify-content: center;
+    margin-bottom: 0.3em;
+}
+
+.at-activity-choice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3em;
+    flex: 0 1 11em;
+    min-width: 0;
+}
+
+.at-activity-thumb {
+    width: 11em;
+    height: 6em;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.at-activity-thumb img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Time Passing: scene strip across the bottom, analogue clock face
+   overlaid roughly centred (matches the Flash composite). */
+.at-activity-thumb-passing .at-thumb-base {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.2em;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    object-fit: fill;
+}
+
+.at-activity-thumb-passing .at-thumb-passing-clock {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: 5.6em;
+    max-width: none;
+    max-height: none;
+}
+
+/* Setting the Clock: thumb shows the green analogue alarm body OR
+   the digital alarm clock chrome, depending on the "digital clock?"
+   checkbox state — never both at once (matches Flash, where the two
+   sprites are mutually exclusive).
+
+   The .at-thumb-alarm-digital state (toggled via JS on the parent
+   .at-activity-thumb-alarm) swaps which child image is visible. */
+.at-activity-thumb-alarm .at-thumb-alarm-body {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+}
+
+.at-activity-thumb-alarm .at-thumb-alarm-band {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: 4.6em;
+    max-width: none;
+    max-height: none;
+}
+
+/* Digital state: hide the green analogue body, show only the digital
+   alarm clock chrome. Default (no class) hides the digital and shows
+   the analogue body. */
+.at-activity-thumb-alarm:not(.at-thumb-alarm-digital) .at-thumb-alarm-band {
+    display: none;
+}
+.at-activity-thumb-alarm.at-thumb-alarm-digital .at-thumb-alarm-body {
+    display: none;
+}
+
+/* What time is it?: full bracelet watch shown prominently — let it use
+   the full thumb height rather than the tiny crop. */
+.at-activity-thumb-watch img {
+    max-height: 100%;
+}
+
+.at-activity-choice input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+}
+
+.at-activity-choice label.button_div {
+    width: 100%;
+    text-align: center;
+    font-size: 0.9em;
+    padding: 0.3em 0.4em;
+}
+
+/* digital clock? checkbox row */
+.at-digital-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    margin-top: 0.2em;
+    font-size: 1em;
+}
+
+
+/* Strip the default browser border from inner fieldsets inside the about-time
+   options form. The shared `form.user_options fieldset.options_group fieldset`
+   rule doesn't match because this form is `.at-options`, not `.user_options`.
+   Without this, the switches fieldset (sr-only legend, group-only) renders a
+   redundant outline inside the .dw-scan-subpanel box. */
+form.at-options fieldset.options_group fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Scanning group inline layout */
+.at-scan-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+
+.at-scan-btns {
+    display: flex;
+    flex-direction: row;
+    gap: 0.3em;
+    align-items: center;
+}
+
+.at-scan-help {
+    color: #444;
+    font-size: 0.9em;
+    margin: 0;
+}
+
+/* Hide the underlying <select> inside the scan-delay spinner — the visible
+   control is the +/- buttons + .spinner_display. (Other activities get this
+   from shared rule `div.user_options select { display: none }`; about-time's
+   form does not carry the `user_options` class so we scope it directly.) */
+.at-options select {
+    display: none;
+}
+
+/* =========================================================
+   Activity screen — shared container
+   ========================================================= */
+
+.at-activity-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.at-activity-screen.hidden_panel {
+    display: none;
+}
+
+/* Mode panels — each fills the full screen area */
+.at-mode {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.at-mode.hidden_panel {
+    display: none;
+}
+
+/* =========================================================
+   Shared: clock hands
+   ========================================================= */
+
+.at-hand {
+    position: absolute;
+    transform-origin: 50% 100%;
+}
+
+/* =========================================================
+   Mode 1: Time Passing
+   Flash layout (800×600 → 800×450):
+     scene:          x=0,   y=0,   w=800, h=272  → 50em × 12.75em base;
+                    bumped to 14em so the clock face overlaps further
+                    into the scene as in Flash.
+     clock face:     x=232, y=196, w=324, h=350  → 14.5em, 9.19em, 20.25em, 16.41em
+     left buttons:   x=14,  y=321  → left=0.88em, top adj-col starts 15.05em
+     right buttons:  x=600, y=321  → left=37.5em
+     bottom bar:     y=554         → top=26em
+     digital (top-right): x=637, y=8 → left=39.8em, top=0.38em
+   ========================================================= */
+
+/* @property declarations register the scene's CSS custom properties as
+   <number> / <percentage>, which lets the browser animate them through
+   `transition`. Without this, changing each alpha snaps; with it the
+   transition cross-fades between time steps. Used together with the
+   `transition` rule on the element below. */
+@property --at-dim-alpha {
+    syntax: '<number>';
+    initial-value: 0;
+    inherits: true;
+}
+@property --at-night-alpha {
+    syntax: '<number>';
+    initial-value: 0;
+    inherits: true;
+}
+@property --at-sun-x {
+    syntax: '<percentage>';
+    initial-value: 50%;
+    inherits: true;
+}
+@property --at-sun-y {
+    syntax: '<percentage>';
+    initial-value: 100%;
+    inherits: true;
+}
+/* Time-Passing scene — Flash overlay model.
+   --at-dim-alpha:   0 = bright day, 1 = full evening dim (grey wash).
+   --at-night-alpha: 0 = no night image, 1 = full night silhouette + moon.
+   --at-sun-x:       0..100% — sun horizontal position along arc.
+   --at-sun-y:       0..100% — sun vertical position (0 = peak, 100 = horizon).
+   The scene strip takes the top 14em of the activity area. Below it is a
+   neutral white background; the clock and adj buttons sit on that band
+   with the clock's top half overlapping into the scene. */
+#atTimePassing { background: #ffffff; }
+
+.at-scene {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 14em;
+    overflow: hidden;
+    background: #9ed3f1;   /* same as sky-top, in case overlay PNGs are slow */
+    --at-dim-alpha: 0;
+    --at-night-alpha: 0;
+    --at-sun-x: 50%;
+    --at-sun-y: 100%;
+    /* Cross-fade alphas so each +1 minute click (or Play tick) is smooth. */
+    transition:
+        --at-dim-alpha 0.5s linear,
+        --at-night-alpha 0.5s linear,
+        --at-sun-x 0.5s linear,
+        --at-sun-y 0.5s linear;
+}
+
+/* Daytime base — inline SVG (sky, hills, road). Stretches to fill the strip. */
+.at-scene-base {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Dim overlay — Flash uses backgroundColour.png (flat mid-grey) painted
+   on top of the daytime scene at increasing alpha to simulate dusk/dawn.
+   In Flash the SWF stage background is itself darker, so as the grey
+   wash blends in the composite reads as deep navy at midnight. CSS
+   multiply against a bright SVG sky just desaturates to teal, so we
+   paint a desaturated navy directly instead — visually closer to Flash. */
+.at-dim-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #1f2a44;
+    opacity: var(--at-dim-alpha);
+    pointer-events: none;
+}
+
+/* Night overlay — crescent moon + silhouettes against transparent white.
+   Alpha follows Flash nightImage._alpha (rises late evening). The PNG was
+   authored at 664×272; stretching it to fill the strip keeps the moon
+   roughly above the house silhouette as in Flash. */
+.at-night-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    opacity: var(--at-night-alpha);
+    pointer-events: none;
+}
+
+/* Stars — small white dots constrained to upper 60% of the sky strip
+   (avoids the hill band). Visible only at deep night (driven by
+   --at-night-alpha). */
+.at-stars {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 60%;
+    pointer-events: none;
+    opacity: var(--at-night-alpha);
+}
+
+.at-stars span {
+    position: absolute;
+    width: 0.15em;
+    height: 0.15em;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0.1em rgba(255,255,255,0.6);
+}
+
+/* Sun — driven by --at-sun-x / --at-sun-y for arc; fades during dim wash. */
+.at-sun {
+    position: absolute;
+    width: 2em;
+    height: 2em;
+    left: var(--at-sun-x);
+    top: var(--at-sun-y);
+    transform: translate(-50%, -50%);
+    opacity: calc(1 - var(--at-dim-alpha));
+    pointer-events: none;
+}
+
+/* === Building / sprite placements ===
+   Sprites sit between the SVG base and the dim/night overlays so the
+   overlays darken them in step with the scene. House on the left, school
+   on the right (with the user's parked car), road curving past both. */
+.at-house,
+.at-school,
+.at-flag,
+.at-bus,
+.at-car,
+.at-pupils,
+.at-teachers,
+.at-skipping,
+.at-football,
+.at-milk {
+    position: absolute;
+}
+
+/* Lit-window sprite. The 7 distinct Flash frames (windows0000..windows0006)
+   carry their own lit-pattern artwork — frame 5 is full bright evening,
+   frame 7 (=windows0006) shows only one or two lit windows late at night.
+   JS swaps the src per Flash's per-time-of-day table in _pickWindowsFrame.
+   A modest warm glow keeps the windows readable against the dim wash. */
+.at-house-windows {
+    position: absolute;
+    filter: drop-shadow(0 0 0.15em rgba(255, 220, 130, 0.85));
+    z-index: 1; /* above dim overlay so it still glows */
+}
+
+/* All scenery positioned relative to the 14em scene strip. Heights are
+   percentages of that strip; positions echo the Flash layout. */
+.at-house {
+    left: 6%;
+    bottom: 16%;
+    height: 22%;
+    width: auto;
+}
+
+/* Small tree beside the house. Positioned just to the right of the house
+   sprite so it reads as a garden tree. Sits below dim/night overlays so it
+   darkens with them. */
+.at-tree {
+    position: absolute;
+    left: 17%;
+    bottom: 15%;
+    width: 2.4em;
+    height: 3.6em;
+    display: block;
+}
+
+.at-house-windows {
+    /* Small window strip on the house — positioned over the house body.
+       Starts hidden via .hidden_panel; shown by JS at lit-window hours. */
+    left: 8%;
+    bottom: 19%;
+    height: 6%;
+    width: auto;
+}
+
+.at-milk {
+    left: 6%;
+    bottom: 15%;
+    height: 4%;
+    width: auto;
+}
+
+.at-school {
+    right: 3%;
+    bottom: 14%;
+    height: 50%;
+    width: auto;
+}
+
+/* school.png already shows its own roof flag; the standalone flag layer is
+   not needed for default rendering. Kept in the HTML for parity with Flash. */
+.at-flag {
+    right: 21%;
+    bottom: 45%;
+    height: 28%;
+    width: auto;
+}
+
+.at-car {
+    right: 4%;
+    bottom: 14%;
+    height: 9%;
+    width: auto;
+}
+
+/* Bus drives across the back road then the front road. JS scrubs the Flash
+   `busAnim` timeline directly: each tick reads the bus's per-frame (left,
+   bottom) from BUS_FRAME_PATH (extracted from the SWF) and assigns
+   element.style.left/bottom. The morning service uses bus0000.png; the
+   home-time service uses bus0001.png with `at-bus-home` to face the bus
+   the other way. The transition keeps motion smooth between game-minutes. */
+.at-bus {
+    height: 9%;
+    width: auto;
+    transition:
+        left 0.5s linear,
+        bottom 0.5s linear;
+}
+
+.at-bus.at-bus-home {
+    transform: scaleX(-1);
+}
+
+/* Daytime traffic cars — two car sprites placed along the road. Position
+   is computed via animations so the cars cycle past the scene during the
+   school-day window (Flash's `cars` MovieClip plays its own internal
+   driving-by loop). Cheap CSS keyframes give the same loop visual without
+   per-frame bus-style scrubbing. */
+.at-cars {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    pointer-events: none;
+}
+.at-cars img {
+    position: absolute;
+    height: 9%;
+    width: auto;
+}
+.at-cars .at-cars-1 {
+    bottom: 18%;
+    animation: at-cars-loop-1 12s linear infinite;
+}
+.at-cars .at-cars-2 {
+    bottom: 14%;
+    /* Flipped sprite drives the other direction. */
+    transform: scaleX(-1);
+    animation: at-cars-loop-2 16s linear infinite;
+}
+
+@keyframes at-cars-loop-1 {
+    0%   { left: -8%; }
+    100% { left: 108%; }
+}
+
+@keyframes at-cars-loop-2 {
+    0%   { left: 108%; }
+    100% { left: -8%; }
+}
+
+.at-football {
+    right: 16%;
+    bottom: 16%;
+    width: auto;
+    height: 4%;
+    /* Flash plays the 95-frame footballGame animation when the clip is
+       shown (footballGame0000..0094 at ~24 fps). JS scrubs the sprite-strip
+       directly via `src` swaps — no CSS animation needed. */
+}
+
+.at-pupils {
+    right: 14%;
+    bottom: 14%;
+    height: 16%;
+    width: auto;
+}
+
+.at-teachers {
+    right: 22%;
+    bottom: 14%;
+    height: 10%;
+    width: auto;
+}
+
+.at-skipping {
+    right: 18%;
+    bottom: 14%;
+    height: 8%;
+    width: auto;
+}
+
+/* =========================================================
+   Shared analog clock face (`.at-cf-svg`)
+   =========================================================
+   All three analog clocks in this activity (Time-Passing, Setting-the-Clock
+   and the What-Time-Is-It watch) render the same face design via an inline
+   SVG carrying the `at-cf-svg` class. The internal structure is identical:
+     - <circle class="at-cf-ring-mid">       light-blue face fill
+     - <g      class="at-cf-dashes">         12 dashed radial spokes
+     - <g      class="at-cf-notches-1min">   60 thin minute notches
+     - <g      class="at-cf-notches-5min">   12 thick hour ticks
+     - <circle class="at-cf-ring-outer">     thin black outline ring
+     - <circle class="at-cf-ring-inner">     optional inner ring (transparent stroke by default)
+     - <circle class="at-cf-pivot">          central pivot dot
+
+   The knobs below let you tune the rendered face from one place. Defaults
+   reproduce the literal values previously hardcoded in the SVG markup, so
+   editing nothing is a no-op. Values in SVG user units unless suffixed.
+
+   Per-clock viewBox notes:
+     - Time-Passing  : viewBox 0 0 300 379, face centre (150, 240)
+     - Setting-Clock : viewBox 0 0 300 379, face centre (150, 240)
+     - Watch         : viewBox 0 0 300 300, face centre (150, 150)
+   The watch viewBox is tighter (no transparent top strip), so its face fills
+   the SVG more aggressively — its rings sit at slightly LARGER SVG-unit radii
+   (148/142 vs 137/132) to render at visually similar size on screen. The
+   watch overrides --analog-ring-outer-px / --analog-ring-mid-px /
+   --analog-ring-inner-px below to keep that visual parity. If the user wants
+   absolute parity in *SVG units*, set those overrides to the shared defaults
+   and the watch face will simply render smaller within its overlay.
+   ========================================================= */
+
+.at-cf-svg {
+    /* ── Geometry knobs (SVG user units) ───────────────────────────── */
+    --analog-ring-outer-px: 132;   /* outermost black outline ring */
+    --analog-ring-mid-px:   137;   /* middle ring — light-blue face fill (the "blue band") */
+    --analog-ring-inner-px: 116;   /* innermost ring — invisible by default; set stroke to paint */
+    --analog-notch-5min:    3.4;   /* stroke-width of the 12 hour ticks */
+    --analog-notch-1min:    1.4;   /* stroke-width of the 60 minute notches */
+    --analog-dash-length:   15;    /* first value of the dashed-spoke stroke-dasharray */
+    /* ── Display knobs ─────────────────────────────────────────────── */
+    --analog-face-scale:    1;     /* multiplier on rendered face size (CSS transform); wired per-clock below to compose with existing transforms */
+}
+
+/* Watch overrides — keep visual parity given the tighter viewBox.
+   (See the per-clock viewBox note in the shared block above.) */
+.at-wt-face-svg {
+    --analog-ring-outer-px: 142;
+    --analog-ring-mid-px:   148;
+    --analog-ring-inner-px: 126;
+}
+
+/* Wire the knobs to the SVG elements via CSS geometry properties. */
+.at-cf-svg .at-cf-ring-outer { r: calc(var(--analog-ring-outer-px) * 1px); }
+.at-cf-svg .at-cf-ring-mid   { r: calc(var(--analog-ring-mid-px)   * 1px); }
+.at-cf-svg .at-cf-ring-inner { r: calc(var(--analog-ring-inner-px) * 1px); }
+.at-cf-svg .at-cf-notches-5min { stroke-width: var(--analog-notch-5min); }
+.at-cf-svg .at-cf-notches-1min { stroke-width: var(--analog-notch-1min); }
+.at-cf-svg .at-cf-dashes       { stroke-dasharray: var(--analog-dash-length) 10; }
+
+/* Hand-scale knob — defined here for proximity to the other clock knobs.
+   The actual `.at-hand { ... }` base rule (position/transform-origin) lives
+   above near line ~343. Each per-clock hand rule below wraps its width /
+   height / left / top in calc(... * var(--analog-hand-scale)).
+   The hand image's rotation is applied by JS via inline style.transform,
+   which would override any CSS transform, so we scale via width/height
+   rather than via a transform. Default 1 = no change. */
+.at-hand {
+    --analog-hand-scale: 1;
+}
+
+/* Clock-face numerals — shared across Time-Passing, Setting-the-Clock and
+   What-Time-Is-It. Each face is an inline SVG (viewBox 300×N) with hour
+   ticks at SVG r=116..132 and the visible black ring outline at r=132.
+
+   To match the welcome screen's `clockFrontPage.png` aesthetic the numerals
+   sit just INSIDE the inner edge of the hour ticks — at SVG r ≈ 110. Each
+   sub-activity multiplies that by its face SVG's CSS-px scale to produce
+   `--clock-radius` in em. The numeral angles come from `--n: 1..12` via
+   `--angle: (n × 30°) − 90°` (rotate so 12 is at the top, math 0° on the
+   right is irrelevant once we subtract 90°).
+
+   GOTCHA — *why @property registration is mandatory here*:
+     Custom-property values inherit as *text*. If `.at-sc-numerals` (parent)
+     declares `--clock-radius: 6em` and `.at-num` (child) has font-size:1.4em,
+     `var(--clock-radius)` is re-evaluated in the child where `1em = 22.4px`,
+     so the rendered radius becomes 6 × 22.4 = 134.4px — **40% too big**.
+     Registering --clock-radius as <length> via @property forces the value to
+     be COMPUTED at the declaration site (the parent, where 1em = 16px), so
+     the inherited value is a concrete length unaffected by the numeral's
+     own font-size. */
+@property --clock-radius {
+    syntax: '<length>';
+    initial-value: 0px;
+    inherits: true;
+}
+
+.at-clock-numerals {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    /* Defaults — overridden per sub-activity below. --clock-cx/cy let us
+       offset the numeral centre when the SVG isn't centred in the wrap
+       (eg. the alarm-clock face sits below centre because of the bells).
+       --analog-num-font-size is the shared knob from the .at-cf-svg block
+       (numerals are siblings, not descendants, so the knob is re-declared
+       here with the same default value to keep one source of truth). */
+    --clock-radius: 7em;
+    --clock-cx: 50%;
+    --clock-cy: 50%;
+    --analog-num-font-size: 1.4em;
+}
+
+.at-num {
+    position: absolute;
+    left: var(--clock-cx);
+    top: var(--clock-cy);
+    /* Welcome clockFrontPage.png aesthetic — bold italic near-black navy. */
+    font-size: var(--analog-num-font-size);
+    font-weight: 800;
+    font-style: italic;
+    color: #0e1830;
+    line-height: 1;
+    /* Math angle: 12 at the top → angle = (n × 30°) − 90°.
+       (Yes — for n=0 (or 12) we want angle = −90° pointing up; CSS sin/cos
+       use the standard math convention where 0° is +x and 90° is +y, so
+       −90° is up.) */
+    --angle: calc(var(--n) * 30deg - 90deg);
+    transform: translate(
+        calc(-50% + cos(var(--angle)) * var(--clock-radius)),
+        calc(-50% + sin(var(--angle)) * var(--clock-radius))
+    );
+}
+
+/* ────────────────────────────────────────────────────────────────────
+   Per-sub-activity numeral radii.
+
+   Common derivation: numeral_radius_em = (target_SVG_r × SVG_width_em) / 300
+   where target_SVG_r = 105 (just inside the hour-tick inner endpoint at SVG
+   r=116) — gives a comfortable margin for the 1.4em italic font.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* Time-Passing: face SVG width = 20em (100% of wrap_w=20em); scale 0.0667em/unit.
+   numeral_radius = 105 × 0.0667 ≈ 7.0em. */
+.at-clock-tp .at-clock-numerals { --clock-radius: 7.0em; --clock-cy: 50%; }
+
+/* Setting-the-Clock: face SVG width = 16.53em (87% of wrap_w=19em); scale 0.0551em/unit.
+   numeral_radius = 105 × 0.0551 ≈ 5.79em.
+   Face centre offset: SVG cy=240 of 379 viewBox lands at 58% of wrap_h (see
+   `.at-alarm-face-svg` block for derivation — 2% down from naive 56% so the
+   "12" clears the green ring). */
+.at-sc-numerals { --clock-radius: 5.79em; --clock-cy: 58%; }
+
+/* Digital clock overlay (top-right of Time Passing screen).
+   Flash uses a digital alarm clock band: black border, white face, dark
+   digits — same look as the analogueScene reference. */
+.at-digital-overlay {
+    position: absolute;
+    top: 0.38em;
+    right: 0.5em;
+    background: #ffffff;
+    color: #1a1a1a;
+    font-family: 'Digital_SF', 'LEDFont', monospace;
+    font-size: 1.8em;
+    padding: 0.05em 0.4em;
+    border: 0.12em solid #1a1a1a;
+    border-radius: 0.18em;
+    z-index: 5;
+    white-space: nowrap;
+}
+
+/* Analogue clock face — Time Passing.
+   Inline SVG (viewBox 300×379, face circle at cy=240, r=137) matches the
+   Setting-the-Clock / welcome aesthetic. The viewBox keeps a 103px
+   transparent strip at the top so existing positioning maths still works:
+   at width=20em=320px (scale 1.067), rendered SVG height = 379×1.067 ≈ 404px,
+   transparent strip ≈ 110px. Container height = 404-110 = 294px = 18.4em
+   clips exactly to the visible face circle. Container top=9em → bottom =
+   9+18.4 = 27.4em (≤ 28.1em activity height ✓). SVG positioned at
+   top: -6.87em (-110px) so the visible circle top aligns with the
+   container top. */
+.at-clock-tp {
+    position: absolute;
+    left: 14.5em;
+    top: 9em;
+    width: 20em;
+    height: 18.4em;
+    overflow: hidden;
+}
+
+.at-clock-tp .at-clock-face-svg {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: -6.87em;   /* hides the 103px transparent top strip at scale 1.067 */
+    display: block;
+    transform: scale(var(--analog-face-scale, 1));
+    transform-origin: 50% 50%;
+}
+
+/* New production face SVG (pictures/clock-face.svg, viewBox 0 0 286 284,
+   face circle centred at cx=143 cy=142 with no transparent padding). The
+   container is 20em × 18.4em; we render the SVG at width:19.07em so the
+   visible face diameter (~18.27em) matches the previous inline SVG, then
+   position it so the clock centre lands at (50%, 50%) of the container —
+   that keeps the existing .at-clock-tp .at-hour-hand / .at-minute-hand
+   pivot CSS (50%, 50% transform-origin via top:50%-H, left:50%-W/2,
+   transform-origin:50% 100%) unchanged and pixel-correct.
+
+   Maths:
+     SVG width  = 19.07em (= 20em × 286/300, matches old face diameter)
+     SVG height = 19.07em × 284/286 = 18.94em
+     clock cx in container = 50% × 19.07em + left = 9.535em + left
+     clock cy in container = 50% × 18.94em + top  = 9.47em  + top
+   To hit container (50%, 50%) = (10em, 9.2em):
+     left = 10em   − 9.535em = 0.465em
+     top  =  9.2em −  9.47em = −0.27em
+*/
+.at-clock-tp .at-tp-clock-face {
+    position: absolute;
+    width: 19.07em;
+    height: auto;
+    left: 0.465em;
+    top: -0.27em;
+    display: block;
+    transform: scale(var(--analog-face-scale, 1));
+    transform-origin: 50% 50%;
+}
+
+/* Scale: 0.0667em/px; SVG pivot (cx=150, cy=240) maps to (50%, ~50%) of the
+   clipped container. width/height/offsets are multiplied by the shared
+   --analog-hand-scale knob (default 1 = no change) so the user can shrink
+   all three clocks' hands from one place — see shared block above. */
+.at-clock-tp .at-hour-hand {
+    width:  calc(1.73em * var(--analog-hand-scale));   /* 26px × 0.0667 */
+    height: calc(6.13em * var(--analog-hand-scale));   /* 92px × 0.0667 */
+    left:   calc(50% - 0.865em * var(--analog-hand-scale));
+    top:    calc(50% - 6.13em  * var(--analog-hand-scale));
+}
+
+.at-clock-tp .at-minute-hand {
+    width:  calc(1.40em * var(--analog-hand-scale));   /* 21px × 0.0667 */
+    height: calc(8.27em * var(--analog-hand-scale));   /* 124px × 0.0667 */
+    left:   calc(50% - 0.70em * var(--analog-hand-scale));
+    top:    calc(50% - 8.27em * var(--analog-hand-scale));
+}
+
+/* Adjustment button columns */
+.at-adj-col {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    top: 15em;
+}
+
+.at-adj-left  { left: 0.5em; }
+.at-adj-right { right: 0.5em; }
+
+.at-adj-btn {
+    background: #d0e3fb;
+    border: 2px solid #4a8ccf;
+    border-radius: 0.45em;
+    font-size: 0.9em;
+    font-weight: 600;
+    padding: 0.35em 0.7em;
+    cursor: pointer;
+    white-space: nowrap;
+    min-width: 7em;
+    text-align: center;
+    color: #112233;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+}
+
+.at-adj-btn:hover {
+    background: #a8c8f4;
+}
+
+/* Bottom bar — Time Passing.
+   Three-cell row matching Flash layout: left cluster flush left, lips
+   centred, Play flush right. The left/right wrappers are absolute-positioned
+   so the lips truly centre on the bar even when the side clusters differ
+   in width. */
+.at-tp-bar {
+    position: absolute;
+    bottom: 0.15em;
+    left: 0;
+    right: 0;
+    height: 2.2em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.5em;
+    box-sizing: border-box;
+}
+
+.at-tp-bar-left {
+    position: absolute;
+    left: 0.5em;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+}
+
+.at-tp-bar-right {
+    position: absolute;
+    right: 0.5em;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+}
+
+.at-bar-btn {
+    background: #d0e3fb;
+    border: 2px solid #4a8ccf;
+    border-radius: 0.45em;
+    font-size: 0.9em;
+    font-weight: 600;
+    padding: 0.35em 0.7em;
+    cursor: pointer;
+    color: #112233;
+}
+
+.at-bar-btn:hover { background: #a8c8f4; }
+
+.at-mouth-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.1em;
+    display: flex;
+    align-items: center;
+}
+
+.at-mouth-btn img {
+    height: 2em;
+    width: auto;
+}
+
+/* Time-Passing mouth: matches Flash's prominent lips, but sized so it
+   sits clear of the clock face above. The clock-tp container bottom is
+   at 27.4em (top:9em + height:18.4em); the activity area is ~28.1em
+   tall, so the mouth is shrunk and pinned to the bottom edge so it
+   reads as fully below the clock instead of peeking out behind it. */
+.at-tp-mouth {
+    align-self: flex-end;
+    padding: 0;
+    margin: 0;
+}
+.at-tp-mouth img {
+    height: 1.4em;
+}
+
+.at-play-btn {
+    background: #d0e3fb;
+    border: 2px solid #4a8ccf;
+    border-radius: 0.45em;
+    font-size: 0.95em;
+    font-weight: 600;
+    padding: 0.35em 0.8em;
+    cursor: pointer;
+    color: #112233;
+}
+
+.at-play-btn:hover { background: #a8c8f4; }
+
+/* =========================================================
+   Mode 2: Setting the Clock
+   Flash layout:
+     alarm clock:   x=135, y=0,   w=530, h=460  → 8.44em, 0, 33.1em, 21.6em
+     left buttons:  x=14,  y=163               → left=0.88em, top=7.64em
+     right buttons: x=596, y=163               → right=0.5em (x=596→37.25em)
+     bottom bar:    y=463                       → top=21.7em
+   Flash setting-clock screen is on a plain white background.
+   ========================================================= */
+#atSettingClock { background: #ffffff; }
+
+/* Clock face overlaid inside the green alarm-clock body.
+   Inline SVG (viewBox 300×379) sized so the face circle (centred at SVG
+   (150,240)) lands at (50%, 58%) of the wrap — matching the alarm-back ring
+   centre AND the hand pivot point. width:87%, left:50% + translateX(-50%)
+   centres the SVG horizontally. SVG height = 87% × wrap_w × 379/300 ≈ 23.6em;
+   top:-1.05em shifts the SVG so the face centre (SVG y=240) lands at
+   13.92em = 58% of wrap_h. 240 × (87% × 21.5em / 300) = 14.97em; wrap centre
+   at (58% × 24em) = 13.92em → top = 13.92 − 14.97 = −1.05em. The 2% downward
+   shift (vs. previous 56%/-1.53em) gives the top "12" clearance from the
+   green alarm ring. Hands and numerals are also re-centred at 58%. */
+.at-alarm-face-svg {
+    position: absolute;
+    width: 87%;
+    height: auto;
+    left: 50%;
+    top: -1.05em;
+    /* translateX(-50%) keeps the SVG horizontally centred under its left:50%
+       anchor; scale(--analog-face-scale) lets the shared knob enlarge/shrink
+       the face. Order matters: scale first (around centre, after translate)
+       composes correctly because the scale origin is the SVG's own centre. */
+    transform: translateX(-50%) scale(var(--analog-face-scale, 1));
+    transform-origin: 50% 50%;
+    pointer-events: none;
+    display: block;
+}
+
+/* Ensure hidden_panel beats the display:block above (about-time.css loads
+   after doorway.css; the specificity tie means the LATER rule wins, so we
+   need an explicit override scoped to about-time). */
+.at-alarm-face-svg.hidden_panel,
+.at-sc-numerals.hidden_panel {
+    display: none;
+}
+
+/* Alarm clock — centred with bells at top.
+   alarmClockBack.png is 387×432. Setting width=19em, height=21.2em preserves
+   the exact aspect ratio (387:432 ≈ 19:21.2 = 0.896), so object-fit:fill = no distortion.
+   Trimmed from 21.5em × 24em so the clock body fits within the activity area
+   the same proportion as the Flash reference (was visibly larger than Flash).
+   Scale: 21.2em / 432px = 0.04907em/px; circle centre ≈ (50%, 60.6% of image/container). */
+.at-alarm-wrap {
+    position: absolute;
+    left: 50%;
+    top: 0.2em;
+    transform: translateX(-50%);
+    width: 19em;
+    height: 21.2em;
+    overflow: hidden;
+}
+
+.at-alarm-img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;   /* matches image aspect — no visible distortion */
+    display: block;
+}
+
+/* hidden_panel must beat the display:block above. about-time.css loads after
+   doorway.css, so a specificity tie means the LATER rule wins — we need an
+   explicit override scoped to the alarm body image. Used by JS to hide the
+   green analogue body when the digital LCD option is on. */
+.at-alarm-img.hidden_panel {
+    display: none;
+}
+
+/* Scale: 0.04907em/px — hourHand 26×92, minuteHand 21×124
+   Green circle centre ≈ (50%, 58%) of the wrap (nudged 2% down so the top
+   "12" clears the green ring — see .at-alarm-face-svg note).
+   z-index lifts hands above the digital band overlay so they remain visible. */
+.at-alarm-wrap .at-sc-hour-hand {
+    width:  calc(1.28em * var(--analog-hand-scale));   /* 26px × 0.04907 */
+    height: calc(4.51em * var(--analog-hand-scale));   /* 92px × 0.04907 */
+    left:   calc(50% - 0.64em  * var(--analog-hand-scale));
+    top:    calc(58% - 4.51em  * var(--analog-hand-scale));
+    z-index: 3;
+}
+
+.at-alarm-wrap .at-sc-minute-hand {
+    width:  calc(1.03em * var(--analog-hand-scale));   /* 21px × 0.04907 */
+    height: calc(6.08em * var(--analog-hand-scale));   /* 124px × 0.04907 */
+    left:   calc(50% - 0.515em * var(--analog-hand-scale));
+    top:    calc(58% - 6.08em  * var(--analog-hand-scale));
+    z-index: 3;
+}
+
+/* Digital display band overlaid on the centre of the analogue clock face.
+   The bezel is the Flash digitalAlarmClock.png sprite (dark-grey alarm-clock
+   chrome with a white LCD inset). It ships with a baked-in "12:00" glyph; we
+   cover that with our live ".at-digital-band-screen" inset so only our live
+   digits show. The sprite is the canonical source of truth — the same file
+   drives the options thumbnail (.at-thumb-alarm-band). Centred at (50%, 58%)
+   to land on the green ring centre; original sprite aspect ratio is 383×186. */
+.at-digital-band {
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    transform: translate(-50%, -50%);
+    width: 13em;
+    height: calc(13em * 186 / 383);   /* preserve original sprite aspect ratio */
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* Sprite chrome: fills the whole band container. */
+.at-digital-band-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    pointer-events: none;
+}
+
+/* hidden_panel beats the display:flex above (about-time.css loads after
+   doorway.css; the specificity tie means the LATER rule wins). */
+.at-digital-band.hidden_panel,
+.at-digital-overlay.hidden_panel {
+    display: none;
+}
+
+/* White LCD inset — sized/positioned to match the LCD opening cut into the
+   digitalAlarmClock.png sprite (visually the screen sits roughly 6% from each
+   side, 12% top, 14% bottom inside the 383×186 sprite). Live "12:00" text is
+   rendered here in the LED-style Digital_SF font, which both matches the
+   welcome page typography and covers the baked-in "12:00" glyph. */
+.at-digital-band-screen {
+    position: absolute;
+    left: 6%;
+    right: 6%;
+    top: 12%;
+    bottom: 14%;
+    background: #ffffff;
+    border-radius: 0.15em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-family: 'Digital_SF', 'LEDFont', monospace;
+    font-size: 2.4em;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Setting the Clock adj columns — vertically centred on clock */
+.at-sc-adj-left {
+    top: 7em;
+    left: 0.5em;
+}
+
+.at-sc-adj-right {
+    top: 7em;
+}
+
+/* Bottom bar — Setting the Clock */
+.at-sc-bar {
+    position: absolute;
+    bottom: 0.5em;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0 1em;
+    justify-content: center;
+}
+
+.at-set-label {
+    font-size: 1em;
+    white-space: nowrap;
+}
+
+.at-target-text {
+    display: inline-block;
+    min-width: 9em;
+    border: 2px solid #7aa;
+    border-radius: 0.3em;
+    padding: 0.2em 0.5em;
+    background: #fff;
+    font-size: 1em;
+    text-align: center;
+}
+
+.at-check-btn {
+    background: #d0e3fb;
+    border: 2px solid #4a8ccf;
+    border-radius: 0.45em;
+    font-size: 0.95em;
+    font-weight: 600;
+    padding: 0.35em 0.8em;
+    cursor: pointer;
+    color: #112233;
+}
+
+.at-check-btn:hover { background: #a8c8f4; }
+
+/* =========================================================
+   Mode 3: What Time Is It?
+   Flash layout:
+     left panel:    x=0,   y=0, w=385 → 24em wide
+     right panel:   x=385, y=0, w=415 → 25.9em wide
+     "What time?" heading: y=100 → top=4.69em
+     answer rows: y=190,265,340 → top=8.9,12.4,15.9em
+     answer btn: x=62, w=270 → left=3.9em, width=16.9em
+     lips: x=360 → left=22.5em
+   ========================================================= */
+
+#atWhatTime {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+#atWhatTime.hidden_panel {
+    display: none;
+}
+
+.at-wt-left {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.5em 1em 0.5em 2em;
+    gap: 1em;
+}
+
+.at-wt-heading {
+    font-size: 1.6em;
+    font-weight: normal;
+    margin: 0 0 0.4em 0;
+    color: #111;
+}
+
+.at-answer-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8em;
+}
+
+.at-answer-btn {
+    flex: 1;
+    background: #d0e3fb;
+    border: 2px solid #4a8ccf;
+    border-radius: 0.5em;
+    font-size: 1em;
+    font-weight: 600;
+    padding: 0.8em 0.4em;
+    cursor: pointer;
+    min-height: 2.6em;
+    text-align: center;
+    color: #112233;
+}
+
+.at-answer-btn:hover  { background: #90b8f0; }
+.at-answer-btn.at-correct   { background: #90ee90; border-color: #2a8; }
+.at-answer-btn.at-incorrect { background: #f8a0a0; border-color: #c44; }
+
+.at-wt-right {
+    width: 55%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ensure hidden_panel overrides the display:flex set below.
+   (about-time.css loads after doorway.css, so display:flex would otherwise win.) */
+.at-watch-analogue.hidden_panel,
+.at-watch-digital.hidden_panel {
+    display: none;
+}
+
+/* Analogue watch.
+   The watch occupies the full vertical extent of the right column. In Flash
+   the watch image actually extends slightly past the top/bottom of the stage,
+   so we render at 108% height and let .at-wt-right clip with overflow:hidden. */
+.at-watch-analogue {
+    position: relative;
+    height: 108%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.at-watch-back-img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* Clock face overlaid on the watch.
+   Measured from watchBack.png (382×600 — see notes/svg-use-viewport-bug.md
+   or rerun the PIL measurement on the asset):
+     - vertical bezel circle: y=115..478 → centre 49.5% of image height
+     - horizontal bezel circle: case mid x ≈ 183.5/382 → centre 48.04% of
+       image width (the case sits slightly LEFT of the image centre because
+       watchBack.png includes the right-side crown bump in its bounding box).
+
+   The image renders height-bound (height:100%, width:auto) inside the
+   flex-centred .at-watch-analogue container. We size the overlay square
+   via height + aspect-ratio:1, and centre it on the bezel — which means
+   nudging `left` 1.96% LEFT of the image centre to compensate for the
+   off-centre case. (Previously this was left:50%, which left the face
+   sitting ~12px right of the case centre — visually slightly off.) */
+.at-watch-clock-overlay {
+    position: absolute;
+    height: 60.5%;
+    aspect-ratio: 1 / 1;
+    /* 50% - (image_centre_x − case_centre_x) / image_width × 100%
+       = 50% - (191 − 183.5)/382 × 100%
+       = 50% - 1.96% = 48.04% */
+    left: 48.04%;
+    top: 49.5%;
+    transform: translate(-50%, -50%);
+}
+
+.at-watch-clock-img {
+    position: absolute;
+    /* clockFace.png is 300×379; the visible circle's bbox = (19, 103)..(295, 379),
+       so the visible content is ~276×276 centred at source (157, 241).
+       To make the visible circle exactly fill the square overlay (S×S),
+       scale the image by S/276 → rendered size 1.087S × 1.373S, and offset
+       so the source centre (157, 241)×(S/276) = (0.569S, 0.873S) lands on
+       (S/2, S/2). That gives left=-6.9%, top=-37.3% of overlay. Overflow
+       is clipped by the overlay container. */
+    top: -37.3%;
+    left: -6.9%;
+    width: 108.7%;
+    height: auto;
+    display: block;
+}
+.at-watch-clock-overlay { overflow: hidden; }
+
+/* Inline SVG clock face for the What-Time watch.
+   Same look as the Setting the Clock face (and welcome clockFrontPage.png):
+   black ring, bold hour ticks, dashed spokes, light-blue fill. viewBox is
+   square (300×300) because the watch overlay is square; sized 96% so the
+   black outline ring sits just inside the watch case rather than flush with
+   it (matches the welcome alarm-clock proportions). */
+.at-wt-face-svg {
+    position: absolute;
+    width: 96%;
+    height: 96%;
+    left: 2%;
+    top: 2%;
+    display: block;
+    pointer-events: none;
+    transform: scale(var(--analog-face-scale, 1));
+    transform-origin: 50% 50%;
+}
+
+/* Numerals inside the square clock overlay. Container is square (set via
+   aspect-ratio on `.at-watch-clock-overlay`), so 50%/50% is the centre.
+   .at-watch-analogue renders at 108% of activity height = 30.4em; the
+   square overlay is 60.5% of that = 18.39em. The face SVG (viewBox 300×300)
+   fills 96% of the overlay → 17.65em wide; scale = 17.65/300 = 0.0588em/unit.
+   numeral_radius = 105 × 0.0588 ≈ 6.18em.
+   Numeral styling (font-size/weight/colour) is inherited from the shared
+   `.at-num` rule above. */
+.at-wt-numerals { --clock-radius: 6.18em; --clock-cx: 50%; --clock-cy: 50%; }
+
+/* Hands inside the square clock overlay. The hand-PNGs share the same
+   pixel scale as the TP clock (hourHand 26×92, minuteHand 21×124), but
+   here sized in % of the square overlay so they scale with the watch.
+   The minute hand reaches 47% of overlay height from the centre to the rim. */
+.at-watch-clock-overlay .at-hour-hand {
+    width:  calc(5.2% * var(--analog-hand-scale));     /* 26/500 ≈ */
+    height: calc(35%  * var(--analog-hand-scale));
+    left:   calc(50% - 2.6% * var(--analog-hand-scale));
+    top:    calc(50% - 35%  * var(--analog-hand-scale));
+}
+
+.at-watch-clock-overlay .at-minute-hand {
+    width:  calc(4.2% * var(--analog-hand-scale));
+    height: calc(47%  * var(--analog-hand-scale));
+    left:   calc(50% - 2.1% * var(--analog-hand-scale));
+    top:    calc(50% - 47%  * var(--analog-hand-scale));
+}
+
+/* Digital watch.
+   Match the analogue sizing — fill the column vertically (with significant
+   overscan, clipped by .at-wt-right's overflow:hidden) so the watch dominates
+   as in Flash. Bumped from 108% to 130% to scale up 20% over the previous
+   render (108 × 1.2 ≈ 130) so the watch fills the right half of the stage
+   like the Flash reference does. */
+.at-watch-digital {
+    position: relative;
+    height: 130%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.at-digital-watch-img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* Digital display overlaid on watch image.
+   digitalWatch.png is 331×768. The mint-green LCD inset:
+     - horizontally x=60..280  →  18.1% .. 84.6%   (width 66.5%, centre 51.4%)
+     - vertically   y=348..440 →  45.3% .. 57.3%   (height 12%,  centre 51.3%)
+   The LCD on the sprite has a baked "12:00" — we cover it with an opaque
+   mint-green overlay (matching the LCD's own colour, RGB 216,253,235) and
+   render the live time on top in black. The overlay extends ~0.5% past the
+   mint area on every side to ensure the baked text is fully concealed.
+   Note: percentages are computed against the flex column .at-watch-digital
+   (not the image itself, which is height-scaled + auto-width and centred
+   inside the column). The placeholder "1" of "12:00" pokes out of the LCD
+   on the top-left, so the overlay is nudged a touch left and roughly twice
+   that up vs the raw LCD bounds to bury that overhang under the bezel. */
+.at-digital-watch-display {
+    position: absolute;
+    left: 16%;
+    top: 41.8%;
+    width: 67.5%;
+    height: 13%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Lighter LCD font: LEDFont (thin 7-segment look) takes priority over
+       Digital_SF (which is the bolder bank-display style we previously used).
+       font-weight 300 keeps the strokes thin even if the browser substitutes
+       a generic monospace. */
+    font-family: 'LEDFont', 'Digital_SF', monospace;
+    font-size: 3.6em;
+    font-weight: 300;
+    color: #000;
+    background: #d8fdeb;
+    border-radius: 0.1em;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    /* Nudge the glyphs up by ~3% of overlay height so the optical centre
+       sits on the LCD bezel (LED-style fonts have a baseline gap below). */
+    padding-bottom: 0.18em;
+}
+
+/* =========================================================
+   Digital display shared styles
+   ========================================================= */
+
+.at-dig-h, .at-dig-m, .at-dig-colon {
+    font-family: 'Digital_SF', 'LEDFont', monospace;
+    line-height: 1;
+}
+
+.at-dig-colon {
+    /* Match the digit baseline. The LED-style ':' glyph centres higher than the
+       digit cap, so nudge it down slightly so colon dots land between the digits. */
+    margin: 0 0.05em;
+    display: inline-block;
+    vertical-align: baseline;
+}
+
+/* =========================================================
+   Feedback overlay
+   ========================================================= */
+
+.at-feedback {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255,255,255,0.92);
+    border: 3px solid #4caf50;
+    border-radius: 0.5em;
+    padding: 0.5em 1.5em;
+    font-size: 1.4em;
+    z-index: 20;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.at-feedback.at-feedback-incorrect {
+    border-color: #d44;
+    color: #d44;
+}
+
+/* =========================================================
+   Results screen
+   ========================================================= */
+
+.at-results-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.at-results-screen.hidden_panel { display: none; }
+
+/* Paper/notepad styling */
+.at-paper {
+    background: #fff;
+    border: 1px solid #bbb;
+    border-radius: 0.4em;
+    padding: 0.6em 1em;
+    width: 90%;
+    max-width: 38em;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.15);
+    font-size: 0.85em;
+    overflow: hidden;
+}
+
+.at-paper-top {
+    margin-bottom: 0.4em;
+}
+
+.at-paper-title {
+    font-size: 1.3em;
+    text-align: left;
+    margin: 0 0 0.3em 0;
+}
+
+.at-paper-fields {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.4em;
+    flex-wrap: wrap;
+}
+
+.at-field-label {
+    font-size: 0.95em;
+    white-space: nowrap;
+}
+
+.at-text-input {
+    border: 1px solid #aaa;
+    border-radius: 0.2em;
+    padding: 0.15em 0.3em;
+    font-size: 0.95em;
+    flex: 1;
+    min-width: 8em;
+}
+
+.at-date-input {
+    flex: 0 0 6em;
+    min-width: 4em;
+}
+
+.at-score-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
+
+.at-score-table th,
+.at-score-table td {
+    border-bottom: 1px solid #ccc;
+    padding: 0.15em 0.4em;
+    text-align: left;
+}
+
+.at-score-table th {
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+.at-score-table .at-col-tries {
+    text-align: center;
+    width: 3em;
+}
+
+.at-total-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+    align-items: center;
+    margin-top: 0.4em;
+    font-size: 0.9em;
+    border-top: 1px solid #aaa;
+    padding-top: 0.3em;
+}
+
+.at-results-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    max-width: 38em;
+    margin-top: 0.5em;
+}
+
+/* =========================================================
+   Digital fonts — loaded from activity folder
+   ========================================================= */
+
+@font-face {
+    font-family: 'Digital_SF';
+    src: url('Digital_SF.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'LEDFont';
+    src: url('LEDFont.ttf') format('truetype');
+}

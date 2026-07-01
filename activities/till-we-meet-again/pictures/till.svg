@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Cash register / till body (Flash sprite_172). Composed of:
+     - the till body (chrome neck, trapezoidal grey housing, black header LCD frame, yellow inner LCD ring)
+     - the open cash drawer at the base (sprite_171). -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 0 400 600" width="400" height="600" preserveAspectRatio="xMidYMid meet">
+  <g transform="translate(-18.9 200.1)">
+    <!-- Till body (shape0 / characterId 169) -->
+    <g>
+      <!-- horizontal neck base -->
+      <path d="M385.85 169.1 L27.4 169.1 27.4 107.8 385.85 107.8 385.85 169.1 Z" fill="#928e92" stroke="#333" stroke-width="2" stroke-linejoin="round"/>
+      <!-- trapezoidal body -->
+      <path d="M353.5 -36.3 L386.5 108 26.95 108 65.95 -36.3 Z" fill="#9a9292" stroke="#333" stroke-width="2" stroke-linejoin="round"/>
+      <!-- inner light strip on neck (pill shape) -->
+      <path d="M345.95 88.4 Q199 101.55 67.95 88.4 65.05 78.75 65.05 66.75 65.05 54.75 67.95 45.1 L345.95 45.1 Q350.4 54.75 350.4 66.75 350.4 78.75 345.95 88.4 Z" fill="#d7d2d2" stroke="#333" stroke-width="2" stroke-linejoin="round"/>
+      <!-- small grey square (camera/sensor) at top -->
+      <path d="M203.7 -161.9 L219.6 -161.9 Q222.6 -161.9 222.6 -158.9 L222.6 -116.7 Q222.6 -113.7 219.6 -113.7 L203.7 -113.7 Q200.8 -113.75 200.8 -116.7 L200.8 -158.9 Q200.8 -161.85 203.7 -161.9 Z" fill="#928e92" stroke="#333" stroke-width="2" stroke-linejoin="round"/>
+      <!-- yellow inner LCD ring (visible behind any overlay) -->
+      <path d="M67.95 46.75 L100.95 -114.35 Q210.8 -123.85 316.95 -114.35 L344.95 43.3 Q350.6 55.4 311.2 59.4 271.75 63.35 211.55 63.6 151.3 63.8 108 59.5 64.7 55.15 67.95 46.75 Z" fill="#d7d2d2" stroke="#333" stroke-width="2" stroke-linejoin="round"/>
+      <!-- inner darker grey trapezoid (where LCD overlay sits) -->
+      <path d="M318.45 -51.1 L325.45 80.5 85.75 80.5 96.75 -51.1 Z" fill="#868286" stroke="#333" stroke-width="2" stroke-linejoin="round"/>
+      <!-- black LCD header frame (where the upper price/equation goes) -->
+      <path d="M119.25 -133.75 Q113.4 -133.75 113.4 -136.9 L113.4 -194.9 Q113.4 -198.1 119.25 -198.1 L310.55 -198.1 Q316.15 -198.1 316.15 -194.9 L316.15 -136.9 Q316.15 -133.75 310.55 -133.75 Z" fill="#000" stroke="#d7d2d2" stroke-width="4" stroke-linejoin="round"/>
+    </g>
+    <!-- Open cash drawer at the base of the till (sprite_171 / shape1) -->
+    <g transform="translate(27.05 236.1)">
+      <!-- drawer rim (darker grey) -->
+      <path d="M-1 114.65 L-6.2 114.65 -6.9 114.65 -6.2 106.2 -2.65 60.75 11.1 -114.9 349.05 -114.9 362.85 60.75 367.05 114.65 360.7 114.65 360.7 113.8 356.35 60.75 345.05 -77.1 14.65 -77.1 3.35 60.75 -1 113.8 -1 114.65 Z M367.15 150.85 L-6.2 150.85 -7.15 150.85 -7.15 116.85 -6.2 116.85 367.15 116.85 Z" fill="#656165" fill-rule="evenodd" stroke="#3c3c3c" stroke-width="2" stroke-linejoin="round"/>
+      <!-- drawer inside (light grey) -->
+      <path d="M-1 113.8 L3.35 60.75 14.65 -77.1 345.05 -77.1 356.35 60.75 360.7 113.8 Z" fill="#928e92" stroke="#3c3c3c" stroke-width="2" stroke-linejoin="round"/>
+    </g>
+  </g>
+</svg>

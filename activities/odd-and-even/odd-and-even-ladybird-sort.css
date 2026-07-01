@@ -1,0 +1,468 @@
+/* Doorway Odd and Even — Ladybird sort sub-activity styles.
+ * Carved out of odd-and-even.css to keep per-sub-activity CSS independent.
+ */
+/* =========================================================
+   Sub-activity C: Ladybird sorting
+   =========================================================
+   Flash frame 6: large lime-green meadow blob covers the stage
+   area from approx. y 80–490 Flash px (→ CSS 3.75–22.97em).
+   Two leaves at bottom: red/odd leaf at left (x≈1.12em, y≈19.22em),
+   blue/even leaf at right (x≈26.44em, y≈19.12em).
+   Ladybirds in scattered positions across the green meadow area.
+
+   Green blob colours: #66ff00 bright lime edge, #7ed05e mid, radial.
+*/
+
+#oeLadbirdSortingArea {
+    background-color: #ffffff;
+    position: relative;
+}
+
+/* HTML5 16:9 stage has less vertical headroom than the Flash 4:3 stage,
+   so the long ladybird instruction is anchored at the top-right of the
+   activity area (alongside the gear / fullscreen buttons in the header
+   nav) with a smaller font, freeing the centre column for the meadow.
+   Pushed further right than before so it clears the gear / fullscreen
+   nav buttons, allowed to wrap to two lines, and left-aligned to read
+   naturally as a paragraph. */
+.oe-screen:has(#oeLadbirdSortingArea:not(.hidden_panel)) .oe-activity-nav {
+    position: absolute;
+    top: 0.2em;
+    left: 13em;
+    right: 1em;
+    z-index: 5;
+    padding: 0;
+}
+.oe-screen:has(#oeLadbirdSortingArea:not(.hidden_panel)) .oe-instruction {
+    font-size: 0.8em;
+    text-align: left;
+    line-height: 1.2;
+    /* Allow up to two lines; long single-line variants still elide via
+       overflow if the locale exceeds 2 lines. */
+    max-height: 2.6em;
+}
+
+.oe-ladybird-phase {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+    flex: 1;
+    min-height: 0;
+}
+
+.oe-ladybird-phase.hidden_panel {
+    display: none;
+}
+
+/* Meadow area: organic green blob covers the top portion. The blob SVG is
+   absolutely positioned to fill the area; ladybirds are layered above it.
+   z-index above .oe-leaves-row (z:1) so that ladybirds positioned over the
+   leaves at the bottom of the screen still paint above the leaf graphics
+   instead of vanishing behind them. */
+.oe-ladybird-area {
+    position: relative;
+    flex: 1;
+    min-height: 11em;
+    overflow: visible;
+    /* Above the line-phase overlay (z-index: 10) so ladybirds parked on
+       the number line paint above the line SVG rather than disappearing
+       behind it. The line overlay's `pointer-events: none` means clicks
+       still fall through to the ladybirds below. */
+    z-index: 11;
+}
+
+/* Meadow blob (the large green leaf ladybirds sit on) — flipped horizontally
+   to match Flash's leaf orientation. Width was previously capped by
+   `object-fit:contain`, which letterboxed the SVG inside the area and
+   left it about a third of the activity width — far narrower than the
+   Flash meadow, which spans almost the full play area. Switching to
+   `object-fit:fill` lets the SVG stretch horizontally to the requested
+   width without bursting beyond it; the centred translateX still keeps
+   the blob horizontally symmetric. The blob silhouette is organic so a
+   small horizontal squash is unnoticeable. */
+.oe-meadow-bg {
+    position: absolute;
+    left: 50%;
+    /* Push the meadow down a little so the instruction text (anchored at
+       the top-right) has clear space above. The leaves row already
+       absorbs the bottom of the area. */
+    top: 1.6em;
+    /* Flash meadow is narrower than earlier widened passes — keep it
+       comfortably inside the play area so the green blob no longer
+       crashes the activity-area edges. Trimmed a further ~10% (from
+       103%) per visual review. */
+    width: 93%;
+    height: 82.5%;
+    transform: translateX(-50%) scaleX(-1);
+    object-fit: fill;
+    object-position: center;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Leaves row at bottom of screen. Leaves slightly overlap at the centre
+   (matching Flash). "done" yellow button sits in the centre. */
+.oe-leaves-row {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 0;
+    min-height: 7em;
+    margin-top: -2.5em; /* leaves rise into the meadow area, as in Flash */
+    z-index: 1;
+}
+
+/* Leaf buttons — use Flash leafLeft / leafRight SVGs.
+   Each leaf is large (~20em wide); both leaves slightly overlap near the
+   centre, with the done button in front. */
+.oe-leaf-btn {
+    position: relative;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    /* +10% on the previous 18em so the leaves read as the visual
+       centrepiece of the sorting phase (matches Flash framing). */
+    width: 19.8em;
+    max-width: 49%;
+    flex: 0 0 auto;
+}
+
+/* Coloured stem below each leaf — matches Flash, which paints a dark
+   red/blue stem flanking the central "done" button. Positioned
+   absolutely under the leaf so the leaf body still sits flush in the
+   row; stem peeks out below. */
+.oe-leaf-stem {
+    position: absolute;
+    width: 1.7em;
+    height: auto;
+    /* Drop the stem down so most of it pokes out below the leaf body. */
+    bottom: -2em;
+    display: block;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Anchor the red stem to the right-hand (rounded) base of the odd leaf,
+   the blue stem mirrored on the left base of the even leaf — same
+   layout as the Flash reference. */
+.oe-odd-leaf  .oe-leaf-stem { right: 28%; }
+.oe-even-leaf .oe-leaf-stem { left:  28%; transform: scaleX(-1); }
+
+/* Push the two big leaves apart so the "done" button has clear separation
+   between them — Flash framed them with a generous gap. */
+.oe-leaf-btn.oe-odd-leaf  { margin-right: 1.5em; }
+.oe-leaf-btn.oe-even-leaf { margin-left:  1.5em; }
+
+.oe-leaf-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    pointer-events: none;
+    /* Keep the leaf body painted above its coloured stem (which sits
+       absolute under the leaf via .oe-leaf-stem). */
+    position: relative;
+    z-index: 1;
+}
+
+/* Coloured-pill label inside each leaf (mirrors Flash "odd"/"even"
+   text-boxes pinned to the leaf's narrow tip). */
+.oe-leaf-label {
+    position: absolute;
+    bottom: 0.4em;
+    background: #ffffff;
+    border: 2px solid #2d0d09;
+    border-radius: 0.3em;
+    padding: 0.05em 0.6em;
+    font-weight: bold;
+    font-size: 1.05em;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.oe-odd-leaf  .oe-leaf-label { left: 30%; color: #ef2938; }
+.oe-even-leaf .oe-leaf-label { right: 30%; color: #1037ff; }
+
+.oe-leaf-done-btn {
+    position: relative;
+    z-index: 2;
+    align-self: center;
+    margin: 0 -1em;
+}
+
+.oe-ladybird-btn {
+    position: absolute;
+    width: 3.6em;
+    height: 4em;
+    background: none;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1;
+}
+
+/* Ladybird-sort feedback bubble — must paint above the meadow,
+   ladybirds, leaves AND the number-line overlay so the "oops" /
+   "well done" message is always visible. Anchored to the centre of
+   the play area so it doesn't get squashed into the leaves row. */
+#oeLadybirdFeedback {
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    pointer-events: none;
+}
+
+/* Slide between positions (meadow → click point on leaf → back to meadow
+   on wrong-Done). Mirrors Flash dynamicTween (frame_06.as `clickToMove` /
+   `dynamicTween`) which eased the ladybird MovieClip between coordinates
+   over ~0.6 s. Applied via the `oe-lb-moving` class so the initial random
+   placement on build doesn't animate. */
+.oe-ladybird-btn.oe-lb-moving {
+    transition: left 0.6s ease-out, top 0.6s ease-out;
+}
+
+/* Number-line phase: slow the slide ~3x so the journey from the leaf up
+   to the number-line slot reads as a deliberate "lining up" motion
+   (matches Flash dynamicTween's longer interval `2` arg on
+   frame_06.as:374 for this phase vs the snappier `1` used for sort
+   placements). */
+.oe-ladybird-btn.oe-lb-on-line.oe-lb-moving,
+.oe-ladybird-btn.oe-lb-line-target.oe-lb-moving {
+    transition: left 1.8s ease-out, top 1.8s ease-out;
+}
+
+.oe-ladybird-btn img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Ladybird number overlay — sits on the head plate (the dark cap at the
+   top of the body) in white so children read odd/even at a glance. The
+   lb1.svg…lb10.svg head occupies the top ~30% of the sprite; centring
+   the span at ~22% lands the digit on the head. Nudged slightly down and
+   smaller so the digit reads as printed on the head plate rather than
+   spilling above it. */
+.oe-lb-number {
+    position: absolute;
+    top: 22%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 0.8em;
+    line-height: 1;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Selected state — thick green outline appears WHILE the ladybird is still
+   on the meadow (selection / pre-placement). aria-pressed flips to "false"
+   the moment the leaf is clicked, so the outline vanishes as the ladybird
+   starts moving. The fill colour of the body (set on correct placement via
+   _recolourLadybirdBody) is the only persistent outcome signal. */
+.oe-ladybird-btn[aria-pressed="true"] {
+    border-color: #2ca02c;
+    box-shadow: 0 0 0 0.45em #2ca02c;
+}
+
+/* Number-line area — overlays the leaves + meadow during the number-line
+   phase. The line phase wrapper is absolutely positioned over the sort
+   phase (which stays visible) so the user sees the ladybirds-on-leaves
+   underneath the number line image. */
+#oeLadybirdLinePhase {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 2em;       /* clears the instruction text at the top */
+    bottom: 0;
+    z-index: 10;
+    pointer-events: none;  /* let clicks fall through to ladybirds; line overlays re-enable */
+}
+#oeLadybirdLinePhase .oe-number-line,
+#oeLadybirdLinePhase .oe-result-text,
+#oeLadybirdLinePhase .main_button {
+    pointer-events: auto;
+}
+.oe-number-line {
+    position: absolute;
+    left: 4%;
+    right: 4%;
+    top: 0;
+    height: 4em;
+    background: transparent;
+    border: none;
+}
+.oe-number-line-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+/* Result info + Done button anchored to bottom of overlay so they don't
+   crowd the line itself. */
+#oeNumberLineInfo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 5em;
+    margin: 0;
+    text-align: center;
+    /* Paint above the ladybird-area (z-index 11) so the prompt is
+       visible. The area was raised so on-line ladybirds paint above the
+       number-line SVG. */
+    z-index: 12;
+}
+/* Selected ladybird on a leaf (during line phase) — green outline reused
+   from the sort phase. */
+.oe-ladybird-btn.oe-lb-line-target[aria-pressed="true"] {
+    border-color: #2ca02c;
+    box-shadow: 0 0 0 0.4em #2ca02c;
+}
+/* Ladybirds parked on the number line must paint ABOVE the number-line
+   SVG (which lives inside the higher-z line-phase overlay), otherwise
+   the digits appear to swallow the ladybirds. */
+.oe-ladybird-btn.oe-lb-on-line {
+    pointer-events: none;
+    z-index: 20;
+}
+/* Locked correctly-placed ladybirds during a wrong-Done retry. Mirrors
+   Flash frame_06.as:160-189 — correctly-placed ladybirds cannot be moved
+   off their leaf once Done has been pressed with any wrong placements. */
+.oe-ladybird-btn.oe-lb-locked {
+    pointer-events: none;
+    cursor: default;
+}
+
+/* =========================================================
+   Phase 4: dynamic state classes
+   ========================================================= */
+
+/* Ladybird sorting — body colour change on correct placement is handled
+   by swapping the lb svg's body fill (`_recolourLadybirdBody` in
+   ladybird-sort.js). Mirrors Flash frame_06.as `body.gotoAndStop(2)`
+   (red — odd on odd leaf) and `body.gotoAndStop(3)` (blue — even on
+   even leaf). A ladybird placed on the WRONG leaf stays neutral (default
+   off-white body, see frame_06.as:312/334 `body.gotoAndStop(1)`). The
+   colour communicates correctness; outline/border is reserved for the
+   "selected" state (green) only. */
+
+/* Number line phase — the actual placed ladybirds (already in
+   #oeLadybirdArea) act as the click targets; no separate "waiting"
+   buttons are rendered. The transient line-target affordance is
+   `.oe-ladybird-btn.oe-lb-line-target` (selected state styled near
+   #oeLadybirdLinePhase above). */
+
+/* --- Ladybird sort: wrong-parity wobble ("oops") ---
+   Mirrors Flash frame_06.as oops.gotoAndPlay(2) (lines 208, 262, 310, 332):
+   a short side-to-side shake when a ladybird is placed on the wrong leaf.
+   Outcome is also conveyed by the ladybird staying neutral (no
+   .oe-lb-correct-* tint — Flash `body.gotoAndStop(1)` analogue) and the
+   spoken feedback. */
+@keyframes oe-lb-wobble {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-0.4em) rotate(-6deg); }
+    40%  { transform: translateX(0.4em)  rotate(6deg); }
+    60%  { transform: translateX(-0.25em) rotate(-3deg); }
+    80%  { transform: translateX(0.25em)  rotate(3deg); }
+    100% { transform: translateX(0); }
+}
+
+.oe-ladybird-btn.oe-lb-wobble {
+    animation: oe-lb-wobble 0.55s ease-in-out;
+}
+
+/* --- Ladybird sort: arrival on leaf (settle scale) ---
+   When a ladybird is placed on a leaf, give it a gentle scale-down so the
+   placement is visually reinforced. DOM remains in place; the colour
+   tint from .oe-lb-correct-odd / .oe-lb-correct-even is the persistent
+   signal when placement is correct. */
+@keyframes oe-lb-settle {
+    0%   { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.oe-ladybird-btn.oe-lb-just-placed {
+    animation: oe-lb-settle 0.35s ease-out;
+}
+
+/* =========================================================
+   Ladybird-sort congratulations overlay
+   =========================================================
+   Mirrors Flash frame_06.as:411 (`_root.attachMovie("congratulations"…)`)
+   which painted on top of the existing meadow + sorted ladybirds rather
+   than replacing them. We use the shared `.oe-balloons` / `.oe-balloon`
+   animation already defined in odd-and-even.css for house-painting; only
+   the wrapper and card are local. Avoids the previous column-flex layout
+   which squashed every preceding element when the congrats became visible. */
+.oe-ladybird-congrats {
+    position: absolute;
+    inset: 0;
+    /* Extend the overlay upward over the activity-nav band so the
+       balloons rise past the top "Well done…" instruction — matches
+       the shoes pattern. */
+    top: -3.5em;
+    z-index: 600;
+    pointer-events: none;  /* balloons + backdrop ignore clicks; card re-enables */
+    display: block;
+    padding: 0;
+}
+.oe-ladybird-congrats .oe-ladybird-congrats-card {
+    position: absolute;
+    left: 50%;
+    /* Top biased into the upper third so the bubble + Back pencil clear
+       the meadow / leaves / number line below and the top instruction
+       band above — matches the sibling sub-activities. The wrapper is a
+       positioning shell only — no background or border — so the Flash
+       congratulations bubble (with its own black outline) reads as a
+       single speech-bubble rather than as a bubble nested inside an
+       outer card. */
+    top: 35%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6em;
+    pointer-events: auto;
+    max-width: 24em;
+    text-align: center;
+    /* Bubble sits ahead of the meadow / leaves layer so the message
+       reads cleanly over the sorted scene rather than getting cropped. */
+    z-index: 2;
+}
+
+/* Scope the .oe-balloons positioning to the ladybird congrats overlay —
+   the shared .oe-balloon block in odd-and-even.css covers the sprite
+   image styling and the rise-sway keyframes, but each per-sub-activity
+   wrapper supplies its own absolute container so the balloons fill the
+   correct stage region. */
+.oe-ladybird-congrats .oe-balloons {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    pointer-events: none;
+    /* Balloons render above every other layer at the celebration moment
+       — Flash's congratulations clip attaches with a very high depth
+       (frame_06.as:411 → ≈ 100000). */
+    z-index: 700;
+}
+
+/* Switch-scanner group-level focus: when the top-level scan is on the
+   ladybirds group (#oeLadybirdArea) or the leaves group (.oe-leaves-row),
+   only the parent ring should be visible. Scannable.highlight() recurses
+   the .scan_highlight class onto every child for live-region semantics,
+   which leaves every ladybird/leaf glowing in gold simultaneously and
+   makes it impossible to tell what's actually selected. Once the user
+   presses to enter the group, Scannable clears the parent highlight
+   before drilling in, so a single individual child can still show its
+   ring during the inner scan cycle. */
+#oeLadybirdArea.scan_highlight .oe-ladybird-btn.scan_highlight,
+.oe-leaves-row.scan_highlight .oe-leaf-btn.scan_highlight {
+    box-shadow: none;
+}
+

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 200" role="img" aria-hidden="true">
+  <!-- Three picture cards from Flash welcome: ladder | jam | ladder
+       Two ladders (same) + one jam jar (different) demonstrates the
+       'same or different' concept. All three card images are extracted
+       Flash sprites in ./welcome/. -->
+  <image href="welcome/ladder-card.svg" x="20"  y="10" width="140" height="180"/>
+  <image href="welcome/jam-card.svg"    x="230" y="10" width="140" height="180"/>
+  <image href="welcome/ladder-card.svg" x="440" y="10" width="140" height="180"/>
+</svg>

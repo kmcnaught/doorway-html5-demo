@@ -1,0 +1,933 @@
+/* Doorway Moving Targets — activity styles.
+   1em = 1/50th of activity width (set by doorway.js onResize).
+   All sizing in em; no px except borders.
+*/
+
+/* --- Screen layout --- */
+
+/* Higher specificity to ensure hidden_panel beats mt-screen's display rules */
+.mt-screen.hidden_panel {
+    display: none;
+}
+
+.mt-screen {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* --- Sub-activity areas --- */
+
+.mt-sub-activity {
+    flex: 1;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Hidden sub-activities */
+.mt-sub-activity.hidden_panel {
+    display: none;
+}
+
+/*
+ * On-screen instruction prompt overlaid at the top of each sub-activity scene.
+ * Flash renders these as static text fields in the centre-top of the stage.
+ * Sits above the scene background but is non-interactive (pointer-events: none)
+ * so it doesn't block clicks on targets that animate through the top area.
+ */
+.mt-prompt {
+    position: absolute;
+    top: 0.4em;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    z-index: 5;
+    font-size: 1.1em;
+    color: #000;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* Light variant for dark scenes (e.g. fireworks night sky) */
+.mt-prompt-light {
+    color: #fff;
+}
+
+/* --- Welcome image --- */
+
+/*
+ * Welcome image: the Flash sprite (sprite_186) showing the framed underwater scene
+ * with fish and seaweed. The SVG is the original Flash asset, sized to match the
+ * Flash layout (~335×235px in an 800×600 stage → ~21em × 13em in the HTML5 stage).
+ * In flow-mode the parent body is no longer aspect-locked, so cap with
+ * max-width/max-height to keep the illustration from blowing up vertically.
+ */
+/*
+ * Welcome image sized to match Flash's display size (~290×200px). The source
+ * SVG (welcome-scene.svg) is a Flash vector trace whose path edges go soft
+ * when rendered larger than ~350px wide. Capping at 18em ≈ 288px keeps the
+ * native crispness while preserving the framed-photo look.
+ */
+.welcome_image {
+    width: 50%;
+    max-width: 18em;
+    aspect-ratio: 350 / 260;
+    max-height: 13em;
+    margin: 0.4em auto 0.6em;
+    border: 3px solid #777;
+    border-radius: 0.3em;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.mt-welcome-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    image-rendering: auto;
+}
+
+/* --- Vans sub-activity --- */
+
+/*
+ * Vans scene background:
+ * Flash stage 800×600. Sky occupies y=0–124.9 (5.85em), green grass below.
+ * Three gray road lanes (shape1/sprite0) at y=164.5, 324.5, 484.5 (7.71em, 15.21em, 22.71em).
+ * Sky: #92b3fe → #e2effa (top→bottom).
+ * Grass: multi-stop greens; simplified to #63ad30 → #325728.
+ * Road lanes: #999999 with white dashed centre markings, border #333333.
+ */
+.mt-vans-scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* Sky band at top, green grass below; bushes layered ABOVE the grass
+       gradient (so the opaque grass doesn't swallow them) but BELOW the
+       lane bands, so the gray roads punch through and leave bush clumps
+       visible only in the verge strips between lanes. */
+    background:
+        /* Lane 3: gray road band — top=22.71em, height=3.64em */
+        linear-gradient(#999 0%, #999 100%) 0 22.71em / 100% 3.64em no-repeat,
+        /* Lane 2 */
+        linear-gradient(#999 0%, #999 100%) 0 15.21em / 100% 3.64em no-repeat,
+        /* Lane 1 */
+        linear-gradient(#999 0%, #999 100%) 0 7.71em / 100% 3.64em no-repeat,
+        /* Bush clumps — sit ABOVE the grass gradient (so they're visible) and
+           BELOW the lane bands (so the roads punch through). Scale the SVG to
+           fill the entire grass band — its native paths are clustered across
+           the canvas so this yields dense coverage in all four verges. */
+        url("pictures/vans-grass.svg") 0 5.85em / 100% calc(100% - 5.85em) no-repeat,
+        /* Grass below horizon */
+        linear-gradient(to bottom, #5b9e2e 0%, #63ad30 20%, #325728 100%) 0 5.85em / 100% calc(100% - 5.85em) no-repeat,
+        /* Sky */
+        linear-gradient(to bottom, #92b3fe 0%, #e2effa 100%) 0 0 / 100% 5.85em no-repeat,
+        /* Fallback fill */
+        #5b9e2e;
+}
+
+/*
+ * White road-lane centre markings (dashed lines).
+ * Each lane has a dashed white line at vertical mid-point.
+ * Lane 1 centre: 7.71em + 1.82em = 9.53em, Lane 2: 17.03em, Lane 3: 24.53em.
+ */
+.mt-vans-scene::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        /* Lane 3 centre dash */
+        repeating-linear-gradient(
+            to right,
+            #fff 0, #fff 2.5em,
+            transparent 2.5em, transparent 5em
+        ) 0 24.53em / 100% 0.25em no-repeat,
+        /* Lane 2 centre dash */
+        repeating-linear-gradient(
+            to right,
+            #fff 0, #fff 2.5em,
+            transparent 2.5em, transparent 5em
+        ) 0 17.03em / 100% 0.25em no-repeat,
+        /* Lane 1 centre dash */
+        repeating-linear-gradient(
+            to right,
+            #fff 0, #fff 2.5em,
+            transparent 2.5em, transparent 5em
+        ) 0 9.53em / 100% 0.25em no-repeat;
+}
+
+.mt-van-target {
+    position: absolute;
+    z-index: 2;
+    /* top and left set by JS per slot (different lane per van) */
+    transform: translateY(-50%) scale(var(--mt-target-scale, 1));
+    transform-origin: center center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.mt-van-target:focus-visible {
+    outline: 0.4em solid gold;
+    outline-offset: 0.2em;
+}
+
+/*
+ * Override shared button:hover translucent fill on every sprite target — the
+ * sprite (van, ball, balloon, fish) is the visual hit target, not the bounding
+ * rectangle. The shared `button:hover { background: rgba(128,128,128,0.2) }`
+ * rule in doorway.css would otherwise paint a translucent rectangle behind
+ * each sprite while the mouse hovers. (Launcher target has its own background
+ * gradient and overrides hover separately to keep the colour pop.)
+ */
+.mt-van-target:hover,
+.mt-ball-target:hover,
+.mt-balloon-target:hover,
+.mt-fish-target:hover {
+    background: transparent;
+}
+
+.mt-van-img {
+    width: 8em;
+    height: auto;
+    display: block;
+    /* Flip horizontally for vans that drive left (set via --mt-van-flip: -1 in JS) */
+    transform: scaleX(var(--mt-van-flip, 1));
+}
+
+/* --- Fireworks sub-activity --- */
+
+/*
+ * Fireworks scene background:
+ * Black night sky with a green grass strip along the bottom. Sparklers stick
+ * up out of the grass on each side. Star count is deliberately sparse so it
+ * doesn't compete with the fireworks visually.
+ */
+.mt-fireworks-scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background:
+        /* Green grass strip along the bottom of the visible scene */
+        linear-gradient(to bottom, #1a8a1a 0%, #0a5a0a 100%) 0 100% / 100% 4em no-repeat,
+        /* Night sky */
+        #000000;
+}
+
+/* Sparse star field over the sky portion only. */
+.mt-fireworks-scene::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 4em 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle, #fff 0.8px, transparent 0.8px),
+        radial-gradient(circle, rgba(255,255,255,0.6) 0.8px, transparent 0.8px);
+    background-size: 11em 9em, 14em 7em;
+    background-position: 2em 1.5em, 5em 3em;
+}
+
+/*
+ * Sparklers — Flash sprite_256. Anchored at the base into the grass; the
+ * native sprite already points up-right, so we rotate the left one to lean
+ * inward (toward the launchers) and mirror+rotate the right one similarly.
+ */
+.mt-sparkler {
+    position: absolute;
+    bottom: 0.2em;
+    width: 3.5em;
+    height: auto;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.mt-sparkler-left {
+    left: 1em;
+    transform: rotate(20deg);
+    transform-origin: bottom left;
+}
+
+.mt-sparkler-right {
+    right: 1em;
+    transform: scaleX(-1) rotate(20deg);
+    transform-origin: bottom right;
+}
+
+/*
+ * Launcher "box" — slim cylinder with a domed top and rounded bottom and a
+ * curly fuse curling out from the lower-left side. Mirrors Flash sprites
+ * 248/251/254. The body silhouette + fuse path come from the extracted Flash
+ * graphics; the button itself is a transparent hit area sized to wrap the
+ * inline SVG. The fuse path has its own class so CSS can animate it (burn
+ * down + glow) when the launcher fires.
+ */
+.mt-launcher-target {
+    position: absolute;
+    bottom: 1.2em;
+    width: 2.8em;
+    height: 6em;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transform: scale(var(--mt-target-scale, 1));
+    transform-origin: center bottom;
+    z-index: 3;
+    /* Horizontal position set by JS */
+}
+
+.mt-launcher-svg {
+    width: 100%;
+    height: 100%;
+    /* Allow the fuse curl to escape the button bounds (the path extends
+       below the box base into the grass-line area). */
+    overflow: visible;
+    display: block;
+}
+
+.mt-launcher-target:focus-visible {
+    outline: 0.4em solid gold;
+    outline-offset: 0.2em;
+    border-radius: 0.5em;
+}
+
+/* Hover feedback — gentle lift + glow so the target reads as clickable. */
+.mt-launcher-target:hover {
+    filter: brightness(1.15) drop-shadow(0 0.1em 0.3em rgba(255, 200, 80, 0.6));
+    transform: scale(calc(var(--mt-target-scale, 1) * 1.05));
+}
+
+/* Body colours — set per-modifier via fill + stroke on the body group's
+   children. Using two consecutive `:nth-child` rules so we can give the
+   fill path one colour and the outline path a darker stroke. */
+.mt-launcher-green   .mt-launcher-body > path:first-child { fill: #33ff00; }
+.mt-launcher-green   .mt-launcher-body-outline           { stroke: #336600; }
+.mt-launcher-orange  .mt-launcher-body > path:first-child { fill: #ff9900; }
+.mt-launcher-orange  .mt-launcher-body-outline           { stroke: #ff3300; }
+.mt-launcher-magenta .mt-launcher-body > path:first-child { fill: #ff00ff; }
+.mt-launcher-magenta .mt-launcher-body-outline           { stroke: #8e00b3; }
+
+/* Fuse: idle = static black curl. While firing, the tip travels along the
+   path (stroke-dashoffset trick) and glows. The tip dot is invisible when
+   idle (r=0); the firing animation also doesn't depend on the dot, so this
+   is purely a hook for future enhancement. */
+.mt-launcher-fuse {
+    stroke: #000;
+    transition: stroke 0.2s linear;
+}
+
+/* When the button has the firing class, the fuse "burns down" — we draw it
+   in two segments using stroke-dasharray + stroke-dashoffset so the visible
+   portion shrinks from full length to 0 over the same duration as the
+   pre-launch delay (1000ms before the initial rocket, per launcherBurstParams).
+   Fuse path length is approximately 60 units; we use 80 to be safe. */
+.mt-launcher-firing .mt-launcher-fuse {
+    stroke: #ff7a1a;
+    stroke-dasharray: 80;
+    stroke-dashoffset: 0;
+    animation: mt-fuse-burn 1s linear forwards;
+    filter: drop-shadow(0 0 0.15em #ffae3a) drop-shadow(0 0 0.3em #ff5500);
+}
+
+@keyframes mt-fuse-burn {
+    /* Burn from box-side outward → the dashoffset grows from 0 → 80 so the
+       drawn portion shrinks and the tip "moves" along the path. We pulse
+       opacity to add a flicker. */
+    0%   { stroke-dashoffset: 0;  opacity: 1; }
+    20%  { stroke-dashoffset: 16; opacity: 0.85; }
+    40%  { stroke-dashoffset: 32; opacity: 1; }
+    60%  { stroke-dashoffset: 48; opacity: 0.85; }
+    80%  { stroke-dashoffset: 64; opacity: 1; }
+    100% { stroke-dashoffset: 80; opacity: 0; }
+}
+
+.mt-explosions-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* --- Footballer sub-activity --- */
+
+/*
+ * Footballer scene background — Flash sprite shape 258 (footballer-scene.svg)
+ * containing the sky, hills, row of trees on the horizon, and the white-lined
+ * football pitch. The Flash decoration is trees, not goalposts.
+ * Flash shape is 810.1×599.45px in an 800×600 stage; we stretch to fill the
+ * HTML5 16:9 stage.
+ */
+.mt-footballer-scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background:
+        url("pictures/footballer-scene.svg") 0 0 / 100% 100% no-repeat,
+        /* Fallback sky gradient (visible if SVG fails to load) */
+        linear-gradient(to bottom, #4265f0 0%, #c6ddfd 100%);
+}
+
+.mt-ball-target {
+    position: absolute;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    /* Anchor inside the pitch's centre circle, not at scene-centre — Flash
+       puts the ball in the centre-circle of the pitch, which sits in the
+       lower half of the 16:9 stage (the trees row eats the top quarter).
+       The centre-circle in footballer-scene.svg is at x≈412/800 = 51.5%
+       (the path arc spans x=349.85 → 474.55), not the geometric stage
+       centre — so left:51.5% sits the ball in the middle of the circle. */
+    top: 60%;
+    left: 51.5%;
+    transform: translate(-50%, -50%) scale(var(--mt-target-scale, 1));
+    transform-origin: center center;
+}
+
+.mt-ball-target:focus-visible {
+    outline: 0.4em solid gold;
+    outline-offset: 0.2em;
+}
+
+.mt-ball-img {
+    /* Ball half size so it fits inside the pitch's centre circle (matches Flash). */
+    width: 3em;
+    height: auto;
+    display: block;
+}
+
+/*
+ * Runner GIF — Flash sprite 273. Plays once when the ball is clicked,
+ * showing the player jogging in from off-screen left. The figure inside
+ * the GIF translates within its 1062×227 bounding box and arrives at the
+ * ball at the last visible frame (~1.0 s at 50 fps).
+ *
+ * The transform positions the GIF so that the figure's final pose lands
+ * at the ball position. Offsets and scale were tuned in the alignment
+ * sandbox at notes/footballer-sandbox/sandbox.html (px → em via /16,
+ * which is 1em = 1/50th of 800px stage width). The remaining ~30em of
+ * GIF extends invisibly to the right of the ball and is clipped by the
+ * scene's overflow:hidden.
+ */
+.mt-footballer-runner {
+    position: absolute;
+    left: 51.5%;
+    top: 60%;
+    width: 66.375em;
+    height: 14.1875em;
+    transform-origin: top left;
+    transform: translate(-39.5em, -10.8em) scale(0.98);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.mt-footballer-runner.hidden_panel {
+    display: none;
+}
+
+/*
+ * Kicker — Flash sprite 278 ("mango"). Three SVG poses extracted from the
+ * mango clip cycle through as a single 250 ms kick: pose A (wind-up,
+ * footballer-stand.svg) → pose B (contact, footballer-kick-contact.svg)
+ * → pose C (follow-through, footballer-kick-followthrough.svg).
+ *
+ * Anchored so the feet line up with the runner's final pose at the ball,
+ * tuned in the alignment sandbox.
+ */
+.mt-footballer-img {
+    position: absolute;
+    left: 51.5%;
+    top: 60%;
+    height: 13.5em;
+    width: auto;
+    transform: translate(-88%, -80%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.mt-footballer-img.hidden_panel {
+    display: none;
+}
+
+/* Footballer is layered behind the ball */
+.mt-ball-target {
+    z-index: 2;
+}
+
+/* --- Popping sub-activity --- */
+
+/*
+ * Popping scene background — Flash sprite shape 289 (popping-scene.svg)
+ * containing both the sky gradient, the two clouds, and the two green hills.
+ * Flash shape is 800.95×600px. In the HTML5 stage (800×450), we stretch
+ * the SVG to fill the scene — Flash had a 4:3 stage (800×600) and HTML5
+ * uses 16:9 (800×450), so the full background scales to cover.
+ */
+.mt-popping-scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background:
+        url("pictures/popping-scene.svg") 0 0 / 100% 100% no-repeat,
+        /* Fallback sky gradient (visible if SVG fails to load) */
+        linear-gradient(to bottom, #4265f0 0%, #c6ddfd 100%);
+}
+
+.mt-balloon-target {
+    position: absolute;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    /* Position animated by JS */
+    bottom: 2em;
+    left: 50%;
+    transform: translateX(-50%) scale(var(--mt-target-scale, 1));
+    transform-origin: center bottom;
+    /* CSS custom properties for animation */
+    --mt-balloon-x: 50%;
+    --mt-balloon-y: 80%;
+}
+
+.mt-balloon-target:focus-visible {
+    outline: 0.4em solid gold;
+    outline-offset: 0.2em;
+}
+
+/*
+ * Balloon shape: inline SVG ported from Flash sprite_293.
+ * `currentColor` on the body path picks up the CSS color, which JS sets via
+ * --mt-balloon-colour each cycle (see setBalloonColour / nextBalloonColourIndex).
+ * Sized 25% larger than the original 4em × 6.6em Flash trace — the prior size
+ * read as too small on the popping scene; the larger sprite gives a click
+ * target closer in apparent size to the Flash original.
+ */
+.mt-balloon-shape {
+    display: block;
+    width: 5em;
+    height: 8.25em;      /* aspect ratio of the Flash sprite, including string */
+    color: var(--mt-balloon-colour, #ec0202);
+    line-height: 0;
+}
+
+.mt-balloon-shape svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+}
+
+/*
+ * Pop effect — anchored at the balloon's centre (JS sets left/top inline).
+ * The wrapper is zero-sized; both children (the bursting lines SVG and the
+ * "pop!" text) are themselves centred on the wrapper via absolute positioning
+ * and a -50% translate, so they always burst out from the balloon's centre
+ * point regardless of layout zoom.
+ */
+.mt-pop-effect {
+    position: absolute;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+}
+
+/* SVG starburst of black line segments fanning out from centre. */
+.mt-pop-burst-lines {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 7em;
+    height: 7em;
+    transform: translate(-50%, -50%);
+    overflow: visible;
+}
+
+/* Spikes are filled tapered lens shapes (wide-in-middle, narrow at the tips)
+   to mimic Flash's ink-brush look. Geometry is generated per-pop by JS
+   (see regeneratePopSpikes in moving-targets-render.js) with jittered
+   angles, radii and thickness so each click has fresh variability. */
+.mt-pop-burst-lines .mt-pop-spikes path {
+    fill: #000;
+    stroke: none;
+}
+
+/* The bold "pop!" word centred over the burst. */
+.mt-pop-text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -50%);
+    font-weight: 900;
+    font-size: 1.6em;
+    color: #000;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+    text-shadow: 0 0 0.15em #fff, 0 0 0.3em #fff;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* When the pop effect is bursting, both the lines and the text run their
+   one-shot keyframes. Animations are short (~400ms) to match a balloon-pop
+   beat — the burst should feel snappy, not lingering. */
+.mt-pop-effect.mt-pop-bursting .mt-pop-burst-lines {
+    animation: mt-pop-lines 0.4s ease-out forwards;
+}
+
+.mt-pop-effect.mt-pop-bursting .mt-pop-text {
+    animation: mt-pop-text 0.4s ease-out forwards;
+}
+
+/* The burst-lines parent just holds visibility — it fades out at the end
+   of the burst so any in-flight spike animations are clipped cleanly.
+   Per-spike travel (.mt-pop-spike) does the actual outward motion. The
+   animationend on this element is what render.js listens for to hide the
+   pop overlay. */
+@keyframes mt-pop-lines {
+    0%   { transform: translate(-50%, -50%); opacity: 1; }
+    80%  { transform: translate(-50%, -50%); opacity: 1; }
+    100% { transform: translate(-50%, -50%); opacity: 0; }
+}
+
+/* Per-spike travel: each spike is a fixed thin eye-shape that slides
+   outward along its own radial axis while fading in then out — gives a
+   "tracer" / ink-streak feel that mimics the motion blur in Flash's
+   multi-frame pop sprite. Angle and travel range come from inline custom
+   properties set by regeneratePopSpikes (per-pop randomness). */
+.mt-pop-burst-lines .mt-pop-spike {
+    transform-origin: 0 0;
+    animation: mt-pop-spike-travel 0.4s ease-out forwards;
+}
+
+@keyframes mt-pop-spike-travel {
+    0%   { transform: rotate(var(--mt-pop-angle)) translateX(var(--mt-pop-r-start)); opacity: 0; }
+    25%  { opacity: 1; }
+    70%  { opacity: 1; }
+    100% { transform: rotate(var(--mt-pop-angle)) translateX(var(--mt-pop-r-end)); opacity: 0; }
+}
+
+/* Text pops in, holds briefly, then fades — slightly slower scale than the
+   lines so the word reads as the focal point of the burst. */
+@keyframes mt-pop-text {
+    0%   { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
+    25%  { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+    70%  { transform: translate(-50%, -50%) scale(1.0); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0; }
+}
+
+/* --- Fish sub-activity --- */
+
+/*
+ * Fish scene background — composite Flash sprite (fish-scene.svg) containing
+ * the underwater horizontal gradient, the seaweed sprites (charId 297, 299, 301)
+ * at their original Flash placements, and the sandy floor (shape 295).
+ * y-coordinates are scaled by 0.75 to fit the Flash 600px stage into HTML5 450px.
+ */
+.mt-fish-scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background:
+        url("pictures/fish-scene.svg") 0 0 / 100% 100% no-repeat,
+        /* Fallback underwater gradient (visible if SVG fails to load).
+           Vertical to mirror the SVG gradient direction. */
+        linear-gradient(to bottom,
+            #86e8dd 0%,
+            #a4ccf8 50%,
+            #73e19e 100%);
+}
+
+.mt-fish-target {
+    position: absolute;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    /* Position animated by JS */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(var(--mt-target-scale, 1));
+    transform-origin: center center;
+    /* Horizontal flip via CSS custom property (set by JS for direction) */
+    --mt-fish-facing: 1; /* 1 = right, -1 = left */
+}
+
+.mt-fish-target:focus-visible {
+    outline: 0.4em solid gold;
+    outline-offset: 0.2em;
+}
+
+.mt-fish-img {
+    /* 10.6em — sized for visibility against the busy weed/pebble backdrop. */
+    width: 10.6em;
+    height: auto;
+    display: block;
+    /* Two stacked transforms: facing flip (set by JS via --mt-fish-facing)
+       and a slow vertical bob. Per-fin/tail flap lives inside fish.svg as
+       SMIL animateTransform on tagged <g> wrappers (#fish-tail, #fish-dorsal,
+       #fish-ventral, #fish-pectoral, #fish-mouth) — SMIL animations run in
+       img-loaded SVGs whereas host-page CSS cannot reach inside them. Flash
+       has no per-fin animation in the extracted source, so the flap is an
+       intentional fidelity ENHANCEMENT, not a port of original behaviour. */
+    transform: scaleX(var(--mt-fish-facing, 1)) translateY(var(--mt-fish-bob, 0));
+    animation: mt-fish-swim-bob 1.4s ease-in-out infinite;
+    transform-origin: center center;
+}
+
+/* Subtle swim cycle: vertical bob via the --mt-fish-bob custom property so the
+   scaleX flip (driven by JS for facing direction) is preserved. Keeping the
+   amplitude tiny (~0.18em) avoids destabilising the hit target. */
+@keyframes mt-fish-swim-bob {
+    0%, 100% { --mt-fish-bob: 0em; }
+    25%      { --mt-fish-bob: -0.18em; }
+    50%      { --mt-fish-bob: 0em; }
+    75%      { --mt-fish-bob: 0.18em; }
+}
+
+/* Tail-sway: a second animation on a wrapper inside the button. Implemented
+   via a child selector so the swim-bob on the img survives. */
+.mt-fish-target.mt-fish-turning .mt-fish-img {
+    /* Brief mid-turn squash — used during the JS-triggered turn-around. */
+    animation: mt-fish-turn 0.25s ease-in-out;
+}
+
+@keyframes mt-fish-turn {
+    0%   { transform: scaleX(var(--mt-fish-facing-prev, 1)) scaleY(1); }
+    50%  { transform: scaleX(0.15) scaleY(0.95); }
+    100% { transform: scaleX(var(--mt-fish-facing, 1)) scaleY(1); }
+}
+
+/* Initialise the custom property in the property registry so the keyframes
+   animation can interpolate it (Chrome/Firefox treat unregistered custom
+   props as discrete strings; without @property the bob would snap rather
+   than ease). Falls back gracefully on browsers without @property. */
+@property --mt-fish-bob {
+    syntax: "<length>";
+    initial-value: 0em;
+    inherits: false;
+}
+
+.mt-bubbles-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* --- Rocket/bang animation elements (injected by JS) --- */
+
+.mt-rocket-anim {
+    position: absolute;
+    /* 1em — the original Flash rocket sprite is a thin streak, not a fat
+       firework. Smaller width reads as a streak and leaves more visual
+       room for the explosion at the end of the trajectory. */
+    width: 1em;
+    height: auto;
+    pointer-events: none;
+    /* transform set by JS for rotation */
+}
+
+.mt-bang-anim {
+    position: absolute;
+    width: 4em;
+    height: auto;
+    pointer-events: none;
+    transform-origin: center center;
+    margin-left: -2em;   /* half of width (4em) so bang centres on its left anchor */
+    margin-top:  -2em;
+    /* Default animation — overridden by .mt-bang-explode / -stars / -rain modifier. */
+    animation: mt-bang-pop 1.2s ease-out forwards;
+}
+
+/* fireworkExplode — quick bright flash then linger before fading. */
+.mt-bang-anim.mt-bang-explode {
+    animation: mt-bang-pop 1.2s ease-out forwards;
+}
+
+/* fireworkStars — scatter outwards: scale up further, slower fade so the
+   star points trail. Slight rotation so each spawn looks distinct. */
+.mt-bang-anim.mt-bang-stars {
+    animation: mt-bang-stars 1.6s ease-out forwards;
+}
+
+/* fireworkRain — droplets fall after the burst: scale up modestly, then
+   shift downward as opacity decays (the SVG already shows trailing strands). */
+.mt-bang-anim.mt-bang-rain {
+    animation: mt-bang-rain 1.8s ease-out forwards;
+}
+
+@keyframes mt-bang-pop {
+    0%   { transform: scale(0.2); opacity: 1; }
+    50%  { transform: scale(1.3); opacity: 1; }
+    80%  { transform: scale(1.1); opacity: 0.85; }
+    100% { transform: scale(1.4); opacity: 0; }
+}
+
+@keyframes mt-bang-stars {
+    0%   { transform: scale(0.2) rotate(-20deg); opacity: 1; }
+    35%  { transform: scale(1.4) rotate(10deg);  opacity: 1; }
+    70%  { transform: scale(1.7) rotate(30deg);  opacity: 0.7; }
+    100% { transform: scale(2.0) rotate(45deg);  opacity: 0; }
+}
+
+@keyframes mt-bang-rain {
+    0%   { transform: scale(0.2)  translateY(0);     opacity: 1; }
+    25%  { transform: scale(1.1)  translateY(0);     opacity: 1; }
+    60%  { transform: scale(1.25) translateY(1.5em); opacity: 0.8; }
+    100% { transform: scale(1.4)  translateY(3em);   opacity: 0; }
+}
+
+/* --- Launcher body pulse during firing (subtle brightness boost, not animated) --- */
+
+.mt-launcher-firing .mt-launcher-body > path:first-child {
+    filter: brightness(1.1);
+}
+
+/* --- Bubble animation elements (injected by JS) ---
+ * Bubbles are decorative (carry no game state). They float upward via a CSS transition
+ * on `top` and `left` (set inline by JS for randomised destination). A subtle wobble
+ * keyframe is layered via `transform` so each bubble has a different horizontal sway.
+ * Removed on `transitionend` (see _spawnBubble).
+ */
+
+.mt-bubble-anim {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.7;
+    animation: mt-bubble-wobble 1.8s ease-in-out infinite;
+}
+
+@keyframes mt-bubble-wobble {
+    0%, 100% { transform: translateX(-0.2em); }
+    50%      { transform: translateX( 0.2em); }
+}
+
+/* --- Scan highlight --- */
+
+
+/* --- Reduced motion ---
+ *
+ * Collapses every animation/transition to 0.01ms.
+ *
+ * Why this is delicate for Moving Targets: motion IS the gameplay. The targets in
+ * three of the five sub-activities (Popping balloon, Fish, and to a lesser extent
+ * Vans/Fireworks/Footballer) move continuously across the stage. If the float/swim
+ * transitions are collapsed to 0.01ms, the balloon and fish would snap to the
+ * far edge in 10µs and be effectively unclickable.
+ *
+ * Decision: under reduced motion, the moving-target sub-activities (Popping, Fish)
+ * are rendered as STATIC targets at a central, easily-clickable position. The other
+ * sub-activities (Vans, Fireworks, Footballer) remain playable since their movement
+ * is triggered by the user's click — the user clicks an *already-still* target and
+ * the (now near-instant) feedback animation just fires and resets.
+ *
+ * JS adds the `mt-reduced-motion` class to the activity root when the matchMedia
+ * query is active, which overrides the relevant CSS keyframes/transitions and
+ * keeps the balloon and fish at fixed reachable positions.
+ */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* JS-applied reduced-motion overrides (paired with the matchMedia detection in JS). */
+.mt-reduced-motion .mt-balloon-target {
+    /* Park the balloon at a fixed, centred clickable position. */
+    bottom: 40%   !important;
+    left:   50%   !important;
+}
+
+.mt-reduced-motion .mt-fish-target {
+    /* Park the fish near scene-centre, slightly above middle for easy targeting. */
+    top:  45%   !important;
+    left: 50%   !important;
+}
+
+/* Cancel the decorative bubble wobble under reduced motion */
+.mt-reduced-motion .mt-bubble-anim {
+    animation: none !important;
+}
+
+/* --- Activity-choice thumbnails on the Options screen ---
+ * Each radio label gets a small picture above its name, matching Flash
+ * where the options page shows a thumbnail per sub-activity.
+ */
+.mt-activity-choice {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2em;
+    padding: 0.3em 0.5em !important;
+    vertical-align: top;
+}
+
+.mt-activity-thumb {
+    display: block;
+    width: 3em;
+    height: 2.2em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.mt-thumb-vans      { background-image: url("pictures/car.svg"); }
+.mt-thumb-footballer{ background-image: url("pictures/football.svg"); }
+.mt-thumb-fish      { background-image: url("pictures/fish.svg"); }
+.mt-thumb-popping   {
+    /* balloon.svg uses currentColor which does not propagate to SVGs loaded
+       via background-image, so we use a dedicated thumbnail with the red
+       fill baked in (matching the Flash options page balloon icon). */
+    background-image: url("pictures/balloon-thumb.svg");
+}
+
+/* Fireworks thumbnail built in CSS — a small night-sky tile with a burst. */
+.mt-thumb-fireworks {
+    background:
+        radial-gradient(circle at 30% 60%, #ffeb3b 1.5px, transparent 2px) no-repeat,
+        radial-gradient(circle at 65% 35%, #f06820 1.5px, transparent 2px) no-repeat,
+        radial-gradient(circle at 50% 50%, rgba(255,235,59,0.7) 0, rgba(255,235,59,0) 0.9em) no-repeat,
+        #001a33;
+    border-radius: 0.2em;
+}
+
+.mt-activity-name {
+    display: block;
+    font-size: 0.9em;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* --- Options grid layout (replaces legacy <table class="options_layout_grid">) --- */
+
+.mt-scan-onoff {
+    display: flex;
+    gap: 0.3em;
+    margin-top: 0.4em;
+}
+
+/* Object Size description sits below the small/medium/large radios
+   (Flash options-screen sub-caption). */
+.mt-difficulty-description {
+    flex-basis: 100%;
+    margin: 0.3em 0 0;
+    font-style: italic;
+}

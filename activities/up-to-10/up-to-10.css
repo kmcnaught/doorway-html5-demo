@@ -1,0 +1,761 @@
+/* Doorway Up to 10 — activity styles.
+   1em = 1/50th of activity width (set by doorway.js onResize).
+   All sizing in em; no px except borders.
+
+   Flash stage 800×600 px, 1em = 16 px.
+   y-position formula: css_top_em = flash_y_px * 0.75 / 16.
+   Key Flash measurements:
+     - Object area:    y=0–539 px  → occupies top flex region
+     - Question text:  y=515.8 px  → 24.18em (visually just above number line)
+     - Number line:    y=539 px    → 25.27em, h=81.8 px → 3.83em
+     - Object size:    72.05 px    → 4.50em
+   Colors (from ffdec SVG export):
+     - Stage/object area background:  #ffffff
+     - Grid lines (Layout 1/2):       #cccccc
+     - Number line slot — up:         #86e25f  border #ff6600 (bright green / orange)
+     - Number line slot — hover:      #6dcc4a  (darker green)
+     - Number line slot — correct:    #86e25f  border #00aa1a (same fill, green border highlight)
+     - Scan highlight border:         #ff6600  (orange, as in Flash sprite5/shape6)
+*/
+
+/* --- Welcome screen picture groups ---
+   Three side-by-side groups of Flash picture objects, mirroring the original
+   Flash welcome screen which showed three groups of counted objects.
+   Hosted inside `.welcome_image` so the shared flow-mode chrome treats them
+   as the standard welcome illustration block (centred, flow-bounded). */
+.utt-welcome-groups {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    max-width: 36em;
+    max-height: 18em;
+    margin: 0 auto;
+    gap: 0;
+}
+
+/* Each group is a fixed-size relative container holding 4–5 objects.
+   Flash object size ~72px → 4.5em; each group ~170px wide × 200px tall →
+   scaled to 450px height: ≈ 12.75em wide × 15em tall. */
+.utt-welcome-group {
+    position: relative;
+    width: 13em;
+    height: 13em;
+    flex-shrink: 0;
+}
+
+/* Each object wrapper: absolutely positioned within the group.
+   Flash object size: 72px → 4.5em */
+.utt-wobj {
+    position: absolute;
+    width: 4em;
+    height: 4em;
+}
+
+.utt-wobj img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Flash badge style: small circle with number at bottom-left of object.
+   Flash uses outlined circles (white fill, thin black border). */
+.utt-wbadge {
+    position: absolute;
+    bottom: -0.1em;
+    left: -0.1em;
+    width: 1.3em;
+    height: 1.3em;
+    background: white;
+    border: 0.12em solid #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75em;
+    font-weight: bold;
+    color: #111;
+    line-height: 1;
+}
+
+/* --- Object positions within each group ---
+   Object size = 4em. Positions approximate the Flash triangular/scattered layout.
+   Football group: 1 top-center, 2 in middle row, 2 in bottom row (triangle).
+   Apple group: 2×2 grid + 1 bottom-center.
+   Sun group: scattered (1 top-left, 1 top-right, 1 mid, 1 bot-left). */
+
+/* Football group (triangle: apex at top, widening downward).
+   Row layout: each row holds two 4em balls with a visible gap between them.
+   Bottom row spans the full 13em (left:0 + left:5em → 1em gap, occupies 0–9em).
+   Mid row is slightly inset (left:0.5em + left:4.5em → 0.5em gap, occupies 0.5–8.5em).
+   Top apex sits centred above the mid pair. */
+.utt-welcome-group:nth-child(1) .utt-wobj-top-right  { top: 0;      left: 2.5em; }
+.utt-welcome-group:nth-child(1) .utt-wobj-mid-left   { top: 3.5em;  left: 0.5em; }
+.utt-welcome-group:nth-child(1) .utt-wobj-mid-right  { top: 3.5em;  left: 5em;   }
+.utt-welcome-group:nth-child(1) .utt-wobj-bot-left   { top: 7em;    left: 0;     }
+.utt-welcome-group:nth-child(1) .utt-wobj-bot-right  { top: 7em;    left: 5em;   }
+
+/* Apple group (2×2 grid + 1 centred below) */
+.utt-welcome-group:nth-child(2) .utt-wobj-top-left   { top: 0;      left: 0.5em; }
+.utt-welcome-group:nth-child(2) .utt-wobj-top-right  { top: 0;      left: 5em;   }
+.utt-welcome-group:nth-child(2) .utt-wobj-mid-left   { top: 4em;    left: 0.5em; }
+.utt-welcome-group:nth-child(2) .utt-wobj-mid-right  { top: 4em;    left: 5em;   }
+.utt-welcome-group:nth-child(2) .utt-wobj-bot-center { top: 8em;    left: 2.75em; }
+
+/* Sun group (scattered diagonal pattern) */
+.utt-welcome-group:nth-child(3) .utt-wobj-top-left   { top: 0;      left: 0;     }
+.utt-welcome-group:nth-child(3) .utt-wobj-top-right  { top: 0.5em;  left: 6em;   }
+.utt-welcome-group:nth-child(3) .utt-wobj-mid-center { top: 3.5em;  left: 3em;   }
+.utt-welcome-group:nth-child(3) .utt-wobj-bot-left   { top: 7em;    left: 0.5em; }
+
+/* --- Screen layout --- */
+
+/* Higher specificity to ensure hidden_panel beats utt-screen's display:flex */
+.utt-screen.hidden_panel {
+    display: none;
+}
+
+.utt-screen {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 1.5em 1em 1em;
+    gap: 0.5em;
+}
+
+.utt-screen-title {
+    font-size: 2em;
+    margin: 0 0 0.5em 0;
+    text-align: center;
+}
+
+/* --- Activity screen layout --- */
+
+/* Flash stage: object area fills the top ~90 % of the stage height;
+   number-line strip is at the bottom and itself contains the question text
+   and "Try again." flag (both children of `_root.numberLine` in Flash).
+   The activity layout is a simple top-to-bottom flex column:
+     - object area  (top, flex: 1)
+     - number line wrapper (bottom, fixed height, contains its own labels row) */
+.utt-activity-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 0;
+    position: relative;
+}
+
+/* --- Question text ---
+
+   Flash: _root.numberLine.questionText is a child of the numberLine clip and
+   sits inside the strip's white area, just above the row of slot buttons.
+   In HTML5 the <p> lives inside `.utt-number-line-labels` (the top row of
+   `#uttNumberLineWrapper`) so it shows/hides with the strip and occupies the
+   same "above the slots" zone as Flash. */
+.utt-question-text {
+    flex: 1;
+    font-size: 1.3em;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: #222;
+    min-height: 1.2em;
+    line-height: 1.2;
+}
+
+/* --- Object display area --- */
+
+/* Grid for Layout 1/2 (options.gridEnabled).
+   Flash: 2-column × 5-row grid centred horizontally in the object area.
+   The HTML5 stage is shorter than Flash (450 px vs 600 px), so the grid is
+   scaled to fit the available object-area height. Cell size is set via
+   --utt-cell-w / --utt-cell-h custom properties so the JS object positioning
+   reads the same values (see _computePositions). --utt-obj-size is the
+   displayed object size; in grid mode it's shrunk so objects sit inside
+   their cell (Flash uses ~72%-of-cell). */
+.utt-object-area {
+    position: relative;
+    flex: 1;
+    background-color: #ffffff;
+    overflow: hidden;
+    min-height: 12em;
+    --utt-cell-w: 3.6em;
+    --utt-cell-h: 3.6em;
+    --utt-grid-cols: 2;
+    --utt-grid-rows: 5;
+    /* Objects always render at the same grid-cell size — see _slotPosition.
+       The visible grid lines toggle via .utt-grid-enabled but the position
+       and footprint stay the same in grid-off / random-order modes. */
+    --utt-obj-size: 2.6em;
+}
+
+.utt-object-area.utt-grid-enabled::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(var(--utt-cell-w) * var(--utt-grid-cols));
+    height: calc(var(--utt-cell-h) * var(--utt-grid-rows));
+    background-image:
+        linear-gradient(to right, #cccccc 1px, transparent 1px),
+        linear-gradient(to bottom, #cccccc 1px, transparent 1px);
+    background-size: var(--utt-cell-w) var(--utt-cell-h);
+    background-repeat: repeat;
+    border: 1px solid #cccccc;
+    box-sizing: content-box;
+    pointer-events: none;
+}
+
+/* Each object is an absolutely positioned img within the object area.
+   Flash object size: 72.05 px → 4.50 em at 1em = 16 px.  In grid mode the
+   size is reduced via the --utt-obj-size custom property so objects sit
+   inside their grid cell with breathing room (matching the Flash ratio).
+   Positioning is set dynamically by JS using left/top. */
+.utt-object {
+    position: absolute;
+    width: var(--utt-obj-size, 4.5em);
+    height: var(--utt-obj-size, 4.5em);
+    cursor: pointer;
+    /* Suppress native <button> chrome — the element is a button for
+       tab-keyboard activation parity with switch scanning, but visually
+       it's just the object image. */
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+}
+
+.utt-object img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Object fade-in (information-carrying — each fade IS the user seeing the next
+   object appear, which drives the implicit count).  Duration is driven by the
+   --fade-duration CSS custom property set on the element from JS (mapped from
+   the user-selected Speed of Presentation option). */
+.utt-object {
+    transition: opacity var(--fade-duration, 0.7s) ease-out;
+}
+
+/* Objects start transparent; .utt-object-hidden → no class transitions opacity */
+.utt-object.utt-object-hidden {
+    opacity: 0;
+}
+
+/* Wrong-order penalty dim: brief CSS animation that auto-restores. */
+.utt-object.utt-object-dim {
+    animation: utt-object-dim 0.6s ease-out forwards;
+}
+
+@keyframes utt-object-dim {
+    0%   { opacity: 0.6; }
+    80%  { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+/* Counter badge: small numbered circle sitting at the bottom-left of the
+   object's grid cell. Half the object's footprint, with a white fill,
+   thin black border, and black numeral — matches the Flash counter sprite
+   (white-circle-with-dark-border outline + black numeral) and the welcome
+   screen badge styling. The badge's left/top are written by JS to anchor
+   its top-left to the cell's bottom-left corner; width/height stay fixed
+   here (= half the object size) so the badge stays proportional in both
+   grid-on and grid-off layouts. */
+.utt-counter-badge {
+    position: absolute;
+    /* Badge diameter ≈ half the object footprint (2.6em → 1.3em). */
+    width: 1.3em;
+    height: 1.3em;
+    background: #fff;
+    color: #000;
+    border: 0.12em solid #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Numeral sized to fit comfortably inside the badge — children inherit
+       font-size, so set the digit on the badge itself (no child span). */
+    font-size: 0.85em;
+    line-height: 1;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 2;
+    box-sizing: border-box;
+    /* Pull up by the badge's own height so its bottom sits flush with the
+       cell's bottom edge (which JS positions via top). */
+    transform: translateY(-100%);
+    animation: utt-badge-pop 0.25s ease-out;
+}
+
+/* Counter badge appearance: small scale+fade pop-in.  Decorative — the badge
+   number itself is the information; the pop just draws attention. The base
+   `transform: translateY(-100%)` (used to flush the badge's bottom to the
+   cell's bottom edge) must be reapplied in each keyframe — a `transform`
+   value replaces the rule's static transform for the duration of the
+   animation. */
+@keyframes utt-badge-pop {
+    from { transform: translateY(-100%) scale(0.4); opacity: 0; }
+    to   { transform: translateY(-100%) scale(1);   opacity: 1; }
+}
+
+/* --- Number line wrapper ---
+   Flash: numberLine at y=539 px (25.27 em), full width (793 px = 49.6 em),
+   height = 81.8 px * 0.75 / 16 = 3.83 em.
+   The wrapper is the bottom strip of the activity screen. */
+
+.utt-number-line-wrapper {
+    background: #ffffff;
+    border-top: 2px solid #cccccc;
+    padding: 0.4em 0.3em;
+    box-sizing: border-box;
+}
+
+/* Override hidden_panel for number line — it uses its own show/hide */
+.utt-number-line-wrapper.hidden_panel {
+    display: none;
+}
+
+/* Number line slide-in (decorative — matches Flash tween of _y from 625→539).
+   The class is added when the wrapper becomes visible and removed on
+   `animationend` so the slide can be re-triggered on the next question. */
+.utt-number-line-wrapper.utt-number-line-entering {
+    animation: utt-number-line-slide 0.6s ease-out;
+}
+
+@keyframes utt-number-line-slide {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0);    }
+}
+
+/* Top row of the strip — holds the question text (centred, left-flex) and the
+   "Try again." flag (right-flex). When `.utt-try-again` is hidden_panel the
+   question text expands to fill the row, which keeps it visually centred. */
+.utt-number-line-labels {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    padding: 0 0.3em 0.2em;
+    min-height: 1.4em;
+}
+
+.utt-number-line {
+    display: flex;
+    gap: 0;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+/* Number line slots.
+   Per-product spec (divergence from Flash, agreed): grey fill with thin black
+   border so the strip reads as a neutral number line rather than the bright
+   Flash green/orange tiles. Text is sized so the digit reads comfortably while
+   slot height stays trimmed enough that the wrapper still fits in the 450 px
+   HTML5 stage with no scroll.
+   Slots are square-cornered and touch each other to match the Flash strip. */
+.utt-line-slot {
+    font-size: 1.5em;
+    font-weight: bold;
+    flex: 1;
+    min-width: 0;
+    height: 2.2em;
+    border: 0.1em solid #000;
+    border-radius: 0;
+    background: #e0e0e0;
+    cursor: pointer;
+    text-align: center;
+    color: #111;
+    padding: 0;
+}
+
+/* Avoid doubled borders between adjacent touching slots */
+.utt-line-slot + .utt-line-slot {
+    border-left-width: 0;
+}
+
+/* Hover/focus state: slightly darker grey so the change is still perceptible.
+   Outline (rather than box-shadow) keeps the gold focus ring visible even
+   though adjacent slots touch and share borders. */
+.utt-line-slot:hover,
+.utt-line-slot:focus-visible {
+    background: #c8c8c8;
+    outline: 0.3em solid gold;
+    outline-offset: -0.15em;
+    position: relative;
+    z-index: 1;
+}
+
+/* Correct-answer state: swap the border to bright green #00aa1a — a clear
+   colour-change cue distinct from the resting black border — and run a short
+   scale-pulse keyframe. Information is still communicated when motion is
+   reduced (border colour change plus audio chain). */
+.utt-line-slot.utt-slot-correct {
+    background: #e0e0e0;
+    border-color: #00aa1a;
+    color: #005500;
+    animation: utt-slot-correct-pulse 0.5s ease-out;
+    /* Restore full border so the green outline reads cleanly even though
+       adjacent slots share an edge (border-left:0 above). Match the resting
+       border thickness (0.1em). */
+    border-left-width: 0.1em;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes utt-slot-correct-pulse {
+    0%   { transform: scale(1);   box-shadow: 0 0 0 0 rgba(0, 170, 26, 0.6); }
+    50%  { transform: scale(1.1); box-shadow: 0 0 0 0.4em rgba(0, 170, 26, 0.0); }
+    100% { transform: scale(1);   box-shadow: 0 0 0 0 rgba(0, 170, 26, 0.0); }
+}
+
+/* "Try again." flag — Flash places this on the right of the strip, above the
+   slots (see `_root.numberLine.tryagainText`). The labels flex row already
+   right-aligns it (question text takes flex:1, leaving try-again to the right). */
+.utt-try-again {
+    flex: 0 0 auto;
+    font-size: 1.2em;
+    text-align: right;
+    color: #cc0000;
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+}
+
+.utt-try-again.hidden_panel {
+    display: none;
+}
+
+/* --- Options fieldsets ---
+   Outer section fieldsets (options_group) keep default browser border to match Flash.
+   Inner control fieldsets (wrapping radio/checkbox pairs inside the options table)
+   must have no visible border — Flash shows no bounding box around these inner groups. */
+.user_options fieldset fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Scan sub-panel row: hidden when scanning is Off.
+   Must override hidden_panel's display:none back to table-row when visible. */
+#uttScanSubPanel.hidden_panel {
+    display: none;
+}
+
+/* --- Number toggle area (options) ---
+   Uses the canonical shared dw-toggle-grid / dw-toggle-btn pattern; only the
+   row-layout shim (.utt-numbers-row .utt-number-toggles below) is local. */
+
+/* Numbers fieldset: number-toggle row sits left, persistent help/warning text
+   sits inline to the right (matches Flash spec). The help text is shown by
+   default in neutral grey; when validation fails on submit, JS adds the
+   `.utt-warning-error` class to switch to the red error styling. */
+.utt-numbers-row {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+
+.utt-numbers-row .utt-number-toggles {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.utt-warning {
+    flex: 0 1 auto;
+    font-size: 0.95em;
+    color: #555;
+    margin: 0;
+    max-width: 12em;
+    line-height: 1.2;
+}
+
+.utt-warning.utt-warning-error {
+    color: #cc0000;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* --- Layout fieldset: three pictogram radios + inline checkbox row -------- */
+
+.utt-layout-radios {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: stretch;
+    gap: 0.5em;
+    flex-wrap: wrap;
+}
+
+.utt-layout-radio {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.3em;
+    padding: 0.4em 0.6em;
+    text-align: center;
+    min-width: 7em;
+}
+
+.utt-layout-pictogram {
+    display: block;
+    width: 5em;
+    height: 4em;
+    line-height: 0;
+}
+
+.utt-layout-pictogram svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.utt-layout-text {
+    font-size: 0.95em;
+    line-height: 1.1;
+    display: block;
+}
+
+/* Inline checkbox row sits under the pictograms, inside the same fieldset. */
+.utt-layout-checks {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.4em 1.5em;
+    margin-top: 0.6em;
+}
+
+.utt-layout-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+}
+
+/* The third checkbox carries a sub-line note ("disabled in scanning mode"),
+   so it stacks the note below the checkbox row. */
+.utt-layout-check-with-note {
+    flex-wrap: wrap;
+    column-gap: 0.3em;
+    row-gap: 0;
+}
+
+.utt-check-note {
+    flex: 1 0 100%;
+    font-size: 0.8em;
+    color: #555;
+    margin-left: 1.6em;
+    line-height: 1.1;
+}
+
+/* Disabled-state visual for the layout checkboxes (grid + count-order are
+   disabled in Random layout; force-counters is disabled in scanning mode).
+   The shared dw-check styles don't include a :disabled rule, so mirror the
+   .dw-toggle-grid pattern (opacity + not-allowed cursor) on both the label
+   and its checkbox-square pseudo-element. The associated note text is
+   greyed in the same proportion. */
+.utt-layout-check input.dw-check-input:disabled + .dw-check-label,
+.utt-layout-check input.dw-check-input:disabled + .dw-check-label::before {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.utt-layout-check-with-note input.dw-check-input:disabled ~ .utt-check-note {
+    opacity: 0.5;
+}
+
+/* --- Number of Questions + Speed of Presentation: side-by-side row ------- */
+
+.utt-questions-speed-row {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    align-items: stretch;
+}
+
+.utt-questions-speed-row > fieldset {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.utt-scan-onoff {
+    display: flex;
+    gap: 0.3em;
+    margin-top: 0.4em;
+}
+
+/* --- Results screen --- */
+
+.utt-results-table {
+    border-collapse: collapse;
+    font-size: 1.1em;
+    width: 100%;
+    max-width: 30em;
+    margin: 0 auto;
+}
+
+.utt-results-table th,
+.utt-results-table td {
+    padding: 0.3em 0.7em;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.utt-results-table th {
+    background: #f0f0f0;
+    font-weight: bold;
+}
+
+.utt-score-text {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    margin: 0.5em 0;
+}
+
+.utt-action-buttons {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    margin-top: auto;
+    padding-top: 0.5em;
+    flex-wrap: wrap;
+}
+
+.utt-print-hint {
+    font-size: 0.75em;
+    color: #555;
+    text-align: center;
+    margin: 0.3em 0 0 0;
+}
+
+/* --- Print stylesheet — show only the results table --- */
+@media print {
+    @page { margin: 1.5cm; }
+
+    body { background: #fff; }
+
+    #dwNavigationHeader,
+    .dw-screen-header,
+    .dw-app-footer,
+    #dwWelcomeScreen,
+    #dwUserOptions,
+    #dwActivityScreen,
+    .utt-action-buttons,
+    .utt-print-hint {
+        display: none !important;
+    }
+
+    .doorway_application,
+    .doorway_fullscreen_div,
+    .doorway_aspect_outer_div,
+    .doorway_aspect_div,
+    main {
+        position: static !important;
+        width: auto !important;
+        height: auto !important;
+        max-width: none !important;
+        max-height: none !important;
+        overflow: visible !important;
+        transform: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    #dwResultsScreen {
+        position: static !important;
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        font-size: 12pt;
+    }
+
+    .utt-results-table {
+        max-width: none;
+        font-size: 1em;
+    }
+    .utt-results-table th { background: transparent; }
+}
+
+/* --- Scan highlight ---
+   Flash: sprite5/shape6 = orange #ff6600 border frame (outer rect minus inner rect).
+   In CSS, a thick box-shadow in the same colour gives the same visual effect. */
+
+.scan_highlight {
+    box-shadow: 0 0 0 0.4em #ff6600;
+}
+
+/* --- Accessibility --- */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* --- Reduced motion --- */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* --- Options-screen overrides for the flow-mode layout ---
+   In flow mode, the Questions/Speed two-column row needs to wrap when the
+   viewport narrows below the combined fieldset width — otherwise the two
+   inner fieldsets get crushed below their content's intrinsic width. */
+body.dw-screen-options .utt-questions-speed-row {
+    flex-wrap: wrap;
+}
+body.dw-screen-options .utt-questions-speed-row > fieldset {
+    flex: 1 1 18em;
+}
+
+/* Prototype: large, always-on scrollbar on the options screen.
+   Discussed alternative for accessibility — see plan in /home/node/.claude/plans.
+   Scoped to aspect-locked mode only: in flow mode the page itself scrolls
+   (shared chrome makes #dwUserOptions overflow:visible), so a form-level
+   scrollbar would either be redundant or fight the page scroll. */
+body.dw-aspect-locked #dwUserOptions {
+    overflow-y: scroll;            /* always render the gutter, not just on overflow */
+    scrollbar-width: thick;        /* Firefox */
+    scrollbar-color: #444 #ddd;    /* thumb / track */
+}
+
+/* WebKit / Blink (Chrome, Safari, Edge) */
+body.dw-aspect-locked #dwUserOptions::-webkit-scrollbar {
+    width: 1.2em;
+}
+body.dw-aspect-locked #dwUserOptions::-webkit-scrollbar-track {
+    background: #ddd;
+    border-radius: 0.6em;
+}
+body.dw-aspect-locked #dwUserOptions::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 0.6em;
+    border: 0.15em solid #ddd;
+}
+body.dw-aspect-locked #dwUserOptions::-webkit-scrollbar-thumb:hover {
+    background: #222;
+}

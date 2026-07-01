@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Heart icon for Odd-and-Even coconut-shy lives display.
+     Drawn to match the Flash frame_08 life1/life2/life3 sprites
+     (red heart with darker stroke). The Flash sprites are baked
+     into the timeline, not exported as named SVGs, so this is a
+     hand-drawn equivalent. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 44" width="48" height="44">
+  <path d="M24 42 C 6 28 0 18 0 11 C 0 4 5 0 11 0 C 16 0 21 3 24 8 C 27 3 32 0 37 0 C 43 0 48 4 48 11 C 48 18 42 28 24 42 Z"
+        fill="#e62b1e" stroke="#7a0a05" stroke-width="2" stroke-linejoin="round"/>
+</svg>

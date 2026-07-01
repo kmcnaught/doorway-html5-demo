@@ -1,0 +1,344 @@
+/* Doorway Odd and Even — House painting sub-activity styles.
+ * Carved out of odd-and-even.css to keep per-sub-activity CSS independent.
+ */
+/* =========================================================
+   Sub-activity B: House painting
+   =========================================================
+   Flash frame 5: white background. Two rows of 10 houses spanning
+   full width (h1–h10 y≈7.84em, h11–h20 y≈12.06em).
+   Paint buckets at bottom: odd/red left (x≈10.37em), even/blue right
+   (x≈35.93em). "Done" button centred bottom.
+   A subtle road strip between the two rows hints at the street layout.
+*/
+
+#oeHousePaintingArea {
+    background-color: #ffffff;
+    position: relative;
+    /* Clip the brush + drip layer so a falling drip or off-edge brush
+       position cannot extend the scroll area of the parent .oe-screen.
+       Without this, mouse-following drips occasionally triggered transient
+       scrollbars at the activity-area edge. */
+    overflow: hidden;
+}
+
+/* Cursor-following brush (Flash brush MC, frame_05.as line 30).
+   Decorative; aria-hidden in HTML. Position is set in JS pixels; size is em.
+   pointer-events: none so the brush itself never intercepts clicks.
+
+   Brush SVG layout (brush.svg viewBox 102.1 × 101.3):
+     - bristle tip is at SVG coords (~31.7, ~93.5) — i.e. 31% from left,
+       92% from top.
+     - At width 4em the tip lands at (1.24em, 3.66em) from the top-left
+       of the <img>.
+   We position the element with left/top = pointer position, then translate
+   by (-1.24em, -3.66em) so the bristle tip lands precisely on the pointer.
+   transform-origin is set to the same offset so rotations (over a house,
+   on a dab) pivot around the bristle tip — keeping the tip pinned to the
+   pointer no matter what the rotation. */
+.oe-brush {
+    position: absolute;
+    width: 4em;
+    height: auto;
+    pointer-events: none;
+    /* Above the bottom bar (.oe-house-bottom z:500) so the brush passes
+       in front of the paint buckets when the cursor crosses them. */
+    z-index: 600;
+    transform-origin: 1.24em 3.66em;
+    transform: translate(-1.24em, -3.66em) rotate(0deg);
+    /* No transform transition: pointermove already drives smooth motion via
+       left/top updates, and a transition on transform makes the tilt-on-house
+       state-change visibly lag. */
+    user-select: none;
+}
+
+.oe-brush.hidden_panel {
+    display: none;
+}
+
+/* Blue brush state (Flash brush.gotoAndStop(2) frame).
+   The extracted brush SVG only renders the red bristle, so a hue rotation
+   turns the red bristles blue while keeping the wood handle close to original. */
+.oe-brush.oe-brush-blue {
+    filter: hue-rotate(220deg) saturate(1.6);
+}
+
+/* Tilt brush forward when over a house (Flash rotationTween(brush,70)
+   in frame_05.as line 81). Default tilt is 0. With transform-origin set
+   to the bristle tip, the rotation pivots around the tip so the tip stays
+   on the pointer. */
+.oe-brush.oe-brush-tilt {
+    transform: translate(-1.24em, -3.66em) rotate(60deg);
+}
+
+/* Brief "dab" punch when a house is painted — mirrors Flash
+   redBrush/blueBrush.gotoAndPlay(2) in frame_05.as:63-64.
+   Pivots around the bristle tip (set via transform-origin) so the tip
+   stays pinned to the pointer through the punch. */
+@keyframes oe-brush-dab {
+    0%   { transform: translate(-1.24em, -3.66em) rotate(60deg) scale(1); }
+    50%  { transform: translate(-1.24em, -3.66em) rotate(75deg) scale(0.92); }
+    100% { transform: translate(-1.24em, -3.66em) rotate(60deg) scale(1); }
+}
+
+.oe-brush.oe-brush-dab {
+    animation: oe-brush-dab 0.22s ease-out;
+}
+
+/* Hide the system cursor when the brush is active inside the painting area
+   (Flash Mouse.hide() — frame_05.as:137). Nav buttons stay clickable so the
+   brush hides + cursor returns when hovering them (see pointerenter/leave
+   wiring in house-painting.js _setupBrush). */
+#oeHousePaintingArea.oe-brush-active {
+    cursor: none;
+}
+#oeHousePaintingArea.oe-brush-active .oe-house-btn {
+    cursor: none;
+}
+
+/* Drip particles — Flash setInterval(makeDrip, 800) frame_05.as:110.
+   Drips spawn at the brush tip and fall ~3em with a small fade. */
+.oe-drip-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99;
+}
+
+.oe-drip {
+    position: absolute;
+    width: 0.45em;
+    height: auto;
+    pointer-events: none;
+    animation: oe-drip-fall 1.4s ease-in forwards;
+}
+
+@keyframes oe-drip-fall {
+    0%   { transform: translateY(0)    scaleY(0.6); opacity: 0; }
+    15%  { transform: translateY(0)    scaleY(1);   opacity: 0.9; }
+    100% { transform: translateY(3em)  scaleY(1.4); opacity: 0; }
+}
+
+/* House grid — Flash layout: two rows of 10 houses across full width.
+   Houses are SVG (Flash sprites). Background is plain white (matches
+   Flash frame_05 white stage); no road strip between rows in Flash. */
+.oe-house-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: 1fr 1fr;
+    column-gap: 0.2em;
+    row-gap: 0.4em;
+    padding: 0.5em 0.3em;
+    flex: 1;
+    min-height: 0;
+    align-items: center;
+    justify-items: center;
+}
+
+/* Each house button: stacks the unpainted SVG, an overlay paint SVG
+   that fades in, and the door number on top. */
+.oe-house-btn {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 71.5 / 90;
+    max-height: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.oe-house-img,
+.oe-house-paint {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Paint overlay (houseRed.svg / houseBlue.svg) has a smaller intrinsic
+   size than houseUnpainted.svg (68.7×76.85 vs 71.5×90.05 — the painted
+   sprites exclude the chimney). The painted SVG canvas is filled almost
+   edge-to-edge by the body shape (internal body spans y 1.0–75.95 of
+   the 76.85 canvas, x 1.0–63.7 of the 68.7 canvas), so when we draw the
+   painted canvas at the same SCREEN coordinates as the unpainted body
+   sits, the painted body aligns to the unpainted body outline.
+   In the unpainted's 71.5×90.05 canvas, the body sprite renders at
+   approximately x 3.7%–97.0%, y 6.93%–90.17% (computed from the body's
+   internal path range plus the SVG's group + use transforms). Position
+   the painted overlay at that rectangle and stretch (`object-fit: fill`)
+   so the painted canvas maps 1:1 onto the body region.
+   Previous values (top 16%, height 84%, width 100%) placed the painted
+   body ~9% lower and 6% wider than the unpainted outline; the houses
+   visibly slid down on paint click. */
+.oe-house-paint {
+    opacity: 0;
+    pointer-events: none;
+    top: 6.93%;
+    left: 3.7%;
+    width: 93.3%;
+    height: 83.24%;
+    object-fit: fill;
+}
+
+.oe-house-btn.oe-painted-odd .oe-house-paint,
+.oe-house-btn.oe-painted-even .oe-house-paint {
+    opacity: 1;
+}
+
+/* Door number: drawn over the house body. Position matches the open-door
+   area in the Flash unpainted-house sprite (~50% from top, centred). */
+.oe-house-number {
+    position: absolute;
+    left: 50%;
+    top: 64%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    font-size: 0.9em;
+    line-height: 1;
+    color: #ffffff;
+    text-shadow: 0 0 2px #000, 0 0 2px #000;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Bottom bar: odd bucket — done — even bucket.
+   Padding pulls the buckets inward (~25% from each edge, as in Flash
+   frame_05) instead of sitting flush against the activity wall.
+   Stacks above the drip layer (z:99) and the house grid; the brush
+   (z:600) is intentionally above this bar so the cursor passes in
+   front of the paint buckets. */
+.oe-house-bottom {
+    position: relative;
+    z-index: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8em 0.3em;
+    gap: 1em;
+}
+
+/* Individual paint buttons sit at the top of the bottom-bar stack. */
+.oe-house-bottom .oe-paint-btn,
+.oe-house-bottom .oe-done-circle {
+    position: relative;
+    z-index: 2;
+}
+
+/* Paint bucket — Flash oddPaint / evenPaint stage sprites (bucketRed.svg
+   / bucketBlue.svg). Grey can + coloured paint surface + baked-in
+   "odd"/"even" label; intrinsic ~77×81 / ~82×81. The button just stacks
+   the sprite img + a small selection arrow underneath. */
+.oe-paint-btn {
+    position: relative;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1em;
+}
+
+.oe-paint-bucket-img {
+    width: 4.2em;
+    height: auto;
+    display: block;
+    pointer-events: none;
+}
+
+/* Selection arrow under the active bucket (Flash arrow MC, moved by
+   _root.arrow._x in frame_05.as:120). Default: hidden. Triangle points
+   UP at the bucket above it, mirroring Flash. */
+.oe-paint-arrow {
+    width: 0;
+    height: 0;
+    border-left:   0.6em solid transparent;
+    border-right:  0.6em solid transparent;
+    border-bottom: 0.8em solid #1a1a1a;
+    visibility: hidden;
+    margin-top: 0.15em;
+}
+
+.oe-paint-btn[aria-pressed="true"] .oe-paint-arrow {
+    visibility: visible;
+}
+
+/* Active-bucket highlight (replaces previous gold outline so it doesn't
+   conflict with the brush-tilt visual when the cursor enters the bucket). */
+.oe-paint-btn[aria-pressed="true"] .oe-paint-bucket-img {
+    filter: drop-shadow(0 0 0.2em rgba(255, 215, 0, 0.95));
+}
+
+/* Yellow "done" circle — Flash done button (yellow disc, lighter rim). */
+.oe-done-circle {
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    border: 2px solid #b8860b;
+    background: radial-gradient(circle at 35% 30%, #fff19a 0%, #f1c40f 60%, #d4ac0d 100%);
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    color: #1a1a1a;
+}
+
+.oe-done-circle:hover,
+.oe-done-circle:focus-visible {
+    outline: 0.2em solid gold;
+    outline-offset: 0.1em;
+}
+
+/* House-painting feedback overlay — sits above the houses in the same
+   slot as the activity instruction (previously it stacked below the
+   bottom paint-bucket row). Absolutely positioned at top centre of the
+   painting area; the instruction is hidden while the bubble is showing
+   so the two never compete for the same visual band. */
+/* Scoped to #oeHouseFeedback specifically — the validation bubble.
+   Using the broader `#oeHousePaintingArea .oe-feedback` selector also
+   matched the bubble inside #oeHouseCongrats and pinned it to top:0
+   of the congrats card, leaving the static "Press back…" paragraph
+   stacked behind it. */
+#oeHouseFeedback {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 550;
+    margin: 0;
+}
+/* Scoped to #oeHouseFeedback specifically — the broader
+   `#oeHousePaintingArea .oe-feedback` selector also matches the bubble
+   inside #oeHouseCongrats (whose .oe-feedback is not marked
+   `hidden_panel` because the parent overlay handles visibility), which
+   then hid the instruction nav across every sub-activity. */
+.oe-screen:has(#oeHouseFeedback:not(.hidden_panel)) .oe-instruction {
+    visibility: hidden;
+}
+
+/* Shift the activity-nav row down slightly so the instruction text
+   clears the framework gear / fullscreen buttons in the top nav. */
+.oe-screen:has(#oeHousePaintingArea:not(.hidden_panel)) .oe-activity-nav {
+    padding-top: 0.6em;
+}
+
+/* --- House painting: paint fades in over the house ---
+   Mirrors Flash frame_05.as fadeInTween (line 17, 0→100 alpha, 0.6 s,
+   Regular.easeOut) applied via attachMovie of houseRed / houseBlue
+   over each painted house. Outcome is also conveyed by the persistent
+   background colour + aria-label change. */
+@keyframes oe-house-paint {
+    0%   { background-color: #ecf0f1; }
+    100% {}  /* end state inherits from .oe-painted-odd / -even */
+}
+
+.oe-house-btn.oe-painted-odd.oe-house-just-painted,
+.oe-house-btn.oe-painted-even.oe-house-just-painted {
+    animation: oe-house-paint-fade 0.6s ease-out;
+}
+
+@keyframes oe-house-paint-fade {
+    0%   { filter: brightness(1.8) saturate(0.2); }
+    100% { filter: none; }
+}
+

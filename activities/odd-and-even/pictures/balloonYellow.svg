@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Yellow balloon, lifted from extracted/Odd and Even/swf_graphics/sprites_svg/sprite_81.svg
+     (Flash congratulations clip). Stroke + body kept verbatim; the "no" text
+     glyph overlay has been removed so the balloon reads as a pure prop. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 184" width="92" height="184">
+  <g transform="translate(1.5, 1.5)">
+    <path d="M42.55 180.7 Q34.5 159.25 42.85 145.1 51.15 130.9 43.65 115.0" fill="none" stroke="#a78503" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.0"/>
+    <path d="M75.95 16.85 Q89.0 33.7 88.85 57.55 88.65 81.35 72.0 98.65 55.3 115.95 43.0 115.5 30.7 115.0 17.05 98.15 3.35 81.3 1.7 57.5 0.0 33.7 13.0 16.85 26.05 0.0 44.5 0.0 62.95 0.0 75.95 16.85" fill="#eafb51" fill-rule="evenodd" stroke="none"/>
+    <path d="M75.95 16.85 Q89.0 33.7 88.85 57.55 88.65 81.35 72.0 98.65 55.3 115.95 43.0 115.5 30.7 115.0 17.05 98.15 3.35 81.3 1.7 57.5 0.0 33.7 13.0 16.85 26.05 0.0 44.5 0.0 62.95 0.0 75.95 16.85 Z" fill="none" stroke="#a78503" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.0"/>
+  </g>
+</svg>

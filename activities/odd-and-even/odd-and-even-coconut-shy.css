@@ -1,0 +1,737 @@
+/* Doorway Odd and Even — Coconut shy sub-activity styles.
+ * Carved out of odd-and-even.css to keep per-sub-activity CSS independent.
+ */
+/* =========================================================
+   Sub-activity E: Coconut shy
+   =========================================================
+   Flash frame 8 background (shape0):
+     - Sky:       #d3dffe,  Flash y   0–362 → CSS  0–57% of scene
+     - Horizon:   #df6262,  Flash y 362–390 → CSS 57–60% of scene (3% band)
+     - Ground:    radial gradient #f0cf9f → #cdb554, Flash y 390–600 → CSS 60–100%
+   Green curtains at top corners are decorative — not reproduced in CSS.
+   Lives (hearts) at bottom-left, level icons at bottom-right.
+
+   Coconut positions (JS-set percentage left/top within .oe-coconut-scene):
+     Row 1 (odd coconuts 1,3,5,7,9): y≈9.79em in 20em scene → top≈49%
+     Row 2 (even coconuts 2,4,6,8,10): y≈12.14em → top≈61%
+     x-spacing: 7.04em, 14.54em, 22.04em, 29.54em, 37.04em (row 1)
+*/
+
+#oeCoconutShyArea {
+    background-color: #ffffff;
+    /* positioning context for the absolute game-over / congrats overlays
+       so they sit on top of the scene rather than pushing it up. */
+    position: relative;
+}
+
+/* Coconut shy scene — sky / horizon / ground background matching Flash.
+   Sky (#d3dffe) covers top ~60%, red horizon band at ~60-63%, ground
+   (ochre) covers bottom 37%. Green curtain SVG drapes over the top.
+   overflow: hidden so ::before / ::after ground/horizon layers clip correctly. */
+.oe-coconut-scene {
+    position: relative;
+    flex: 1;
+    min-height: 18em;
+    border-radius: 0.3em;
+    overflow: hidden;
+    background-color: #d3dffe;
+}
+
+/* Ground — broad ochre band covers bottom ~45% of scene with a subtle
+   radial-style gradient (Flash y 390-600 of 600 = 35% of height, but with
+   stretched HTML5 16:9 stage we get a slightly larger relative band).
+   A second linear gradient overlays faint wood-plank stripes to hint at
+   the planks visible in the Flash ground. */
+.oe-coconut-scene::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 45%;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(110, 70, 30, 0.0)  0,
+            rgba(110, 70, 30, 0.0)  3em,
+            rgba(110, 70, 30, 0.08) 3em,
+            rgba(110, 70, 30, 0.08) 3.05em
+        ),
+        radial-gradient(ellipse at 50% 0%, #f0cf9f 0%, #d9b770 70%, #cdb554 100%);
+    z-index: 0;
+}
+
+/* Horizon dividing band — red strip at the sky/ground boundary. Trimmed
+   to 75% of its previous height (7.5%, was 10%) with lighter top/bottom
+   rims so the band reads as a horizon line rather than a heavy bar. */
+.oe-coconut-scene::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 52.25%;
+    height: 7.5%;
+    background-color: #df6262;
+    border-top: 0.15em solid #b94d4d;
+    border-bottom: 0.15em solid #b94d4d;
+    z-index: 1;
+}
+
+/* Green curtain (Flash sprite_311) — drapes across top of scene.
+   The SVG is 801×784 with the scalloped bottom edge near the middle of
+   the artwork. Using `object-fit: fill` keeps the scallop visible at the
+   correct vertical position. */
+.oe-curtain-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    object-fit: fill;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Curtain transition overlay — the SAME curtain SVG sized to cover the
+   whole scene, parked above the visible scene (translateY: -100%) and
+   animated down to cover the coconut row, then back up. Used between
+   levels and on Try Again. Sits ABOVE every gameplay layer (coconuts,
+   ball arc, level/lives badges) so the transition reads as a clean
+   reveal. The default state — neither oe-curtain-down nor oe-curtain-up —
+   keeps it parked off-screen. */
+.oe-curtain-transition {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    pointer-events: none;
+    /* Above everything else in the scene: feedback bubble (z:8),
+       game-over (z:10) and congrats overlay sit OUTSIDE the scene so
+       they're unaffected by the curtain layering. */
+    z-index: 50;
+    transform: translateY(-100%);
+}
+.oe-curtain-transition.oe-curtain-down {
+    animation: oe-curtain-drop 0.6s ease-in forwards;
+}
+.oe-curtain-transition.oe-curtain-up {
+    animation: oe-curtain-raise 0.6s ease-out forwards;
+}
+@keyframes oe-curtain-drop {
+    0%   { transform: translateY(-100%); }
+    100% { transform: translateY(0); }
+}
+@keyframes oe-curtain-raise {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .oe-curtain-transition.oe-curtain-down,
+    .oe-curtain-transition.oe-curtain-up {
+        animation-duration: 0.01s;
+    }
+}
+
+/* Instruction box — green-bordered, just below the curtain. Font sized
+   20% smaller (was 1em) per the visual-fidelity pass. */
+.oe-coconut-instruction {
+    position: absolute;
+    top: 0.6em;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    border: 2px solid #4a8e3a;
+    border-radius: 0.4em;
+    padding: 0.3em 1em;
+    font-size: 0.8em;
+    margin: 0;
+    z-index: 3;
+    max-width: 60%;
+    text-align: center;
+}
+
+/* Lives / level wrappers — sit at bottom on the ochre ground. The lives
+   label sits centred under the hearts (Flash frame_08 has the label tag
+   pinned beneath the heart row); the level label keeps its own column. */
+.oe-coconut-lives-wrap {
+    position: absolute;
+    bottom: 0.3em;
+    left: 0.4em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 3;
+}
+.oe-coconut-level-wrap {
+    position: absolute;
+    bottom: 0.3em;
+    right: 0.4em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 3;
+}
+.oe-coconut-status-label {
+    font-weight: bold;
+    font-size: 0.9em;
+    color: #1a1a1a;
+    margin-top: 0.1em;
+    /* Keep "Lives: N" / "Level: N" on one line — at narrow widths the
+       wrap shrank to label width and the count truncated off the right
+       edge. */
+    white-space: nowrap;
+    /* Centre the label under the hearts / pyramid. The wrap is a flex
+       column with align-items:center, so the span itself sits centred;
+       text-align here covers locales whose label wraps to two words. */
+    text-align: center;
+}
+
+.oe-lives-display {
+    display: flex;
+    gap: 0.1em;
+    align-items: center;
+}
+
+/* Life heart icons — Flash life1–life3 sprites at ~44px wide.
+   In Flash the three hearts are prominent at the bottom-left of the
+   ground (large bright red). Each life is an <img> of pictures/heart.svg
+   (the Flash sprite is baked into the timeline so this SVG is a hand-drawn
+   equivalent: red fill, dark red outline). */
+.oe-life-icon {
+    width: 2.2em;
+    height: 2.2em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.oe-life-icon img {
+    width: 100%;
+    height: auto;
+    display: block;
+    pointer-events: none;
+}
+
+.oe-life-icon.oe-life-lost {
+    opacity: 0.2;
+    filter: grayscale(1);
+}
+
+/* Level pyramid — 10 mini-coconut icons stacked as a triangle
+   (1+2+3+4=10). Mirrors Flash levelIcons.miniNut1..10 (frame_08.as:50-83).
+   Each row is a flex strip; rows STACK vertically with a small gap and
+   each is independently centred so the icon-count widens row-by-row —
+   apex (1 icon) at the top, broad base (4 icons) at the bottom — forming
+   a clear triangular silhouette. Rows interlock with a slight vertical
+   overlap (negative margin) so the result reads as a heap of stacked
+   coconuts rather than a column-aligned grid. The pyramid is slightly
+   thinner & taller than before — narrower icons + smaller horizontal
+   gap pull the base in, taller icon aspect lifts the apex. */
+.oe-level-pyramid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+.oe-level-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.05em;
+    /* Slight vertical overlap so rows nestle rather than touch — gives a
+       coconut-heap feel. The first row has no neighbour above so its
+       margin-top stays zero (handled below). */
+    margin-top: -0.4em;
+}
+.oe-level-row:first-child { margin-top: 0; }
+
+.oe-level-icon {
+    /* Thinner & taller than 1.4×1.4 — the mini-coconut sprite is 20×24
+       (aspect 0.83 wide); the icon container now matches that aspect so
+       the visible coconut isn't squashed horizontally. Result: pyramid
+       reads as slightly slimmer with a higher apex. */
+    width: 1.1em;
+    height: 1.55em;
+    position: relative;
+}
+
+.oe-level-icon-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Completed levels: the mini-nut keeps its natural brown colour — no
+   extra filter. Pending levels are greyed out below so the completed
+   ones stand out. (Earlier pass used a darker filter to distinguish
+   completed vs current, but the brief is "brown for completed OR
+   current" — they should look identical.) */
+.oe-level-icon.oe-level-done .oe-level-icon-img {
+    filter: none;
+}
+
+/* Pending levels (= every mini-nut except the one for the current level)
+   are greyed out so the active level stands out. JS adds this class to
+   every icon, then removes it from the current-level icon. */
+.oe-level-icon.oe-level-pending .oe-level-icon-img {
+    filter: grayscale(1) opacity(0.4);
+}
+
+/* Coconut targets — raised above background layers. Each is a Flash
+   coconutHolder.svg sprite (coconut head + blue post + ground shadow as
+   a single artwork) bottom-anchored to the scene. The number is overlaid
+   as a positioned span (the sprite's #numberText is inside <use>s that
+   aren't reachable from outside <img>, so we draw the number ourselves).
+   .oe-coco-back / .oe-coco-front are kept on the buttons for JS
+   compatibility but resolve to the same sprite height (see above).
+   The button's `pointer-events` are disabled so the giant invisible
+   sprite area (most of which is empty post / shadow space) doesn't
+   register clicks. A small hit-target overlay (`.oe-coconut-hit`) sits
+   over just the coconut head and re-enables pointer events — keeping
+   the visible sprite the same but only the head clickable. */
+.oe-coconut-target {
+    position: absolute;
+    bottom: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+/* Hit target — a coconut-shaped ellipse over the visible head. The
+   sprite's head sits at x≈82%, y≈21% with a natural aspect of ~2:3
+   (wider than 1:1 looks like a circle around the coconut, but a tall
+   oval traces the silhouette more accurately). The hit area is taller
+   than wide so it covers the coconut tip + base, including the hair
+   tuft above. */
+.oe-coconut-hit {
+    position: absolute;
+    /* Centred on the visible coconut at (83%, 22%) of the sprite. The
+       hit box is generous (~32% wide, ~36% tall) so children with
+       imprecise pointing can still register a hit on the visible
+       coconut, including the hair tufts at the top. */
+    top: 4%;
+    left: 67%;
+    width: 32%;
+    height: 36%;
+    border-radius: 50% / 50%;
+    pointer-events: auto;
+    cursor: pointer;
+    z-index: 3;
+}
+/* Both rows use the same sprite height so the coconut shy reads as a
+   single back rank. The original Flash sprite was uniform per-coconut;
+   the back/front modifier classes stay so existing JS can keep using
+   them, but they resolve to identical sizes here. Shrunk a further ~20%
+   (was 55%) so the row reads as compact coconut shies — leaves more
+   ground/sky breathing room. Alternate coconuts sit ~20% of a coconut's
+   height higher (back row) so the line of coconuts zig-zags up/down
+   rather than being flat. */
+.oe-coconut-target.oe-coco-back,
+.oe-coconut-target.oe-coco-front {
+    height: 44%;
+}
+.oe-coconut-target.oe-coco-back  { bottom: 9%; }   /* lifted ~20% of coconut height */
+.oe-coconut-target.oe-coco-front { bottom: 0; }
+
+/* Hover / focus / scan highlights all live on the hit-target span (a
+   coconut-shaped ellipse on the head) rather than the button — the
+   button's bounding box includes the wide empty area to the LEFT of
+   the head in the sprite canvas plus the full post + shadow below,
+   which made any outline / shadow on the button read as a giant ~2×
+   rectangle around each shy. Routing the affordances to the hit
+   element keeps switch-access scan highlights matching the mouse/touch
+   hit-shape exactly. The button itself also needs `background: none`
+   to suppress the shared `button:hover` grey wash (doorway.css line
+   463-469) which would otherwise tint the whole sprite bounding box
+   on hover. */
+.oe-coconut-target:hover,
+.oe-coconut-target:focus-visible {
+    background: none;
+    outline: none;
+}
+.oe-coconut-target.scan_highlight {
+    /* Cancel the shared .scan_highlight box-shadow on the button — we
+       reapply it to the hit ellipse below so the scan ring traces the
+       coconut head, not the empty bounding box. */
+    box-shadow: none;
+}
+.oe-coconut-target:hover .oe-coconut-hit,
+.oe-coconut-target:focus-visible .oe-coconut-hit {
+    outline: 0.2em solid gold;
+    outline-offset: 0.1em;
+}
+.oe-coconut-target.scan_highlight .oe-coconut-hit {
+    box-shadow: 0 0 0 0.3em gold;
+    border-radius: 50% / 50%;
+}
+
+.oe-coconut-sprite {
+    /* Fill the button's height; width auto preserves the sprite's
+       162.85:249.45 aspect ratio (~0.65 wide). */
+    height: 100%;
+    width: auto;
+    display: block;
+    pointer-events: none;
+}
+
+/* Head overlay — a clipped copy of the sprite that shows ONLY the
+   coconut head (including the hair tufts that sit ABOVE the head) +
+   the number. On a correct hit, this overlay falls to the ground while
+   the underlying sprite has its head + hair region masked out, so the
+   blue ring (the saucer the coconut was perched on) and the post stay
+   planted and the whole coconut — head, hair, number — tumbles
+   together.
+
+   Sprite coordinates: head + hair occupy roughly x=66%-99%, y=0%-26%
+   of the 162.85 × 249.45 canvas. The blue ring sits just below the
+   head at y≈27%-28% (sprite_311's shape1). So the mask is a vertical
+   ellipse over the upper-right region of the sprite, sized to cover
+   the hair tufts at the very top and the coconut body, ending just
+   ABOVE the ring so the ring stays visible on the post when the
+   coconut falls. */
+.oe-coconut-head-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    -webkit-mask-image: radial-gradient(ellipse 22% 22% at 83% 14%, #000 95%, transparent 100%);
+            mask-image: radial-gradient(ellipse 22% 22% at 83% 14%, #000 95%, transparent 100%);
+}
+.oe-coconut-head-img {
+    height: 100%;
+    width: auto;
+    display: block;
+}
+
+/* Number sits over the coconut head — the sprite's coconut head occupies
+   the top-right region (~y 12-92 of 249 in SVG coords, head x ≈ 107-163
+   of 162.85). Centre of head ≈ (83%, 20%) of the sprite canvas. Sized to
+   read at a glance — Flash had a large digit on each coconut head. */
+.oe-coconut-number {
+    position: absolute;
+    top: 20%;
+    left: 83%;
+    transform: translate(-50%, -50%);
+    /* Shrunk a further ~35% (was 2.25em) so the digit sits cleanly inside
+       the coconut head silhouette rather than spilling out at the edges
+       — pairs with the smaller shies above. */
+    font-size: 1.45em;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 0 3px #2d0d09, 0 0 3px #2d0d09;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.oe-coconut-target.oe-fallen {
+    /* When fallen, the BUTTON stays fully visible (the post/shy holds
+       its place); only the head overlay falls (see .oe-coconut-falling
+       below). Pointer events still disable so the post can't be
+       re-clicked. */
+    pointer-events: none;
+}
+/* Hide the head + hair region of the underlying sprite once the
+   coconut has fallen — using the inverse of the head-overlay mask so
+   the head + hair are knocked out and the blue ring + post + shadow
+   stay visible. Same ellipse coords as the overlay mask above. */
+.oe-coconut-target.oe-fallen .oe-coconut-sprite {
+    -webkit-mask-image: radial-gradient(ellipse 22% 22% at 83% 14%, transparent 95%, #000 100%);
+            mask-image: radial-gradient(ellipse 22% 22% at 83% 14%, transparent 95%, #000 100%);
+}
+
+/* Game-over panel overlays the scene rather than pushing it up — the
+   coconut illustration stays full-bleed underneath the "out of lives"
+   bubble + retry button. The overlay captures pointer events across the
+   whole area so the user can't keep clicking coconuts after game-over. */
+.oe-game-over {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    text-align: center;
+    z-index: 60;  /* above curtain transition so retry button is clickable */
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.oe-game-over.hidden_panel {
+    display: none;
+}
+
+/* Try Again button — bump the hover contrast so the label stays legible
+   when the user is mousing over. The shared .main_button uses a faint
+   wash that fell below WCAG AA on the cream activity background; force
+   a saturated brown hover so the white label remains clearly readable.
+   Keying off the surrounding `.oe-game-over` (and #oeCoconutGameOver)
+   keeps this scoped to coconut-shy. */
+.oe-game-over #oeCoconutRetryBtn:hover,
+.oe-game-over #oeCoconutRetryBtn:focus-visible {
+    background-color: #6b3a1e;
+    color: #ffffff;
+    border-color: #3d1d0d;
+    outline: 2px solid #f9c44a;
+    outline-offset: 2px;
+}
+
+/* Level-complete bubble — overlay across the centre of the scene with a
+   solid white background so the "Well done! Level N complete!" message
+   sits proudly on top of the coconut graphic. Pinned to the centre via
+   absolute positioning. Layered above the gameplay (lives/level badges
+   sit at z:3, coconuts at z:4-6) so the message reads cleanly; the
+   curtain transition (z:50) sits above the bubble — but the bubble is
+   hidden before the curtain drops so they never visually overlap. */
+.oe-coconut-scene .oe-level-complete {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+    background: #ffffff;
+    border: 2px solid #3a7a2e;
+    border-radius: 0.5em;
+    padding: 0.5em 1.2em;
+    box-shadow: 0 0.2em 0.6em rgba(0, 0, 0, 0.18);
+    /* The shared .oe-feedback baseline uses an SVG bubble frame behind
+       the text. We want a clean white card here, so the frame image is
+       hidden below and the bubble background comes from the rule above. */
+}
+.oe-coconut-scene .oe-level-complete .oe-feedback-frame {
+    display: none;
+}
+.oe-coconut-scene .oe-level-complete .oe-feedback-text {
+    color: #1a1a1a;
+    padding: 0;
+    font-weight: bold;
+}
+
+/* --- Coconut shy: coconut falls when knocked down ---
+   Mirrors Flash frame_08 coconutN.gotoAndPlay(2). Outcome is also
+   conveyed by .oe-fallen (opacity 0.3, pointer-events: none),
+   disabled state, aria-label "fallen", and the audio cue. The
+   keyframe finishes in the same opacity/transform end-state as
+   .oe-fallen so the visual is stable after the animation. */
+@keyframes oe-coconut-fall {
+    0%   { transform: translateY(0)    rotate(0deg);  opacity: 1; }
+    20%  { transform: translateY(-0.3em) rotate(-8deg); opacity: 1; }
+    100% { transform: translateY(6em)   rotate(60deg); opacity: 0.6; }
+}
+
+/* The fall animation now plays on the head OVERLAY, not the whole
+   button — so the post/shy stays planted and fully visible while just
+   the coconut + number tumble to the ground. */
+.oe-coconut-target.oe-fallen.oe-coconut-falling .oe-coconut-head-overlay {
+    animation: oe-coconut-fall 0.7s ease-in forwards;
+}
+/* End-state: keep the head down at the ground after the animation. */
+.oe-coconut-target.oe-fallen .oe-coconut-head-overlay {
+    transform: translateY(6em) rotate(60deg);
+    opacity: 0.6;
+}
+
+/* --- Coconut shy: life lost flash ---
+   Mirrors Flash frame_08 lifeN.gotoAndPlay(2) (lines 226/229/237).
+   Outcome is also conveyed by .oe-life-lost (opacity 0.25) and the
+   aria-label change. */
+@keyframes oe-life-lost {
+    0%   { opacity: 1; transform: scale(1); }
+    30%  { opacity: 0.8; transform: scale(1.25); color: #e74c3c; }
+    100% { opacity: 0.25; transform: scale(1); }
+}
+
+.oe-life-icon.oe-life-lost.oe-life-just-lost {
+    animation: oe-life-lost 0.5s ease-out forwards;
+}
+
+/* --- Coconut shy: level-complete feedback reveal ---
+   Mirrors Flash frame_08 messageGreat.gotoAndPlay(2) (lines 150/158).
+   Outcome is also conveyed by aria-live announcement + audio + the
+   level-icon being marked .oe-level-done. Bespoke keyframe that
+   preserves the centering translate(-50%, -50%) — the shared
+   oe-feedback-reveal animates transform: translateY(…) which would
+   override our centering and pop the bubble to the top-left. */
+@keyframes oe-coconut-level-complete-reveal {
+    0%   { opacity: 0; transform: translate(-50%, calc(-50% - 0.4em)); }
+    100% { opacity: 1; transform: translate(-50%, -50%); }
+}
+.oe-coconut-scene .oe-level-complete.oe-level-complete-show {
+    animation: oe-coconut-level-complete-reveal 0.4s ease-out;
+}
+
+/* --- Coconut shy: level icon completion pop ---
+   When a level is completed the corresponding mini-nut icon goes brown.
+   The pop reinforces the change; .oe-level-done carries the meaning. */
+@keyframes oe-level-icon-pop {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+.oe-level-icon.oe-level-done.oe-level-just-done {
+    animation: oe-level-icon-pop 0.4s ease-out;
+}
+
+/* --- Coconut shy: thrown ball arc ---
+   Mirrors Flash throwBall (frame_08.as:477-506): ball travels from
+   thrower position (bottom-centre) up to the clicked coconut. On a
+   correct hit the ball arcs to the target and fades — see oe-ball-throw.
+   On a wrong answer the ball arcs to the target then bounces back to
+   the source so the user sees the "miss" — see oe-ball-miss. The
+   target position is provided by JS via --oe-ball-dx / --oe-ball-dy
+   custom props (px relative to the source). */
+.oe-ball-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.oe-thrown-ball {
+    position: absolute;
+    width: 1.6em;
+    height: 1.6em;
+    /* JS sets left/top to the thrower position (scene bottom-centre);
+       the keyframe translates by --oe-ball-dx / --oe-ball-dy with a
+       mid-arc lift so the throw reads as an upward arc, not a slide. */
+    transform: translate(-50%, -50%);
+    animation: oe-ball-throw 0.55s ease-out forwards;
+}
+
+/* Wrong-answer throw: same outbound arc, but the ball returns to the
+   thrower instead of fading at the target. */
+.oe-thrown-ball.oe-thrown-ball-miss {
+    animation: oe-ball-miss 1.1s ease-in-out forwards;
+}
+
+@keyframes oe-ball-throw {
+    0% {
+        transform: translate(-50%, -50%) scale(0.7);
+        opacity: 1;
+    }
+    50% {
+        transform:
+            translate(-50%, -50%)
+            translate(calc(var(--oe-ball-dx, 0px) * 0.5),
+                      calc(var(--oe-ball-dy, 0px) * 0.5 - 2.5em))
+            scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform:
+            translate(-50%, -50%)
+            translate(var(--oe-ball-dx, 0px), var(--oe-ball-dy, 0px))
+            scale(0.95);
+        opacity: 0;
+    }
+}
+
+@keyframes oe-ball-miss {
+    0% {
+        transform: translate(-50%, -50%) scale(0.7);
+        opacity: 1;
+    }
+    25% {
+        transform:
+            translate(-50%, -50%)
+            translate(calc(var(--oe-ball-dx, 0px) * 0.5),
+                      calc(var(--oe-ball-dy, 0px) * 0.5 - 2.5em))
+            scale(1);
+        opacity: 1;
+    }
+    50% {
+        /* Ball reaches the target (no contact — coconut stays up). */
+        transform:
+            translate(-50%, -50%)
+            translate(var(--oe-ball-dx, 0px), var(--oe-ball-dy, 0px))
+            scale(0.95);
+        opacity: 1;
+    }
+    75% {
+        /* Bounces back along the arc — mirror-image lift on the return. */
+        transform:
+            translate(-50%, -50%)
+            translate(calc(var(--oe-ball-dx, 0px) * 0.5),
+                      calc(var(--oe-ball-dy, 0px) * 0.5 - 2.5em))
+            scale(0.95);
+        opacity: 1;
+    }
+    100% {
+        /* Back at the thrower. */
+        transform: translate(-50%, -50%) scale(0.7);
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   Coconut-shy congratulations (game finished)
+   =========================================================
+   Mirror the house-painting end-state (defined in odd-and-even.css):
+   the congrats card overlays the coconut scene with rising balloons
+   in the background instead of replacing the scene. This is the
+   "awesome / balloons finish state" — matches the parallel fixes
+   landing in shoes / ladybirds / tutorial. */
+.oe-coconut-congrats-card {
+    position: absolute;
+    left: 50%;
+    /* Top biased into the upper third so the bubble + Back pencil clear
+       the coconut posts / hearts / level pyramid below and the top
+       instruction band above — matches the sibling sub-activities. The
+       wrapper is a positioning shell only — no background or border —
+       so the Flash congratulations bubble (with its own black outline)
+       reads as a single speech-bubble rather than as a bubble nested
+       inside an outer card. */
+    top: 35%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6em;
+    pointer-events: auto;
+    max-width: 24em;
+    text-align: center;
+    z-index: 70;
+}
+#oeCoconutCongrats.oe-coconut-end {
+    position: absolute;
+    inset: 0;
+    /* Extend the overlay upward over the activity-nav band so the
+       balloons rise past the top "Well done…" instruction — matches
+       the shoes pattern. */
+    top: -3.5em;
+    z-index: 65;  /* above curtain (50), below game-over wash (60) is fine since they don't co-exist */
+    pointer-events: none;
+    display: block;
+    padding: 0;
+}
+#oeCoconutCongrats.oe-coconut-end.hidden_panel {
+    display: none;
+}
+/* Suppress the shared .oe-congratulations:not(.hidden_panel) reveal
+   animation — it animates transform: translateY which would shift the
+   absolutely-positioned card off-centre. Our reveal is the balloons
+   themselves. */
+#oeCoconutCongrats.oe-coconut-end:not(.hidden_panel) {
+    animation: none;
+}
+#oeCoconutCongrats.oe-coconut-end .oe-balloons {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    /* Balloons render above every other layer at the celebration moment
+       — Flash's congratulations clip attaches with a very high depth
+       (≈ 100000). The container z-index sits above its sibling layers
+       inside the coconut scene. */
+    z-index: 700;
+}

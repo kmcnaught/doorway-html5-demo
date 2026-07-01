@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About Time — bus animation calibrator</title>
+<link rel="stylesheet" type="text/css" href="about-time.css">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 16px; font-family: system-ui, sans-serif;
+         background: #f6f7f8; color: #222; }
+  header { margin-bottom: 12px; }
+  header h1 { margin: 0 0 4px; font-size: 16px; }
+  header p { margin: 0; font-size: 12px; color: #555; max-width: 900px; }
+
+  main { display: flex; gap: 16px; align-items: flex-start; }
+
+  .scene-wrap { flex: 0 0 auto; position: sticky; top: 16px;
+                align-self: flex-start; }
+
+  /* The Time Passing scene backdrop, rendered standalone for calibration.
+     1em locked to 16px so em-based sprite sizes (sun, etc.) reproduce the
+     debug-page layout. All the child sprites use % coords which resolve
+     against this 800×224 box. */
+  #animateScene {
+    position: relative;
+    width: 800px;
+    height: 224px;
+    font-size: 16px;
+    overflow: visible;      /* let sprites clip outside for calibration */
+    background: #9ed3f1;
+    border: 1px solid #999;
+  }
+  /* Frame overlays sit above every sprite and above the ruler. */
+  .frame-overlay {
+    position: absolute;
+    display: block;
+    pointer-events: none;
+    z-index: 400;
+    opacity: 0.35;   /* dim by default so overlapping frames read */
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.6));
+  }
+  .frame-overlay.selected {
+    opacity: 1;
+    filter: drop-shadow(0 0 2px #d94b4b) drop-shadow(0 0 4px #d94b4b);
+    z-index: 500;
+    outline: 1.5px dashed #d94b4b;
+    outline-offset: 1px;
+  }
+  .frame-overlay .frame-label {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    color: #222;
+    font: 9px ui-monospace, monospace;
+    padding: 0 3px;
+    border-radius: 2px;
+    border: 1px solid #999;
+    pointer-events: auto;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .frame-overlay.selected .frame-label {
+    background: #d94b4b;
+    color: #fff;
+    border-color: #b03636;
+    font-weight: 600;
+  }
+  .frame-overlay .sprite-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+  }
+
+  /* Right-hand panel. */
+  .panel { flex: 1; min-width: 340px; max-width: 460px;
+           background: #fff; border: 1px solid #ccc; padding: 12px 14px;
+           border-radius: 6px; }
+  .panel h2 { margin: 0 0 8px; font-size: 14px; }
+  .panel h3 { margin: 16px 0 4px; font-size: 13px; }
+
+  /* Timeline picker. */
+  #timelineList { display: flex; flex-wrap: wrap; gap: 4px;
+                   margin-bottom: 10px; }
+  .tl-btn { font: 11px ui-monospace, monospace; padding: 3px 6px;
+             border: 1px solid #bbb; background: #eee; border-radius: 3px;
+             cursor: pointer; }
+  .tl-btn.hidden-slot { background: #f5f5f5; color: #aaa;
+                         border-style: dashed; }
+  .tl-btn.selected { background: #1f2a44; color: #fff;
+                      border-color: #1f2a44; font-weight: 600; }
+
+  #frameEditor .no-selection { color: #999; font-style: italic;
+                                 font-size: 12px; }
+  #frameEditor label { display: grid;
+                        grid-template-columns: 90px 1fr 60px;
+                        gap: 6px; align-items: center;
+                        margin: 4px 0; font-size: 12px; }
+  #frameEditor label span:first-child { color: #444; }
+  #frameEditor input[type=range] { width: 100%; }
+  #frameEditor input[type=number] { width: 100%;
+                                     font: 12px ui-monospace, monospace;
+                                     text-align: right; padding: 2px 4px;
+                                     border: 1px solid #ccc;
+                                     border-radius: 3px; }
+  #frameEditor select { font-size: 12px; padding: 2px 4px;
+                         border: 1px solid #ccc; border-radius: 3px; }
+  #frameEditor .row-flex { display: flex; gap: 8px; align-items: center;
+                            margin: 4px 0; font-size: 12px; }
+  #frameEditor .btn-row { margin-top: 10px; display: flex; gap: 6px; }
+  #frameEditor button { font-size: 12px; padding: 4px 10px;
+                          background: #1f2a44; color: #fff; border: 0;
+                          border-radius: 3px; cursor: pointer; }
+  #frameEditor button.secondary { background: #eee; color: #333;
+                                    border: 1px solid #ccc; }
+
+  #jsOut { width: 100%; min-height: 220px;
+            font: 11px ui-monospace, monospace;
+            padding: 8px; border: 1px solid #ccc; border-radius: 4px;
+            background: #fafafa; margin-top: 6px; white-space: pre; }
+
+  .hint { font-size: 11px; color: #666; margin-top: 6px; }
+
+  /* Ruler toggle. */
+  .scene-controls { margin-bottom: 8px; display: flex; gap: 8px;
+                     align-items: center; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>About Time — bus animation calibrator</h1>
+  <p>Every frame of MORNING_BUS_TIMELINE is drawn on top of the Time
+    Passing scene. Click any frame's label to select it, then use the
+    editor on the right to adjust its position, size, rotation, sprite
+    variant, or mirror flag. Copy the JS block at the bottom back into
+    <code>about-time-bus-path.js</code>.</p>
+</header>
+
+<main>
+  <div class="scene-wrap">
+    <div class="scene-controls">
+      <label><input type="checkbox" id="rulerCheck"> ruler</label>
+      <label><input type="checkbox" id="showBackdrop" checked> show backdrop</label>
+      <label>timeline: <select id="timelineSelect">
+          <option value="morning">Morning arrival (07:55–08:11)</option>
+          <option value="home">Home-time departure (15:17–15:34)</option>
+      </select></label>
+    </div>
+    <div id="animateScene">
+      <!-- Sky base -->
+      <svg class="at-scene-base" viewBox="0 0 800 280" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="anim-sky-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#9ed3f1"/>
+            <stop offset="60%"  stop-color="#bce0f6"/>
+            <stop offset="100%" stop-color="#dcefea"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="800" height="280" fill="url(#anim-sky-grad)"/>
+      </svg>
+      <!-- Scene backdrop sprites (calibrated positions from about-time.css). -->
+      <img class="at-back-hill"   src="pictures/back-hill.svg"   alt="">
+      <img class="at-back-road"   src="pictures/back-road.svg"   alt="">
+      <img class="at-front-hill"  src="pictures/front-hill.svg"  alt="">
+      <img class="at-front-roads" src="pictures/front-roads.svg" alt="">
+      <img class="at-house" src="pictures/house.png" alt="">
+      <svg class="at-tree" viewBox="0 0 40 60" aria-hidden="true">
+        <rect x="17" y="32" width="6" height="22" fill="#5a3a22"/>
+        <ellipse cx="20" cy="24" rx="16" ry="18" fill="#3f7d3a"/>
+        <ellipse cx="20" cy="22" rx="12" ry="14" fill="#4a8e44"/>
+      </svg>
+      <img class="at-school" src="pictures/school.png" alt="">
+      <!-- Ruler for calling out precise positions in px / em. -->
+      <div class="at-debug-ruler" aria-hidden="true" id="animateRuler">
+        <span class="tick tick-x" style="left: 0%">0px / 0em</span>
+        <span class="tick tick-x" style="left: 10%">80 / 5em</span>
+        <span class="tick tick-x" style="left: 20%">160 / 10em</span>
+        <span class="tick tick-x" style="left: 30%">240 / 15em</span>
+        <span class="tick tick-x" style="left: 40%">320 / 20em</span>
+        <span class="tick tick-x" style="left: 50%">400 / 25em</span>
+        <span class="tick tick-x" style="left: 60%">480 / 30em</span>
+        <span class="tick tick-x" style="left: 70%">560 / 35em</span>
+        <span class="tick tick-x" style="left: 80%">640 / 40em</span>
+        <span class="tick tick-x" style="left: 90%">720 / 45em</span>
+        <span class="tick tick-x" style="left: 100%; transform: translateX(-100%)">800 / 50em</span>
+        <span class="tick tick-y" style="top: 0%">0px / 0em</span>
+        <span class="tick tick-y" style="top: 14.286%">32 / 2em</span>
+        <span class="tick tick-y" style="top: 28.571%">64 / 4em</span>
+        <span class="tick tick-y" style="top: 42.857%">96 / 6em</span>
+        <span class="tick tick-y" style="top: 57.143%">128 / 8em</span>
+        <span class="tick tick-y" style="top: 71.429%">160 / 10em</span>
+        <span class="tick tick-y" style="top: 85.714%">192 / 12em</span>
+        <span class="tick tick-y" style="top: 100%; transform: translateY(-100%)">224 / 14em</span>
+        <span class="readout">800 × 224 px · 50 × 14 em · minor = 1em</span>
+      </div>
+      <!-- Bus frame overlays get injected here by JS. -->
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Frame list</h2>
+    <p class="hint">Grey slots = null (bus hidden). Click a filled slot to
+      edit; hidden slots can be un-hidden with the "make visible" button
+      in the editor.</p>
+    <div id="timelineList"></div>
+
+    <h3>Frame editor</h3>
+    <div id="frameEditor"></div>
+
+    <h3>Timeline output — paste into about-time-bus-path.js</h3>
+    <textarea id="jsOut" readonly></textarea>
+    <div class="btn-row" style="margin-top: 6px;">
+      <button type="button" id="copyBtn" class="secondary">copy</button>
+    </div>
+  </div>
+</main>
+
+<script type="module">
+import {
+    MORNING_BUS_TIMELINE,
+    HOME_BUS_TIMELINE,
+    BACK_ROAD_CENTERLINE,
+    FRONT_ROADS_CENTERLINE,
+} from './about-time-bus-path.js';
+
+// Deep-clone the source timelines into an editable working copy so we
+// don't mutate the imported objects (which are `const` frozen-in-spirit).
+const STATE = {
+    morning: cloneTimeline(MORNING_BUS_TIMELINE),
+    home:    cloneTimeline(HOME_BUS_TIMELINE),
+    currentTimeline: 'morning',
+    selectedIdx: -1,
+};
+
+const SPRITE_TO_FILE = {
+    'side':          'pictures/bus0000.png',
+    'side-home':     'pictures/bus0001.png',
+    'back':          'pictures/busBack.png',
+    'front':         'pictures/busFront.png',
+    'quarter':       'pictures/busQuarter1.png',
+    'quarter-back':  'pictures/busQuarterBack.png',
+};
+
+const SPRITE_OPTIONS = [
+    'side', 'back', 'front', 'quarter', 'quarter-back',
+];
+
+function cloneTimeline(tl) {
+    return {
+        startAtMinutes: tl.startAtMinutes,
+        steps: tl.steps.map(s => s ? { ...s } : null),
+    };
+}
+
+function timeLabel(startAtMinutes, idx) {
+    const t = startAtMinutes + idx;
+    const hh = String(Math.floor(t / 60)).padStart(2, '0');
+    const mm = String(t % 60).padStart(2, '0');
+    return `${hh}:${mm}`;
+}
+
+// ─── Render bus frame overlays ────────────────────────────────────────────
+const scene = document.getElementById('animateScene');
+let overlays = [];
+
+function currentTimeline() {
+    return STATE[STATE.currentTimeline];
+}
+
+function isHomeTimeline() {
+    return STATE.currentTimeline === 'home';
+}
+
+function renderOverlays() {
+    // Clear existing overlays.
+    for (const ov of overlays) ov.remove();
+    overlays = [];
+    const tl = currentTimeline();
+    for (let idx = 0; idx < tl.steps.length; idx++) {
+        const step = tl.steps[idx];
+        if (!step) continue;
+        const div = document.createElement('div');
+        div.className = 'frame-overlay';
+        if (idx === STATE.selectedIdx) div.classList.add('selected');
+        div.style.left   = `${step.xPct}%`;
+        div.style.bottom = `${step.yBottomPct}%`;
+        div.style.width  = `${step.widthPct}%`;
+        div.style.height = `${step.heightPct}%`;
+        const mirror = step.mirror ? -1 : 1;
+        const rot = step.rotationDeg || 0;
+        div.style.transform = `scaleX(${mirror}) rotate(${rot}deg)`;
+        div.style.transformOrigin = 'center center';
+
+        const img = document.createElement('img');
+        img.className = 'sprite-img';
+        const key = (step.sprite === 'side' && isHomeTimeline())
+                    ? 'side-home' : step.sprite;
+        img.src = SPRITE_OPTIONS.includes(step.sprite)
+                  ? SPRITE_TO_FILE[key] : SPRITE_TO_FILE.side;
+        img.alt = '';
+        div.appendChild(img);
+
+        const label = document.createElement('span');
+        label.className = 'frame-label';
+        label.textContent = timeLabel(tl.startAtMinutes, idx);
+        // Undo the scaleX(-1) on the label so text stays legible.
+        if (step.mirror) label.style.transform = 'translateX(-50%) scaleX(-1)';
+        label.addEventListener('click', (e) => {
+            e.stopPropagation();
+            selectFrame(idx);
+        });
+        div.appendChild(label);
+        scene.appendChild(div);
+        overlays.push(div);
+    }
+}
+
+// ─── Timeline picker (chip list on the right) ─────────────────────────────
+const listEl = document.getElementById('timelineList');
+
+function renderList() {
+    listEl.innerHTML = '';
+    const tl = currentTimeline();
+    for (let idx = 0; idx < tl.steps.length; idx++) {
+        const btn = document.createElement('button');
+        btn.className = 'tl-btn';
+        if (!tl.steps[idx]) btn.classList.add('hidden-slot');
+        if (idx === STATE.selectedIdx) btn.classList.add('selected');
+        btn.textContent = timeLabel(tl.startAtMinutes, idx);
+        btn.addEventListener('click', () => selectFrame(idx));
+        listEl.appendChild(btn);
+    }
+}
+
+// ─── Frame editor (right panel) ───────────────────────────────────────────
+// Editor DOM is built ONCE per selection (buildEditor) and updated in-place
+// on subsequent state changes (syncEditor). Rebuilding on every input
+// (e.g. slider drag) would kill focus and disable arrow-key nudging.
+const editor = document.getElementById('frameEditor');
+const EDIT_KEYS = ['xPct', 'yBottomPct', 'widthPct', 'heightPct', 'rotationDeg'];
+const EDIT_META = {
+    // xPct can go negative so the sprite starts off the left edge of
+    // the scene (bus entering / leaving frame). The scene keeps
+    // `overflow: visible` in the animate page so the sprite renders,
+    // and at runtime .at-scene has `overflow: hidden` so it naturally
+    // clips the off-canvas portion.
+    xPct:       { label: 'x (left %)',   min: -30,  max: 130, step: 0.1 },
+    yBottomPct: { label: 'y (bottom %)', min: -30,  max: 130, step: 0.1 },
+    widthPct:   { label: 'width %',      min: 0.5,  max: 30,  step: 0.1 },
+    heightPct:  { label: 'height %',     min: 0.5,  max: 40,  step: 0.1 },
+    rotationDeg:{ label: 'rotation °',   min: -45,  max: 45,  step: 0.5 },
+};
+
+/** Full teardown + rebuild. Only called when the selection changes
+ *  (or on a hidden→visible transition), so focused inputs during a
+ *  slider drag survive intact. */
+function buildEditor() {
+    editor.innerHTML = '';
+    const tl = currentTimeline();
+    const idx = STATE.selectedIdx;
+    if (idx < 0) {
+        const p = document.createElement('p');
+        p.className = 'no-selection';
+        p.textContent = 'Click a frame on the scene or in the list to edit.';
+        editor.appendChild(p);
+        return;
+    }
+    const step = tl.steps[idx];
+    const label = timeLabel(tl.startAtMinutes, idx);
+    if (!step) {
+        editor.innerHTML =
+            `<p><b>${label}</b> — hidden (bus not visible at this tick).</p>`;
+        const row = document.createElement('div');
+        row.className = 'btn-row';
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = 'make visible';
+        btn.addEventListener('click', () => {
+            tl.steps[idx] = defaultStep();
+            selectFrame(idx);     // rebuild editor for the newly-visible step
+        });
+        row.appendChild(btn);
+        editor.appendChild(row);
+        return;
+    }
+
+    // Time label header.
+    editor.insertAdjacentHTML('beforeend', `<p><b>${label}</b></p>`);
+
+    // Sprite variant select.
+    editor.appendChild(makeSelectRow('sprite', 'sprite', SPRITE_OPTIONS,
+        step.sprite, (v) => { step.sprite = v; syncNonEditor(); }));
+
+    // Mirror checkbox.
+    const mirrorLbl = document.createElement('label');
+    mirrorLbl.style.gridTemplateColumns = 'auto';
+    mirrorLbl.innerHTML =
+        `<span><input type="checkbox" id="edit-mirror" ${step.mirror ? 'checked' : ''}> mirror (scaleX -1)</span>`;
+    editor.appendChild(mirrorLbl);
+    mirrorLbl.querySelector('input').addEventListener('change', (e) => {
+        step.mirror = e.target.checked;
+        syncNonEditor();
+    });
+
+    // Front-layer checkbox (Phase 2: bus above the front-hill/roads
+    // terrain). Default is 'behind' so front-hill occludes the bus
+    // during Phase 1 on the back road.
+    const layerLbl = document.createElement('label');
+    layerLbl.style.gridTemplateColumns = 'auto';
+    const isFront = step.layer === 'front';
+    layerLbl.innerHTML =
+        `<span><input type="checkbox" id="edit-front-layer" ${isFront ? 'checked' : ''}> front layer (above front-hill)</span>`;
+    editor.appendChild(layerLbl);
+    layerLbl.querySelector('input').addEventListener('change', (e) => {
+        step.layer = e.target.checked ? 'front' : 'behind';
+        syncNonEditor();
+    });
+
+    // Numeric rows.
+    for (const key of EDIT_KEYS) {
+        const meta = EDIT_META[key];
+        editor.appendChild(makeRangeRow(key, meta, step[key] || 0, (v) => {
+            step[key] = v;
+            syncNonEditor();
+        }));
+    }
+
+    // Row of secondary buttons.
+    const btnRow = document.createElement('div');
+    btnRow.className = 'btn-row';
+    const hideBtn = document.createElement('button');
+    hideBtn.type = 'button';
+    hideBtn.className = 'secondary';
+    hideBtn.textContent = 'hide (null)';
+    hideBtn.addEventListener('click', () => {
+        tl.steps[idx] = null;
+        selectFrame(idx);         // rebuild editor to show hidden state
+    });
+    btnRow.appendChild(hideBtn);
+    const dupBtn = document.createElement('button');
+    dupBtn.type = 'button';
+    dupBtn.className = 'secondary';
+    dupBtn.textContent = 'copy → next';
+    dupBtn.addEventListener('click', () => {
+        if (idx + 1 < tl.steps.length) {
+            tl.steps[idx + 1] = { ...step };
+            syncNonEditor();
+        }
+    });
+    btnRow.appendChild(dupBtn);
+    editor.appendChild(btnRow);
+}
+
+/** Build one row = label + range + number, wired to update the step in
+ *  place. Returns the <label> row for insertion. */
+function makeRangeRow(key, meta, initial, onChange) {
+    const row = document.createElement('label');
+    row.innerHTML = `<span>${meta.label}</span>`;
+    const range = document.createElement('input');
+    range.type = 'range';
+    range.min = String(meta.min); range.max = String(meta.max);
+    range.step = String(meta.step); range.value = String(initial);
+    range.dataset.key = key;
+    const num = document.createElement('input');
+    num.type = 'number';
+    num.min = String(meta.min); num.max = String(meta.max);
+    num.step = String(meta.step); num.value = String(initial);
+    num.dataset.key = key;
+    // Range → number in real time (unless the user is typing into num).
+    range.addEventListener('input', () => {
+        if (document.activeElement !== num) num.value = range.value;
+        onChange(Number(range.value));
+    });
+    num.addEventListener('input', () => {
+        if (num.value === '' || Number.isNaN(Number(num.value))) return;
+        range.value = num.value;
+        onChange(Number(num.value));
+    });
+    row.appendChild(range);
+    row.appendChild(num);
+    return row;
+}
+
+function makeSelectRow(key, label, options, initial, onChange) {
+    const row = document.createElement('label');
+    row.innerHTML = `<span>${label}</span>`;
+    const sel = document.createElement('select');
+    sel.dataset.key = key;
+    for (const o of options) {
+        const opt = document.createElement('option');
+        opt.value = o; opt.textContent = o;
+        if (o === initial) opt.selected = true;
+        sel.appendChild(opt);
+    }
+    sel.addEventListener('change', () => onChange(sel.value));
+    row.appendChild(sel);
+    row.appendChild(document.createElement('span')); // grid filler
+    return row;
+}
+
+function defaultStep() {
+    return {
+        sprite: 'side',
+        mirror: false,
+        xPct: 20,
+        yBottomPct: 50,
+        widthPct: 6.0,
+        heightPct: 11.6,
+        rotationDeg: 0,
+    };
+}
+
+// ─── JS output textarea ───────────────────────────────────────────────────
+const jsOut = document.getElementById('jsOut');
+
+function renderOutput() {
+    const tl = currentTimeline();
+    const name = STATE.currentTimeline === 'morning'
+                 ? 'MORNING_BUS_TIMELINE' : 'HOME_BUS_TIMELINE';
+    const rows = tl.steps.map((s, i) => {
+        const label = timeLabel(tl.startAtMinutes, i);
+        if (!s) return `        null, // ${label}`;
+        const parts = [
+            `sprite: '${s.sprite}'`,
+            `mirror: ${s.mirror ? 'true' : 'false'}`,
+            `xPct: ${round(s.xPct, 2)}`,
+            `yBottomPct: ${round(s.yBottomPct, 2)}`,
+            `widthPct: ${round(s.widthPct, 2)}`,
+            `heightPct: ${round(s.heightPct, 2)}`,
+        ];
+        if (s.rotationDeg) parts.push(`rotationDeg: ${round(s.rotationDeg, 1)}`);
+        if (s.layer && s.layer !== 'behind') parts.push(`layer: '${s.layer}'`);
+        return `        { ${parts.join(', ')} }, // ${label}`;
+    });
+    jsOut.value =
+        `export const ${name} = {\n` +
+        `    startAtMinutes: ${tl.startAtMinutes},\n` +
+        `    steps: [\n${rows.join('\n')}\n    ],\n` +
+        `};\n`;
+}
+
+function round(n, digits) {
+    return Number(Number(n).toFixed(digits));
+}
+
+// ─── Wiring ───────────────────────────────────────────────────────────────
+function selectFrame(idx) {
+    STATE.selectedIdx = idx;
+    update();
+}
+
+/** Full refresh — used on selection change / timeline switch / initial load.
+ *  Rebuilds the editor DOM so it reflects the new frame's fields. */
+function update() {
+    renderOverlays();
+    renderList();
+    buildEditor();
+    renderOutput();
+}
+
+/** Partial refresh — used during input events on the editor. Skips the
+ *  editor rebuild so focused inputs (and arrow-key state) survive. */
+function syncNonEditor() {
+    renderOverlays();
+    renderList();
+    renderOutput();
+}
+
+document.getElementById('rulerCheck').addEventListener('change', (e) => {
+    scene.classList.toggle('debug-ruler-on', e.target.checked);
+});
+document.getElementById('showBackdrop').addEventListener('change', (e) => {
+    scene.style.background = e.target.checked ? '#9ed3f1' : 'transparent';
+    for (const child of scene.children) {
+        if (child.classList.contains('frame-overlay') ||
+            child.classList.contains('at-debug-ruler')) continue;
+        child.style.visibility = e.target.checked ? '' : 'hidden';
+    }
+});
+document.getElementById('timelineSelect').addEventListener('change', (e) => {
+    STATE.currentTimeline = e.target.value;
+    STATE.selectedIdx = -1;
+    update();
+});
+document.getElementById('copyBtn').addEventListener('click', () => {
+    jsOut.select();
+    document.execCommand('copy');
+});
+
+// ─── Arrow-key nudging of the selected frame ─────────────────────────────
+// Left/Right nudges xPct, Up/Down nudges yBottomPct (Up = higher on
+// strip). Shift multiplies the step for coarser moves. Ignored while a
+// text-typing input is focused so the sliders and the JS textarea keep
+// working normally. */
+const NUDGE_STEP = 0.1;
+const NUDGE_STEP_LARGE = 1.0;
+document.addEventListener('keydown', (e) => {
+    if (STATE.selectedIdx < 0) return;
+    const step = currentTimeline().steps[STATE.selectedIdx];
+    if (!step) return;
+    // Don't hijack arrow keys while the user is editing a range/number
+    // input or the JS output textarea — those already handle arrows
+    // themselves.
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+    const size = e.shiftKey ? NUDGE_STEP_LARGE : NUDGE_STEP;
+    let dx = 0, dy = 0;
+    if (e.key === 'ArrowLeft')  dx = -size;
+    else if (e.key === 'ArrowRight') dx =  size;
+    else if (e.key === 'ArrowUp')    dy =  size;
+    else if (e.key === 'ArrowDown')  dy = -size;
+    else return;
+    e.preventDefault();
+    // Match the editor sliders' range so nudging can push the sprite
+    // off-canvas on either edge without stopping at 0.
+    step.xPct = clamp(round(step.xPct + dx, 3),
+                       EDIT_META.xPct.min, EDIT_META.xPct.max);
+    step.yBottomPct = clamp(round(step.yBottomPct + dy, 3),
+                             EDIT_META.yBottomPct.min, EDIT_META.yBottomPct.max);
+    syncEditorValues(['xPct', 'yBottomPct']);
+    syncNonEditor();
+});
+
+function clamp(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); }
+
+/** Push the step's current values back into the editor's range + number
+ *  inputs (without firing input events so we don't cascade). Used after
+ *  external mutation like arrow-key nudging so the sliders track. */
+function syncEditorValues(keys) {
+    const step = currentTimeline().steps[STATE.selectedIdx];
+    if (!step) return;
+    for (const key of keys) {
+        const v = String(step[key]);
+        for (const el of editor.querySelectorAll(`input[data-key="${key}"]`)) {
+            el.value = v;
+        }
+    }
+}
+
+update();
+</script>
+</body>
+</html>

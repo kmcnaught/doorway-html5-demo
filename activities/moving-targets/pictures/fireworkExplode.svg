@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Firework explosion — green/yellow "starburst" with radial rays and dots.
+  Used by launcher A (green). The original Flash sprite was a morph between
+  frames and rendered as a tiny dot when extracted as a single SVG snapshot;
+  this hand-built replacement shows the expanded burst silhouette so the
+  explosion is actually visible on screen.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="mtFwExpCore" cx="0" cy="0" r="35" gradientUnits="userSpaceOnUse">
+      <stop offset="0"   stop-color="#fffacc" stop-opacity="0.95"/>
+      <stop offset="0.5" stop-color="#66ff00" stop-opacity="0.55"/>
+      <stop offset="1"   stop-color="#1aaa00" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Soft glow halo -->
+  <circle cx="0" cy="0" r="42" fill="url(#mtFwExpCore)"/>
+  <!-- Long radial rays (12 rays at 30° intervals) -->
+  <g stroke="#aaff33" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.95">
+    <line x1="0" y1="0" x2="0"    y2="-42"/>
+    <line x1="0" y1="0" x2="21"   y2="-36.4"/>
+    <line x1="0" y1="0" x2="36.4" y2="-21"/>
+    <line x1="0" y1="0" x2="42"   y2="0"/>
+    <line x1="0" y1="0" x2="36.4" y2="21"/>
+    <line x1="0" y1="0" x2="21"   y2="36.4"/>
+    <line x1="0" y1="0" x2="0"    y2="42"/>
+    <line x1="0" y1="0" x2="-21"  y2="36.4"/>
+    <line x1="0" y1="0" x2="-36.4" y2="21"/>
+    <line x1="0" y1="0" x2="-42"  y2="0"/>
+    <line x1="0" y1="0" x2="-36.4" y2="-21"/>
+    <line x1="0" y1="0" x2="-21"  y2="-36.4"/>
+  </g>
+  <!-- Tip dots on each ray -->
+  <g fill="#ffff66">
+    <circle cx="0"    cy="-42"  r="2.5"/>
+    <circle cx="21"   cy="-36.4" r="2.5"/>
+    <circle cx="36.4" cy="-21"  r="2.5"/>
+    <circle cx="42"   cy="0"    r="2.5"/>
+    <circle cx="36.4" cy="21"   r="2.5"/>
+    <circle cx="21"   cy="36.4" r="2.5"/>
+    <circle cx="0"    cy="42"   r="2.5"/>
+    <circle cx="-21"  cy="36.4" r="2.5"/>
+    <circle cx="-36.4" cy="21"  r="2.5"/>
+    <circle cx="-42"  cy="0"    r="2.5"/>
+    <circle cx="-36.4" cy="-21" r="2.5"/>
+    <circle cx="-21"  cy="-36.4" r="2.5"/>
+  </g>
+  <!-- Bright core -->
+  <circle cx="0" cy="0" r="6" fill="#ffffcc"/>
+</svg>

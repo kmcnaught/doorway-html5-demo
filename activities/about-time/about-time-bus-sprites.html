@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>About Time — bus sprite browser</title>
+<style>
+  body { margin: 0; padding: 24px; font-family: system-ui, sans-serif;
+         background: #fafafa; color: #222; }
+  h1 { margin: 0 0 4px; font-size: 20px; }
+  p.lede { margin: 0 0 24px; color: #555; max-width: 720px; font-size: 14px; }
+  h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em;
+       color: #666; margin: 32px 0 12px; border-bottom: 1px solid #ddd;
+       padding-bottom: 4px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+          gap: 16px; }
+  .card { background: #fff; border: 1px solid #ddd; border-radius: 6px;
+          padding: 14px; }
+  .card .file { font: 12px ui-monospace, monospace; color: #666; margin: 0 0 2px; }
+  .card .name { font-weight: 600; font-size: 15px; margin: 0 0 6px; }
+  .card .dims { font-size: 12px; color: #888; margin: 0 0 12px; }
+  .card .role { font-size: 12px; color: #444; background: #f0f4ff;
+                border-left: 3px solid #4a6fbf; padding: 6px 8px;
+                border-radius: 3px; margin: 8px 0 12px; }
+  .card .swatch { display: flex; align-items: end; gap: 12px;
+                   background: repeating-linear-gradient(45deg,#f0f0f0 0 8px,#f8f8f8 8px 16px);
+                   padding: 12px; border: 1px solid #e3e3e3;
+                   border-radius: 4px; min-height: 80px; }
+  .card .swatch .sample { display: flex; flex-direction: column;
+                            align-items: center; gap: 4px; }
+  .card .swatch img { image-rendering: pixelated; display: block; }
+  .card .swatch .cap { font-size: 10px; color: #666;
+                          font-variant-numeric: tabular-nums; }
+  .strip-preview { margin-top: 12px; background: #9ed3f1; border: 1px solid #ccc;
+                     border-radius: 4px; position: relative; width: 100%;
+                     aspect-ratio: 800 / 224; overflow: hidden; }
+  .strip-preview img { position: absolute; image-rendering: pixelated; }
+  .strip-preview .anchor-note { position: absolute; top: 4px; left: 6px;
+                                    font-size: 10px; color: #333;
+                                    background: rgba(255,255,255,0.85);
+                                    padding: 1px 5px; border-radius: 3px; }
+  code { background: #f0f0f0; padding: 1px 4px; border-radius: 3px;
+         font-size: 12px; }
+  .note { max-width: 720px; font-size: 13px; color: #333;
+          background: #fffceb; border-left: 3px solid #e2b81b;
+          padding: 10px 14px; margin: 12px 0 24px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<h1>About Time — bus sprite browser</h1>
+<p class="lede">
+  All seven bus PNGs in <code>pictures/</code>, at native size and at 6× so
+  the shape reads. Roles reflect the current wiring in
+  <code>BUS_VARIANT_BY_FRAME</code> and the two calibration anchors.
+</p>
+
+<div class="note">
+  <b>Proposed two-phase animation.</b> Phase 1 uses the smaller scale
+  (bus0001 anchor near the house) and drives the bus along the back road,
+  disappearing Z-behind <code>front-hill</code>. 10 game-minute gap.
+  Phase 2 has the bus reappear on the front bend at the larger scale
+  and animate to <code>bus-parked-large</code> at the school kerb.
+  Use this browser to pick which sprites belong to which phase.
+</div>
+
+<h2>Side view — the two liveries</h2>
+<div class="grid">
+
+  <div class="card">
+    <p class="file">pictures/bus.png</p>
+    <p class="name">bus (generic side view)</p>
+    <p class="dims">48 × 26</p>
+    <p class="role">
+      Default side sprite. Used as the fallback / calibration base.
+      <code>bus-parked-large</code> scales this up to 60×32 at the
+      school kerb.
+    </p>
+    <div class="swatch">
+      <div class="sample"><img src="pictures/bus.png" width="48" height="26" alt=""><span class="cap">native</span></div>
+      <div class="sample"><img src="pictures/bus.png" width="288" height="156" alt=""><span class="cap">6×</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="file">pictures/bus0000.png</p>
+    <p class="name">bus0000 — morning livery</p>
+    <p class="dims">48 × 26</p>
+    <p class="role">
+      Morning arrival livery. Currently used by the render code for
+      the 07:55–08:04 window (livery 1 in Flash — <code>bus.gotoAndStop(1)</code>).
+      <b>Phase 2 candidate</b> if we want a visually distinct arrival bus.
+    </p>
+    <div class="swatch">
+      <div class="sample"><img src="pictures/bus0000.png" width="48" height="26" alt=""><span class="cap">native</span></div>
+      <div class="sample"><img src="pictures/bus0000.png" width="288" height="156" alt=""><span class="cap">6×</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="file">pictures/bus0001.png</p>
+    <p class="name">bus0001 — home-time livery</p>
+    <p class="dims">48 × 26</p>
+    <p class="role">
+      Home-time departure livery. Currently used 15:17–16:13
+      (livery 2 in Flash — <code>bus.gotoAndStop(2)</code>).
+      <b>Anchors the FAR end</b> of the perspective ramp
+      (<code>bus-livery-home</code> calibration entry).
+      <b>Phase 1 candidate</b>.
+    </p>
+    <div class="swatch">
+      <div class="sample"><img src="pictures/bus0001.png" width="48" height="26" alt=""><span class="cap">native</span></div>
+      <div class="sample"><img src="pictures/bus0001.png" width="288" height="156" alt=""><span class="cap">6×</span></div>
+    </div>
+  </div>
+</div>
+
+<h2>Front / back — head-on views</h2>
+<div class="grid">
+
+  <div class="card">
+    <p class="file">pictures/busFront.png</p>
+    <p class="name">busFront — facing viewer</p>
+    <p class="dims">23 × 26</p>
+    <p class="role">
+      Front-on. Currently mapped to frames 29–30 (coming down onto the
+      front road, briefly presenting the front).
+      <b>Phase 2 candidate</b>: bus reappears at the top of the front
+      bend facing forward.
+    </p>
+    <div class="swatch">
+      <div class="sample"><img src="pictures/busFront.png" width="23" height="26" alt=""><span class="cap">native</span></div>
+      <div class="sample"><img src="pictures/busFront.png" width="138" height="156" alt=""><span class="cap">6×</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="file">pictures/busBack.png</p>
+    <p class="name">busBack — heading away</p>
+    <p class="dims">23 × 26</p>
+    <p class="role">
+      Rear view (bus retreating from camera). Currently mapped to
+      frames 17–27 (dwell at the far corner).
+      <b>Phase 1 candidate</b>: last sprite before bus disappears
+      between the hills.
+    </p>
+    <div class="swatch">
+      <div class="sample"><img src="pictures/busBack.png" width="23" height="26" alt=""><span class="cap">native</span></div>
+      <div class="sample"><img src="pictures/busBack.png" width="138" height="156" alt=""><span class="cap">6×</span></div>
+    </div>
+  </div>
+</div>
+
+<h2>3/4 angle — the turning views</h2>
+<div class="grid">
+
+  <div class="card">
+    <p class="file">pictures/busQuarter1.png</p>
+    <p class="name">busQuarter1 — 3/4 front-right</p>
+    <p class="dims">25 × 28</p>
+    <p class="role">
+      Bus curving back toward camera. Currently mapped to frame 28.
+      <b>Phase 2 candidate</b> for the "coming round the front bend"
+      moments before it settles into side-view along the front road.
+    </p>
+    <div class="swatch">
+      <div class="sample"><img src="pictures/busQuarter1.png" width="25" height="28" alt=""><span class="cap">native</span></div>
+      <div class="sample"><img src="pictures/busQuarter1.png" width="150" height="168" alt=""><span class="cap">6×</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="file">pictures/busQuarterBack.png</p>
+    <p class="name">busQuarterBack — 3/4 back-right</p>
+    <p class="dims">25 × 28</p>
+    <p class="role">
+      Bus entering the back corner. Currently mapped to frame 16.
+      <b>Phase 1 candidate</b>: bus turning as it heads into the gap
+      between the hills.
+    </p>
+    <div class="swatch">
+      <div class="sample"><img src="pictures/busQuarterBack.png" width="25" height="28" alt=""><span class="cap">native</span></div>
+      <div class="sample"><img src="pictures/busQuarterBack.png" width="150" height="168" alt=""><span class="cap">6×</span></div>
+    </div>
+  </div>
+</div>
+
+<h2>Scale + position anchors (from the calibration app)</h2>
+
+<div class="strip-preview" style="max-width: 800px;">
+  <span class="anchor-note">strip 800 × 224. Red bounding boxes show the two anchors' current calibration defaults.</span>
+  <img src="pictures/bus.png"      alt="" style="left: 80%; bottom: 40%; width: 7.5%;  height: 14.286%; outline: 2px solid rgba(255,0,0,0.6);">
+  <img src="pictures/bus0001.png"  alt="" style="left: 32.5%; bottom: 26.339%; width: 6%; height: 11.607%; outline: 2px solid rgba(255,0,0,0.6);">
+</div>
+
+<p style="font-size: 13px; color: #444; max-width: 800px; margin-top: 12px;">
+  Sizes above use the calibration defaults —
+  <code>bus-parked-large</code> at (640, 285, 60×32) &amp;
+  <code>bus-livery-home</code> at (260, 165, 48×26). Update those
+  in the calibration app and I'll wire a
+  size + position interpolation across the two phases.
+</p>
+
+</body>
+</html>

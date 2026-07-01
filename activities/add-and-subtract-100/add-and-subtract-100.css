@@ -1,0 +1,1369 @@
+/* Add and Subtract to 100 activity styles.
+ * 1em = 1/50th of activity width (800px / 50 = 16px).
+ * Available height: 450px ≈ 28.125em (minus nav ~2em → ~26em usable).
+ * Tens block SVG aspect ratio: 40.45 × 350.4  ≈ 1 : 8.66
+ */
+
+/* -------------------------------------------------------------------------
+   Options form — suppress borders on inner (nested) fieldsets
+   The outer Activity / Accessibility fieldsets keep their default browser
+   border; the inner fieldsets (Operation, Questions, Number range, etc.)
+   that sit inside the options table do not have visible borders in Flash.
+   ------------------------------------------------------------------------- */
+fieldset fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* -------------------------------------------------------------------------
+   Welcome screen
+   -------------------------------------------------------------------------
+   Flash welcome: "77 in blocks". 10 ten-columns (3 dashed phantoms + 7 solid
+   blue), with the overall block ~square. Right column: a 10-row units stack
+   with 3 dashed-empty at the TOP (9,8,7) and 7 solid orange below (6..0),
+   so the orange stack sits at the bottom. A horizontal blue rule above and
+   a vertical blue rule between tens and units. Number labels (0-9) align to
+   the BOTTOM of each cell (the "line"), not the gap between cells. */
+
+/* "Doorway" brand label on the welcome screen.
+   Shared style sets color:#555 (grey) — override to black to match
+   Flash. */
+body.dw-screen-welcome #dwWelcomeScreen .dw-app-label {
+    color: #000;
+}
+
+/* tenBlue.svg native aspect ratio 1:8.66 (40.45 × 350.4). To make the
+   10-ten block visually square we need height ≈ 10× column-width.
+   Each ten-image stretches modestly (8.66→10) but stays recognisable.
+   Unit cells are sized so 10 of them stack to exactly the tens height,
+   keeping the units column's bottom aligned with the tens column's bottom. */
+.aat100-welcome-demo {
+    --aat100-ten-w: 1.27em;            /* ~15% smaller than 1.5em */
+    --aat100-ten-h: calc(var(--aat100-ten-w) * 10);
+    --aat100-unit-h: calc(var(--aat100-ten-h) / 10);
+    --aat100-phantom-border: 0.1em;    /* thinner dashed outline */
+    --aat100-blue: #1d4ec4;            /* brighter blue to match activity screen */
+    --aat100-rule: 0.18em;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.2em auto 0.4em;
+    width: max-content;
+    max-width: 100%;
+    max-height: 19em;
+}
+
+/* Horizontal blue rule above the composition. */
+.aat100-welcome-rules {
+    border-top: var(--aat100-rule) solid var(--aat100-blue);
+}
+
+/* Cross row: left col (numeral + tens) | (vertical rule) | right col
+   (numeral + units). Vertical rule = right border of the left column,
+   so it spans the full row height up to the horizontal rule. */
+.aat100-welcome-cross-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+}
+
+.aat100-welcome-left-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    border-right: var(--aat100-rule) solid var(--aat100-blue);
+}
+
+.aat100-welcome-right-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* "7 7" numerals sit on top of their column's blocks (inside the cross). */
+.aat100-welcome-numeral {
+    font-size: 1.2em;
+    line-height: 1.1;
+    font-weight: normal;
+    color: #000;
+    padding: 0 0.15em;
+}
+
+.aat100-welcome-numeral-tens  { align-self: flex-end;   margin-right: 0.1em; }
+.aat100-welcome-numeral-units { align-self: flex-start; margin-left: 0.1em; }
+
+/* TENS row — 10 cells (3 dashed phantoms + 7 solid bars), zero gap. */
+.aat100-welcome-tens-col {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    height: var(--aat100-ten-h);
+}
+
+/* Higher-specificity selector defeats shared/doorway.css's
+   `div.welcome_image img { width: 100%; height: 100% }` rule. */
+div.welcome_image img.aat100-welcome-ten {
+    width: var(--aat100-ten-w);
+    height: var(--aat100-ten-h);
+    display: block;
+    flex: 0 0 auto;
+}
+
+/* Phantom (empty) tens-bar: same footprint as a tenBlue, dashed outline.
+   Adjacent phantoms overlap by one border-width so the dashed strokes
+   collapse onto each other rather than leaving a visible gap. The first
+   solid blue ten also pulls left by the same amount to butt against the
+   last phantom's dashed edge. */
+.aat100-welcome-ten-phantom {
+    width: var(--aat100-ten-w);
+    height: var(--aat100-ten-h);
+    border: var(--aat100-phantom-border) dashed #888;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+}
+
+.aat100-welcome-ten-phantom + .aat100-welcome-ten-phantom,
+.aat100-welcome-tens-col img.aat100-welcome-ten:first-of-type {
+    margin-left: calc(var(--aat100-phantom-border) * -1);
+}
+
+/* UNITS column — 10 rows, top→bottom = 9..0. */
+.aat100-welcome-unitstack {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.aat100-welcome-unit-row {
+    display: flex;
+    align-items: flex-end;          /* anchor label to cell baseline (line) */
+    gap: 0.18em;
+    height: var(--aat100-unit-h);
+}
+
+.aat100-welcome-unit-cell {
+    width: var(--aat100-ten-w);
+    height: 100%;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+}
+
+/* Label sits at the bottom edge of the cell — aligns with the "line"
+   between two cells rather than centred in the gap. */
+.aat100-welcome-unit-label {
+    font-size: 0.7em;
+    font-weight: normal;
+    line-height: 1;
+    color: #000;
+    transform: translateY(0.3em);   /* half-cell shift down */
+}
+
+/* Empty (dashed grey) units — positions 9, 8, 7. */
+.aat100-welcome-unit-empty {
+    border: var(--aat100-phantom-border) dashed #888;
+}
+
+/* Solid orange units (unitOrange palette: fill #ff9b06, stroke #d55500). */
+.aat100-welcome-unit-lit {
+    background: #ff9b06;
+    border: 0.2em solid #d55500;
+}
+
+/* -------------------------------------------------------------------------
+   Activity screen — new layout
+   -------------------------------------------------------------------------
+   Top row: back-pencil + "Make the Number" title (left), "Question: 1 of 10"
+   (right). Subtitle row: "Make 20" with a small mouth icon to the right.
+   Work area: 2-column grid (tens | units) with vertical blue divider running
+   through the t/u header and the working area. Below the work area: +/-
+   buttons under each column, plus Done bottom-right. */
+
+.aat100-screen.hidden_panel { display: none; }
+
+.aat100-screen {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    /* Padding-top is minimal — title sits flush adjacent to the navigation
+       header (settings/fullscreen icons). Instructions sit below the title
+       with their own top padding so they clear the nav bar without forcing
+       the title down. */
+    padding: 0.2em 0.8em 0.3em;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+    --aat100-blue: #2255aa;
+    --aat100-rule: 0.18em;
+    /* Tens column width tuned so the 10-column grid is comparable in width
+       to Flash's tens block (~57% of stage). With 50em stage and a 7fr/3fr
+       work split, the tens column gets ~33em; 10 × 2.55em + 9 × 0.12em ≈
+       26.6em fills most of it (with the grid anchored flush against the
+       central divider via align-self: flex-end). */
+    /* Unit cell side = tens column width = 1 unit square. The 10-unit tall
+       tens grid and 10-cell units stack must fit vertically inside the
+       activity work area (~17em after chrome). 1.6em × 10 = 16em fits. */
+    --aat100-ten-w: 1.6em;            /* tens column width = 1 unit square */
+    --aat100-unit-size: 1.6em;        /* units cell side (height = width) */
+    --aat100-ten-h: calc(var(--aat100-unit-size) * 10);
+    --aat100-work-cols-ratio: 6fr 4fr;
+    /* Brighter, more saturated blue rule (Flash uses #1d4ec4-ish for the
+       horizontal/vertical guides). The vertical line is wider per spec —
+       expressed separately so the horizontal stays the thinner default. */
+    --aat100-blue: #1d4ec4;
+    --aat100-rule: 0.14em;            /* horizontal rule */
+    --aat100-rule-v: 0.22em;          /* vertical rule (wider) */
+    /* Thinner dashed strokes for the phantom slots / units ruler. */
+    --aat100-dash: 0.1em;
+}
+
+/* Top row: back pencil + title (left), question counter (right). Top
+   padding leaves room for the absolute-positioned nav-bar icons (gear /
+   fullscreen / audio), which occupy ~6em on the left. The title shifts
+   right by that amount so it doesn't overlap them. */
+.aat100-top-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    gap: 0.8em;
+    min-height: 2em;
+    padding-left: 10em;
+}
+
+.aat100-top-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6em;
+}
+
+.aat100-back-btn {
+    /* shared .pencil_btn already sized; keep ~2em high to fit the top row */
+    transform: scale(0.85);
+    transform-origin: left center;
+}
+
+/* Activity title — same size across all sub-activities (Explore / Make /
+   What's / Sums) so the top row is visually consistent. Jotter font matches
+   the Flash titleTextBox in frame_05.as. */
+.aat100-screen-title {
+    margin: 0;
+    font-size: 1.2em;
+    font-family: "Jotter Primary", sans-serif;
+    font-weight: normal;
+    color: #222;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.aat100-question-counter {
+    margin: 0;
+    font-size: 1em;
+    font-family: "Jotter Primary", sans-serif;
+    color: #222;
+    white-space: nowrap;
+}
+
+/* Instructions row — sits below the title and now hosts the replay-mouth
+   icon to the right of the subtitle text (matches Flash composition: the
+   prompt text and the speaker glyph share a single row, both above the
+   blue rule). The row stays a flex container so the mouth tracks the end
+   of the text rather than floating at a fixed x-position. */
+.aat100-subtitle-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 0.3em;
+    min-height: 1.6em;
+    flex-shrink: 0;
+    /* Align with the title above (which sits behind the nav-bar icons via
+       .aat100-top-row's padding-left: 10em). */
+    padding-left: 10em;
+}
+
+.aat100-subtitle {
+    margin: 0;
+    font-size: 1em;
+    font-family: "Jotter Primary", sans-serif;
+    font-weight: normal;
+    color: #222;
+    line-height: 1.15;
+    white-space: normal;
+    /* Keep the text from running past the t|u divider when it spans two
+       lines. The divider sits at 60% of the inner width, so cap the
+       subtitle at ~55% to leave space for the mouth icon. */
+    max-width: calc(0.8em + (100% - 1.6em) * 0.55);
+    box-sizing: border-box;
+}
+.aat100-subtitle:empty + .aat100-replay-inline { display: none; }
+
+/* Replay-mouth, inline variant. Sits immediately to the right of the
+   subtitle text. The button itself is just a clickable wrapper around the
+   small mouth glyph (mouth.png) — no border/background. */
+.aat100-replay-inline {
+    width: 1.8em;
+    height: 1.4em;
+    flex-shrink: 0;
+}
+
+/* Sum text (sums modes) sits above the work area. */
+.aat100-sum-text {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #224;
+    text-align: center;
+    margin: 0;
+    min-height: 0;
+    flex-shrink: 0;
+}
+.aat100-sum-text:empty { min-height: 0; }
+
+/* -------------------------------------------------------------------------
+   Work area: 2-column grid (tens | units) with vertical blue divider that
+   spans the t/u header band and the working area.
+   ------------------------------------------------------------------------- */
+.aat100-work {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: var(--aat100-work-cols-ratio);
+    grid-template-rows: 1fr auto;
+    column-gap: 0;
+    row-gap: 0;
+    position: relative;
+    /* Horizontal blue rule below the t/u header band (drawn as the column
+       background — see .aat100-work-tens / .aat100-work-units). */
+}
+
+/* Vertical blue rule = right border on the LEFT column. Wider than the
+   horizontal rule per Flash. */
+.aat100-work-tens {
+    border-right: var(--aat100-rule-v) solid var(--aat100-blue);
+}
+
+.aat100-work-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    min-height: 0;
+    min-width: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* "t" / "u" header row — Jotter handwriting font, NOT italic per Flash
+   (the original glyphs sit upright). Horizontal blue rule sits BELOW this
+   band. The 't' butts against the right edge of the tens column (against
+   the vertical blue divider); 'u' butts against the left edge of the
+   units column (also the divider). */
+.aat100-tu-header {
+    font-family: "Jotter Primary", sans-serif;
+    font-style: normal;
+    font-size: 1.4em;
+    color: #222;
+    line-height: 1;
+    width: 100%;
+    padding: 0.1em 0 0.15em;
+    border-bottom: var(--aat100-rule) solid var(--aat100-blue);
+    box-sizing: border-box;
+}
+.aat100-work-tens  > .aat100-tu-header { text-align: right; padding-right: 0.2em; }
+.aat100-work-units > .aat100-tu-header { text-align: left;  padding-left:  0.2em; }
+
+/* Big-digit row: large "0" current value (+ mouthTotal icon on the units side).
+   Tens-column instance right-aligns toward the central divider; units-column
+   instance left-aligns toward it — so both digits sit close to the divider. */
+.aat100-units-digit-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6em;
+    padding: 0.1em 0;
+    min-height: 1.6em;
+    width: 100%;
+}
+.aat100-work-tens  .aat100-units-digit-row { justify-content: flex-end;   padding-right: 0.3em; }
+.aat100-work-units .aat100-units-digit-row { justify-content: flex-start; padding-left:  0.3em; }
+
+.aat100-units-big-digit {
+    /* Borderless, Jotter handwriting font — the digit reads as the
+       handwritten "t"/"u" headers above it, with no visible cell outline
+       (per Flash, which set the running-total textfield's border to false). */
+    font-family: "Jotter Primary", sans-serif;
+    font-size: 1.5em;
+    line-height: 1;
+    color: #222;
+    text-align: center;
+    min-width: 1em;
+    padding: 0.05em 0.2em;
+    border: none;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+/* Tens digit-row is hidden by default for the new layout (kept for written
+   sums where it gets revealed via JS). */
+.aat100-tens-digit-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25em;
+    min-height: 2em;
+    justify-content: flex-end;
+    width: 100%;
+}
+.aat100-tens-digit-row.hidden_panel { display: none; }
+
+/* -------------------------------------------------------------------------
+   Tens column — 10 dashed phantom slots side-by-side (the "empty board").
+   Each slot is a tall narrow column with 9 internal horizontal segment
+   lines (showing the 10 unit-rows inside a ten). Live tens blocks render
+   on top via absolute positioning (#aat100TensCol).
+   ------------------------------------------------------------------------- */
+.aat100-tens-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: 1fr;
+    column-gap: 0;
+    align-items: stretch;
+    /* Right-aligned against the central vertical divider so the rightmost
+       phantom column butts up against the blue rule (matches Flash). */
+    align-self: flex-end;
+    margin: 0.4em 0 0 0;
+    /* Each phantom column is a tall narrow bar with 1:10 aspect (width:height).
+       With 10 columns of 1fr each, the overall grid is 10 unit-widths wide and
+       10 unit-heights tall — i.e. square. Driving the grid via aspect-ratio +
+       fluid height means the grid fills the available vertical space and the
+       width derives from that, guaranteeing each column stays 1:10. */
+    flex: 0 1 auto;
+    height: 18em;
+    max-height: 100%;
+    min-height: 0;
+    aspect-ratio: 1 / 1;
+    width: auto;
+    max-width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    /* No CSS border — see the units-col-wrapper comment for the same
+       reason: a border would shrink the content area so 10 columns at
+       1fr each would no longer line up with the percentage-positioned
+       dashed lines, and a live ten-block (width: 10%) would render off
+       the column it represents. Draw the outer rectangle as background
+       dashed lines at 0% and 100% instead, and keep the 9 internal
+       verticals at 10-90%. */
+    background:
+        linear-gradient(to bottom, #888 50%, transparent 50%) 0%   0 / var(--aat100-dash) 0.75em repeat-y,
+        linear-gradient(to bottom, #888 50%, transparent 50%) 10%  0 / var(--aat100-dash) 0.75em repeat-y,
+        linear-gradient(to bottom, #888 50%, transparent 50%) 20%  0 / var(--aat100-dash) 0.75em repeat-y,
+        linear-gradient(to bottom, #888 50%, transparent 50%) 30%  0 / var(--aat100-dash) 0.75em repeat-y,
+        linear-gradient(to bottom, #888 50%, transparent 50%) 40%  0 / var(--aat100-dash) 0.75em repeat-y,
+        linear-gradient(to bottom, #888 50%, transparent 50%) 50%  0 / var(--aat100-dash) 0.75em repeat-y,
+        linear-gradient(to bottom, #888 50%, transparent 50%) 60%  0 / var(--aat100-dash) 0.75em repeat-y,
+        linear-gradient(to bottom, #888 50%, transparent 50%) 70%  0 / var(--aat100-dash) 0.75em repeat-y,
+        linear-gradient(to bottom, #888 50%, transparent 50%) 80%  0 / var(--aat100-dash) 0.75em repeat-y,
+        linear-gradient(to bottom, #888 50%, transparent 50%) 90%  0 / var(--aat100-dash) 0.75em repeat-y,
+        linear-gradient(to bottom, #888 50%, transparent 50%) 100% 0 / var(--aat100-dash) 0.75em repeat-y,
+        /* Top and bottom horizontals — match the units-wrapper edges so
+           the two rulers feel like a single composition. */
+        linear-gradient(to right, #888 50%, transparent 50%) 0 0%   / 0.75em var(--aat100-dash) repeat-x,
+        linear-gradient(to right, #888 50%, transparent 50%) 0 100% / 0.75em var(--aat100-dash) repeat-x;
+}
+
+/* Slots are invisible scaffolding now — the grid container itself draws
+   both outer border and internal vertical lines (above). The slot must NOT
+   pin a min-width (e.g. `width: var(--aat100-ten-w)`); otherwise its
+   intrinsic min-content beats the grid's `aspect-ratio: 1` and the grid
+   ends up wider than it is tall. Let the `1fr` columns size the slots
+   fluidly so the grid stays a true square. */
+.aat100-tens-slot {
+    min-width: 0;
+    height: 100%;
+    border: 0;
+    background: transparent;
+    box-sizing: border-box;
+}
+
+/* Live tens column — absolutely positioned inside the dashed grid so
+   live blocks visually replace the dashed phantoms. With row-reverse +
+   flex-start, the first appended ten sits at the right edge (against the
+   central divider) and each subsequent ten stacks to its LEFT. */
+.aat100-tens-col {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 0;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------
+   Units column — single dashed slot acting as a "ruler" with 10 unit-cells.
+   Number labels (9..0) align to the BOTTOM of each cell (the line). Live
+   units blocks render in front (#aat100UnitsCol).
+   ------------------------------------------------------------------------- */
+.aat100-units-stack {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0.2em;
+    margin-top: 0.4em;
+    /* Fluid height: matches the tens-grid sizing rule so both columns share
+       a baseline regardless of available vertical space. */
+    height: 18em;
+    max-height: 100%;
+    flex: 0 1 auto;
+    min-height: 0;
+    transition: transform 0.4s ease-in-out;
+    /* Left-aligned in the units column so the ruler sits flush against
+       the central blue divider, matching Flash. */
+    align-self: flex-start;
+}
+
+.aat100-units-stack.aat100-units-shifted {
+    transform: translateX(1.75em);
+}
+
+.aat100-units-col-wrapper {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    flex: 0 0 auto;
+    /* Each ruler cell is 1:1 (unit width:unit height). Wrapper is 1 cell
+       wide and 10 tall ⇒ aspect-ratio 1:10, with width derived from height
+       so the ruler stays in lockstep with the (fluid) tens grid. */
+    height: 100%;
+    aspect-ratio: 1 / 10;
+    width: auto;
+    box-sizing: border-box;
+    /* No CSS border: a real border would shrink the content-area aspect
+       ratio away from 1:10, and the unit blocks (sized as 100% × 10% of
+       the inner box) would no longer be square. Instead, draw both the
+       outer rectangle and the 9 internal segments as background dashed
+       lines — 11 horizontal lines at 0%, 10%, … 100% give the same
+       visual ruler-box without eating into the geometry. */
+    background:
+        linear-gradient(to right, #888 50%, transparent 50%) 0 0%   / 0.75em var(--aat100-dash) repeat-x,
+        linear-gradient(to right, #888 50%, transparent 50%) 0 10%  / 0.75em var(--aat100-dash) repeat-x,
+        linear-gradient(to right, #888 50%, transparent 50%) 0 20%  / 0.75em var(--aat100-dash) repeat-x,
+        linear-gradient(to right, #888 50%, transparent 50%) 0 30%  / 0.75em var(--aat100-dash) repeat-x,
+        linear-gradient(to right, #888 50%, transparent 50%) 0 40%  / 0.75em var(--aat100-dash) repeat-x,
+        linear-gradient(to right, #888 50%, transparent 50%) 0 50%  / 0.75em var(--aat100-dash) repeat-x,
+        linear-gradient(to right, #888 50%, transparent 50%) 0 60%  / 0.75em var(--aat100-dash) repeat-x,
+        linear-gradient(to right, #888 50%, transparent 50%) 0 70%  / 0.75em var(--aat100-dash) repeat-x,
+        linear-gradient(to right, #888 50%, transparent 50%) 0 80%  / 0.75em var(--aat100-dash) repeat-x,
+        linear-gradient(to right, #888 50%, transparent 50%) 0 90%  / 0.75em var(--aat100-dash) repeat-x,
+        linear-gradient(to right, #888 50%, transparent 50%) 0 100% / 0.75em var(--aat100-dash) repeat-x,
+        /* Left & right edge verticals — same dash cadence as the tens-grid
+           verticals so the two rulers visually tile. */
+        linear-gradient(to bottom, #888 50%, transparent 50%) 0%   0 / var(--aat100-dash) 0.75em repeat-y,
+        linear-gradient(to bottom, #888 50%, transparent 50%) 100% 0 / var(--aat100-dash) 0.75em repeat-y;
+}
+
+.aat100-units-col {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 0;
+    flex-shrink: 0;
+    width: 100%;
+    /* No min-width: the wrapper's aspect-ratio (1:10) drives the column
+       width from its height; pinning a min-width here would beat that and
+       leave the cell wider than 1/10th of the ruler height. */
+    min-width: 0;
+    height: 100%;
+    position: relative;
+}
+
+/* Ruler labels: 9..0 — each label aligned to the BOTTOM edge of its
+   own cell (the line between cells), NOT centred in the gap between
+   adjacent cell lines.
+   Layout: 10-row CSS grid where each row matches one unit cell; each
+   <span> is anchored to the BOTTOM of its row so it visually sits on
+   the line that separates that cell from the one below. */
+.aat100-units-numbers {
+    display: grid;
+    /* Fluid rows: 10 equal-fraction rows match the ruler wrapper's segments. */
+    grid-template-rows: repeat(10, 1fr);
+    align-items: end;
+    height: 100%;
+    font-family: "Jotter Primary", sans-serif;
+    color: #444;
+    line-height: 1;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+.aat100-units-numbers span {
+    display: block;
+    font-size: 0.65em;
+    /* Centre the digit vertically on the line between cells (rather than
+       sit it above or below). Each <span> is anchored to the BOTTOM of
+       its row (align-items: end); translating down by 50% of its own
+       height places the digit's vertical centre on the cell's bottom
+       edge — i.e. on the dashed line itself. */
+    transform: translateY(50%);
+}
+
+/* +/- block controls — sit BELOW each column. */
+.aat100-block-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.3em;
+    margin-top: 0.4em;
+    flex-shrink: 0;
+}
+/* What's-the-Number mode hides the block-builder +/− pair entirely (input
+   moves to the inline t/u row above). Override the display:flex default. */
+.aat100-block-controls.hidden_panel { display: none; }
+
+.aat100-tens-controls {
+    /* Right-align under the tens block (which is right-anchored against
+       the central divider — see .aat100-tens-grid margin: 0 0 0 auto). */
+    align-self: flex-end;
+    margin-right: 0;
+}
+
+.aat100-units-controls {
+    /* Left-align under the units column (which sits flush left in the
+       narrow right pane — see .aat100-units-stack default flex layout). */
+    align-self: flex-start;
+}
+
+/* Done button — bottom-right of the activity screen, beside (not on top of)
+   the units +/- controls. Same colour/outline family as the +/- buttons
+   (light blue-grey fill, dark border, low border-radius). */
+.aat100-done-btn {
+    position: absolute;
+    bottom: 0.4em;
+    right: 0.6em;
+    z-index: 2;
+    background: linear-gradient(180deg, #ededf6 0%, #f0f0f7 15%, #dadef1 85%, #abb1e0 100%);
+    border: 0.08em solid #7e86de;
+    border-radius: 0.18em;
+    padding: 0.25em 0.9em;
+    font-family: "Jotter Primary", sans-serif;
+    font-size: 1.2em;
+    color: #222;
+}
+.aat100-done-btn:hover:not(:disabled) {
+    background: linear-gradient(180deg, #f7f7fc 0%, #e5e8f5 60%, #c6cee9 100%);
+}
+
+/* -------------------------------------------------------------------------
+   Block images
+   ------------------------------------------------------------------------- */
+.aat100-ten-block {
+    /* Fill one column of the 10-column tens grid. The grid is square and
+       its columns are 1fr each, so a block at 10% width × 100% height
+       matches the dashed phantom slot underneath exactly. Sizing by % of
+       the parent (not by --aat100-ten-w em hint) means the block tracks
+       the actual rendered column width, which is now driven by
+       aspect-ratio rather than the em variable. */
+    height: 100%;
+    width: 10%;
+    display: block;
+    flex-shrink: 0;
+    opacity: 1;
+}
+
+.aat100-ten-block.aat100-fading-in {
+    animation: aat100FadeIn 0.25s ease-in-out;
+}
+
+.aat100-ten-block.aat100-fading-out {
+    animation: aat100FadeOut 0.2s ease-in-out forwards;
+    pointer-events: none;
+}
+
+.aat100-unit-block {
+    /* Each unit block fills exactly 1/10 of the parent ruler height — the
+       ruler is 10 cells tall and this block must occupy one cell regardless
+       of how many other blocks are stacked above. */
+    width: 100%;
+    height: 10%;
+    flex: 0 0 10%;
+    display: block;
+    opacity: 1;
+}
+
+.aat100-unit-block.aat100-fading-in {
+    animation: aat100FadeIn 0.18s ease-in-out;
+}
+
+.aat100-unit-block.aat100-fading-out {
+    animation: aat100FadeOut 0.15s ease-in-out forwards;
+    pointer-events: none;
+}
+
+@keyframes aat100FadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes aat100FadeOut {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+/* Trade animations (Flash moveRightAnim / moveLeftAnim) — preserved for
+   the units/tens borrow visual. */
+.aat100-ten-block.aat100-trading-out {
+    animation: aat100TradeOutTen 0.7s ease-in-out forwards;
+    pointer-events: none;
+}
+
+/* Trade-out displaces the block by ~2 ten-column widths so the visual
+   carry feels distinct at any column-width tuning. */
+@keyframes aat100TradeOutTen {
+    0%   { transform: translateX(0);                              opacity: 1; }
+    55%  { transform: translateX(calc(var(--aat100-ten-w) * 2));  opacity: 1; }
+    100% { transform: translateX(calc(var(--aat100-ten-w) * 2));  opacity: 0; }
+}
+
+.aat100-ten-block.aat100-trading-in {
+    animation: aat100TradeInTen 0.7s ease-in-out;
+}
+
+@keyframes aat100TradeInTen {
+    0%   { transform: translateX(calc(var(--aat100-ten-w) * 2));  opacity: 0.5; }
+    40%  { transform: translateX(calc(var(--aat100-ten-w) * 2));  opacity: 1;   }
+    100% { transform: translateX(0);                              opacity: 1;   }
+}
+
+/* Ghost units column (Flash fadeInExtraUnitColumn). */
+.aat100-ghost-units-col {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 0.08em;
+    position: absolute;
+    bottom: 0;
+    left: -1.7em;
+    width: 1.4em;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+    pointer-events: none;
+}
+.aat100-ghost-units-col.aat100-ghost-visible { opacity: 0.45; }
+.aat100-ghost-unit {
+    width: 1.4em;
+    height: 1.4em;
+    display: block;
+}
+
+/* Combo block: 1×10 outlined unit strip during -Unit trade. */
+.aat100-combo-block {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: var(--aat100-unit-size, 1.1em);
+    height: var(--aat100-ten-h, 13em);
+    display: block;
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+.aat100-combo-block.aat100-combo-fading {
+    animation: aat100ComboFade 0.7s ease-in-out forwards;
+}
+
+@keyframes aat100ComboFade {
+    0%   { opacity: 0.85; transform: translate(-50%, 0); }
+    40%  { opacity: 0.7;  transform: translate(-50%, 0); }
+    100% { opacity: 0;    transform: translate(-50%, -0.3em); }
+}
+
+/* -------------------------------------------------------------------------
+   Digit boxes (kept for written-sums mode)
+   ------------------------------------------------------------------------- */
+.aat100-digit-box {
+    width: 1.7em;
+    height: 1.7em;
+    border: 0.12em solid #888;
+    border-radius: 0.15em;
+    background: #fff;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.2em;
+    font-weight: normal;
+    color: #222;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.aat100-digit-box.aat100-digit-running {
+    border-color: #000;
+    border-width: 0.16em;
+    font-weight: bold;
+}
+.aat100-digit-box.aat100-digit-tens.aat100-digit-running { border-color: #1d3f7a; }
+.aat100-digit-box.aat100-digit-units.aat100-digit-running { border-color: #1d3f7a; }
+
+.aat100-digit-pm-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 0.05em;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.5em;
+    line-height: 1;
+    color: #222;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.aat100-digit-pm-btn:hover:not(:disabled) { color: #000; transform: scale(1.1); }
+.aat100-digit-pm-btn:focus-visible {
+    outline: 0.18em dotted black;
+    outline-offset: 0.1em;
+}
+.aat100-digit-pm-btn.hidden_panel { display: none; }
+
+.aat100-digit-box.aat100-digit-total { display: none; }
+
+/* Written sums layout — three-row column notation positioned to the right
+   of the block grid (Flash places it around x=550, y=200 in the 800x600
+   stage). Each row is "operator tb ub"; an extra divider line separates
+   row 2 from row 3. The +/- buttons next to row-3 digits are revealed
+   only in steps 2 (units guess) and 4 (tens guess). */
+.aat100-written-display.hidden_panel { display: none; }
+
+.aat100-written-display {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15em;
+    align-items: flex-start;
+    flex-shrink: 0;
+    position: absolute;
+    /* Upper-right of the activity area, clear of the praise/feedback
+       which sits below it. Left expressed as % of stage width so em
+       resolving against the element's own (larger) font-size doesn't
+       push the column off-screen. */
+    top: 4.5em;
+    left: 68%;
+    z-index: 4;
+}
+
+.aat100-written-row {
+    display: flex;
+    align-items: center;
+    gap: 0.25em;
+}
+
+.aat100-written-op {
+    font-size: 1.4em;
+    font-weight: bold;
+    min-width: 1em;
+    text-align: center;
+    color: #222;
+}
+
+.aat100-written-divider {
+    border-top: 0.12em solid #333;
+    /* Width spans the two digit boxes + the operator slot. */
+    width: 4.3em;
+    margin: 0.1em 0 0.1em 1em;
+}
+
+/* Shaded placeholder state for tb1/ub1/tb2/ub2 before they're filled. */
+.aat100-digit-box.aat100-wsum-shaded {
+    opacity: 0.4;
+}
+
+/* The +/- buttons inside the row-3 units/tens inputs sit just to the left
+   and right of the digit box. The whole tens-input + units-input cluster
+   in row 3 stays inline so the digits stay aligned with rows 1 and 2. */
+.aat100-wsum-tens-input,
+.aat100-wsum-units-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.1em;
+}
+
+/* -------------------------------------------------------------------------
+   +/- block controls
+   ------------------------------------------------------------------------- */
+.aat100-block-btn {
+    /* Square aspect, less rounded, Jotter font for the +/- glyph. Pale-blue
+       gradient + lavender border match Flash button sprite_370.svg. Sized
+       10% smaller than the original 2.1em per UX request. */
+    width: 1.9em;
+    height: 1.9em;
+    aspect-ratio: 1 / 1;
+    border-radius: 0.18em;
+    border: 0.08em solid #7e86de;
+    background: linear-gradient(180deg, #ededf6 0%, #f0f0f7 15%, #dadef1 85%, #abb1e0 100%);
+    font-family: "Jotter Primary", sans-serif;
+    font-size: 1.6em;
+    font-weight: bold;
+    line-height: 1;
+    color: #222;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, transform 0.1s;
+    flex-shrink: 0;
+}
+.aat100-block-btn:hover:not(:disabled) {
+    background: linear-gradient(180deg, #f7f7fc 0%, #e5e8f5 60%, #c6cee9 100%);
+    transform: scale(1.05);
+}
+.aat100-block-btn:active:not(:disabled) { transform: scale(0.95); }
+.aat100-block-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+/* -------------------------------------------------------------------------
+   Feedback / praise overlays
+   -------------------------------------------------------------------------
+   Both feedback ("Try again.") and praise ("Super! 26 − 12 = 14") sit to the
+   RIGHT of the number grid, vertically centred against the lower half of
+   the grid (the upper half is reserved for the writtensums column-notation
+   when active). The grid (tens block + units ruler) right-edge sits at
+   ≈ 33em from the screen-left:
+     - divider position: x = 0.8em + (innerWidth × 0.6)
+     - units stack adds  ≈ (grid-height / 10) + ruler-labels (≈ 2.5em total)
+   For a stage width of 50em ⇒ grid-right ≈ 33em ⇒ free space ≈ 17em on the
+   right. Reserving 1em gutter each side → max-width = 50 − 34 − 1 = 15em
+   so the message never overflows the page even under fullscreen scaling. */
+.aat100-feedback,
+.aat100-praise {
+    position: absolute;
+    /* Positioned as % of the activity-screen width so the values aren't
+       affected by the element's own font-size (em on an absolute child
+       resolves against ITS font-size, not the parent — bigger praise text
+       would otherwise push itself off-screen).
+         - stage width = 50em (1em = 1/50 of activity-screen width)
+         - grid-right ≈ 33em from left = 66% of stage
+         - gutter 1em → message left edge ≈ 34em = 68%
+         - right gutter 1em → max-width = 50 − 34 − 1 = 15em = 30%
+       Vertically anchored above the Done button so the writtensums column
+       notation (top: 4.5em ⇒ ends ≈ 10em) can sit above without overlap. */
+    left: 68%;
+    bottom: 4em;       /* clear of the Done button (bottom 0.4em + ~2em tall) */
+    max-width: 30%;
+    margin: 0;
+    text-align: center;
+    pointer-events: none;
+    z-index: 5;
+    min-height: 0;
+}
+
+.aat100-feedback {
+    font-size: 1.1em;
+    color: #b22;
+}
+.aat100-feedback:empty { display: none; }
+
+.aat100-praise {
+    font-size: 1.4em;
+    color: #226600;
+    font-weight: bold;
+    line-height: 1.15;
+}
+.aat100-praise:empty { display: none; }
+
+.aat100-praise.aat100-praise-reveal {
+    animation: aat100PraiseReveal 0.45s ease-out;
+}
+
+@keyframes aat100PraiseReveal {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1);    }
+}
+
+.aat100-feedback.aat100-feedback-shake {
+    animation: aat100FeedbackShake 0.3s ease-in-out;
+}
+
+@keyframes aat100FeedbackShake {
+    0%, 100% { transform: translateX(0);     }
+    25%      { transform: translateX(-0.4em); }
+    50%      { transform: translateX(0.4em);  }
+    75%      { transform: translateX(-0.2em); }
+}
+
+/* -------------------------------------------------------------------------
+   What's the Number input — inline +/- next to the t and u digit displays.
+   ------------------------------------------------------------------------- */
+.aat100-wtn-input-row.hidden_panel { display: none; }
+/* Match the units-side gap (0.6em) on the tens-side row so the four +/-
+   buttons sit at the same horizontal distance from their digit. Previously
+   tens-side used 0.3em which made the left pair visibly closer than the
+   right pair. */
+.aat100-wtn-input-row { gap: 0.6em; }
+.aat100-wtn-input-btn.hidden_panel { display: none; }
+
+/* Compact +/- variant for the inline t/u inputs — smaller than the
+   primary block-controls so they fit comfortably alongside the digit.
+   Inherits pale-blue gradient + lavender border from .aat100-block-btn.
+   Square corners (matches Flash button sprite). */
+.aat100-wtn-input-btn {
+    width: 1.35em;
+    height: 1.35em;
+    font-size: 1.2em;
+    border-radius: 0;
+}
+
+/* When the WTN inline input is active, both digit displays (tens + units)
+   get a black square outline — they read as the user's editable answer
+   box, matching the Flash digit-box appearance. Toggled via JS by adding
+   `aat100-wtn-active` to the tens + units `.aat100-units-big-digit`
+   elements when WTN is showing, removed otherwise. */
+.aat100-units-big-digit.aat100-wtn-active {
+    border: 0.08em solid #000;
+    border-radius: 0;
+    background: #fff;
+    min-width: 1.2em;
+    padding: 0.05em 0.25em;
+}
+
+/* Pulse animation deliberately omitted for WTN digits (the digits update
+   on every +/− press; pulsing felt distracting). The shared
+   .aat100-number-pulse keyframes are still applied to other contexts
+   (number input display etc.). */
+
+/* -------------------------------------------------------------------------
+   Legacy combined-number input (kept hidden; superseded by inline WTN row).
+   ------------------------------------------------------------------------- */
+.aat100-number-input-area.hidden_panel { display: none; }
+
+.aat100-number-input-area {
+    display: none;            /* permanently hidden — replaced by inline t/u inputs */
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4em;
+    flex-shrink: 0;
+    position: absolute;
+    bottom: 3.5em;
+    right: 1em;
+}
+
+.aat100-number-input-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6em;
+}
+
+.aat100-number-input-display {
+    min-width: 3.5em;
+    min-height: 2.5em;
+    border: 0.15em solid #2255aa;
+    border-radius: 0.4em;
+    background: #f0f4ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: #2255aa;
+}
+
+.aat100-number-input-display.aat100-number-pulse {
+    animation: aat100NumberPulse 0.3s ease-in-out;
+}
+
+@keyframes aat100NumberPulse {
+    0%   { transform: scale(1);   }
+    50%  { transform: scale(1.4); }
+    100% { transform: scale(1);   }
+}
+
+/* -------------------------------------------------------------------------
+   Results screen
+   ------------------------------------------------------------------------- */
+.aat100-results-screen.hidden_panel { display: none; }
+
+.aat100-results-screen {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5em 1em 1em;
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.aat100-results-title {
+    font-size: 1.8em;
+    text-align: center;
+    margin: 0 0 0.4em 0;
+}
+
+.aat100-results-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 1em;
+    color: #444;
+    margin-bottom: 0.6em;
+    flex-shrink: 0;
+}
+
+.aat100-results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.1em;
+    flex: 1;
+}
+
+.aat100-results-table th,
+.aat100-results-table td {
+    border: 0.06em solid #ccc;
+    padding: 0.25em 0.5em;
+    text-align: center;
+}
+
+.aat100-results-table th {
+    background: #eef;
+    font-weight: bold;
+}
+
+.aat100-score-text {
+    font-size: 1.4em;
+    font-weight: bold;
+    text-align: center;
+    margin: 0.5em 0;
+    color: #225500;
+}
+
+.aat100-results-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1em;
+    flex-shrink: 0;
+    padding: 0.4em 0;
+}
+
+/* -------------------------------------------------------------------------
+   Options grid + description
+   ------------------------------------------------------------------------- */
+.aat100-activity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2em;
+    row-gap: 1em;
+    align-items: start;
+    margin-top: 0.4em;
+}
+
+/* "Description: <text>" paragraph: prefix stays static, the second span
+   live-updates from translations. */
+.aat100-activity-description {
+    margin: 0.4em 0 0;
+    font-size: 0.95em;
+    color: #444;
+    min-height: 1.2em;
+}
+
+.aat100-description-prefix {
+    font-weight: bold;
+    color: #222;
+    margin-right: 0.3em;
+}
+
+#aat100ActivityDescription {
+    font-style: italic;
+}
+
+/* Mode (Learning/Assessment) row sits inside the activity fieldset, beneath
+   the description. The legend ("Mode") is visually hidden — divergence
+   noted: the visible labels remain "Learning" / "Assessment". */
+.aat100-mode-group {
+    border: none;
+    padding: 0.4em 0 0;
+    margin: 0;
+}
+
+.aat100-mode-description {
+    margin: 0.4em 0 0;
+    font-size: 0.9em;
+    color: #444;
+    font-style: italic;
+    min-height: 1.1em;
+}
+
+/* Dimmed state for locked-by-activity radios. */
+.aat100-dimmed {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------
+   Colour-set picker (options screen, mirrors Flash leftButton/rightButton +
+   colourOptionsBox in frame_03.as). Two arrow buttons flank a small swatch
+   showing the active tens-block and unit-stack at chosen colour.
+   ------------------------------------------------------------------------- */
+.aat100-colour-picker {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6em;
+    margin-top: 0.3em;
+}
+
+.aat100-colour-arrow {
+    width: 2.4em;
+    height: 2em;
+    border-radius: 0.18em;
+    border: 0.08em solid #7e86de;
+    background: linear-gradient(180deg, #ededf6 0%, #f0f0f7 15%, #dadef1 85%, #abb1e0 100%);
+    color: #222;
+    font-family: "Jotter Primary", sans-serif;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.aat100-colour-arrow:hover:not(:disabled) {
+    background: linear-gradient(180deg, #f7f7fc 0%, #e5e8f5 60%, #c6cee9 100%);
+}
+
+/* Colour-set swatch (Flash colourOptionsBox in frame_03.as):
+   one tall tens-block on the left + a vertical stack of 10 unit-squares on
+   the right. Flash equalises the two heights visually — the units stack and
+   tens block are the same height, even though that means each unit cell is
+   slightly compressed (10 cubes ÷ tens-height < tens-width). Sizing by
+   matching heights (rather than matching unit-cube-width to tens-column-
+   width) is what the Flash reference shows. */
+.aat100-colour-swatch {
+    --aat100-swatch-h: 4.5em;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 0.25em;
+    height: var(--aat100-swatch-h);
+}
+
+.aat100-colour-swatch-ten {
+    /* Full swatch height to match the units stack. */
+    height: 100%;
+    width: auto;
+    display: block;
+}
+
+/* Vertical stack of 10 unit squares — full swatch height (matches the
+   tens block on the left). Width derives from the tens-block's column
+   width so the cubes don't visually dominate the swatch. */
+.aat100-colour-swatch-units {
+    height: 100%;
+    /* Width matches the tens-block column width (tens native aspect
+       40.45 / 350.4 = 0.1155, so width = swatch-h × 0.1155). */
+    width: calc(var(--aat100-swatch-h) * 0.1155);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+}
+
+.aat100-colour-swatch-units img {
+    width: 100%;
+    /* Square cubes: 1/10 of the stack height. */
+    height: 10%;
+    flex: 0 0 10%;
+    display: block;
+}
+
+/* -------------------------------------------------------------------------
+   Scanning controls (options screen)
+   ------------------------------------------------------------------------- */
+.aat100-scan-onoff {
+    display: flex;
+    gap: 0.3em;
+    margin-top: 0.4em;
+}
+
+.aat100-scan-delay-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    margin-top: 0.3em;
+}
+
+.aat100-scan-delay-row.hidden_panel { display: none; }
+
+.aat100-scan-delay-label { margin: 0; }
+
+/* -------------------------------------------------------------------------
+   Replay-instruction mouth icons (Flash mouthGuide / mouthTotal).
+   Both use about-time's mouth.png — a small red mouth glyph. The <button>
+   is transparent; the <img> is the visual.
+   ------------------------------------------------------------------------- */
+.aat100-replay-btn {
+    width: 1.8em;
+    height: 1.4em;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.aat100-replay-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.aat100-replay-btn:hover  { filter: brightness(0.92); }
+.aat100-replay-btn:active { filter: brightness(0.82); }
+.aat100-replay-btn:focus-visible {
+    outline: 0.2em solid #0066cc;
+    outline-offset: 0.15em;
+}
+.aat100-replay-btn.hidden_panel { display: none; }
+
+/* mouthTotal sits as a direct child of .aat100-work (ahead of the tens/units
+   columns in DOM order so keyboard tab reaches it before the block-builder
+   +/− buttons). Positioned absolutely over the central divider, aligned to
+   the digit-row baseline so it looks unchanged from the previous in-row
+   placement. */
+.aat100-replay-total {
+    position: absolute;
+    top: 1.65em;            /* clears the t/u header band */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+/* Hide the t/u big-digit displays + mouthTotal in Make-the-Number Assessment.
+   Flash: hideDigits=true && currentActivity=="makethenumber" hides ub3/tb3
+   (the running-total tens/units digit boxes) plus the mouthTotal icon.
+   Use visibility:hidden on the digits so the row keeps its baseline (the
+   units stack underneath is positioned relative to it). */
+.aat100-screen.aat100-assessment-hide-digits .aat100-units-big-digit,
+.aat100-screen.aat100-assessment-hide-digits #aat100MouthTotal {
+    visibility: hidden;
+}
+
+/* -------------------------------------------------------------------------
+   Reduced-motion fallback.
+   ------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

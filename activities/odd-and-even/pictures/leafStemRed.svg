@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="100" viewBox="0 0 40 100" role="img" aria-label="Red leaf stem">
+  <title>Red leaf stem</title>
+  <!-- Curved stem matching Flash: dark red gradient, gentle bend from
+       upper-left (under leaf base) down-right toward centre. -->
+  <defs>
+    <linearGradient id="stemRedGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a0252b"/>
+      <stop offset="50%" stop-color="#c93338"/>
+      <stop offset="100%" stop-color="#7a1c20"/>
+    </linearGradient>
+  </defs>
+  <path d="M14 0 Q18 30 26 60 Q30 80 34 100 L40 100 L40 100 Q34 80 30 60 Q22 30 22 0 Z"
+        fill="url(#stemRedGrad)" stroke="#620f0f" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>

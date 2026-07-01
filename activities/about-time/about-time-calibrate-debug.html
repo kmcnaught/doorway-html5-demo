@@ -1,0 +1,975 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>About Time — scene calibration (debug)</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, sans-serif; background: #f6f7f8;
+         color: #222; }
+  header { background: #1f2a44; color: #fff; padding: 10px 16px; }
+  header h1 { margin: 0; font-size: 16px; font-weight: 600; }
+  header p  { margin: 4px 0 0; font-size: 12px; opacity: 0.85; }
+
+  main { display: flex; gap: 16px; padding: 16px; align-items: flex-start; }
+  /* Canvas stays pinned to the top of the viewport while the (potentially
+     tall) layer panel scrolls, so the 800×600 preview is always visible. */
+  .canvas-wrap { flex: 0 0 auto; position: sticky; top: 16px;
+                 align-self: flex-start; }
+
+  /* Canvas is taller than the actual Time Passing scene strip so layers can
+     be dragged above/below the strip without being clipped. The dashed
+     "target strip zone" outline inside marks the real strip bounds:
+     .at-scene = 14em (~224px at 1em=16px) × 800px wide. Any layer that
+     spills outside the zone will be clipped when the scene renders in the
+     activity — the calibration canvas keeps the overflow visible so it can
+     be nudged back into place first. */
+  #atCanvas {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    background:
+      repeating-linear-gradient(45deg, #f0f0f0 0 10px, #fafafa 10px 20px);
+    border: 1px solid #888;
+    overflow: hidden;
+  }
+  /* Target strip zone: 800 x 224 (= .at-scene at 14em, 1em=16px), centred
+     vertically inside the taller calibration canvas so there is symmetric
+     head/foot-room. Positioned via inline top/height so we can adjust it
+     if TARGET_STRIP_H changes in JS. */
+  #targetStripZone {
+    position: absolute;
+    left: 0;
+    width: 800px;
+    outline: 2px dashed #c33;
+    outline-offset: -1px;
+    pointer-events: none;
+    z-index: 5;
+  }
+  #targetStripZone::after {
+    content: "target strip zone (800 × " attr(data-h) " — .at-scene)";
+    position: absolute;
+    top: -18px;
+    left: 4px;
+    font-size: 11px;
+    color: #c33;
+    background: #fff;
+    padding: 0 4px;
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+  }
+  .at-layer { position: absolute; pointer-events: none; }
+  .at-layer.image > img { width: 100%; height: 100%; display: block;
+                           image-rendering: -webkit-optimize-contrast; }
+  /* Reference image is aspect-locked: width is user-controlled, height
+     auto-derives from the PNG's intrinsic aspect ratio. */
+  #layer-reference { position: absolute; pointer-events: none; }
+  #layer-reference > img { display: block; width: 100%; height: auto;
+                            image-rendering: -webkit-optimize-contrast; }
+  .at-layer.svg-path > svg,
+  .at-layer.svg-tree > svg { width: 100%; height: 100%; display: block;
+                              overflow: visible; }
+  .at-layer.svg-path > svg path { stroke-width: 1.2; opacity: 0.55; }
+  .at-layer.hidden { display: none; }
+  /* Per-layer "hide" toggle (set by checkbox in the layer block). */
+  .at-layer.user-hidden { display: none; }
+
+  /* Reference uses lower opacity so traced paths above it are visible.
+     A toggle below lets the user temporarily bump opacity back to 100%. */
+  #layer-reference > img { opacity: var(--ref-opacity, 0.55); }
+  /* Group opacity applied to every non-reference layer wrap so the user can
+     fade traced/user SVGs down when lining them up against the reference. */
+  .at-layer:not(#layer-reference) { opacity: var(--layers-opacity, 1); }
+  /* Reference-on-top mode: bump the reference above all traced/user layers.
+     Default DOM order puts the reference at the back. */
+  #atCanvas.ref-on-top #layer-reference { z-index: 100; }
+  /* Per-block ▲/▼ swap buttons in the layer header. */
+  .layer-block .swap-btns { display: inline-flex; gap: 4px; margin-left: auto; }
+  .layer-block .swap-btns button { font-size: 12px; padding: 0 6px;
+    background: #eee; border: 1px solid #ccc; border-radius: 3px; cursor: pointer; }
+  .layer-block .swap-btns button:disabled { opacity: 0.3; cursor: default; }
+
+  /* === Panel === */
+  .panel { flex: 1; min-width: 360px; max-width: 480px;
+           background: #fff; border: 1px solid #ccc; padding: 12px 14px;
+           border-radius: 6px; }
+  .panel h2 { margin: 0 0 8px; font-size: 14px; }
+  .panel .layer-block { border-top: 1px solid #e3e3e3; padding: 10px 0; }
+  .panel .layer-block:first-of-type { border-top: 0; padding-top: 4px; }
+  .layer-block.locked { opacity: 0.5; pointer-events: none; }
+  .layer-block.locked .step { color: #c00; }
+  .layer-block summary {
+    cursor: pointer; font-size: 13px; font-weight: 600;
+    display: flex; gap: 8px; align-items: center;
+  }
+  .layer-block .step { font-size: 11px; padding: 2px 6px;
+    background: #1f2a44; color: #fff; border-radius: 10px; min-width: 18px;
+    text-align: center; }
+  .layer-block.confirmed .step { background: #2d8a3a; }
+  .layer-block.confirmed summary::after { content: "  ✓"; color: #2d8a3a; }
+  .layer-block[open] > summary { margin-bottom: 6px; }
+
+  .ctrl { display: grid; grid-template-columns: 80px 1fr 60px;
+          gap: 6px; align-items: center; font-size: 12px;
+          margin: 2px 0; }
+  .ctrl label { color: #444; }
+  .ctrl input[type=range] { width: 100%; }
+  .ctrl input[type=number] { width: 100%; font-variant-numeric: tabular-nums;
+                             text-align: right; padding: 2px 4px;
+                             border: 1px solid #ccc; border-radius: 3px;
+                             font: inherit; -moz-appearance: textfield; }
+  .ctrl input[type=number]::-webkit-outer-spin-button,
+  .ctrl input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .ctrl output { font-variant-numeric: tabular-nums; text-align: right;
+                  background: #f3f3f3; padding: 2px 4px; border-radius: 3px; }
+  .ctrl-row { display: flex; gap: 8px; align-items: center; margin-top: 6px;
+              font-size: 12px; }
+  .ctrl-row label { display: inline-flex; gap: 4px; align-items: center; }
+  .confirm-btn {
+    margin-top: 8px; font-size: 13px; padding: 6px 12px;
+    background: #1f2a44; color: #fff; border: 0; border-radius: 4px;
+    cursor: pointer;
+  }
+  .confirm-btn:hover { background: #2c3a5e; }
+  .reset-btn {
+    margin-top: 8px; margin-left: 6px; font-size: 12px; padding: 4px 8px;
+    background: #eee; border: 1px solid #ccc; border-radius: 4px;
+    cursor: pointer;
+  }
+
+  #cssOut {
+    width: 100%; min-height: 220px;
+    font-family: ui-monospace, monospace; font-size: 12px;
+    padding: 8px; border: 1px solid #ccc; border-radius: 4px;
+    background: #fafafa;
+    margin-top: 6px; white-space: pre;
+  }
+  .out-header { display: flex; align-items: center; gap: 12px;
+                margin-top: 16px; }
+  .out-header button {
+    font-size: 12px; padding: 4px 10px; border: 1px solid #888;
+    background: #fff; border-radius: 4px; cursor: pointer;
+  }
+
+  .ref-opacity-row { display: flex; gap: 8px; align-items: center;
+                      margin: 8px 0 4px; font-size: 12px; }
+  .ref-source-row  { display: flex; flex-wrap: wrap; gap: 6px 12px;
+                      align-items: center; margin: 8px 0 0; font-size: 12px; }
+  .ref-source-row label { display: inline-flex; gap: 4px; align-items: center;
+                           cursor: pointer; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>About Time — scene calibration (debug tool)</h1>
+  <p>Position the reference, then reveal &amp; align each layer in turn.
+     Each <b>Confirm</b> appends a CSS block to the textarea below.
+     Copy &amp; paste back to chat when done.</p>
+</header>
+
+<main>
+  <div class="canvas-wrap">
+    <div id="atCanvas" aria-label="800x600 scene calibration canvas">
+      <div id="targetStripZone"></div>
+    </div>
+    <div class="ref-source-row">
+      <span>Reference image:</span>
+      <label><input type="radio" name="refSource"
+                    value="pictures/analogueScene-hi.png" checked />
+        analogueScene upscaled (797×208)</label>
+      <label><input type="radio" name="refSource"
+                    value="reference-flash.png" />
+        Flash capture (800×600, night+UI)</label>
+      <label><input type="radio" name="refSource"
+                    value="pictures/analogueScene.png" />
+        Original (207×54)</label>
+    </div>
+    <div class="ref-opacity-row">
+      <label for="refOpacity">Reference opacity</label>
+      <input id="refOpacity" type="range" min="0" max="100" value="55" />
+      <output id="refOpacityVal">55</output>%
+    </div>
+    <div class="ref-opacity-row">
+      <label for="layersOpacity">Layers opacity</label>
+      <input id="layersOpacity" type="range" min="0" max="100" value="100" />
+      <output id="layersOpacityVal">100</output>%
+    </div>
+    <div class="ref-opacity-row">
+      <label><input type="checkbox" id="refOnTop" />
+        Reference on top of all layers</label>
+    </div>
+  </div>
+
+  <section class="panel">
+    <h2>Layers</h2>
+    <div id="layerControls"></div>
+
+    <div class="out-header">
+      <h2 style="margin:0; flex:1;">Confirmed values (copy &amp; paste)</h2>
+      <button type="button" id="clearOut">Clear</button>
+      <button type="button" id="copyOut">Copy</button>
+    </div>
+    <textarea id="cssOut" spellcheck="false"
+              aria-label="Confirmed CSS values (copy &amp; paste back to chat)"
+              ></textarea>
+  </section>
+</main>
+
+<script>
+"use strict";
+
+// Canvas geometry.
+//   CANVAS_W / CANVAS_H  — the full working canvas the user drags layers on.
+//     Taller than the actual scene strip so layers can overshoot without
+//     being clipped while being placed.
+//   TARGET_STRIP_W / TARGET_STRIP_H — the true .at-scene bounds
+//     (14em × 100%, which resolves to 800 × 224 at 1em=16px). Rendered as
+//     a dashed outline so the user knows where the strip really is.
+const CANVAS_W = 800;
+const CANVAS_H = 600;
+const TARGET_STRIP_W = 800;
+const TARGET_STRIP_H = 224;
+const TARGET_STRIP_TOP = Math.round((CANVAS_H - TARGET_STRIP_H) / 2);
+
+// Layer descriptors injected by build_calibrate.py.
+// Confirmed default values (indexes 0-16) come from a previous calibration
+// session — those layers auto-confirm on page load (see the loop after the
+// build-page section) so the user can jump straight to the next uncalibrated
+// layer (car-2 at idx=17).
+// The reference layer keeps its absolute y (=209) because buildBlock's
+// useImageMode branch does NOT add TARGET_STRIP_TOP for the reference; every
+// other image layer uses a strip-relative y, and applyLayerImage adds
+// TARGET_STRIP_TOP at init.
+const LAYERS = [
+  // --- Pre-calibrated (auto-confirmed on load) ---------------------------
+  {"id": "reference",     "label": "Reference (analogueScene upscaled 797×208)", "kind": "image",    "src": "pictures/analogueScene-hi.png", "default": {"x":   0, "y": 209, "w": 797, "h": 208}},
+  {"id": "back-hill",     "label": "Back hill (SVG, user-traced)",               "kind": "image",    "src": "pictures/back-hill.svg",        "default": {"x":  -6, "y":  82, "w": 700, "h": 145}},
+  {"id": "back-road",     "label": "Back road (SVG, user-traced)",               "kind": "image",    "src": "pictures/back-road.svg",        "default": {"x":   2, "y":  95, "w": 190, "h":  56}},
+  {"id": "front-hill",    "label": "Front hill (SVG, user-traced)",              "kind": "image",    "src": "pictures/front-hill.svg",       "default": {"x": -18, "y":  86, "w": 813, "h": 141}},
+  {"id": "front-roads",   "label": "Front roads (SVG, user-traced)",             "kind": "image",    "src": "pictures/front-roads.svg",      "default": {"x":  61, "y": 116, "w": 738, "h":  92}},
+  {"id": "house",         "label": "House sprite (house.png)",                   "kind": "image",    "src": "pictures/house.png",            "default": {"x":  29, "y":  31, "w":  97, "h":  61}},
+  {"id": "tree",          "label": "Tree (inline SVG, current shape)",           "kind": "svg-tree",                                         "default": {"x": 123, "y":  46, "w":  30, "h":  45}},
+  {"id": "school",        "label": "School sprite (school.png)",                 "kind": "image",    "src": "pictures/school.png",           "default": {"x": 549, "y":  23, "w": 264, "h": 137}},
+  {"id": "sun",           "label": "Sun sprite (sun.png)",                       "kind": "image",    "src": "pictures/sun.png",              "default": {"x": 600, "y":  30, "w":  50, "h":  50}},
+  {"id": "house-windows", "label": "House windows (windows.png)",                "kind": "image",    "src": "pictures/windows.png",          "default": {"x":  51, "y":  51, "w":  82, "h":  52}},
+  {"id": "milk",          "label": "Milk bottle (milk.png)",                     "kind": "image",    "src": "pictures/milk.png",             "default": {"x":  65, "y":  73, "w":  13, "h":  20}},
+  {"id": "car",           "label": "Parked car (car1.png)",                      "kind": "image",    "src": "pictures/car1.png",             "default": {"x": 739, "y": 108, "w":  52, "h":  25}},
+  {"id": "bus",           "label": "Bus side (bus.png)",                         "kind": "image",    "src": "pictures/bus.png",              "default": {"x": 200, "y": 177, "w":  48, "h":  26}},
+  {"id": "football",      "label": "Football (football.png)",                    "kind": "image",    "src": "pictures/football.png",         "default": {"x": 607, "y": 138, "w":   6, "h":   6}},
+  {"id": "pupils",        "label": "Pupils group (pupils.png)",                  "kind": "image",    "src": "pictures/pupils.png",           "default": {"x": 669, "y":  51, "w": 117, "h":  88}},
+  {"id": "teachers",      "label": "Teachers group (teachers.png)",              "kind": "image",    "src": "pictures/teachers.png",         "default": {"x": 668, "y": 102, "w":  46, "h":  28}},
+  {"id": "skipping",      "label": "Skipping (skipping.png)",                    "kind": "image",    "src": "pictures/skipping.png",         "default": {"x": 642, "y": 126, "w":  31, "h":  18}},
+  // --- User-calibrated 2026-07-01 (auto-confirmed on load) ---------------
+  {"id": "car-2",            "label": "Second car (car2.png)",                            "kind": "image", "src": "pictures/car2.png",                "default": {"x": 738, "y": 122, "w":  52, "h":  25}},
+  {"id": "car-rear",         "label": "Car rear view (carRear.png)",                      "kind": "image", "src": "pictures/carRear.png",             "default": {"x":  34, "y":  64, "w":  25, "h":  22}},
+  {"id": "bus-back",         "label": "Bus back view (busBack.png)",                      "kind": "image", "src": "pictures/busBack.png",             "default": {"x":  67, "y": 151, "w":  23, "h":  26}},
+  {"id": "bus-front",        "label": "Bus front view (busFront.png)",                    "kind": "image", "src": "pictures/busFront.png",            "default": {"x": 169, "y": 118, "w":  23, "h":  26}},
+  {"id": "bus-quarter1",     "label": "Bus 3/4 angle (busQuarter1.png)",                  "kind": "image", "src": "pictures/busQuarter1.png",         "default": {"x":  89, "y": 129, "w":  25, "h":  28}},
+  {"id": "bus-quarter-back", "label": "Bus 3/4 back angle (busQuarterBack.png)",          "kind": "image", "src": "pictures/busQuarterBack.png",      "default": {"x":  88, "y": 130, "w":  25, "h":  28}},
+  {"id": "pupil-running",    "label": "Running pupil (pupil7running frame 0)",            "kind": "image", "src": "pictures/pupil7running_0000.png",  "default": {"x": 624, "y": 116, "w":  43, "h":  17}},
+  {"id": "pupil-3",          "label": "Pupil variant 3 (pupil3.png)",                     "kind": "image", "src": "pictures/pupil3.png",              "default": {"x": 603, "y": 108, "w":   7, "h":  15}},
+  {"id": "pupil-6",          "label": "Pupil variant 6 (pupil6.png)",                     "kind": "image", "src": "pictures/pupil6.png",              "default": {"x": 598, "y": 116, "w":   6, "h":  16}},
+  {"id": "pupil-8",          "label": "Pupil variant 8 (pupil8.png)",                     "kind": "image", "src": "pictures/pupil8.png",              "default": {"x": 607, "y": 117, "w":   6, "h":  15}},
+  {"id": "teacher-2",        "label": "Teacher variant 2 (teacher2.png)",                 "kind": "image", "src": "pictures/teacher2.png",            "default": {"x": 645, "y": 110, "w":   9, "h":  23}},
+  {"id": "teacher-3",        "label": "Teacher variant 3 (teacher3.png)",                 "kind": "image", "src": "pictures/teacher3.png",            "default": {"x": 730, "y": 110, "w":   9, "h":  23}},
+  {"id": "teacher-4",        "label": "Teacher variant 4 (teacher4.png)",                 "kind": "image", "src": "pictures/teacher4.png",            "default": {"x": 740, "y": 110, "w":   9, "h":  22}},
+  // --- User-calibrated 2026-07-01 late (auto-confirmed on load) ---------
+  // Individual pupil singles + pupil7 running sub-clips + all 6 pupils MC
+  // frames. pupil-7 was dropped from the palette (user said "don't know
+  // what this is, so probably leave out"). pupils-0000..0002 depict
+  // pupils disgorging from the bus (morning arrival, strip x≈620);
+  // pupils-0003..0005 depict them back on the playground (strip x≈585).
+  {"id": "pupil-1",          "label": "Pupil variant 1 (pupil1.png)",                     "kind": "image", "src": "pictures/pupil1.png",              "default": {"x": 630, "y": 123, "w":   7, "h":  16}},
+  {"id": "pupil-2",          "label": "Pupil variant 2 (pupil2.png)",                     "kind": "image", "src": "pictures/pupil2.png",              "default": {"x": 622, "y": 125, "w":   7, "h":  15}},
+  {"id": "pupil-run-anim",   "label": "Pupil run sub-clip (pupil7runAnim_0000.png)",      "kind": "image", "src": "pictures/pupil7runAnim_0000.png",  "default": {"x": 630, "y": 118, "w":  11, "h":  16}},
+  {"id": "pupil-run-anim2",  "label": "Pupil run sub-clip 2 (pupil7runAnim2_0000.png)",   "kind": "image", "src": "pictures/pupil7runAnim2_0000.png", "default": {"x": 645, "y": 118, "w":  11, "h":  16}},
+  {"id": "pupils-0000",      "label": "Pupils MC frame 0 — bus arrival (pupils0000.png)", "kind": "image", "src": "pictures/pupils0000.png",          "default": {"x": 620, "y": 110, "w": 117, "h":  88}},
+  {"id": "pupils-0001",      "label": "Pupils MC frame 1 — bus arrival (pupils0001.png)", "kind": "image", "src": "pictures/pupils0001.png",          "default": {"x": 620, "y": 110, "w": 117, "h":  88}},
+  {"id": "pupils-0002",      "label": "Pupils MC frame 2 (pupils0002.png)",               "kind": "image", "src": "pictures/pupils0002.png",          "default": {"x": 620, "y": 110, "w": 117, "h":  88}},
+  {"id": "pupils-0003",      "label": "Pupils MC frame 3 (pupils0003.png)",               "kind": "image", "src": "pictures/pupils0003.png",          "default": {"x": 585, "y": 110, "w": 117, "h":  88}},
+  {"id": "pupils-0004",      "label": "Pupils MC frame 4 (pupils0004.png)",               "kind": "image", "src": "pictures/pupils0004.png",          "default": {"x": 584, "y": 121, "w": 117, "h":  88}},
+  {"id": "pupils-0005",      "label": "Pupils MC frame 5 — playtime (pupils0005.png)",    "kind": "image", "src": "pictures/pupils0005.png",          "default": {"x": 585, "y": 111, "w": 117, "h":  88}},
+  // --- Newly-added house-side scene + skyline outline (uncalibrated) ---
+  // Skyline outline (nightImage.png) — the horizon silhouette shown
+  // during evening. At runtime it's rendered as a full-strip overlay
+  // with object-fit:contain; the calibration entry lets you nudge its
+  // position/scale so the silhouette lines up with the daytime scene.
+  {"id": "skyline",          "label": "Skyline outline (nightImage.png silhouette)",       "kind": "image", "src": "pictures/nightImage.png",          "default": {"x":  68, "y": 145, "w": 664, "h": 272}},
+  // After-school football scene reused near the house (HTML5 addition —
+  // Flash only had the playground game). football-home sizes to the
+  // animation-strip frame (33×16); pupils around it use existing sprites
+  // at fresh IDs so they can be positioned independently of the
+  // playground copies.
+  {"id": "football-home",    "label": "House-side football (footballGame0000.png)",        "kind": "image", "src": "pictures/footballGame0000.png",    "default": {"x": 144, "y": 100, "w":  33, "h":  16}},
+  {"id": "pupil-running-home", "label": "House-side runner (pupil7running_0000.png)",     "kind": "image", "src": "pictures/pupil7running_0000.png",  "default": {"x": 105, "y":  95, "w":  43, "h":  17}},
+  {"id": "pupil-1-home",     "label": "House-side pupil (pupil1.png)",                    "kind": "image", "src": "pictures/pupil1.png",              "default": {"x": 170, "y":  90, "w":   7, "h":  16}},
+  {"id": "pupil-2-home",     "label": "House-side pupil (pupil2.png)",                    "kind": "image", "src": "pictures/pupil2.png",              "default": {"x": 185, "y":  92, "w":   7, "h":  15}},
+  // --- Bus scale + position anchors, and all livery variants -------------
+  // Two anchors pin the bus perspective ramp end-to-end. Their position
+  // AND size together define where the bus should sit (and how big it
+  // should render) at the two extremes of its curved path; intermediate
+  // frames along BUS_FRAME_PATH interpolate between them.
+  //   bus-parked-large — "near end": side view parked at the school kerb
+  //     for pupil dismount. Position + scale reference.
+  //   bus-livery-home  — "far end": home-time livery, positioned up by
+  //     the house on the back road. Position + scale reference.
+  {"id": "bus-parked-large", "label": "Bus anchor NEAR — parked at school for dismount (bus.png)", "kind": "image", "src": "pictures/bus.png",                 "default": {"x": 640, "y": 285, "w":  60, "h":  32}},
+  {"id": "bus-livery-home",  "label": "Bus anchor FAR — home-time by the house (bus0001.png)",     "kind": "image", "src": "pictures/bus0001.png",             "default": {"x": 260, "y": 165, "w":  48, "h":  26}},
+  // Additional side-view livery kept as its own layer so the user can
+  // pick it up separately when deciding which sprite to draw where.
+  // bus0000 = morning arrival livery (same 48×26 footprint as bus.png).
+  {"id": "bus-livery-morning", "label": "Bus livery — morning arrival (bus0000.png)",           "kind": "image", "src": "pictures/bus0000.png",             "default": {"x": 200, "y": 165, "w":  48, "h":  26}},
+];
+
+const canvas = document.getElementById("atCanvas");
+const controlsEl = document.getElementById("layerControls");
+const out = document.getElementById("cssOut");
+
+// Per-layer current state. Layer 0 (reference) uses {x,y,w,h};
+// every subsequent layer uses {x,y,sx,sy,flip}.
+const state = {};
+// Whether a layer has been confirmed (gates the next one).
+const confirmed = new Set();
+
+function makeRange(min, max, step, value) {
+  const el = document.createElement("input");
+  el.type = "range";
+  el.min = String(min); el.max = String(max);
+  el.step = String(step); el.value = String(value);
+  return el;
+}
+
+// Set a range's value without firing an "input" event, and keep the paired
+// number input in sync. Used when the aspect-lock is on and we need to update
+// the "other" dimension without cascading a second input event.
+function setRangeQuiet(range, val) {
+  range.value = String(val);
+  const num = range.parentElement && range.parentElement.querySelector("input[type=number]");
+  if (num) num.value = String(val);
+}
+
+// Read a layer's intrinsic aspect ratio (natural h / natural w). Returns
+// null if the layer has no meaningful intrinsic aspect (e.g. full-canvas
+// overlays that fill the strip box).
+function getNatRatio(layer) {
+  if (layer.kind === "svg-tree") return 60 / 40;
+  if (layer.kind === "image") {
+    const img = document.querySelector("#layer-" + layer.id + " > img");
+    if (img && img.naturalWidth) return img.naturalHeight / img.naturalWidth;
+  }
+  return null;
+}
+
+function makeCtrl(parent, label, range, formatter) {
+  const row = document.createElement("div");
+  row.className = "ctrl";
+  const l = document.createElement("label"); l.textContent = label;
+  // Editable number input synced with the range slider. Typing a value
+  // fires an "input" event on the range so the layer updates identically
+  // to dragging.
+  const num = document.createElement("input");
+  num.type = "number";
+  num.min = range.min; num.max = range.max; num.step = range.step;
+  num.value = range.value;
+  const syncNumFromRange = () => {
+    if (document.activeElement !== num) num.value = range.value;
+  };
+  range.addEventListener("input", syncNumFromRange);
+  num.addEventListener("input", () => {
+    if (num.value === "" || isNaN(Number(num.value))) return;
+    range.value = num.value;
+    range.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  row.appendChild(l); row.appendChild(range); row.appendChild(num);
+  parent.appendChild(row);
+  return range;
+}
+
+function applyLayer(layer) {
+  const el = document.getElementById("layer-" + layer.id);
+  if (!el) return;
+  const s = state[layer.id];
+  if (layer.id === "reference") {
+    // Aspect-locked: only width is user-controlled; height is auto via CSS.
+    // The intrinsic aspect ratio of the PNG (naturalHeight/naturalWidth)
+    // takes care of the rendered height once the image loads.
+    el.style.left   = s.x + "px";
+    el.style.top    = s.y + "px";
+    el.style.width  = s.w + "px";
+    el.style.height = "auto";
+    return;
+  }
+  // Non-reference full-canvas overlays (traced SVG paths). They live in a
+  // box that matches the *target strip* (not the full padded canvas), so
+  // their viewBox coords stay consistent with the eventual .at-scene render.
+  // Sliders adjust translate + scale around the strip's centre.
+  el.style.left   = "0px";
+  el.style.top    = TARGET_STRIP_TOP + "px";
+  el.style.width  = TARGET_STRIP_W + "px";
+  el.style.height = TARGET_STRIP_H + "px";
+  const flip = s.flip ? -1 : 1;
+  el.style.transform =
+    "translate(" + s.x + "px," + s.y + "px) " +
+    "scale(" + (s.sx * flip) + "," + s.sy + ")";
+  // Transform-origin is relative to the layer box (which starts at the strip
+  // top), so use the strip's own centre — not the canvas centre.
+  el.style.transformOrigin =
+    (TARGET_STRIP_W / 2) + "px " + (TARGET_STRIP_H / 2) + "px";
+}
+
+function makeLayerEl(layer) {
+  const wrap = document.createElement("div");
+  wrap.id = "layer-" + layer.id;
+  wrap.className = "at-layer " + layer.kind;
+  if (layer.kind === "image") {
+    const img = document.createElement("img");
+    img.src = layer.src;
+    img.alt = "";
+    // Reference layer needs its intrinsic aspect ratio recorded so that
+    // (a) applyLayer can leave `height: auto` in place, and (b) the
+    // confirmed CSS block can annotate the naturalWidth/naturalHeight.
+    if (layer.id === "reference") {
+      const stash = () => {
+        if (!state[layer.id]) return; // block not built yet — retry on state ready
+        state[layer.id].natW = img.naturalWidth || 1;
+        state[layer.id].natH = img.naturalHeight || 1;
+      };
+      if (img.complete && img.naturalWidth) {
+        // Cached — natural dims already known. Stash on next tick so state[]
+        // for the reference has been initialised by buildBlock().
+        setTimeout(stash, 0);
+      } else {
+        img.addEventListener("load", stash);
+      }
+    }
+    wrap.appendChild(img);
+  } else if (layer.kind === "svg-path") {
+    const ns = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("viewBox",
+      "0 0 " + layer.viewBoxW + " " + layer.viewBoxH);
+    svg.setAttribute("preserveAspectRatio", "none");
+    const p = document.createElementNS(ns, "path");
+    p.setAttribute("d", layer.d);
+    p.setAttribute("fill", layer.fill);
+    p.setAttribute("stroke", layer.stroke);
+    svg.appendChild(p);
+    wrap.appendChild(svg);
+  } else if (layer.kind === "svg-tree") {
+    // Same tree as about-time-debug.html, embedded inline.
+    wrap.innerHTML = ''
+      + '<svg viewBox="0 0 40 60" preserveAspectRatio="none">'
+      + '  <rect x="17" y="32" width="6" height="22" fill="#5a3a22"/>'
+      + '  <ellipse cx="20" cy="24" rx="16" ry="18" fill="#3f7d3a"/>'
+      + '  <ellipse cx="20" cy="22" rx="12" ry="14" fill="#4a8e44"/>'
+      + '</svg>';
+    // Tree is a positioned sprite, not a full-canvas overlay. We treat it
+    // like an "image" layer for positioning: x/y/w/h, no flip/scale.
+    wrap.classList.add("image");
+    wrap.classList.remove("svg-tree");
+  }
+  // Start hidden except for the reference.
+  if (layer.id !== "reference") wrap.classList.add("hidden");
+  canvas.appendChild(wrap);
+  return wrap;
+}
+
+function buildBlock(layer, idx) {
+  const block = document.createElement("details");
+  block.className = "layer-block";
+  block.id = "block-" + layer.id;
+  if (idx === 0) block.setAttribute("open", "");
+  if (idx > 0) block.classList.add("locked");
+
+  const sum = document.createElement("summary");
+  sum.innerHTML = '<span class="step">' + (idx + 1) + '</span> '
+    + layer.label;
+  // Adjacent-swap buttons for non-reference layers. Clicking ▲/▼ moves
+  // this layer up/down in the canvas stack (by re-appending DOM elements)
+  // and swaps the corresponding block position in the panel.
+  if (layer.id !== "reference") {
+    const swap = document.createElement("span");
+    swap.className = "swap-btns";
+    swap.innerHTML =
+      '<button type="button" data-dir="up" title="swap with layer above">▲</button>' +
+      '<button type="button" data-dir="down" title="swap with layer below">▼</button>';
+    swap.addEventListener("click", e => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      e.preventDefault(); e.stopPropagation();
+      swapWith(block, btn.dataset.dir);
+    });
+    sum.appendChild(swap);
+  }
+  block.appendChild(sum);
+
+  const body = document.createElement("div");
+  block.appendChild(body);
+
+  // Build controls. Reference uses {x,y,w,h}; others use {x,y,sx,sy,flip}.
+  const useImageMode = (layer.id === "reference" || layer.kind === "image"
+                        || layer.kind === "svg-tree");
+  if (useImageMode && layer.id === "reference") {
+    // Reference is aspect-locked. Track x, y, w only — height is derived
+    // from the PNG's intrinsic aspect ratio (natH/natW) and applied via
+    // CSS `height: auto`. We seed w to the canvas width (800) and y from
+    // the layer descriptor's default — the Flash 800×600 reference is
+    // meant to fill the whole canvas at native resolution (y=0), whereas
+    // a shorter reference PNG is centred inside the strip zone.
+    const initW = layer.default && layer.default.w ? layer.default.w : CANVAS_W;
+    const initY = layer.default && layer.default.y !== undefined
+      ? layer.default.y
+      : TARGET_STRIP_TOP;
+    // natAspect (h/w) starts as a plausible guess; the real value is
+    // written back from the img.onload handler in makeLayerEl and used
+    // both by applyLayer (via `height: auto`) and by appendCssBlock.
+    state[layer.id] = {
+      x: 0,
+      y: initY,
+      w: initW,
+      natW: 1,
+      natH: 1
+    };
+    const fmtPx = v => Number(v).toFixed(0);
+    makeCtrl(body, "x",     makeRange(-400, 900, 1, state[layer.id].x), fmtPx)
+      .addEventListener("input", e => {
+        state[layer.id].x = +e.target.value; applyLayer(layer);
+      });
+    makeCtrl(body, "y",     makeRange(-100, 600, 1, state[layer.id].y), fmtPx)
+      .addEventListener("input", e => {
+        state[layer.id].y = +e.target.value; applyLayer(layer);
+      });
+    // Single width slider — height is aspect-locked. Range covers 50px to
+    // 1600px so the user can zoom well past the canvas width if they need
+    // to line the reference up with a specific detail.
+    makeCtrl(body, "width", makeRange(50, 1600, 1, state[layer.id].w), fmtPx)
+      .addEventListener("input", e => {
+        state[layer.id].w = +e.target.value; applyLayer(layer);
+      });
+  } else if (useImageMode) {
+    // Image-sprite layers (house / school / sun / tree). Position offsets
+    // are relative to the canvas origin, so we shift the default y so the
+    // sprite lands inside the target strip zone rather than at the top of
+    // the padded canvas. Ranges are opened up so sprites can drift above
+    // or below the strip while the user tweaks.
+    state[layer.id] = Object.assign({}, layer.default);
+    state[layer.id].y = (layer.default.y || 0) + TARGET_STRIP_TOP;
+    const fmtPx = v => Number(v).toFixed(0);
+    makeCtrl(body, "x",      makeRange(-200, 1000, 1, state[layer.id].x), fmtPx)
+      .addEventListener("input", e => { state[layer.id].x = +e.target.value; applyLayerImage(layer); });
+    makeCtrl(body, "y",      makeRange(-100, CANVAS_H, 1, state[layer.id].y), fmtPx)
+      .addEventListener("input", e => { state[layer.id].y = +e.target.value; applyLayerImage(layer); });
+    // Track w/h as separate references so the aspect-lock can update the
+    // "other" dimension when one changes.
+    // Min = 1px so tiny sprites (e.g. milk bottle at 13×20 natural) can be
+    // scaled down further if needed. Max stays at the full canvas dimensions.
+    const wR = makeCtrl(body, "width",  makeRange(1, 1600, 1, state[layer.id].w), fmtPx);
+    const hR = makeCtrl(body, "height", makeRange(1, 800, 1, state[layer.id].h), fmtPx);
+    wR.addEventListener("input", e => {
+      state[layer.id].w = +e.target.value;
+      const lock = block.querySelector(".aspect-lock");
+      if (lock && lock.checked) {
+        const r = getNatRatio(layer);
+        if (r) {
+          state[layer.id].h = Math.round(state[layer.id].w * r);
+          setRangeQuiet(hR, state[layer.id].h);
+        }
+      }
+      applyLayerImage(layer);
+    });
+    hR.addEventListener("input", e => {
+      state[layer.id].h = +e.target.value;
+      const lock = block.querySelector(".aspect-lock");
+      if (lock && lock.checked) {
+        const r = getNatRatio(layer);
+        if (r) {
+          state[layer.id].w = Math.round(state[layer.id].h / r);
+          setRangeQuiet(wR, state[layer.id].w);
+        }
+      }
+      applyLayerImage(layer);
+    });
+  } else {
+    state[layer.id] = { x: 0, y: 0, sx: 1, sy: 1, flip: false };
+    const fmtPx = v => Number(v).toFixed(0);
+    const fmtSc = v => Number(v).toFixed(3);
+    // Translate ranges opened up to ± half the canvas dimensions so
+    // full-canvas overlays can be nudged well outside the strip zone.
+    makeCtrl(body, "translate x", makeRange(-500, 500, 1, 0), fmtPx)
+      .addEventListener("input", e => { state[layer.id].x = +e.target.value; applyLayer(layer); });
+    makeCtrl(body, "translate y", makeRange(-300, 300, 1, 0), fmtPx)
+      .addEventListener("input", e => { state[layer.id].y = +e.target.value; applyLayer(layer); });
+    const sxR = makeCtrl(body, "scale x", makeRange(0.2, 3, 0.005, 1), fmtSc);
+    const syR = makeCtrl(body, "scale y", makeRange(0.2, 3, 0.005, 1), fmtSc);
+    sxR.addEventListener("input", e => {
+      state[layer.id].sx = +e.target.value;
+      const lock = block.querySelector(".aspect-lock");
+      if (lock && lock.checked) {
+        state[layer.id].sy = state[layer.id].sx;
+        setRangeQuiet(syR, state[layer.id].sy);
+      }
+      applyLayer(layer);
+    });
+    syR.addEventListener("input", e => {
+      state[layer.id].sy = +e.target.value;
+      const lock = block.querySelector(".aspect-lock");
+      if (lock && lock.checked) {
+        state[layer.id].sx = state[layer.id].sy;
+        setRangeQuiet(sxR, state[layer.id].sx);
+      }
+      applyLayer(layer);
+    });
+
+    const row = document.createElement("div"); row.className = "ctrl-row";
+    const lab = document.createElement("label");
+    const cb = document.createElement("input"); cb.type = "checkbox";
+    cb.addEventListener("change", e => { state[layer.id].flip = e.target.checked; applyLayer(layer); });
+    lab.appendChild(cb);
+    lab.appendChild(document.createTextNode(" flip horizontally"));
+    row.appendChild(lab); body.appendChild(row);
+  }
+
+  // Aspect-lock checkbox (skip reference — its height is already CSS-locked).
+  // In image-mode: linked width ↔ height via the layer's natural aspect.
+  // In full-canvas overlay mode: linked scale-x ↔ scale-y.
+  if (layer.id !== "reference") {
+    const aRow = document.createElement("div"); aRow.className = "ctrl-row";
+    const aLab = document.createElement("label");
+    const aCb = document.createElement("input");
+    aCb.type = "checkbox"; aCb.checked = true; aCb.className = "aspect-lock";
+    aLab.appendChild(aCb);
+    aLab.appendChild(document.createTextNode(" lock aspect ratio"));
+    aRow.appendChild(aLab); body.appendChild(aRow);
+  }
+
+  // Per-layer "hide while focusing on later layers" toggle. Lets the user
+  // temporarily remove an already-confirmed layer from the canvas without
+  // resetting it. Initially unchecked.
+  if (idx > 0) {
+    const visRow = document.createElement("div");
+    visRow.className = "ctrl-row";
+    const vLab = document.createElement("label");
+    const vCb = document.createElement("input"); vCb.type = "checkbox";
+    vCb.addEventListener("change", e => {
+      const el = document.getElementById("layer-" + layer.id);
+      el.classList.toggle("user-hidden", e.target.checked);
+    });
+    vLab.appendChild(vCb);
+    vLab.appendChild(document.createTextNode(" temporarily hide this layer"));
+    visRow.appendChild(vLab);
+    body.appendChild(visRow);
+  }
+
+  const confirm = document.createElement("button");
+  confirm.type = "button"; confirm.className = "confirm-btn";
+  confirm.textContent = "Confirm";
+  confirm.addEventListener("click", () => confirmLayer(layer, idx));
+  body.appendChild(confirm);
+
+  const reset = document.createElement("button");
+  reset.type = "button"; reset.className = "reset-btn";
+  reset.textContent = "Reset this layer";
+  reset.addEventListener("click", () => { resetLayer(layer, idx); });
+  body.appendChild(reset);
+
+  return block;
+}
+
+// Reset just this layer to its default position/size, keeping other layers
+// (and their confirmed state) intact. Rebuilds the block DOM in place so
+// every input/checkbox reflects the reset state.
+function resetLayer(layer, idx) {
+  const oldBlock = document.getElementById("block-" + layer.id);
+  if (!oldBlock) return;
+  const wasOpen = oldBlock.hasAttribute("open");
+  const wasConfirmed = oldBlock.classList.contains("confirmed");
+  const wasLocked = oldBlock.classList.contains("locked");
+  // Snapshot pre-reset values so an accidental reset is recoverable from
+  // the browser devtools console (values + a paste-ready CSS block).
+  const preState = state[layer.id] ? Object.assign({}, state[layer.id]) : null;
+  if (preState) {
+    const preBlock = buildCssBlock(layer, preState, "PRE-RESET SNAPSHOT");
+    console.warn("%c[calibrate] RESET " + layer.id + " — pre-reset snapshot:",
+      "color:#c33; font-weight:600", preState, preBlock);
+  } else {
+    console.warn("[calibrate] RESET " + layer.id + " (no prior state)");
+  }
+  // Clear state — buildBlock will re-init from defaults.
+  delete state[layer.id];
+  const newBlock = buildBlock(layer, idx);
+  // buildBlock re-applies idx-based defaults (locked / open / step colour);
+  // override with the pre-reset state so we don't re-lock a layer the user
+  // was already working with.
+  if (wasOpen) newBlock.setAttribute("open", "");
+  else newBlock.removeAttribute("open");
+  newBlock.classList.toggle("confirmed", wasConfirmed);
+  newBlock.classList.toggle("locked", wasLocked && !wasConfirmed);
+  oldBlock.replaceWith(newBlock);
+  // Re-apply positioning so the canvas element snaps back too.
+  const el = document.getElementById("layer-" + layer.id);
+  if (el && wasConfirmed) el.classList.remove("hidden");
+  if (layer.id === "reference") applyLayer(layer);
+  else if (layer.kind === "image" || layer.kind === "svg-tree") applyLayerImage(layer);
+  else applyLayer(layer);
+}
+
+function applyLayerImage(layer) {
+  // For "image"-mode non-reference layers (house/school/sun/tree): position
+  // & size directly via left/top/width/height, no full-canvas transform.
+  const el = document.getElementById("layer-" + layer.id);
+  const s = state[layer.id];
+  el.style.left   = s.x + "px";
+  el.style.top    = s.y + "px";
+  el.style.width  = s.w + "px";
+  el.style.height = s.h + "px";
+}
+
+function confirmLayer(layer, idx) {
+  markLayerConfirmed(layer);
+  unlockNextLayer(idx, /*open=*/true);
+  appendCssBlock(layer);
+}
+
+// Extracted from confirmLayer so the auto-confirm-on-load loop can reuse the
+// non-user-click parts without popping every follow-on block open.
+function markLayerConfirmed(layer) {
+  confirmed.add(layer.id);
+  const block = document.getElementById("block-" + layer.id);
+  block.classList.add("confirmed");
+  block.removeAttribute("open");
+}
+
+function unlockNextLayer(idx, openNext) {
+  const next = LAYERS[idx + 1];
+  if (!next) return;
+  const nb = document.getElementById("block-" + next.id);
+  nb.classList.remove("locked");
+  if (openNext) nb.setAttribute("open", "");
+  const nl = document.getElementById("layer-" + next.id);
+  nl.classList.remove("hidden");
+  // Make sure the next layer is rendered at its current state values.
+  if (next.kind === "image" || next.kind === "svg-tree") {
+    applyLayerImage(next);
+  } else {
+    applyLayer(next);
+  }
+}
+
+// Build a paste-ready CSS block from a layer + its current state snapshot.
+// Split out from appendCssBlock so it can also be logged to the console on
+// reset (before the state gets wiped) — accidental resets stay recoverable
+// by scrolling back through devtools.
+function buildCssBlock(layer, s, tag) {
+  const ts = new Date().toISOString().slice(11, 19);
+  let block = "\n/* " + layer.label + "  [" + tag + " " + ts + "] */\n";
+  if (layer.id === "reference") {
+    const natW = s.natW || 1;
+    const natH = s.natH || 1;
+    const derivedH = (s.w * natH / natW);
+    block +=
+      "/* naturalWidth=" + natW + "px, naturalHeight=" + natH + "px, "
+      + "aspect=" + (natH / natW).toFixed(4) + " (h/w); "
+      + "rendered height at width " + s.w + "px = "
+      + derivedH.toFixed(1) + "px */\n";
+    block +=
+      ".calibrate-reference { left: " + s.x + "px; top: " + s.y + "px; "
+      + "width: " + s.w + "px; height: auto; "
+      + "aspect-ratio: " + natW + " / " + natH + "; }\n";
+  } else if (layer.kind === "image" || layer.kind === "svg-tree") {
+    block +=
+      ".calibrate-" + layer.id + " { left: " + s.x + "px; top: " + s.y + "px; "
+      + "width: " + s.w + "px; height: " + s.h + "px; }\n";
+  } else {
+    const flip = s.flip ? -1 : 1;
+    block +=
+      ".calibrate-" + layer.id + " { transform: translate("
+      + s.x + "px, " + s.y + "px) scale("
+      + (s.sx * flip).toFixed(3) + ", " + s.sy.toFixed(3) + "); "
+      + "transform-origin: 400px 140px; }\n";
+    const slug = layer.id;
+    block +=
+      "/* dev-panel-style custom properties for #" + slug + " */\n"
+      + ".at-scene { --at-" + slug + "-x: " + s.x + ";"
+      + " --at-" + slug + "-y: " + s.y + ";"
+      + " --at-" + slug + "-sx: " + s.sx.toFixed(3) + ";"
+      + " --at-" + slug + "-sy: " + s.sy.toFixed(3) + ";"
+      + " --at-" + slug + "-flip: " + (s.flip ? -1 : 1) + "; }\n";
+  }
+  return block;
+}
+
+function appendCssBlock(layer) {
+  const s = state[layer.id];
+  const block = buildCssBlock(layer, s, "confirmed");
+  console.log("%c[calibrate] confirmed " + layer.id, "color:#2d8a3a", s, block);
+  out.value += block;
+  out.scrollTop = out.scrollHeight;
+  return block;
+}
+
+// === Build the page ==========================================================
+// Size the canvas and position the "target strip zone" overlay (dashed
+// 800×TARGET_STRIP_H box centred inside the taller canvas).
+canvas.style.width  = CANVAS_W + "px";
+canvas.style.height = CANVAS_H + "px";
+const stripZone = document.getElementById("targetStripZone");
+stripZone.style.top    = TARGET_STRIP_TOP + "px";
+stripZone.style.width  = TARGET_STRIP_W + "px";
+stripZone.style.height = TARGET_STRIP_H + "px";
+stripZone.setAttribute("data-h", String(TARGET_STRIP_H));
+
+// Adjacent-block swap: given a block DOM element and "up"/"down", swap it
+// with its sibling in the panel AND swap the corresponding canvas layers'
+// DOM order (later-in-DOM sits on top). Never crosses the reference block —
+// the reference stays anchored at the top of the layer list.
+function swapWith(block, dir) {
+  const sibling = dir === "up"
+    ? block.previousElementSibling
+    : block.nextElementSibling;
+  if (!sibling) return;
+  if (sibling.id === "block-reference") return;
+  // Swap in the panel.
+  if (dir === "up") controlsEl.insertBefore(block, sibling);
+  else              controlsEl.insertBefore(sibling, block);
+  // Swap in the canvas so stacking follows.
+  const idA = block.id.replace(/^block-/, "");
+  const idB = sibling.id.replace(/^block-/, "");
+  const elA = document.getElementById("layer-" + idA);
+  const elB = document.getElementById("layer-" + idB);
+  if (elA && elB) {
+    if (dir === "up") canvas.insertBefore(elA, elB);
+    else              canvas.insertBefore(elB, elA);
+  }
+}
+
+for (let i = 0; i < LAYERS.length; i++) {
+  const layer = LAYERS[i];
+  makeLayerEl(layer);
+  const block = buildBlock(layer, i);
+  controlsEl.appendChild(block);
+}
+// Initial render of all layers (so values match state even before reveal).
+for (const layer of LAYERS) {
+  if (layer.id === "reference") applyLayer(layer);
+  else if (layer.kind === "image" || layer.kind === "svg-tree") applyLayerImage(layer);
+  else applyLayer(layer);
+}
+
+// Auto-confirm the pre-calibrated layers (indexes 0-16, reference through
+// skipping) so the user doesn't have to click Confirm seventeen times on
+// values they already nailed in a previous session. Each iteration marks the
+// block confirmed and appends its CSS block to the textarea (same as clicking
+// Confirm). Then the next block (car-2 at idx=17) is unlocked and opened so
+// the user can carry on with the newly-added sprites.
+const AUTO_CONFIRM_COUNT = 40;
+function runAutoConfirm() {
+  for (let i = 0; i < AUTO_CONFIRM_COUNT && i < LAYERS.length; i++) {
+    const layer = LAYERS[i];
+    markLayerConfirmed(layer);
+    appendCssBlock(layer);
+    // Reveal the corresponding canvas layer (all confirmed layers must be
+    // visible so the user sees the scene assembled — reveal is unconditional
+    // here since buildBlock initially hides every non-reference layer).
+    const el = document.getElementById("layer-" + layer.id);
+    if (el) el.classList.remove("hidden");
+  }
+  // Open the next block (house-windows at idx=9). Passing idx = AUTO_CONFIRM_COUNT-1
+  // unlocks LAYERS[AUTO_CONFIRM_COUNT] and reveals it.
+  unlockNextLayer(AUTO_CONFIRM_COUNT - 1, /*openNext=*/true);
+  console.info("[calibrate] auto-confirmed " + AUTO_CONFIRM_COUNT
+    + " layers from previous session");
+}
+// Wait for the reference image's natural dimensions to be known before
+// running auto-confirm so its CSS block records the true aspect-ratio (the
+// stash callback in makeLayerEl writes state.reference.natW/natH). Fall back
+// to running immediately if the load never fires.
+const refImgForAutoConfirm = document.querySelector("#layer-reference > img");
+if (refImgForAutoConfirm && refImgForAutoConfirm.complete
+    && refImgForAutoConfirm.naturalWidth) {
+  // Cached — makeLayerEl scheduled a stash on setTimeout(0). Queue after it.
+  setTimeout(runAutoConfirm, 0);
+} else if (refImgForAutoConfirm) {
+  refImgForAutoConfirm.addEventListener("load", runAutoConfirm, { once: true });
+  refImgForAutoConfirm.addEventListener("error", runAutoConfirm, { once: true });
+} else {
+  runAutoConfirm();
+}
+
+// Reference opacity slider
+const refOp = document.getElementById("refOpacity");
+const refOpVal = document.getElementById("refOpacityVal");
+refOp.addEventListener("input", () => {
+  document.documentElement.style.setProperty("--ref-opacity",
+    (refOp.value / 100).toFixed(2));
+  refOpVal.textContent = refOp.value;
+});
+document.documentElement.style.setProperty("--ref-opacity", "0.55");
+
+// Layers-group opacity slider — fades every non-reference layer wrap.
+const layersOp = document.getElementById("layersOpacity");
+const layersOpVal = document.getElementById("layersOpacityVal");
+layersOp.addEventListener("input", () => {
+  document.documentElement.style.setProperty("--layers-opacity",
+    (layersOp.value / 100).toFixed(2));
+  layersOpVal.textContent = layersOp.value;
+});
+document.documentElement.style.setProperty("--layers-opacity", "1");
+
+// Z-order toggle: reference above vs beneath the traced/user layers.
+const refOnTop = document.getElementById("refOnTop");
+refOnTop.addEventListener("change", e => {
+  canvas.classList.toggle("ref-on-top", e.target.checked);
+});
+
+// Reference-image source switcher. Radio buttons above the opacity slider
+// let the user pick between the 800×600 Flash capture (default) and the
+// simplified analogueScene.png thumbnail. Swapping updates the <img src>
+// and re-stashes natural dimensions so the aspect-lock stays correct.
+const refImg = document.querySelector("#layer-reference > img");
+const refSourceRadios = document.querySelectorAll('input[name="refSource"]');
+for (const r of refSourceRadios) {
+  r.addEventListener("change", e => {
+    if (!e.target.checked) return;
+    refImg.src = e.target.value;
+    // Refresh natW/natH from the newly loaded image so the aspect ratio
+    // in the confirmed-CSS block and the `height: auto` layout stay right.
+    const refresh = () => {
+      const s = state.reference;
+      if (!s) return;
+      s.natW = refImg.naturalWidth || 1;
+      s.natH = refImg.naturalHeight || 1;
+    };
+    if (refImg.complete && refImg.naturalWidth) {
+      setTimeout(refresh, 0);
+    } else {
+      refImg.addEventListener("load", refresh, { once: true });
+    }
+  });
+}
+
+// CSS-output buttons
+document.getElementById("clearOut").addEventListener("click", () => {
+  // Log the entire textarea contents before wiping so an accidental clear
+  // is recoverable from devtools history.
+  if (out.value.trim()) {
+    console.warn("%c[calibrate] CLEARED textarea — previous contents:",
+      "color:#c33; font-weight:600");
+    console.log(out.value);
+  }
+  out.value = "";
+});
+document.getElementById("copyOut").addEventListener("click", () => {
+  out.select();
+  document.execCommand("copy");
+  // Modern clipboard API fallback (works under https/localhost)
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(out.value).catch(() => {});
+  }
+});
+// Auto-select on focus so the user can Ctrl+A then Ctrl+C quickly.
+out.addEventListener("focus", () => out.select());
+
+</script>
+</body>
+</html>

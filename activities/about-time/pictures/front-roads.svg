@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="52.933109mm"
+   height="6.5406818mm"
+   viewBox="0 0 52.933109 6.5406818"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="front-roads.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.0289352"
+     inkscape:cx="99.617548"
+     inkscape:cy="12.148481"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="2872"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-78.581251,-145.25625)">
+    <path
+       style="fill:#9d9d9d;fill-opacity:1;stroke:#262626;stroke-width:0.0799999;stroke-dasharray:none;stroke-opacity:1"
+       d="m 83.90289,147.32922 c 0,0 -1.35223,0.55806 -1.99286,0.90804 -0.47803,0.25101 -1.10593,0.57715 -1.15714,1.10893 -0.0214,0.22192 0.21814,0.39937 0.38571,0.54643 0.17291,0.15174 0.39041,0.25519 0.61072,0.32143 0.87649,0.26354 1.89224,0.20641 2.73214,0.27322 1.36778,0.1088 2.75842,0.075 4.13035,0.0964 1.33913,0.0209 2.43751,0.0795 3.77679,0.0804 8.05715,0.005 16.1143,0.0475 24.17143,0.0321 2.0786,-0.004 6.23572,-0.0321 6.23572,-0.0321 l 0.83571,-5.14286 -0.83571,-0.0321 0.0643,-0.19286 h 2.60357 l -0.0964,0.225 h -0.80357 l -0.32143,5.14286 7.23214,-0.0643 v 1.06072 c 0,0 -11.84991,0.0969 -17.775,0.0964 -7.66083,-6.5e-4 -15.32195,-0.0299 -22.98215,-0.12857 -3.18582,0.006 -6.2471,0.14044 -9.42559,-0.1183 -0.50372,-0.049 -1.11691,-0.21131 -1.59941,-0.46025 -0.43111,-0.22243 -0.83525,-0.60316 -0.99643,-1.06071 -0.13924,-0.39528 -0.079,-0.83484 0.14465,-1.18928 0.24618,-0.39017 1.62106,-1.04891 2.42678,-1.28572 z"
+       id="path4"
+       sodipodi:nodetypes="caaaassssccccccccccsssssssc" />
+  </g>
+</svg>

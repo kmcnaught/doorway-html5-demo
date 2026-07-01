@@ -1,0 +1,1882 @@
+/* Doorway Supermarket — activity styles.
+   1em = 1/50th of activity width (set by doorway.js onResize).
+   All sizing in em; no px except borders.
+*/
+
+/* --- Welcome screen image ---
+   Layered composition built from Flash sprites in pictures/:
+     trolley.svg  — full trolley (handle, basket, wheels)
+     belt.svg     — conveyor-belt cylinder
+     till.svg     — checkout monitor + stand
+   Items (item*.svg) are positioned via percent within the scene.
+*/
+
+/* Constrained for flow-mode welcome layout: the scene must fit inside
+   .dw-welcome-body alongside title group and optional subtitle without
+   pushing the subtitle past the sticky footer at typical viewport heights.
+   max-height keeps the wide 800:360 strip from monopolising vertical space
+   when the viewport is unusually tall. */
+.welcome_image {
+    width: 100%;
+    max-width: 42em;
+    max-height: 18em;
+    margin: 0 auto;
+    pointer-events: none;
+}
+
+/* Scene container — all children absolutely positioned within.
+   Aspect ratio mirrors Flash welcome region (trolley to belt to till). */
+.wimg-scene {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 800 / 360;
+    overflow: hidden;
+}
+
+/* Belt sprite — wide, thin cylinder sitting roughly mid-height. The belt SVG
+   has preserveAspectRatio="none" so we can squash it to a flat strip.
+   Drawn first so trolley + till + items render on top. Starts under the
+   trolley so the belt visually disappears behind the basket on the left.
+   Flash places the belt high in the frame (~50% from the top) so the
+   conveyor surface visually carries the carrots/milk above the bottom of
+   the scene; raising the belt brings the HTML5 layout into line. */
+.wimg-scene .wimg-belt {
+    position: absolute;
+    left: 35%;
+    right: 0;
+    top: 52%;
+    width: 65% !important;
+    height: 22% !important;
+    pointer-events: none;
+}
+
+/* Trolley sprite — !important needed to override doorway.css rule
+   "div.welcome_image img { width:100%; height:100% }". Sits flush against
+   the belt on the right so less of the belt is visible on the left side,
+   matching the Flash welcome layout. */
+.wimg-scene .wimg-trolley {
+    position: absolute;
+    left: 4%;
+    bottom: 0;
+    width: 38% !important;
+    height: 100% !important;
+    object-fit: contain;
+    object-position: bottom left;
+    pointer-events: none;
+}
+
+/* Trolley front rails overlay — separate Flash sprite (sprite_365,
+   "trollyFront") whose job is to render the wire rails on the front of
+   the basket OVER the items inside, so the items appear to be enclosed
+   by the basket. Without this overlay the items float in front of the
+   basket wireframe.
+   Native sprite aspect 309:244 — landscape (the rails span the basket's
+   open front face). Positioned to overlay the basket interior area
+   (roughly left 8%-40%, top 30%-65% in scene coords, matching where
+   the items sit). z-index 2 sits above .wimg-item (z:1). */
+.wimg-scene .wimg-trolley-front {
+    position: absolute;
+    left: 8%;
+    top: 28%;
+    width: 33% !important;
+    height: auto !important;
+    aspect-ratio: 309 / 244;
+    object-fit: contain;
+    object-position: top left;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.wimg-scene .wimg-item {
+    position: absolute;
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Items inside the trolley basket (positioned over the trolley sprite).
+   trolley-empty.svg is a side-view perspective trolley whose basket
+   interior in scene-coordinates is roughly:
+     left  edge: 11%  (back of basket, slightly left)
+     right edge: 36%  (open front of basket, viewer's right)
+     top edge:  35%  (rim of basket)
+     bottom:    65%  (bottom of basket where items rest)
+   Items stack inside, with cereal box upright at the back-left and
+   shorter items in front. */
+.wimg-scene .wimg-beans {
+    left: 13%;
+    top: 42%;
+    width: 8% !important;
+    height: 22% !important;
+}
+.wimg-scene .wimg-cereal {
+    left: 21%;
+    top: 28%;
+    width: 9% !important;
+    height: 35% !important;
+}
+.wimg-scene .wimg-noodles {
+    left: 13%;
+    top: 50%;
+    width: 9% !important;
+    height: 16% !important;
+}
+.wimg-scene .wimg-juice {
+    left: 22%;
+    top: 47%;
+    width: 7% !important;
+    height: 25% !important;
+}
+.wimg-scene .wimg-pepper {
+    left: 30%;
+    top: 40%;
+    width: 9% !important;
+    height: 25% !important;
+}
+
+/* Items on the conveyor belt. Top values shifted up to track the belt
+   which now sits at top:52% rather than 62%. */
+.wimg-scene .wimg-carrots {
+    left: 50%;
+    top: 42%;
+    width: 14% !important;
+    height: 22% !important;
+}
+.wimg-scene .wimg-milk {
+    left: 66%;
+    top: 34%;
+    width: 7% !important;
+    height: 32% !important;
+}
+
+/* Till group — checkout monitor + stand on the right, with the running
+   total displayed in the black screen. Flash frame_02.as line 7 sets the
+   till display to "£3.79" on the welcome screen. The group sizes match
+   the till sprite aspect (298:353) so the price overlay can be positioned
+   in percentage units relative to the rendered till.
+   Shifted up by ~the belt-cylinder height (22%) so the till sits above
+   the conveyor instead of crashing into it — matches the Flash welcome
+   where the monitor head reaches up near the title and the stand base
+   clears the belt. z-index above the belt/items so the till body
+   overlays them where they meet. */
+.wimg-scene .wimg-till-group {
+    position: absolute;
+    right: 2%;
+    bottom: 22%;
+    width: 20%;
+    aspect-ratio: 298 / 353;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.wimg-scene .wimg-till {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+/* The till sprite (298×353) has its black monitor screen at the very
+   top: SVG y=18..59 of 353 ≈ 5%..17% of the sprite's height. Earlier
+   values (top:14%, height:9%) sat the figure below the LCD; the new
+   values align the price exactly onto the black band. The label also
+   sits visually higher in absolute terms than the till's upward shift
+   (the group moved bottom: 0 → 22%; the label additionally moves from
+   top:14% to top:6% within the group). */
+.wimg-scene .wimg-till-price {
+    position: absolute;
+    left: 22%;
+    right: 22%;
+    top: 6%;
+    height: 11%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5fb35f;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    font-size: 0.9em;
+    line-height: 1;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* --- Options form --- */
+
+/* Flash description paragraph at the top of the options panel.
+   Sits above the first fieldset, matching the Flash layout. */
+.sm-options-description {
+    text-align: center;
+    margin: 0 0 0.6em;
+    font-style: italic;
+}
+
+/* --- Options grid layout (replaces legacy <table class="options_layout_grid">) --- */
+
+.sm-activity-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+    align-items: start;
+}
+
+.sm-scan-onoff {
+    display: flex;
+    gap: 0.3em;
+    margin-top: 0.4em;
+}
+
+/* Switch count radio buttons within scan sub-panel */
+.sm-scan-switches {
+    display: flex;
+    gap: 0.3em;
+    align-items: center;
+}
+
+/* --- Screen layout --- */
+
+/* Ensure hidden_panel wins over per-screen overrides that use ID specificity
+   (e.g. `#dwShoppingScreen.sm-screen { display: grid }`). The shared
+   `.hidden_panel { display: none }` and even `.sm-screen.hidden_panel { display: none }`
+   both have lower specificity than an ID selector, so an ID-anchored override
+   would otherwise leak the shopping/payment/etc. layout through onto the
+   options/welcome screens. */
+#dwShoppingScreen.sm-screen.hidden_panel,
+#dwConveyorScreen.sm-screen.hidden_panel,
+#dwPaymentScreen.sm-screen.hidden_panel,
+#dwReceiptScreen.sm-screen.hidden_panel {
+    display: none;
+}
+
+/* Plain-class fallback (kept for screens without ID-anchored overrides). */
+.sm-screen.hidden_panel {
+    display: none;
+}
+
+.sm-screen {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 1.5em 1em 1em;
+    gap: 0.5em;
+}
+
+/* --- Shopping screen layout ---
+   Flash: aisle hanging sign at top, three perspective shelves on the right
+   (sprite_482), trolley graphic parked bottom-left (sprite_382), round-the-
+   price panel top-left over the trolley, "Pick some items" + Checkout at
+   bottom-right. Light-cyan background.
+*/
+
+#dwShoppingScreen.sm-screen {
+    background: #d6f0ed;
+    display: grid;
+    /* Widen the left column so the trolley graphic can grow toward the
+       shelves and read at a similar visual weight to the Flash version
+       (where the trolley dominates the bottom-left quadrant). */
+    grid-template-columns: 14em 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        "aisle  aisle"
+        "side   shelves"
+        "footer footer";
+    gap: 0.3em 0.3em;
+    padding: 0.3em 0.6em 0.4em;
+    position: relative;
+}
+
+/* --- Aisle navigation (top row) ---
+   Centre: the hanging aisle sign (sprite_503) acts as the panel; the aisle
+   name is overlaid as text. Sides: the cycling arrows (sprite_498), with the
+   right button visually flipped. */
+
+/* Aisle nav row: arrows hug the central sign, and the whole group is shifted
+   right so the sign sits roughly central against the shelves (Flash places
+   the hanging sign over the shelving unit, not over the trolley). The right
+   arrow has margin-right:auto rather than the whole row being justify:center
+   so the arrows stay tight against the sign instead of flying to the edges
+   when the row's available width grows.  `gap:0` because each arrow now
+   carries an explicit negative margin pulling it tight against the sign
+   (Flash places the arrowheads almost touching the sign edges).
+   `padding-left` shifts the entire row right so the sign moves toward where
+   the right arrow used to sit (about half the previous gap). */
+.sm-aisle-nav {
+    grid-area: aisle;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    padding-left: 19em;           /* push the whole nav past the trolley column;
+                                     bumped from 16em so the sign sits further
+                                     right (about halfway to where the right
+                                     arrow used to be). */
+}
+
+/* Sign sized 5% larger than the previous 18em — Flash hanging sign reads as
+   visually dominant.  Height bumped proportionally so the green painted
+   band keeps its aspect. `padding-bottom` increased a touch so the text
+   lifts off the bottom edge and sits cleanly inside the green band
+   rather than hugging the rim. */
+.sm-aisle-sign {
+    position: relative;
+    display: flex;
+    align-items: flex-end;        /* push name down into the green band, away from hanger top */
+    justify-content: center;
+    width: 18.9em;
+    height: 3.57em;
+    padding-bottom: 0.55em;
+}
+
+.sm-aisle-sign-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.sm-aisle-name {
+    position: relative;
+    z-index: 1;
+    /* Sized to fit the longest aisle name ("3. Chilled Food") inside the
+       painted green band of the hanging sign without wrapping. Flash text
+       is regular weight (not bold). */
+    font-size: 1em;
+    margin: 0;
+    font-weight: normal;
+    color: #205313;
+    white-space: nowrap;
+}
+
+.sm-nav-btn {
+    background: transparent;
+    border: 0.12em solid transparent;
+    border-radius: 0.4em;
+    padding: 0.2em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3em;
+    height: 2.4em;
+}
+
+/* Pull each arrow tight against the hanging sign — Flash places the
+   arrowheads almost touching the sign edges. Negative margin overlaps the
+   transparent SVG padding into the sign's frame so the visible arrowhead
+   sits next to the sign. The gap was halved from its previous value (the
+   arrow buttons used to sit ~0.4em apart from the sign visible edge; now
+   they sit at ~0.2em — matching the Flash reference where the arrows are
+   almost flush against the sign). */
+.sm-aisle-nav .sm-nav-btn-prev {
+    margin-right: -1.5em;
+}
+.sm-aisle-nav .sm-nav-btn-next {
+    margin-left: -1.5em;
+}
+
+/* `.sm-nav-btn { display: flex }` comes later than the shared
+   `.hidden_panel { display: none }` and has equal specificity, so it would
+   otherwise win and leave both aisle arrows visible on the first/last shelf.
+   Force display:none with `visibility:hidden` to also reserve layout space
+   (the centre sign stays centred when one arrow disappears). */
+.sm-nav-btn.hidden_panel {
+    display: flex;
+    visibility: hidden;
+}
+
+.sm-nav-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.sm-nav-btn-next img {
+    transform: scaleX(-1);
+}
+
+.sm-nav-btn:focus-visible {
+    border-color: #205313;
+    outline: 0.15em solid #205313;
+}
+
+.sm-nav-btn:hover img {
+    filter: brightness(1.1);
+}
+
+/* --- Shelves wrap (right) ---
+   The Flash shelves sprite is the backdrop. We overlay items in a 3×4 grid
+   that aligns to the shelf perspective. The sprite viewBox is 504.45 ×
+   551.7; items occupy roughly y=18..96% inside it, three horizontal bands.
+*/
+
+/* The wrap matches the shelves sprite's aspect ratio (504.45 × 551.7) so the
+   inset-percentage grid below aligns to the painted shelf surfaces — without
+   this, the SVG centres inside a wider container and items drift off-shelf.
+
+   Per-shelf tilt angles are exposed as named custom properties so they can be
+   tweaked in isolation — each shelf in the SVG backdrop is drawn at a
+   slightly different perspective angle (top is nearly flat, bottom drops
+   most), and the price-tag rows + items above them follow that slope.
+   The angle is realised as `translateY` per column position (rightward items
+   drop further), NOT as a `rotate` on the row, so items themselves stay
+   upright (matching Flash, where products sit upright on a sloped shelf).
+   `--shelf-label-h` is the visual height of a green price-tag strip in em
+   units; mid and bot shelves shift their row UP by a multiple of this so the
+   tags clip into the green shelf-rim painted higher in the SVG. */
+.sm-shelves-wrap {
+    --shelf-top-tilt: 0.2em;
+    --shelf-mid-tilt: 0.5em;
+    --shelf-bot-tilt: 0.75em;
+    --shelf-label-h: 1.4em;
+    --shelf-top-row-shift: 0em;
+    --shelf-mid-row-shift: calc(var(--shelf-label-h) * -0.5);
+    --shelf-bot-row-shift: calc(var(--shelf-label-h) * -1);
+    /* Price-tag tilt: the painted green shelf-rim in the SVG backdrop is
+       drawn in perspective, so the tags should rotate slightly to track it.
+       Two knobs let designers tweak rotation and horizontal offset
+       independently:
+         --price-tag-tilt        — base rotation angle (negative = anti-clockwise)
+         --price-tag-tilt-step   — additional rotation per shelf-row going down
+                                   (the bottom shelf has the steepest visible angle)
+       Both are inherited by .sm-item-price and applied via a `rotate` term
+       appended to the existing translateX centring transform. */
+    --price-tag-tilt: -7deg;
+    --price-tag-tilt-step: -1deg;
+    grid-area: shelves;
+    position: relative;
+    min-height: 0;
+    aspect-ratio: 504 / 552;
+    height: 100%;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.sm-shelves-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* The shelves sprite has perspective: the painted "shelf surface" occupies the
+   centred ~62% width within the sprite frame, with depth/angle on the right.
+   `.sm-item-grid` constrains items to that visible surface so the 4th item per
+   row doesn't fall off into the perspective.
+
+   The bottom inset is intentionally tight (≈2%) so items land directly on the
+   bottom shelf surface — Flash places items/price-tags right at the shelf
+   edge with no air gap below. The grid is divided into three equal-height
+   row bands, each anchored to the bottom of its band so its contents sit on
+   the shelf line for that row. */
+.sm-item-grid {
+    position: absolute;
+    inset: 5% 18% 2% 6%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    pointer-events: none;        /* let the backdrop show through; buttons re-enable */
+}
+
+/* Shelves are drawn in perspective with the left edge slightly higher than
+   the right (vanishing point off-right). Each row of four items sits along
+   that perspective line — items further right drop down by an amount
+   proportional to the per-shelf `--shelf-*-tilt` var, expressed as the total
+   drop between the leftmost and rightmost item.  Items themselves stay
+   upright (Flash places products vertical on a sloped shelf surface, it does
+   not rotate them).
+   `padding-bottom` reserves space at the bottom of the row band for the
+   price-tag strip that floats below the item image.
+   `align-items: end` bottom-aligns items within the row so taller and
+   shorter products both rest on the shelf line (plus the tilt) rather than
+   centring vertically.
+   The per-row vertical shift (`--shelf-*-row-shift`) is applied as a
+   `translateY` on the row — mid and bot rows shift UP so their tag strip
+   clips onto the green shelf-rim painted higher in the SVG backdrop. */
+.sm-shelf-row {
+    --row-tilt: 0em;          /* overridden per-row below */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.2em;
+    flex: 1;
+    min-height: 0;
+    align-items: end;
+    position: relative;
+    padding-bottom: var(--shelf-label-h);
+}
+
+/* Per-shelf vertical shift + tilt magnitude.
+   Tilts come from named vars on `.sm-shelves-wrap` so they can be tweaked
+   in one place. Mid and bot rows shift UP (negative Y) so their price-tag
+   strip clips onto the green shelf-rim painted higher in the SVG backdrop
+   — Flash places mid-shelf tags ≈ half a label-height higher and
+   bottom-shelf tags ≈ a full label-height higher than naive even spacing. */
+.sm-shelf-row:nth-child(1) {
+    --row-tilt: var(--shelf-top-tilt);
+    --row-tag-tilt: var(--price-tag-tilt);
+    transform: translateY(var(--shelf-top-row-shift));
+}
+.sm-shelf-row:nth-child(2) {
+    --row-tilt: var(--shelf-mid-tilt);
+    --row-tag-tilt: calc(var(--price-tag-tilt) + var(--price-tag-tilt-step));
+    transform: translateY(var(--shelf-mid-row-shift));
+}
+.sm-shelf-row:nth-child(3) {
+    --row-tilt: var(--shelf-bot-tilt);
+    --row-tag-tilt: calc(var(--price-tag-tilt) + var(--price-tag-tilt-step) * 2);
+    transform: translateY(var(--shelf-bot-row-shift));
+}
+
+/* Per-column drop, scaled by the current row's `--row-tilt` (the total drop
+   from leftmost to rightmost item). Items stay upright. */
+.sm-shelf-row > .sm-item-btn:nth-child(1) { transform: translateY(0); }
+.sm-shelf-row > .sm-item-btn:nth-child(2) { transform: translateY(calc(var(--row-tilt) * 0.333)); }
+.sm-shelf-row > .sm-item-btn:nth-child(3) { transform: translateY(calc(var(--row-tilt) * 0.667)); }
+.sm-shelf-row > .sm-item-btn:nth-child(4) { transform: translateY(var(--row-tilt)); }
+
+/* The button wraps just the product image; the price tag is absolutely
+   positioned below it on the green shelf rim painted in the SVG backdrop.
+   Dropping `height: 100%` shrinks the click target from "the whole row
+   band" down to "just the visible product image", removing the dead
+   space above/below the sprite that previously made the hover zone much
+   taller than the item. */
+.sm-item-btn {
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1em;
+    gap: 0;
+    position: relative;
+}
+
+.sm-item-btn:hover .sm-item-img,
+.sm-item-btn:focus-visible .sm-item-img {
+    transform: scale(1.08);
+}
+
+.sm-item-btn:focus-visible {
+    outline: 0.18em solid #0066cc;
+    border-radius: 0.3em;
+}
+
+/* Items scaled up ~25% from the previous 3em / 2.2em sizing — Flash shelves
+   show noticeably larger product graphics than the HTML5 baseline. */
+.sm-item-img {
+    width: 100%;
+    max-width: 3.75em;
+    height: 2.75em;
+    object-fit: contain;
+    transition: transform 0.15s ease-out;
+}
+
+/* Green price-tag strip — Flash renders it floating ON the green shelf
+   rim painted in the shelves backdrop, with each row's tags clinging to
+   the bottom of the row band, BELOW the product image (the item is above
+   the tag with a clear gap, not overlapping it).  Absolutely positioned
+   below the item-btn so the button's hover/click target wraps just the
+   product image, not the tag.  `bottom:-1.2em` pushes the tag down onto
+   the green shelf-rim painted into the SVG backdrop.
+   The tag is tilted along the painted shelf's perspective via the named
+   custom properties on `.sm-shelves-wrap` (--price-tag-tilt /
+   --price-tag-tilt-step). Each row reads its `--row-tag-tilt` from those
+   knobs (set on `.sm-shelf-row:nth-child(N)` below), so changing the
+   knob value in one place re-pitches every tag at once. */
+.sm-item-price {
+    position: absolute;
+    bottom: -1.2em;
+    left: 50%;
+    transform: translateX(-50%) rotate(var(--row-tag-tilt, var(--price-tag-tilt, 0deg)));
+    transform-origin: center center;
+    font-size: 0.8em;
+    color: #0c4e0c;
+    font-weight: bold;
+    background: #ffffff;
+    border: 0.1em solid #4f9b3f;
+    border-radius: 0.2em;
+    padding: 0 0.3em;
+    min-width: 2.4em;
+    text-align: center;
+    box-shadow: 0 0.05em 0 #c8e8c0;
+    z-index: 2;
+    pointer-events: none;       /* clicks pass through to the button */
+    white-space: nowrap;
+}
+
+/* --- Trolley + round overlay column (left side) --- */
+
+.sm-trolly-area {
+    grid-area: side;
+}
+
+/* --- Round-price overlay ---
+   Flash positions the round panel top-left (over the trolley area). Snap it
+   into the left grid column with absolute positioning so it overlays the
+   trolley while open. */
+
+.sm-round-overlay {
+    position: absolute;
+    top: 3em;
+    left: 0.8em;
+    width: 13em;
+    background: #c4ebbc;
+    border: 0.18em solid #205313;
+    border-radius: 0.4em;
+    padding: 0.7em;
+    z-index: 100;
+    text-align: center;
+    box-shadow: 0 0.2em 0.6em rgba(0,0,0,0.25);
+}
+
+.sm-round-overlay h3 {
+    font-size: 1em;
+    margin: 0 0 0.4em 0;
+    color: #205313;
+    line-height: 1.2;
+}
+
+/* Price text + item slot share a single row inside the round dialog —
+   the spoken / written price sits on the left, the just-clicked product
+   sprite lands in the slot on the right (via the fly-item animation). */
+.sm-round-itemrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    margin: 0 0 0.3em 0;
+}
+
+.sm-round-itemcost {
+    font-size: 0.85em;
+    margin: 0;
+    color: #205313;
+    flex: 1 1 auto;
+    text-align: left;
+}
+
+/* Drop-target slot for the flying product sprite. Stays empty (collapsed
+   to zero width) until JS populates it on item click; then expands to a
+   square sprite well so the trolley user sees which item is being rounded. */
+.sm-round-itemslot {
+    flex: 0 0 auto;
+    width: 0;
+    height: 2.6em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    transition: width 0.15s ease-out;
+}
+
+.sm-round-itemslot.sm-round-itemslot-filled {
+    width: 2.6em;
+}
+
+.sm-round-itemslot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* The just-placed product sprite is wrapped in a button so clicking it
+   returns the item (cancels the round-the-price step). Style as a plain
+   image well — no chrome — with a hover/focus ring so users discover the
+   click target. */
+.sm-round-itemslot-btn {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 0.3em;
+}
+
+.sm-round-itemslot-btn:hover img,
+.sm-round-itemslot-btn:focus-visible img {
+    transform: scale(1.08);
+}
+
+.sm-round-itemslot-btn:focus-visible {
+    outline: 0.18em solid #0066cc;
+}
+
+.sm-round-itemslot-btn img {
+    transition: transform 0.15s ease-out;
+}
+
+/* Fade + scale-in applied via JS each time the overlay is revealed (Flash
+   used a 0.5s alpha tween: `fadeIn("roundMenu", true)`). Decorative — the
+   overlay text and spoken `round-prompt` audio carry the meaning. The class
+   is removed on `animationend` so it can be re-added next reveal. */
+.sm-round-overlay-enter {
+    animation: sm-round-overlay-enter 0.35s ease-out;
+}
+
+@keyframes sm-round-overlay-enter {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1);    }
+}
+
+/* Flash layout: the current rounded value sits in a small white box on its
+   own row (positioned next to the item indicator); the controls "-" "+" and
+   "Add" share a single button row below it. */
+.sm-round-value-row {
+    display: flex;
+    justify-content: center;
+    margin: 0.3em 0 0.4em 0;
+}
+
+.sm-round-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    margin: 0.3em 0 0.2em 0;
+}
+
+.sm-stepper-btn {
+    font-size: 1.4em;
+    width: 1.6em;
+    height: 1.6em;
+    border: 2px solid #333;
+    border-radius: 50%;
+    cursor: pointer;
+    background: #f0f0f0;
+    padding: 0;
+    line-height: 1;
+}
+
+/* "Add" button shares the stepper row in Flash — make it sit alongside +/-
+   without inheriting the giant default main_button padding. */
+.sm-round-add {
+    font-size: 1em;
+    padding: 0.3em 0.9em;
+    margin: 0;
+}
+
+.sm-stepper-btn:hover,
+.sm-stepper-btn:focus-visible {
+    background: #ddd;
+    outline: 0.2em solid #0066cc;
+}
+
+.sm-round-value {
+    font-size: 1.6em;
+    font-weight: bold;
+    min-width: 2em;
+    padding: 0 0.3em;
+    text-align: center;
+    background: #fff;
+    border: 0.1em solid #205313;
+    border-radius: 0.2em;
+    color: #205313;
+}
+
+.sm-round-feedback {
+    color: #cc0000;
+    font-size: 1em;
+    min-height: 1.4em;
+    margin: 0.3em 0;
+}
+
+/* --- Trolley (left column on shopping screen) ---
+   Flash uses a perspective trolley sprite (sprite_382) parked bottom-left.
+   We use it as a backdrop; the list of collected items overlays the basket.
+*/
+
+.sm-trolly-area {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+    min-height: 0;
+    padding: 0;
+}
+
+.sm-trolly-bg {
+    position: absolute;
+    left: -0.5em;
+    bottom: 0;
+    /* Grow the trolley so it visually dominates the bottom-left quadrant
+       (matching Flash) rather than being a small thumbnail. */
+    width: 110%;
+    height: 100%;
+    object-fit: contain;
+    object-position: bottom left;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.sm-trolly-heading {
+    margin: 0;
+}
+
+/* Items in the basket — laid out as 10 absolutely-positioned slots inside
+   the basket opening of the trolley SVG.  No panel chrome (no background,
+   no border) — Flash drops items straight into the basket so the trolley
+   graphic does the visual work.  The slot area spans the basket interior
+   coordinates of the trolley sprite; individual slots inside use the
+   `--slot-x` / `--slot-y` custom properties set per nth-child below to
+   form a 3-2-3-2 pattern with a slight `\` slant tracking the basket's
+   perspective. */
+.sm-trolly-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    left: 12%;
+    right: 30%;
+    top: 36%;
+    bottom: 18%;
+    z-index: 1;
+    overflow: visible;
+}
+
+/* Per-slot positioning — 10 slots in a 3-2-3-2 pattern.  Coordinates are
+   percentages of the .sm-trolly-list bounding box.  Each row is offset
+   right by `--slot-slant` to bias the cluster down-right and create the
+   `\` slant the user requested.  The vertical positions are evenly spaced
+   across the bounding box. */
+.sm-trolly-list {
+    --slot-slant-x: 4%;
+}
+
+.sm-trolly-item {
+    position: absolute;
+    left: var(--slot-x, 0);
+    top: var(--slot-y, 0);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4em;
+    height: 2.4em;
+}
+
+/* Row 1: 3 slots (top row, leftmost x). */
+.sm-trolly-item:nth-child(1)  { --slot-x:  0%;  --slot-y:   0%; }
+.sm-trolly-item:nth-child(2)  { --slot-x: 28%;  --slot-y:   0%; }
+.sm-trolly-item:nth-child(3)  { --slot-x: 56%;  --slot-y:   0%; }
+/* Row 2: 2 slots, offset by slant. */
+.sm-trolly-item:nth-child(4)  { --slot-x: calc(14% + var(--slot-slant-x)); --slot-y: 28%; }
+.sm-trolly-item:nth-child(5)  { --slot-x: calc(42% + var(--slot-slant-x)); --slot-y: 28%; }
+/* Row 3: 3 slots, slanted further. */
+.sm-trolly-item:nth-child(6)  { --slot-x: calc( 0% + var(--slot-slant-x) * 2); --slot-y: 55%; }
+.sm-trolly-item:nth-child(7)  { --slot-x: calc(28% + var(--slot-slant-x) * 2); --slot-y: 55%; }
+.sm-trolly-item:nth-child(8)  { --slot-x: calc(56% + var(--slot-slant-x) * 2); --slot-y: 55%; }
+/* Row 4: 2 slots, slanted most. */
+.sm-trolly-item:nth-child(9)  { --slot-x: calc(14% + var(--slot-slant-x) * 3); --slot-y: 80%; }
+.sm-trolly-item:nth-child(10) { --slot-x: calc(42% + var(--slot-slant-x) * 3); --slot-y: 80%; }
+
+/* Transient "flyer" — a cloned item sprite that animates from a shelf
+   button to the round-overlay item-cost label (on click) and from there
+   into the trolley list (on Add). Mounted on document.body and removed
+   on transitionend; uses fixed positioning so its coordinates aren't
+   warped by ancestor transforms. */
+.sm-fly-item {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000;
+    object-fit: contain;
+    will-change: transform, opacity;
+}
+
+.sm-fly-item-go {
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+/* Newly-added trolley row: slide+fade in from the right.
+   Carries information (an item has been added to the trolley) — outcome is
+   also conveyed by the spoken `item-added` audio and the updated total. */
+.sm-trolly-item-enter {
+    animation: sm-trolly-item-enter 0.4s ease-out;
+}
+
+@keyframes sm-trolly-item-enter {
+    from { opacity: 0; transform: translateX(1.5em); }
+    to   { opacity: 1; transform: translateX(0);     }
+}
+
+/* Clickable wrapper inside each slot — bare button restyled to look like
+   the bare image it replaces. Clicking returns the item to the shelf
+   (Flash frame_05.as:435–469 newItem<N>.onRelease). */
+.sm-trolly-item-btn {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sm-trolly-item-btn:focus-visible {
+    outline: 0.15em solid #1976d2;
+    outline-offset: 0.1em;
+}
+
+/* Product sprite inside the basket — fills the .sm-trolly-item slot. */
+.sm-trolly-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+/* Trolley total — Flash didn't render an on-screen total on the shopping
+   screen, just the items in the basket. Keep the element for screen
+   readers (live region) but visually hide it via the standard sr-only
+   pattern.  `!important` overrides the high-specificity ID rules earlier
+   in this stylesheet so the element really stays invisible. */
+.sm-trolly-total {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* --- Screen navigation ---
+   Bottom-right placement everywhere; on the shopping screen the parent grid
+   places this row in the "footer" area alongside the "Pick some items" hint.
+*/
+
+.sm-screen-nav {
+    display: flex;
+    gap: 1em;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 0.3em;
+}
+
+#dwShoppingScreen .sm-shopping-footer {
+    grid-area: footer;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.6em;
+    /* Reserve vertical space for the Checkout button so showing/hiding it
+       (during round-the-price overlay) doesn't reflow the grid above. */
+    min-height: 2.6em;
+}
+
+/* Reserve layout space for the Checkout button. Using visibility:hidden
+   instead of display:none keeps the button slot in flow so the grid above
+   doesn't reflow up and down each time the round-overlay opens/closes. */
+#smShoppingNext.hidden_panel {
+    display: inline-block;
+    visibility: hidden;
+}
+
+#dwShoppingScreen .sm-shopping-hint {
+    margin: 0;
+    font-style: italic;
+    font-weight: bold;
+    background: #fff;
+    border: 0.12em solid #888;
+    border-radius: 0.4em;
+    padding: 0.2em 0.6em;
+}
+
+.sm-back-btn {
+    padding: 0.5em 1em;
+    font-size: 1.2em;
+    border: 2px solid #888;
+    border-radius: 0.4em;
+    background: #eee;
+    cursor: pointer;
+}
+
+.sm-back-btn:hover,
+.sm-back-btn:focus-visible {
+    background: #ddd;
+    outline: 0.2em solid #0066cc;
+}
+
+/* --- Conveyor screen ---
+   Flash: pale cyan background, dark grey 3D belt cylinder spanning the
+   bottom half, till on the right (above belt surface), simple orange
+   item-dots rolling left along the belt.
+*/
+
+.sm-conveyor-screen {
+    background: #e0f7f5;
+    /* Conveyor scene fills the screen — no flex column, the scene is the
+       sole positioned context for belt, till, items, text, and Next button. */
+    display: block;
+    position: relative;
+}
+
+.sm-conveyor-scene {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+/* Estimate + till-total text block — two right-aligned lines in the
+   upper-middle of the stage. Mirrors Flash frame_06: both lines are
+   visible together once the conveyor reaches its terminal state. */
+.sm-conveyor-text-block {
+    position: absolute;
+    top: 4em;
+    right: 4em;
+    text-align: right;
+    z-index: 5;             /* above the belt, below the till sprite */
+    pointer-events: none;
+}
+
+.sm-estimate-text,
+.sm-till-total {
+    margin: 0;
+    font-size: 1.6em;
+    line-height: 1.4;
+    color: #222;
+    white-space: nowrap;
+}
+
+.sm-till-total {
+    min-height: 1.4em;       /* reserve a line so the layout doesn't jitter
+                                between the running ticker and the final reveal */
+}
+
+/* Belt: cylinder anchored to the bottom of the stage. Flash reference
+   has the belt occupy ~32 % of the (4:3) Flash stage height; rendered into
+   a 16:9 stage that's the same proportion (~9em on a 28em-tall stage). */
+.sm-conveyor-belt {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 9em;
+    object-fit: fill;
+    pointer-events: none;
+}
+
+/* Till: anchored to the bottom edge of the stage. The till.svg viewBox is
+   298×353 (aspect 0.844 = taller than wide), but in Flash the till was
+   horizontally scaled to look closer to square. We size width AND height
+   here to land roughly at Flash's proportions (~32 % of stage width,
+   ~57 % of stage height) — stretching the SVG slightly is acceptable
+   because the till has no fine internal text/detail that would distort
+   noticeably. */
+.sm-conveyor-till {
+    position: absolute;
+    right: 1.5em;
+    bottom: 0;
+    width: 16em;
+    height: 13em;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Items track: sits on the visible top portion of the belt. Belt is 9em
+   tall, bottom-anchored; the items rest just above its apex. */
+.sm-conveyor {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 2.5em;
+    height: 3em;
+    overflow: visible;
+}
+
+/* Next button anchored to the bottom-right, overlapping the till's lower
+   edge — mirrors Flash where the pencil tab sits inside the till's base. */
+.sm-conveyor-next {
+    position: absolute;
+    right: 0.5em;
+    bottom: 0.5em;
+    z-index: 20;
+}
+
+/* Each conveyor item: actual product sprite sliding LEFT → RIGHT along
+   the belt, passing behind the till sprite and continuing off the right
+   edge of the screen. Flash frame_06 moves the `newItem*` clips across
+   the belt (the orange dots seen in extracted reference captures are a
+   runtime fallback when sprites fail to attach; the deployed Flash showed
+   actual item graphics).
+
+   Two chained CSS animations:
+     1. sm-conveyor-approach — slide from off-left to the till's scanner
+        window. Its `animationend` fires the beep (mirrors Flash
+        `_root.hitBlock.hitTest` in frame_06).
+     2. sm-conveyor-exit     — slide from the till's window off the right
+        edge of the stage. Its `animationend` on the LAST item triggers
+        the till-total reveal (mirrors Flash `sayTotal`).
+
+   --sm-conveyor-approach-x : translateX at the moment the item is at the
+                              till's scanner (= the till's left-edge minus
+                              a bit, so the item is half-inside the till).
+   --sm-conveyor-exit-x     : translateX at the moment the item leaves the
+                              stage on the right (off-screen). */
+.sm-conveyor-item {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    width: 9em;
+    height: 9em;
+    white-space: nowrap;
+    color: #222;
+    text-shadow: 0 0 0.15em #fff, 0 0 0.15em #fff;
+    left: -9em;            /* start just off the left edge so it enters the belt */
+    top: 50%;
+    /* approach-x: translateX value when the item reaches the till's scanner.
+       Till sits right:1.5em (16em wide) on a 50em stage, so its left edge is
+       at ~32.5em. The scanner window is ~30 % from the till's left edge,
+       so its centre lands near ~37em. Item starts at left:-9em with width
+       9em — translating 42em puts the item centre at ~37.5em.
+       exit-x: translateX needed to clear the right edge. Item left edge
+       starts at -9em; translating 60em puts it at 51em, fully off-screen.
+       Caption span sizes the label only; the keyframe distances stay in
+       stage-em units (no font-size override on the item itself). */
+    --sm-conveyor-approach-x: 42em;
+    --sm-conveyor-exit-x: 60em;
+    /* Timing mirrors Flash frame_06.as: items move 5 px/frame at 24 fps
+       (= 120 px/s) and are spaced 140 px (~1.17 s) apart on the belt.
+       `sayTotal` fires `3100 + N × 1000` ms after the conveyor starts.
+       Items start 1.0 s apart; total per-item travel is 4.1 s (2.4 s
+       approach + 1.7 s exit), so the last item's exit ends at
+       `(N-1) × 1.0 + 4.1 = N + 3.1` s after the conveyor starts. The
+       middle keyframe at 58.5 % (= 2.4 / 4.1) marks the scanner-crossing
+       moment; supermarket-render.js fires the beep + till tick on the
+       same schedule via setTimeout. */
+    animation: sm-conveyor-belt 4.1s linear forwards;
+    animation-delay: calc(var(--item-index) * 1s);
+    transform: translate(0, -50%);
+}
+
+/* Item sprite + caption: 25 % smaller than the surrounding item box per
+   prior review feedback; products at the checkout read better at a
+   smaller scale when they're meant to pass behind the till. Font-size is
+   scoped here (not on the item parent) so the keyframe's em values stay
+   in stage-em units. */
+.sm-conveyor-img {
+    display: block;
+    width: 5.46em;
+    height: 5.04em;
+    object-fit: contain;
+}
+
+.sm-conveyor-item > span {
+    font-size: 0.7em;
+}
+
+@keyframes sm-conveyor-belt {
+    0%    { transform: translate(0,                                  -50%); }
+    58.5% { transform: translate(var(--sm-conveyor-approach-x, 37em), -50%); }
+    100%  { transform: translate(var(--sm-conveyor-exit-x,     60em), -50%); }
+}
+
+/* Till total fade-in once the conveyor finishes. */
+.sm-till-total-reveal {
+    animation: sm-till-total-fade 0.4s ease-out forwards;
+}
+
+@keyframes sm-till-total-fade {
+    from { opacity: 0; transform: translateY(0.3em); }
+    to   { opacity: 1; transform: translateY(0);     }
+}
+
+/* --- Payment screen ---
+   Flash frame_07 scene: pale cyan background, customer's hand at top-right
+   fanning the bank of money (£5/£10/£20 notes plus 1p..£2 coins), brown
+   leather wallet at bottom-left with three note slots held by the cashier's
+   hand, black counter band running horizontally across the middle.
+*/
+
+#dwPaymentScreen.sm-screen {
+    background: #e0f7f5;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Counter — black band across the middle of the screen, matching the Flash
+   conveyor/counter sprite.  Drawn with a pseudo-element so we don't need
+   another DOM node.  Sits behind interactive money; pointer-events disabled
+   so the drop-zone is the .sm-till-drop element on top of it. */
+#dwPaymentScreen.sm-screen::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 55%;
+    height: 4em;
+    background: linear-gradient(180deg, #2a2a2a 0%, #050505 50%, #2a2a2a 100%);
+    border-top: 0.18em solid #000;
+    border-bottom: 0.18em solid #000;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.sm-cashier-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+}
+
+/* Graphical scene container — fills the screen below the cashier prompt.
+   All graphic + interactive elements are absolutely positioned within. */
+.sm-payment-scene {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+}
+
+/* --- Customer hand at top-right, fanning the bank of money. ---
+   Uses Flash sprite_536 (customer-hand.svg) — palm flat with a long arm
+   extending up to the top-right corner of the scene.  The native SVG
+   aspect ratio is 247:550 ≈ 0.45 (tall + thin), so the group's height
+   is sized to fit the long arm and the bank of money sits over the palm
+   at the bottom of the group. */
+.sm-cashier-hand-group {
+    position: absolute;
+    top: -1em;
+    right: -1em;
+    width: 16em;
+    height: 18em;
+    pointer-events: none;        /* hand image is decorative */
+    z-index: 2;
+}
+
+.sm-cashier-hand-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 7em;
+    height: auto;
+    /* Flash sprite has the palm at the bottom and the arm extending
+       upward; flip horizontally so the fingers reach down-left toward
+       the centre of the scene rather than down-right. */
+    transform: scaleX(-1);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* The bank of money sits in front of the hand. The buttons inside it use
+   --sm-money-x / --sm-money-y custom properties set by _renderWallet() to
+   place themselves in the Flash customerStartLocs fan pattern. */
+.sm-cashier-hand-money {
+    position: absolute;
+    inset: 0;
+    pointer-events: auto;
+    z-index: 2;
+}
+
+/* --- Counter drop zone — coins handed over land here. --- */
+.sm-till-drop {
+    position: absolute;
+    left: 2em;
+    right: 2em;
+    top: 55%;
+    height: 4em;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.4em;
+    align-items: center;
+    padding: 0 1em;
+    overflow-x: auto;
+    z-index: 1;
+}
+
+/* --- Wallet at bottom-left, held by the cashier's hand. ---
+   Uses Flash sprite_549 (wallet-full.svg) which bundles the cashier hand
+   and the brown leather wallet (with three slot dividers) into a single
+   SVG.  The cashier hand is at the lower-right of the sprite, the wallet
+   body fills most of the upper portion.  Native aspect ratio is 399:465
+   ≈ 0.86. */
+.sm-wallet-group {
+    position: absolute;
+    left: -1em;
+    bottom: -1em;
+    width: 13em;
+    height: auto;
+    z-index: 2;
+}
+
+.sm-wallet-bg {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 13em;
+    height: auto;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Wallet slots overlay sits just above the wallet body so notes pushed into
+   the slots peek out of the top of the wallet (the slot opening masks the
+   bottom 60% of the note via z-order, like Flash walletMask1/2/3).
+   The wallet body in sprite_549 occupies roughly the top half of the
+   sprite; the three vertical dividers in the leather sit at x ≈ 25%,
+   50%, 75% within the wallet rectangle. */
+.sm-wallet-slots {
+    position: absolute;
+    left: 1.8em;
+    bottom: 4.4em;
+    width: 9.4em;
+    height: 1.8em;
+    display: flex;
+    gap: 0.25em;
+    z-index: 3;
+    pointer-events: auto;
+}
+
+.sm-wallet-slot {
+    position: relative;
+    flex: 1;
+    height: 100%;
+}
+
+/* The note inside a wallet slot is centred and only its top portion is
+   visible above the wallet's leather edge — matches Flash where the slot's
+   ink-dark "mouth" hides everything but the £ glyph and top corners. */
+.sm-wallet-slot .sm-money-btn {
+    position: absolute;
+    left: 50%;
+    top: -2em;
+    transform: translateX(-50%);
+}
+
+/* --- Money button (used for both hand-fan, counter, and wallet slot). --- */
+.sm-money-btn {
+    display: inline-block;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    /* When inside the customer-hand fan the button picks up its position
+       from --sm-money-x / --sm-money-y; otherwise it lays out in flow. */
+}
+
+.sm-cashier-hand-money .sm-money-btn {
+    position: absolute;
+    left: var(--sm-money-x, 0);
+    top:  var(--sm-money-y, 0);
+}
+
+.sm-money-btn img {
+    display: block;
+    pointer-events: none;
+    object-fit: contain;
+}
+
+.sm-money-coin img {
+    width: 3em;
+    height: 3em;
+}
+
+.sm-money-note img {
+    width: 5em;
+    height: auto;
+}
+
+.sm-money-btn:hover,
+.sm-money-btn:focus-visible {
+    outline: 0.18em solid #0066cc;
+    outline-offset: 0.05em;
+    border-radius: 0.35em;
+}
+
+.sm-money-placed {
+    /* Visual hint that this item has been paid — slight glow + drop shadow */
+    filter: drop-shadow(0 0.1em 0.2em rgba(0, 0, 0, 0.35));
+}
+
+/* Money item moving from one parent to another — slight pop + fade. The
+   reveal carries the action visually; total update and aria-live still
+   convey the outcome under reduced motion. */
+.sm-money-move {
+    animation: sm-money-move 0.3s ease-out;
+}
+
+@keyframes sm-money-move {
+    from { opacity: 0.4; transform: scale(0.85); }
+    to   { opacity: 1;   transform: scale(1);    }
+}
+
+/* Note inside a wallet slot overrides the scale animation's transform — keep
+   the centring translate while it animates in.  Without this the note would
+   briefly slide off-centre when first inserted. */
+.sm-wallet-slot .sm-money-btn.sm-money-move {
+    animation: sm-money-move-slot 0.3s ease-out;
+}
+
+@keyframes sm-money-move-slot {
+    from { opacity: 0.4; transform: translateX(-50%) scale(0.85); }
+    to   { opacity: 1;   transform: translateX(-50%) scale(1);    }
+}
+
+.sm-payment-feedback {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 5.5em;
+    text-align: center;
+    font-size: 1.3em;
+    color: #cc0000;
+    min-height: 1.5em;
+    margin: 0;
+    z-index: 4;
+    pointer-events: none;
+    text-shadow: 0 0.05em 0.15em rgba(255,255,255,0.7);
+}
+
+/* --- Stage E: post-payment cashier line ("Thanks, here's your change.").
+       Visible counterpart of cashierText2 in Flash frame_07 line 1045.
+       Sits above the change cluster, fading in as it arrives. */
+.sm-cashier-text2 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0.4em;
+    text-align: center;
+    font-size: 1.3em;
+    color: #205313;
+    min-height: 1.5em;
+    margin: 0;
+    z-index: 5;
+    pointer-events: none;
+    text-shadow: 0 0.05em 0.15em rgba(255,255,255,0.7);
+    animation: sm-cashier-text-fade 0.4s ease-out;
+}
+
+@keyframes sm-cashier-text-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* --- Stage E sweep animations -------------------------------------------
+
+   Flash frame_07 line 965ff: each placed coin tweens from its counter
+   position up to (700, -200) — off the top-right of the 800x600 stage.
+   We use a CSS animation driven by per-element custom properties so we
+   don't have to mutate stylesheet keyframes at runtime.
+
+   .sm-coin-sweep is applied to a placed .sm-money-btn at sweep time.  The
+   element is reparented to .sm-payment-scene (an absolutely-positioned
+   parent) with explicit left/top set from its bounding rect, then this
+   class drives the translate. Removal is handled by the JS animationend
+   listener.
+*/
+.sm-coin-sweep {
+    position: absolute !important;
+    z-index: 6;
+    animation: sm-coin-sweep 0.7s ease-in forwards;
+    pointer-events: none;
+}
+
+@keyframes sm-coin-sweep {
+    from { transform: translate(0, 0);                                            opacity: 1; }
+    to   { transform: translate(var(--sm-sweep-dx, 20em), var(--sm-sweep-dy, -20em)); opacity: 0; }
+}
+
+/* Standalone cashier-hand sprite (separate from the wallet bundle). Sits
+   above the counter in the same plane as the swept coins. Initially
+   hidden; revealed by _runPaymentSuccess. The sprite is decorative so
+   pointer-events are disabled — the change cluster (sibling) carries
+   the click target. */
+.sm-cashier-hand-sprite {
+    position: absolute;
+    width: 9em;
+    height: auto;
+    /* Resting position: hovering over the counter centre, hand reaching
+       down from the top. Mirrored so the gloved fingers point left (the
+       direction of the customer's hand). */
+    left: 50%;
+    top: 38%;
+    transform: translate(-50%, 0);
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* Sweep-off: hand follows the coins toward the top-right (Flash (800,-200),
+   i.e. up and slightly right of stage). Translation in em units relative
+   to the resting position. */
+.sm-cashier-hand-sweep-off {
+    animation: sm-cashier-hand-sweep-off 0.7s ease-in forwards;
+}
+
+@keyframes sm-cashier-hand-sweep-off {
+    from { transform: translate(-50%, 0); opacity: 1; }
+    to   { transform: translate(20em, -20em); opacity: 0; }
+}
+
+/* Re-entry (change-owed branch): hand drops back in from off-top-right,
+   carrying the change cluster.  Flash frame_07 line 1043: tween from
+   (1000,-200) -> (691,279).  Held in place until the user clicks the
+   cluster. */
+.sm-cashier-hand-enter-change {
+    animation: sm-cashier-hand-enter-change 0.8s ease-out 1.2s both;
+}
+
+@keyframes sm-cashier-hand-enter-change {
+    from { transform: translate(25em, -20em); opacity: 0; }
+    to   { transform: translate(-50%, 0);     opacity: 1; }
+}
+
+/* Final exit (after the user takes the change): hand sweeps back off
+   top-right (Flash frame_07 line 1109: (cashierHand._x,_y) -> (800,-200)). */
+.sm-cashier-hand-final-exit {
+    animation: sm-cashier-hand-sweep-off 0.7s ease-in 1.2s forwards;
+}
+
+/* --- Change cluster (Flash changeClip) ----------------------------------
+
+   A single clickable button — the user "picks up the pile of change" in
+   one click (Flash-style, per the stage-E spec).  Greedy-change coins
+   are positioned inside the cluster using --sm-cl-x / --sm-cl-y custom
+   properties (per-coin) so we don't have to inline pixel positions in JS.
+
+   Resting position roughly matches Flash (570, 160) — over the counter,
+   slightly left of centre. Entry tweens from off-top-right (800, -300),
+   exit (in stages: to the customer's hand at (235, 439), then off the
+   bottom-left to (100, 900)) via the -collect / -exit classes below.
+*/
+.sm-change-cluster-btn {
+    position: absolute;
+    border: none;
+    background: transparent;
+    padding: 0.3em;
+    cursor: pointer;
+    /* Resting position over the counter. */
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, 0);
+    width: 9em;
+    height: 4em;
+    z-index: 5;
+    /* Subtle grouping ring so the cluster reads as one clickable unit
+       even before hover/focus. */
+    border-radius: 0.6em;
+    outline: 0.15em dashed rgba(34, 84, 19, 0.55);
+    outline-offset: 0.2em;
+}
+
+.sm-change-cluster-btn:hover,
+.sm-change-cluster-btn:focus-visible {
+    outline: 0.2em solid #0066cc;
+    outline-offset: 0.25em;
+}
+
+/* Coins/notes inside the cluster are decorative — clicks land on the
+   parent button as a single target. */
+.sm-change-cluster-btn img {
+    position: absolute;
+    left: var(--sm-cl-x, 0);
+    top:  var(--sm-cl-y, 0);
+    pointer-events: none;
+    /* Note vs coin sizes — mirror the in-hand bank-of-money sizing so
+       the pile reads visually consistent. */
+    width: 2.4em;
+    height: auto;
+    object-fit: contain;
+}
+
+.sm-change-cluster-btn img.sm-cl-note {
+    width: 3.4em;
+}
+
+/* Entry: tween in from off-top-right with the 1.2s delay (Flash
+   setInterval(moveObject, 1200, ...) — line 1041). */
+.sm-change-cluster-enter {
+    animation: sm-change-cluster-enter 0.8s ease-out 1.2s both;
+}
+
+@keyframes sm-change-cluster-enter {
+    from { transform: translate(20em, -20em); opacity: 0; }
+    to   { transform: translate(-50%, 0);     opacity: 1; }
+}
+
+/* Collect: cluster tweens from rest -> customer's hand area (Flash
+   frame_07 line 1080: (570,160) -> (235,439)). */
+.sm-change-cluster-collect {
+    animation: sm-change-cluster-collect 0.7s ease-in-out forwards;
+}
+
+@keyframes sm-change-cluster-collect {
+    from { transform: translate(-50%, 0); opacity: 1; }
+    to   { transform: translate(-21em, 12em); opacity: 1; }
+}
+
+/* Exit: from customer's hand area off the bottom-left (Flash line 1104:
+   (235,439) -> (100,900)). Delayed 1.2s after the collect tween. */
+.sm-change-cluster-exit {
+    animation: sm-change-cluster-exit 0.8s ease-in 1.2s forwards;
+}
+
+@keyframes sm-change-cluster-exit {
+    from { transform: translate(-21em, 12em); opacity: 1; }
+    to   { transform: translate(-30em, 28em); opacity: 0; }
+}
+
+/* --- Customer-hand exit (both Stage E branches) -------------------------
+   Flash frame_07 lines 1106/1207: the customer's hand (the bank-of-money
+   group, .sm-cashier-hand-group in our DOM) tweens from (254,440) to
+   (100,900) — off the bottom-left.  Wallet group (cashier's other hand
+   bundle) follows similarly. */
+.sm-customer-hand-exit {
+    animation: sm-customer-hand-exit 0.8s ease-in 1.2s forwards;
+}
+
+@keyframes sm-customer-hand-exit {
+    from { transform: translate(0, 0); opacity: 1; }
+    to   { transform: translate(-25em, 25em); opacity: 0; }
+}
+
+/* Faster variant for the exact-payment branch (no change cluster gating
+   it). Flash line 1207 still has the 1.2s setInterval, but the entire
+   branch has no E4a "click change" beat, so we cut the delay to 0.4s
+   for a snappier exact-payment finish. */
+.sm-customer-hand-exit-now {
+    animation: sm-customer-hand-exit 0.8s ease-in 0.4s forwards;
+}
+
+/* Wallet slots fade out alongside the customer-hand exit (Flash lines
+   1111-1117 hide walletMask1/2/3 + removeMovieClip). */
+.sm-wallet-fade-out {
+    animation: sm-wallet-fade-out 0.6s ease-out 1.2s forwards;
+}
+
+@keyframes sm-wallet-fade-out {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+/* --- Receipt screen ---
+   Flash: white paper with horizontal ruled lines, title at the top, table
+   filling the body, totals/cash/change at the bottom-right, and a four-
+   checkbox self-assessment row below ("How well did you use rounding?").
+*/
+
+.sm-receipt {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.8em 1.2em;
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            #ffffff 0em,
+            #ffffff 1.55em,
+            #b8c8d4 1.55em,
+            #b8c8d4 1.6em
+        );
+    background-position: 0 1.8em;
+    border: 1px solid #888;
+    box-shadow: 0 0.2em 0.6em rgba(0,0,0,0.1);
+    color: #222;
+}
+
+.sm-receipt-title {
+    font-size: 1.4em;
+    margin: 0 0 0.6em 0;
+    text-align: left;
+    border-bottom: 1px solid #888;
+    padding-bottom: 0.2em;
+}
+
+.sm-receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.05em;
+    line-height: 1.6em;
+    table-layout: fixed;
+}
+
+.sm-receipt-table col.sm-col-item    { width: 50%; }
+.sm-receipt-table col.sm-col-price   { width: 25%; }
+.sm-receipt-table col.sm-col-rounded { width: 25%; }
+
+.sm-receipt-table th,
+.sm-receipt-table td {
+    padding: 0 0.6em;
+    border: none;
+    text-align: left;
+    vertical-align: top;
+}
+
+.sm-receipt-table thead th {
+    font-weight: bold;
+    border-bottom: 1px solid #888;
+}
+
+.sm-receipt-table tbody td:nth-child(2),
+.sm-receipt-table tbody td:nth-child(3),
+.sm-receipt-table tfoot td {
+    text-align: right;
+}
+
+.sm-receipt-table tfoot th {
+    text-align: right;
+    font-weight: bold;
+}
+
+.sm-receipt-table tfoot tr:first-child th,
+.sm-receipt-table tfoot tr:first-child td {
+    border-top: 1px solid #888;
+    padding-top: 0.3em;
+}
+
+/* Self-assessment row, below the receipt paper. */
+.sm-receipt-eval {
+    border: none;
+    padding: 0.4em 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4em 1.2em;
+    font-size: 1em;
+}
+
+.sm-receipt-eval legend {
+    font-weight: bold;
+    width: 100%;
+    margin-bottom: 0.2em;
+}
+
+.sm-eval-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+}
+
+.sm-eval-option input[type="checkbox"] {
+    width: 1em;
+    height: 1em;
+    accent-color: #205313;
+}
+
+/* --- Shopping hint ("Pick some items.") --- */
+.sm-shopping-hint {
+    text-align: center;
+    font-style: italic;
+    color: #444;
+    margin: 0;
+}
+
+/* --- Scan highlight --- */
+
+
+/* --- Accessibility --- */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.sm-print-hint {
+    font-size: 0.75em;
+    color: #555;
+    text-align: right;
+    margin: 0.3em 0 0 0;
+}
+
+/* --- Print stylesheet — show only the receipt paper ---
+   The Flash original printed the receipt (frame_08 printButton), so the
+   learner can take home a record of their shopping. We strip the page
+   chrome, the eval radios, and the action buttons so the printed sheet
+   is just the receipt itself. */
+@media print {
+    @page { margin: 1.5cm; }
+
+    body { background: #fff; }
+
+    #dwNavigationHeader,
+    .dw-screen-header,
+    .dw-app-footer,
+    #dwWelcomeScreen,
+    #dwUserOptions,
+    #dwShoppingScreen,
+    #dwPaymentScreen,
+    .sm-screen-nav,
+    .sm-receipt-eval,
+    .sm-print-hint {
+        display: none !important;
+    }
+
+    .doorway_application,
+    .doorway_fullscreen_div,
+    .doorway_aspect_outer_div,
+    .doorway_aspect_div,
+    main {
+        position: static !important;
+        width: auto !important;
+        height: auto !important;
+        max-width: none !important;
+        max-height: none !important;
+        overflow: visible !important;
+        transform: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    #dwReceiptScreen {
+        position: static !important;
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        font-size: 12pt;
+    }
+
+    .sm-receipt {
+        flex: none;
+        overflow: visible;
+        box-shadow: none;
+        background: #fff;
+        border: 1px solid #888;
+    }
+
+    .sm-receipt-table { font-size: 1em; }
+}
+
+/* --- Reduced motion ---
+   Verbatim from porting-plan.md § Phase 5: collapse all animations and
+   transitions to 0.01ms so `animationend`/`transitionend` listeners still
+   fire and game-state sequencing still works, but the visible motion is
+   removed. The conveyor-item rule additionally restores in-flow layout so
+   items don't all stack at the right edge when not animating.
+*/
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+    /* Under reduced motion the chained approach+exit animations fire
+       essentially instantly, so each item will jump straight to its exit
+       position (off-screen). animationend still fires for both animations
+       so the beep + till-total reveal sequencing still completes. */
+}

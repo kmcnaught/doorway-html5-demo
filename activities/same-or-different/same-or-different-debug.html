@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="../shared/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../shared/doorway.css">
+    <link rel="stylesheet" type="text/css" href="same-or-different.css">
+    <script type="module" src="./same-or-different.js"></script>
+    <title>Doorway Same or Different (debug)</title>
+</head>
+<body id="bodyId" onload="SameOrDifferent_init();">
+<div id="dwWholeApp" class="doorway_application">
+    <div id="dwFullScreenDiv" class="doorway_fullscreen_div">
+        <div id="dwAspectOuterDiv" class="doorway_aspect_outer_div">
+            <div id="dwAspectDiv" class="doorway_aspect_div">
+
+                <!-- Live region for screen reader announcements -->
+                <div id="dwLiveRegion" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+                <!-- Navigation header -->
+                <nav id="dwNavigationHeader" class="navigation_header" data-i18nkey-aria-label="nav.toolbar.label">
+                    <button type="button" class="teacher_button hidden_panel" id="dwOptionsButton" data-i18nkey-aria-label="nav.settings.label">
+                        <img src="../shared/settings.svg" width="100%" height="100%" alt="Options" aria-hidden="true">
+                    </button>
+                    <button type="button" class="teacher_button" id="dwFullScreenButton" data-i18nkey-aria-label="nav.fullscreen.label">
+                        <img src="../shared/full-screen.svg" width="100%" height="100%" alt="Fullscreen" aria-hidden="true">
+                    </button>
+
+                </nav>
+
+                <!-- Shared page header (banner landmark). Sibling of <main>, so
+                     <header> gets its implicit banner role. Content varies per
+                     screen via CSS visibility: logo shows on welcome; title
+                     shows on options; whole header hidden on activity. -->
+                <header class="dw-screen-header">
+                    <a href="http://www.doorwayonline.org.uk/" class="doorway_logo">
+                        <img src="../shared/doorwayLogo.svg" alt="Doorway Online">
+                    </a>
+                    <h1 class="title_message" tabindex="-1" data-i18nkey="options.heading">Options</h1>
+                </header>
+
+                <main>
+
+                <!-- Welcome screen -->
+                <div id="dwWelcomeScreen" class="doorway_welcome">
+                    <div class="dw-welcome-body">
+                        <div class="dw-welcome-titles">
+                            <p class="dw-app-label" data-i18nkey="doorway.brand">Doorway</p>
+                            <h1 class="title_message" tabindex="-1" data-i18nkey="same-or-different.welcome.title">Same or Different?</h1>
+                        </div>
+                        <div class="welcome_image" role="img" aria-label="Three cards: two planks and a jar of jam">
+                            <img src="welcome/ladder-card.svg" alt="">
+                            <img src="welcome/jam-card.svg" alt="">
+                            <img src="welcome/ladder-card.svg" alt="">
+                        </div>
+                        <p class="sub_title" data-i18nkey="same-or-different.welcome.subtitle">Two activities that explore the concept of the same and different.</p>
+                    </div>
+                </div>
+
+                <!-- Options screen -->
+                <form name="options_form" id="dwUserOptions" class="hidden_panel user_options">
+                    <div class="user_options">
+                        <fieldset class="options_group game_options">
+                            <legend class="options_group_title" data-i18nkey="same-or-different.options.activity.legend">Activity</legend>
+                            <div class="sad-activity-grid">
+                                <fieldset>
+                                    <legend data-i18nkey="same-or-different.options.exercise.legend">Exercise Type</legend>
+                                    <input type="radio" name="sad_exercise_option" value="1" id="radio-exercise-1" checked>
+                                    <label for="radio-exercise-1" class="user_options_radio button_div" data-i18nkey="same-or-different.options.exercise.two-the-same">Two the Same</label>
+                                    <input type="radio" name="sad_exercise_option" value="2" id="radio-exercise-2">
+                                    <label for="radio-exercise-2" class="user_options_radio button_div" data-i18nkey="same-or-different.options.exercise.odd-one-out">Odd One Out</label>
+                                </fieldset>
+                                <fieldset>
+                                    <legend data-i18nkey="same-or-different.options.num-cards.legend">Number of Cards</legend>
+                                    <div class="spinner_select" id="sad_num_cards_spinner">
+                                        <button type="button" class="spinner_down" id="sad_num_cards_spin_down" aria-label="Fewer cards" data-i18nkey-aria-label="same-or-different.options.num-cards.decrease">-</button>
+                                        <select name="sad_num_cards" id="sad_num_cards_sel">
+                                            <option value="6" selected>6</option>
+                                            <option value="9">9</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                        <div class="spinner_display button_div" id="sad_num_cards_display">6</div>
+                                        <button type="button" class="spinner_up" id="sad_num_cards_spin_up" aria-label="More cards" data-i18nkey-aria-label="same-or-different.options.num-cards.increase">+</button>
+                                    </div>
+                                    <p id="sadCardCountHelp" class="sad-card-count-help" data-i18nkey="same-or-different.options.card-count.mode1-help">Mode 1: 6, 9 or 12 cards</p>
+                                </fieldset>
+                                <fieldset class="sad-grid-questions">
+                                    <legend data-i18nkey="same-or-different.options.num-questions.legend">Number of Questions</legend>
+                                    <div class="spinner_select" id="sad_num_questions_spinner">
+                                        <button type="button" class="spinner_down" id="sad_num_questions_spin_down" aria-label="Fewer questions" data-i18nkey-aria-label="same-or-different.options.num-questions.decrease">-</button>
+                                        <select name="sad_num_questions" id="sad_num_questions_sel">
+                                            <option value="5" selected>5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                            <option value="20">20</option>
+                                        </select>
+                                        <div class="spinner_display button_div" id="sad_num_questions_display">5</div>
+                                        <button type="button" class="spinner_up" id="sad_num_questions_spin_up" aria-label="More questions" data-i18nkey-aria-label="same-or-different.options.num-questions.increase">+</button>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="options_group">
+                            <legend class="options_group_title" data-i18nkey="options.audio.legend">Audio</legend>
+                            <input type="radio" name="audio_mode" value="webspeech" id="radio-audio-webspeech">
+                            <label for="radio-audio-webspeech" class="user_options_radio button_div" data-i18nkey="options.audio.webspeech">Computer voice</label>
+                            <input type="radio" name="audio_mode" value="recorded" id="radio-audio-recorded" checked>
+                            <label for="radio-audio-recorded" class="user_options_radio button_div" data-i18nkey="options.audio.recorded">Recorded audio</label>
+                            <input type="radio" name="audio_mode" value="none" id="radio-audio-none">
+                            <label for="radio-audio-none" class="user_options_radio button_div" data-i18nkey="options.audio.none">No audio</label>
+                        </fieldset>
+
+                        <fieldset class="options_group accessibility_options">
+                            <legend class="options_group_title" data-i18nkey="accessibility.heading">Accessibility</legend>
+                            <div class="sad-accessibility-row">
+                                <div class="sad-scan-cell">
+                                    <p data-i18nkey="accessibility.scanning.label">Scanning</p>
+                                    <div class="sad-scan-onoff">
+                                        <input type="radio" name="enable_scanning" value="true" id="radio-scan-on">
+                                        <label for="radio-scan-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.on">On</label>
+                                        <input type="radio" name="enable_scanning" value="false" id="radio-scan-off" checked>
+                                        <label for="radio-scan-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.off">Off</label>
+                                    </div>
+                                </div>
+
+                                <!-- Scan sub-panel (shown only when scan is on) -->
+                                <div id="sadScanSubPanel" class="hidden_panel sad-scan-cells">
+                                    <div class="sad-scan-switches-cell">
+                                        <p data-i18nkey="accessibility.switches.label">Number of switches</p>
+                                        <input type="radio" name="num_switches" value="1" id="radio-scan-mode-1" checked>
+                                        <label for="radio-scan-mode-1" class="user_options_radio button_div" data-i18nkey="accessibility.switches.one">One switch (auto)</label>
+                                        <input type="radio" name="num_switches" value="2" id="radio-scan-mode-2">
+                                        <label for="radio-scan-mode-2" class="user_options_radio button_div" data-i18nkey="accessibility.switches.two">Two switch</label>
+                                    </div>
+                                    <div id="sadScanDelayCell" class="sad-scan-delay-cell">
+                                        <p data-i18nkey="accessibility.scan-delay.label">Scan delay (seconds)</p>
+                                        <div class="spinner_select" id="scan_delay_spinner">
+                                            <button type="button" class="spinner_down" id="scan_delay_spin_down" aria-label="Shorter scan delay" data-i18nkey-aria-label="accessibility.scan-delay.decrease">-</button>
+                                            <select name="scan_delay" id="scan_delay_sel">
+                                                <option value="1000">1</option>
+                                                <option value="1500">1.5</option>
+                                                <option value="2000" selected>2</option>
+                                                <option value="2500">2.5</option>
+                                                <option value="3000">3</option>
+                                                <option value="3500">3.5</option>
+                                                <option value="4000">4</option>
+                                                <option value="4500">4.5</option>
+                                                <option value="5000">5</option>
+                                            </select>
+                                            <div class="spinner_display button_div" id="scan_delay_display">2</div>
+                                            <button type="button" class="spinner_up" id="scan_delay_spin_up" aria-label="Longer scan delay" data-i18nkey-aria-label="accessibility.scan-delay.increase">+</button>
+                                        </div>
+                                    </div>
+                                    <fieldset class="sad-scan-back-group">
+                                        <legend data-i18nkey="accessibility.scanback.legend">Scan back button</legend>
+                                        <input type="radio" name="sad_scan_back" value="true" id="radio-scanback-on">
+                                        <label for="radio-scanback-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.on">On</label>
+                                        <input type="radio" name="sad_scan_back" value="false" id="radio-scanback-off" checked>
+                                        <label for="radio-scanback-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.off">Off</label>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                    </div>
+                </form>
+
+                <!-- Audio elements -->
+                <audio src="audio/findtwothesame.wav" preload="auto" id="sadFindTwoTheSame"></audio>
+                <audio src="audio/findtheoddoneout.wav" preload="auto" id="sadFindTheOddOneOut"></audio>
+                <audio src="audio/theyarethesame.wav" preload="auto" id="sadTheyAreTheSame"></audio>
+                <audio src="audio/thatstheoddoneout.wav" preload="auto" id="sadThatsTheOddOneOut"></audio>
+                <audio src="audio/fantastic.wav" preload="auto" id="sadFantastic"></audio>
+                <audio src="audio/amazing.wav" preload="auto" id="sadAmazing"></audio>
+                <audio src="audio/great.wav" preload="auto" id="sadGreat"></audio>
+
+                <!-- Activity screen -->
+                <div id="dwActivityScreen" class="hidden_panel sad-screen">
+                    <h1 class="sr-only" tabindex="-1" data-i18nkey="same-or-different.welcome.title">Same or Different?</h1>
+                    <div class="sad-activity-layout">
+
+                        <div class="sad-activity-header">
+                            <p id="sadModeTitle" class="sad-mode-title" data-i18nkey="same-or-different.mode.find-two-the-same">Find two the same</p>
+                            <p id="sadQuestionCounter" class="sad-question-counter">1 of 5</p>
+                        </div>
+
+                        <div id="sadCardGrid" class="sad-card-grid" aria-label="Picture cards" data-i18nkey-aria-label="same-or-different.aria.card-grid"></div>
+
+                        <!-- Bottom row: feedback banner (centre) | Next pencil (right). -->
+                        <div class="sad-activity-bottom">
+                            <div id="sadBanner" class="hidden_panel sad-banner" aria-live="assertive">
+                                <p id="sadBannerText" class="sad-banner-text"></p>
+                            </div>
+                            <button type="button" id="sadNextButton" class="pencil_btn hidden_panel" data-i18nkey="doorway.btn.next">next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results screen -->
+                <div id="dwResultsScreen" class="hidden_panel sad-screen">
+                    <div class="sad-results-layout">
+                        <h2 class="sad-results-heading" tabindex="-1" data-i18nkey="same-or-different.results.heading">Same or Different - Results</h2>
+                        <h3 id="sadCongratText" class="sad-congrat-text"></h3>
+                        <p id="sadCardsText" class="sad-tries-text"></p>
+                        <p id="sadQuestionsText" class="sad-tries-text"></p>
+                        <p id="sadTriesText" class="sad-tries-text"></p>
+                        <p id="sadScorePercent" class="sad-score-percent"></p>
+                        <div class="sad-results-nav">
+                            <button type="button" id="sadPlayAgainBtn" class="pencil_btn" data-i18nkey="doorway.btn.repeat">repeat</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shared framework elements -->
+                <div id="dwMainApp" style="display:none;"></div>
+                <div id="dwDarkenedPanel" class="darkened_panel hidden_panel"></div>
+                <div id="dwWellDone" class="well_done_message hidden_panel">
+                    <p class="instruction_message"></p>
+                </div>
+
+            </main>
+
+            <!-- Shared page footer (contentinfo landmark). Sibling of <main>,
+                 so <footer> gets its implicit contentinfo role. Action buttons
+                 visibility per screen via CSS: enter on welcome; home+start on
+                 options; whole footer hidden on activity. -->
+            <footer class="dw-app-footer">
+                <div class="dw-action-footer">
+                    <button id="dwEnterButton" class="pencil_btn" data-i18nkey="doorway.btn.enter">enter</button>
+                    <button type="button" id="dwHomeButton" class="pencil_btn" data-pencil-dir="left" data-i18nkey="doorway.btn.home">home</button>
+                    <button type="button" id="dwSubmitUserOptions" class="pencil_btn" data-i18nkey="doorway.btn.start">start</button>
+                </div>
+                <p class="copyright_message" data-i18nkey="doorway.copyright">© CALL Scotland, University of Edinburgh 2026</p>
+            </footer>
+            </div><!-- doorway_aspect_div -->
+        </div><!-- doorway_aspect_outer_div -->
+    </div><!-- doorway_fullscreen_div -->
+</div><!-- doorway_application -->
+</body>
+</html>

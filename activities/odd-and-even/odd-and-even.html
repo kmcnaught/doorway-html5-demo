@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="../shared/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../shared/doorway.css">
+    <link rel="stylesheet" type="text/css" href="odd-and-even.css">
+    <link rel="stylesheet" type="text/css" href="odd-and-even-shoe-pairing.css">
+    <link rel="stylesheet" type="text/css" href="odd-and-even-house-painting.css">
+    <link rel="stylesheet" type="text/css" href="odd-and-even-ladybird-sort.css">
+    <link rel="stylesheet" type="text/css" href="odd-and-even-tutorial.css">
+    <link rel="stylesheet" type="text/css" href="odd-and-even-coconut-shy.css">
+    <script src="odd-and-even.min.js"></script>
+    <title>Doorway Odd and Even</title>
+</head>
+<body id="bodyId" onload="OddAndEven_init();">
+<div id="dwWholeApp" class="doorway_application">
+    <div id="dwFullScreenDiv" class="doorway_fullscreen_div">
+        <div id="dwAspectOuterDiv" class="doorway_aspect_outer_div">
+            <div id="dwAspectDiv" class="doorway_aspect_div">
+
+                <div id="dwLiveRegion" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+                <!-- Navigation header -->
+                <nav id="dwNavigationHeader" class="navigation_header" data-i18nkey-aria-label="nav.toolbar.label">
+                    <button type="button" class="teacher_button hidden_panel" id="dwOptionsButton" data-i18nkey-aria-label="nav.settings.label">
+                        <img src="../shared/settings.svg" width="100%" height="100%" alt="Options" aria-hidden="true">
+                    </button>
+                    <button type="button" class="teacher_button" id="dwFullScreenButton" data-i18nkey-aria-label="nav.fullscreen.label">
+                        <img src="../shared/full-screen.svg" width="100%" height="100%" alt="Fullscreen" aria-hidden="true">
+                    </button>
+
+                </nav>
+
+                <!-- Shared page header (banner landmark). Sibling of <main>, so
+                     <header> gets its implicit banner role. Content varies per
+                     screen via CSS visibility: logo shows on welcome; title
+                     shows on options; whole header hidden on activity. -->
+                <header class="dw-screen-header">
+                    <a href="http://www.doorwayonline.org.uk/" class="doorway_logo">
+                        <img src="../shared/doorwayLogo.svg" alt="Doorway Online">
+                    </a>
+                    <h1 class="title_message" tabindex="-1" data-i18nkey="options.heading">Options</h1>
+                </header>
+
+                <main>
+
+                <!-- Welcome screen -->
+                <div id="dwWelcomeScreen" class="doorway_welcome">
+                    <div class="dw-welcome-body">
+                        <div class="dw-welcome-titles">
+                            <p class="dw-app-label" data-i18nkey="doorway.brand">Doorway</p>
+                            <h1 class="title_message" tabindex="-1" data-i18nkey="odd-and-even.welcome.title">Odd and Even</h1>
+                        </div>
+                        <div class="welcome_image" role="img" aria-label="A collage of objects used in odd and even activities">
+                            <div class="oe-welcome-collage">
+                                <img src="pictures/shoe.svg" class="oe-wc-shoe oe-wc-shoe-1" alt="">
+                                <img src="pictures/shoe.svg" class="oe-wc-shoe oe-wc-shoe-2" alt="">
+                                <img src="pictures/lb3-welcome.svg" class="oe-wc-lb oe-wc-lb-red" alt="">
+                                <img src="pictures/lb8-welcome.svg" class="oe-wc-lb oe-wc-lb-blue" alt="">
+                                <div class="oe-wc-houses">
+                                    <div class="oe-wc-house oe-wc-house-1">
+                                        <img src="pictures/houseRed.svg" alt="">
+                                        <span class="oe-wc-house-door">1</span>
+                                    </div>
+                                    <div class="oe-wc-house oe-wc-house-2">
+                                        <img src="pictures/houseBlue.svg" alt="">
+                                        <span class="oe-wc-house-door">2</span>
+                                    </div>
+                                    <div class="oe-wc-house oe-wc-house-3">
+                                        <img src="pictures/houseRed.svg" alt="">
+                                        <span class="oe-wc-house-door">3</span>
+                                    </div>
+                                </div>
+                                <div class="oe-wc-numgrid">
+                                    <div class="oe-wc-numgrid-inner">
+                                        <span class="oe-wc-odd">1</span><span class="oe-wc-even">2</span><span class="oe-wc-odd">3</span><span class="oe-wc-even">4</span>
+                                        <span class="oe-wc-odd">11</span><span class="oe-wc-even">12</span><span class="oe-wc-odd">13</span><span class="oe-wc-even">14</span>
+                                        <span class="oe-wc-odd">21</span><span class="oe-wc-even">22</span><span class="oe-wc-odd">23</span><span class="oe-wc-even">24</span>
+                                    </div>
+                                </div>
+                                <div class="oe-wc-cocos">
+                                    <div class="oe-wc-coco oe-wc-coco-1">
+                                        <img src="pictures/coconutHolder.svg" alt="">
+                                        <span class="oe-wc-coco-num">8</span>
+                                    </div>
+                                    <div class="oe-wc-coco oe-wc-coco-2">
+                                        <img src="pictures/coconutHolder.svg" alt="">
+                                        <span class="oe-wc-coco-num">10</span>
+                                    </div>
+                                    <div class="oe-wc-coco oe-wc-coco-3">
+                                        <img src="pictures/coconutHolder.svg" alt="">
+                                        <span class="oe-wc-coco-num">7</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Options / activity picker screen -->
+                <form name="options_form" id="dwUserOptions" class="hidden_panel user_options">
+                    <div class="user_options">
+
+                        <fieldset class="options_group game_options oe-activity-picker">
+                            <legend class="options_group_title" data-i18nkey="odd-and-even.options.activity.label">Activity</legend>
+                            <input type="radio" name="oe_selected_activity" value="shoepairing" id="radio-activity-shoepairing" checked>
+                            <label for="radio-activity-shoepairing" class="user_options_radio button_div oe-activity-card">
+                                <span class="oe-activity-icon oe-activity-icon-shoes" aria-hidden="true">
+                                    <img src="pictures/shoe.svg" alt="">
+                                    <img src="pictures/shoe.svg" alt="">
+                                </span>
+                                <span class="oe-activity-label" data-i18nkey="odd-and-even.options.activity.shoepairing">Pairing</span>
+                            </label>
+                            <input type="radio" name="oe_selected_activity" value="ladybirds" id="radio-activity-ladybirds">
+                            <label for="radio-activity-ladybirds" class="user_options_radio button_div oe-activity-card">
+                                <span class="oe-activity-icon oe-activity-icon-ladybirds" aria-hidden="true">
+                                    <img src="pictures/lb3-welcome.svg" class="oe-ai-lb" alt="">
+                                    <img src="pictures/lb8-welcome.svg" class="oe-ai-lb" alt="">
+                                </span>
+                                <span class="oe-activity-label" data-i18nkey="odd-and-even.options.activity.ladybirds">Odd and Even to 10</span>
+                            </label>
+                            <input type="radio" name="oe_selected_activity" value="housepainting" id="radio-activity-housepainting">
+                            <label for="radio-activity-housepainting" class="user_options_radio button_div oe-activity-card">
+                                <span class="oe-activity-icon oe-activity-icon-houses" aria-hidden="true">
+                                    <span class="oe-ai-house oe-ai-house-red"><img src="pictures/houseRed.svg" alt=""><span class="oe-ai-house-door">1</span></span>
+                                    <span class="oe-ai-house oe-ai-house-blue"><img src="pictures/houseBlue.svg" alt=""><span class="oe-ai-house-door">2</span></span>
+                                    <span class="oe-ai-house oe-ai-house-red"><img src="pictures/houseRed.svg" alt=""><span class="oe-ai-house-door">3</span></span>
+                                </span>
+                                <span class="oe-activity-label" data-i18nkey="odd-and-even.options.activity.housepainting">Odd and Even Pattern to 20</span>
+                            </label>
+                            <input type="radio" name="oe_selected_activity" value="tutorial" id="radio-activity-tutorial">
+                            <label for="radio-activity-tutorial" class="user_options_radio button_div oe-activity-card">
+                                <!-- Mirrors the welcome-screen number-grid graphic
+                                     (.oe-wc-numgrid): a 4×3 grid cropped by overflow:hidden
+                                     so the user sees 1-3 (+ sliver of 4) and 11-13
+                                     (+ sliver of 14) plus a row of 21-24 below. -->
+                                <span class="oe-activity-icon oe-activity-icon-100sq" aria-hidden="true">
+                                    <span class="oe-ai-100sq-inner">
+                                        <span class="oe-ai-cell oe-ai-odd">1</span><span class="oe-ai-cell oe-ai-even">2</span><span class="oe-ai-cell oe-ai-odd">3</span><span class="oe-ai-cell oe-ai-even">4</span>
+                                        <span class="oe-ai-cell oe-ai-odd">11</span><span class="oe-ai-cell oe-ai-even">12</span><span class="oe-ai-cell oe-ai-odd">13</span><span class="oe-ai-cell oe-ai-even">14</span>
+                                        <span class="oe-ai-cell oe-ai-odd">21</span><span class="oe-ai-cell oe-ai-even">22</span><span class="oe-ai-cell oe-ai-odd">23</span><span class="oe-ai-cell oe-ai-even">24</span>
+                                    </span>
+                                </span>
+                                <span class="oe-activity-label" data-i18nkey="odd-and-even.options.activity.tutorial">Odd and Even Pattern to 100</span>
+                            </label>
+                            <input type="radio" name="oe_selected_activity" value="coconutshy" id="radio-activity-coconutshy">
+                            <label for="radio-activity-coconutshy" class="user_options_radio button_div oe-activity-card">
+                                <span class="oe-activity-icon oe-activity-icon-coconut" aria-hidden="true">
+                                    <span class="oe-ai-coco oe-ai-coco-mid"><img src="pictures/coconutHolder.svg" alt=""><span class="oe-ai-coco-num">10</span></span>
+                                    <span class="oe-ai-coco oe-ai-coco-left"><img src="pictures/coconutHolder.svg" alt=""><span class="oe-ai-coco-num">8</span></span>
+                                    <span class="oe-ai-coco oe-ai-coco-right"><img src="pictures/coconutHolder.svg" alt=""><span class="oe-ai-coco-num">7</span></span>
+                                </span>
+                                <span class="oe-activity-label" data-i18nkey="odd-and-even.options.activity.coconutshy">Find Odd and Even Game</span>
+                            </label>
+                        </fieldset>
+
+                        <!-- Audio options: 2-way toggle (webspeech / none).
+                             The Flash original shipped no recorded clips for this
+                             activity, so the project-wide tristate recorded radio
+                             is intentionally omitted here — see commit history. -->
+                        <fieldset class="options_group">
+                            <legend class="options_group_title" data-i18nkey="options.audio.legend">Audio</legend>
+                            <input type="radio" name="audio_mode" value="webspeech" id="radio-audio-webspeech" checked>
+                            <label for="radio-audio-webspeech" class="user_options_radio button_div" data-i18nkey="options.audio.webspeech">Computer voice</label>
+                            <input type="radio" name="audio_mode" value="none" id="radio-audio-none">
+                            <label for="radio-audio-none" class="user_options_radio button_div" data-i18nkey="options.audio.none">No audio</label>
+                        </fieldset>
+
+                        <fieldset class="options_group accessibility_options">
+                            <legend class="options_group_title" data-i18nkey="accessibility.heading">Accessibility</legend>
+                            <div class="oe-scan-onoff">
+                                <p class="oe-scan-label" data-i18nkey="accessibility.scanning.label">Scanning</p>
+                                <input type="radio" name="enable_scanning" value="true" id="radio-scanning-on">
+                                <label for="radio-scanning-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.on">On</label>
+                                <input type="radio" name="enable_scanning" value="false" id="radio-scanning-off" checked>
+                                <label for="radio-scanning-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.off">Off</label>
+                            </div>
+
+                            <!-- Scan sub-panel (shown only when scanning is On) -->
+                            <div id="oeScanSubPanel" class="hidden_panel dw-scan-subpanel">
+                                <fieldset class="oe-scan-switches-cell">
+                                    <legend class="sr-only" data-i18nkey="accessibility.switches.label">Number of switches</legend>
+                                    <input type="radio" name="num_switches" value="2" id="radio-switches-2">
+                                    <label for="radio-switches-2" class="user_options_radio button_div" data-i18nkey="accessibility.switches.two">Two switch</label>
+                                    <input type="radio" name="num_switches" value="1" id="radio-switches-1" checked>
+                                    <label for="radio-switches-1" class="user_options_radio button_div" data-i18nkey="accessibility.switches.one">One switch (auto)</label>
+                                </fieldset>
+                                <div id="oeScanDelayRow" class="oe-scan-delay-cell">
+                                    <p id="oe-scan-delay-label" data-i18nkey="accessibility.scan-delay.label">Scan delay (seconds)</p>
+                                    <div class="spinner_select" id="scan_delay_spinner">
+                                        <button type="button" class="spinner_down" id="scan_delay_spin_down" aria-label="Shorter scan delay" data-i18nkey-aria-label="accessibility.scan-delay.decrease">-</button>
+                                        <select name="scan_delay" id="scan_delay_sel" aria-labelledby="oe-scan-delay-label">
+                                            <option value="1000">1</option>
+                                            <option value="1500">1.5</option>
+                                            <option value="2000" selected>2</option>
+                                            <option value="2500">2.5</option>
+                                            <option value="3000">3</option>
+                                            <option value="3500">3.5</option>
+                                            <option value="4000">4</option>
+                                            <option value="4500">4.5</option>
+                                            <option value="5000">5</option>
+                                        </select>
+                                        <div class="spinner_display button_div" id="scan_delay_display">2</div>
+                                        <button type="button" class="spinner_up" id="scan_delay_spin_up" aria-label="Longer scan delay" data-i18nkey-aria-label="accessibility.scan-delay.increase">+</button>
+                                    </div>
+                                </div>
+                                <fieldset class="oe-scan-back-group">
+                                    <legend data-i18nkey="accessibility.scanback.legend">Scan back button</legend>
+                                    <input type="radio" name="oe_scan_back" value="true" id="radio-scanback-on">
+                                    <label for="radio-scanback-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.on">On</label>
+                                    <input type="radio" name="oe_scan_back" value="false" id="radio-scanback-off" checked>
+                                    <label for="radio-scanback-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.off">Off</label>
+                                </fieldset>
+                            </div>
+                        </fieldset>
+
+                    </div>
+                </form>
+
+                <!-- Activity screen — contains one sub-div per sub-activity -->
+                <div id="dwActivityScreen" class="hidden_panel oe-screen">
+                    <h1 class="sr-only" tabindex="-1" data-i18nkey="odd-and-even.welcome.title">Odd and Even</h1>
+
+                    <!-- Shared activity nav bar -->
+                    <div class="oe-activity-nav">
+                        <p id="oeInstruction" class="oe-instruction"></p>
+                    </div>
+
+                    <!-- Sub-activity A: Shoe pairing -->
+                    <div id="oeShoePairingArea" class="oe-sub-activity hidden_panel" aria-label="Shoe pairs activity" data-i18nkey-aria-label="odd-and-even.aria.shoe-pairing-area">
+                        <div class="oe-sub-header">
+                            <p id="oeShoeQuestion" class="oe-question-counter"></p>
+                        </div>
+                        <!-- Shoe display area (shoes are added by JS) -->
+                        <div id="oeShoeGrid" class="oe-shoe-grid" role="group" aria-label="Shoes to sort" data-i18nkey-aria-label="odd-and-even.aria.shoe-grid"></div>
+                        <!-- Shelf (shoes animate here) -->
+                        <div id="oeShoeShelf" class="oe-shoe-shelf" role="group" aria-label="Shelf" data-i18nkey-aria-label="odd-and-even.aria.shoe-shelf"></div>
+                        <!-- Pairing result message (shown after shoes are placed) -->
+                        <p id="oeShoeResult" class="oe-result-text hidden_panel"></p>
+                        <!-- Answer buttons -->
+                        <div id="oeShoeAnswerBtns" class="oe-answer-buttons hidden_panel">
+                            <button type="button" id="oeShoeOddBtn" class="oe-answer-btn oe-odd-btn" data-i18nkey="odd-and-even.shoe.btn.odd">Odd</button>
+                            <button type="button" id="oeShoeEvenBtn" class="oe-answer-btn oe-even-btn" data-i18nkey="odd-and-even.shoe.btn.even">Even</button>
+                        </div>
+                        <!-- Feedback -->
+                        <div id="oeShoeFeedback" class="oe-feedback hidden_panel" aria-live="assertive" aria-atomic="true">
+                            <img class="oe-feedback-frame" alt="" aria-hidden="true">
+                            <span class="oe-feedback-text"></span>
+                        </div>
+                        <!-- Next / Retry buttons. Retry uses the
+                             Flash retryButton sprite styling (gold radial
+                             gradient oval) — see .oe-shoe-retry-btn. -->
+                        <button type="button" id="oeShoeNextBtn" class="pencil_btn hidden_panel" data-i18nkey="doorway.btn.next">next</button>
+                        <button type="button" id="oeShoeRetryBtn" class="oe-shoe-retry-btn hidden_panel" data-i18nkey="odd-and-even.shoe.btn.retry">retry</button>
+                        <!-- Congratulations — mirrors Flash frame_04.as:281-289
+                             which attaches the `congratulations` clip (an
+                             "Awesome!…" bubble + balloons) on top of the
+                             existing scene while the green-box result text
+                             reads "Well done…". The HTML5 splits the static
+                             instruction (.oe-result-text) from the bubble
+                             (.oe-feedback) and adds rising Flash balloon
+                             sprites — yellow / purple / green — biased to
+                             the left and right of the central card so they
+                             don't cover the message. Repeat button removed
+                             at the user's request: at end-state the player
+                             just sees the celebration. -->
+                        <div id="oeShoeCongrats" class="oe-congratulations oe-shoe-congrats hidden_panel">
+                            <div class="oe-balloons" aria-hidden="true">
+                                <img class="oe-balloon oe-balloon-1" src="pictures/balloonYellow.svg" alt="">
+                                <img class="oe-balloon oe-balloon-2" src="pictures/balloonPurple.svg" alt="">
+                                <img class="oe-balloon oe-balloon-3" src="pictures/balloonGreen.svg" alt="">
+                                <img class="oe-balloon oe-balloon-4" src="pictures/balloonYellow.svg" alt="">
+                                <img class="oe-balloon oe-balloon-5" src="pictures/balloonPurple.svg" alt="">
+                                <img class="oe-balloon oe-balloon-6" src="pictures/balloonGreen.svg" alt="">
+                            </div>
+                            <div class="oe-shoe-congrats-card">
+                                <div class="oe-feedback oe-correct" aria-live="polite" aria-atomic="true">
+                                    <img class="oe-feedback-frame" src="pictures/messageCorrect.svg" alt="" aria-hidden="true">
+                                    <span class="oe-feedback-text" data-i18nkey="odd-and-even.shoe.congrats-bubble">Awesome! You finished the activity! Well done!</span>
+                                </div>
+                                <button type="button" id="oeShoeCongratsBackBtn" class="pencil_btn" data-pencil-dir="left" data-i18nkey="doorway.btn.back">back</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-activity B: House painting (Flash frame_05).
+                         Layout mirrors Flash: 10×2 row of unpainted houses fills the
+                         middle; paint buckets sit at bottom left (odd/red) and bottom
+                         right (even/blue) with a yellow "done" button centred between
+                         them. A cursor-following brush hovers above. -->
+                    <div id="oeHousePaintingArea" class="oe-sub-activity hidden_panel" aria-label="House painting activity" data-i18nkey-aria-label="odd-and-even.aria.house-painting-area">
+                        <!-- Houses grid (h1–h20) — populated by JS -->
+                        <div id="oeHouseGrid" class="oe-house-grid" aria-label="Houses to paint" data-i18nkey-aria-label="odd-and-even.aria.house-grid">
+                            <!-- 20 house buttons populated by JS -->
+                        </div>
+                        <!-- Bottom bar: odd bucket | done | even bucket -->
+                        <div class="oe-house-bottom">
+                            <!-- Odd paint bucket — Flash oddPaint sprite
+                                 (grey bucket + red paint surface +
+                                 baked-in "odd" label). Arrow below marks
+                                 active selection. -->
+                            <button type="button" id="oeOddPaintBtn" class="oe-paint-btn oe-odd-paint" aria-pressed="true" aria-label="Odd paint" data-i18nkey-aria-label="odd-and-even.aria.odd-paint-btn">
+                                <img class="oe-paint-bucket-img" src="pictures/bucketRed.svg" alt="" aria-hidden="true">
+                                <span class="oe-paint-arrow" aria-hidden="true"></span>
+                            </button>
+                            <!-- Done button (yellow circle), centre -->
+                            <button type="button" id="oeHouseDoneBtn" class="oe-done-circle" data-i18nkey="odd-and-even.house.btn.done">done</button>
+                            <!-- Even paint bucket — Flash evenPaint sprite
+                                 (grey bucket + blue paint surface +
+                                 baked-in "even" label). -->
+                            <button type="button" id="oeEvenPaintBtn" class="oe-paint-btn oe-even-paint" aria-pressed="false" aria-label="Even paint" data-i18nkey-aria-label="odd-and-even.aria.even-paint-btn">
+                                <img class="oe-paint-bucket-img" src="pictures/bucketBlue.svg" alt="" aria-hidden="true">
+                                <span class="oe-paint-arrow" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <!-- Cursor-following brush (Flash brush MC: frame_05.as line 30).
+                             Decorative — aria-hidden. Toggles red/blue via class. -->
+                        <img id="oeBrush" class="oe-brush oe-brush-red hidden_panel"
+                             src="pictures/brush.svg" alt="" aria-hidden="true">
+                        <!-- Drip particles container (paint drips fall from brush position).
+                             Decorative — Flash setInterval(makeDrip, 800) in frame_05.as:110. -->
+                        <div id="oeDripLayer" class="oe-drip-layer" aria-hidden="true"></div>
+                        <!-- Validation feedback (overlay) -->
+                        <div id="oeHouseFeedback" class="oe-feedback hidden_panel" aria-live="assertive" aria-atomic="true">
+                            <img class="oe-feedback-frame" alt="" aria-hidden="true">
+                            <span class="oe-feedback-text"></span>
+                        </div>
+                        <!-- Congratulations — overlays the painted scene
+                             instead of replacing it (mirrors Flash
+                             frame_05.as:180, which attaches the
+                             `congratulations` clip — Awesome bubble +
+                             balloons — on top of the existing scene).
+                             Balloons are the Flash sprites
+                             (balloonYellow/Purple/Green from sprite_81/85/89)
+                             biased to the left and right of the central
+                             card so they don't cover the message. The
+                             bubble matches the Flash congratulations.svg
+                             glyph copy; Repeat button removed — the end-
+                             state is celebration-only, with Back the only
+                             escape via the host nav bar. -->
+                        <div id="oeHouseCongrats" class="oe-congratulations oe-house-congrats hidden_panel">
+                            <div class="oe-balloons" aria-hidden="true">
+                                <img class="oe-balloon oe-balloon-1" src="pictures/balloonYellow.svg" alt="">
+                                <img class="oe-balloon oe-balloon-2" src="pictures/balloonPurple.svg" alt="">
+                                <img class="oe-balloon oe-balloon-3" src="pictures/balloonGreen.svg" alt="">
+                                <img class="oe-balloon oe-balloon-4" src="pictures/balloonYellow.svg" alt="">
+                                <img class="oe-balloon oe-balloon-5" src="pictures/balloonPurple.svg" alt="">
+                                <img class="oe-balloon oe-balloon-6" src="pictures/balloonGreen.svg" alt="">
+                            </div>
+                            <div class="oe-house-congrats-card">
+                                <div class="oe-feedback oe-correct" aria-live="polite" aria-atomic="true">
+                                    <img class="oe-feedback-frame" src="pictures/messageCorrect.svg" alt="" aria-hidden="true">
+                                    <span class="oe-feedback-text" data-i18nkey="odd-and-even.house.congrats-bubble">Awesome! You finished the activity! well done!</span>
+                                </div>
+                                <p class="oe-congrats-text" data-i18nkey="odd-and-even.house.congrats">Well done! Press back to choose another exercise.</p>
+                                <button type="button" id="oeHouseCongratsBackBtn" class="pencil_btn" data-pencil-dir="left" data-i18nkey="doorway.btn.back">back</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-activity C: Ladybird sorting (Flash frame_06).
+                         Layout mirrors Flash: green meadow blob covers the main
+                         play area with 10 ladybirds scattered on it; two large
+                         leaves (red odd left, blue even right) span the bottom
+                         with a yellow "done" button between them. -->
+                    <div id="oeLadbirdSortingArea" class="oe-sub-activity hidden_panel" aria-label="Ladybird sorting activity" data-i18nkey-aria-label="odd-and-even.aria.ladybird-sorting-area">
+                        <!-- Sorting phase (phase 1) -->
+                        <div id="oeLadybirdSortPhase" class="oe-ladybird-phase">
+                            <!-- Meadow stage: ladybirds scattered on green blob -->
+                            <div id="oeLadybirdArea" class="oe-ladybird-area" aria-label="Ladybirds to sort" data-i18nkey-aria-label="odd-and-even.aria.ladybird-area">
+                                <img class="oe-meadow-bg" src="pictures/meadowBlob.svg" alt="" aria-hidden="true">
+                                <!-- Ladybirds (lb1–lb10 positioned by JS) -->
+                            </div>
+                            <!-- Bottom row: red leaf | done | blue leaf, leaves overlap -->
+                            <div class="oe-leaves-row">
+                                <button type="button" id="oeOddLeaf" class="oe-leaf-btn oe-odd-leaf" aria-label="Odd leaf — place odd-numbered ladybirds here" data-i18nkey-aria-label="odd-and-even.aria.odd-leaf">
+                                    <img src="pictures/leafStemRed.svg" class="oe-leaf-stem" alt="" aria-hidden="true">
+                                    <img src="pictures/leafLeft.svg" class="oe-leaf-img" alt="" aria-hidden="true">
+                                    <span class="oe-leaf-label" data-i18nkey="odd-and-even.ladybird.leaf.odd">odd</span>
+                                </button>
+                                <button type="button" id="oeLadybirdDoneBtn" class="oe-done-circle oe-leaf-done-btn" data-i18nkey="odd-and-even.ladybird.btn.done">done</button>
+                                <button type="button" id="oeEvenLeaf" class="oe-leaf-btn oe-even-leaf" aria-label="Even leaf — place even-numbered ladybirds here" data-i18nkey-aria-label="odd-and-even.aria.even-leaf">
+                                    <img src="pictures/leafStemBlue.svg" class="oe-leaf-stem" alt="" aria-hidden="true">
+                                    <img src="pictures/leafRight.svg" class="oe-leaf-img" alt="" aria-hidden="true">
+                                    <span class="oe-leaf-label" data-i18nkey="odd-and-even.ladybird.leaf.even">even</span>
+                                </button>
+                            </div>
+                            <!-- Validation feedback (floating overlay) -->
+                            <div id="oeLadybirdFeedback" class="oe-feedback hidden_panel" aria-live="assertive" aria-atomic="true">
+                                <img class="oe-feedback-frame" alt="" aria-hidden="true">
+                                <span class="oe-feedback-text"></span>
+                            </div>
+                        </div>
+                        <!-- Number line phase (phase 2) — overlay shown after
+                             all-correct sort. The line itself sits over the
+                             leaves + sorted ladybirds (Flash frame_06.as:435
+                             attaches numberLine over the existing scene). -->
+                        <div id="oeLadybirdLinePhase" class="oe-ladybird-phase hidden_panel">
+                            <div id="oeNumberLine" class="oe-number-line" aria-label="Number line" data-i18nkey-aria-label="odd-and-even.aria.number-line">
+                                <!-- Number line SVG image and slot targets populated by JS in Phase 2 -->
+                            </div>
+                            <!-- Pattern call-out shown once all 10 ladybirds
+                                 are placed on the line. Content populated in
+                                 ladybird-sort.js via innerHTML so the inline
+                                 colour spans (oe-c-red / oe-c-blue) render —
+                                 data-i18nkey on a <p> uses textContent which
+                                 would print the span markup literally. -->
+                            <p id="oeNumberLineInfo" class="oe-result-text hidden_panel"></p>
+                            <!-- No separate line-phase Done button: the
+                                 existing gold #oeLadybirdDoneBtn in the
+                                 leaves row is reused (Flash frame_06.as:401
+                                 reuses the same checkButton across both
+                                 phases). onClickDone in ladybird-sort.js
+                                 branches on phase. -->
+                        </div>
+                        <!-- Congratulations — Flash frame_06.as:411 attaches
+                             the congratulations MC on top of the existing
+                             meadow + leaves + sorted ladybirds + number line.
+                             Balloons are the Flash sprites
+                             (balloonYellow/Purple/Green from sprite_81/85/89)
+                             biased to the left and right of the central card
+                             so they don't cover the message. The bubble
+                             matches the Flash congratulations.svg glyph
+                             copy; Repeat button removed — end-state is
+                             celebration-only, with Back the only escape via
+                             the host nav bar. -->
+                        <div id="oeLadybirdCongrats" class="oe-congratulations oe-ladybird-congrats hidden_panel">
+                            <div class="oe-balloons" aria-hidden="true">
+                                <img class="oe-balloon oe-balloon-1" src="pictures/balloonYellow.svg" alt="">
+                                <img class="oe-balloon oe-balloon-2" src="pictures/balloonPurple.svg" alt="">
+                                <img class="oe-balloon oe-balloon-3" src="pictures/balloonGreen.svg" alt="">
+                                <img class="oe-balloon oe-balloon-4" src="pictures/balloonYellow.svg" alt="">
+                                <img class="oe-balloon oe-balloon-5" src="pictures/balloonPurple.svg" alt="">
+                                <img class="oe-balloon oe-balloon-6" src="pictures/balloonGreen.svg" alt="">
+                            </div>
+                            <div class="oe-ladybird-congrats-card">
+                                <div class="oe-feedback oe-correct" aria-live="polite" aria-atomic="true">
+                                    <img class="oe-feedback-frame" src="pictures/messageCorrect.svg" alt="" aria-hidden="true">
+                                    <span class="oe-feedback-text" data-i18nkey="odd-and-even.ladybird.congrats-bubble">Awesome! You finished the activity! well done!</span>
+                                </div>
+                                <p class="oe-congrats-text" data-i18nkey="odd-and-even.ladybird.congrats">Well done! Press back to choose another activity.</p>
+                                <button type="button" id="oeLadybirdCongratsBackBtn" class="pencil_btn" data-pencil-dir="left" data-i18nkey="doorway.btn.back">back</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-activity D: 100-square tutorial (Flash frame_07).
+                         Layout mirrors Flash: 100-square grid on the LEFT,
+                         a column of 4 leaf-shaped page tabs on the RIGHT.
+                         A small ladybird marker hops between the tabs as the
+                         user advances. Instruction text is shown above the
+                         square (Flash had it in an infoText box at the top). -->
+                    <div id="oeTutorialArea" class="oe-sub-activity hidden_panel" aria-label="Odd and even tutorial" data-i18nkey-aria-label="odd-and-even.aria.tutorial-area">
+                        <!-- Instruction text bar (Flash infoText box). Width is
+                             constrained in CSS so the longest panel (panel 3)
+                             wraps to two lines; the row reserves two lines of
+                             height so panels 1-4 don't reflow the layout. -->
+                        <div id="oeTutorialPanel" class="oe-tutorial-panel">
+                            <p id="oeTutorialText" class="oe-tutorial-text"></p>
+                        </div>
+                        <!-- Body: 100-square left, page-tabs + next button right -->
+                        <div class="oe-tutorial-body">
+                            <!-- 100-square grid (cells s1–s100 populated by JS) -->
+                            <div id="oe100Square" class="oe-100-square" aria-label="100 square — odd numbers red, even numbers blue" data-i18nkey-aria-label="odd-and-even.aria.100-square"></div>
+                            <!-- Right column: page-tab leaves + next button.
+                                 Flash leaf1..leaf4 — each step reveals the next
+                                 oval (frame_07.as:36-51). A "marker" tweens
+                                 between visible ovals (ladyBirdMove —
+                                 frame_07.as:58-61). The gold "next" oval sits
+                                 under the tabs (HTML5 only — Flash placed the
+                                 pencil next button bottom-right; moving it
+                                 frees vertical space and groups the page
+                                 navigation together). -->
+                            <div class="oe-tutorial-right-col">
+                                <div class="oe-tutorial-tabs">
+                                    <button type="button" class="oe-tutorial-tab" data-page="1"><span class="oe-tab-num">1</span><span class="oe-tab-dot">.</span></button>
+                                    <button type="button" class="oe-tutorial-tab oe-tutorial-tab-pending" data-page="2"><span class="oe-tab-num">2</span><span class="oe-tab-dot">.</span></button>
+                                    <button type="button" class="oe-tutorial-tab oe-tutorial-tab-pending" data-page="3"><span class="oe-tab-num">3</span><span class="oe-tab-dot">.</span></button>
+                                    <button type="button" class="oe-tutorial-tab oe-tutorial-tab-pending" data-page="4"><span class="oe-tab-num">4</span><span class="oe-tab-dot">.</span></button>
+                                    <span id="oeTutorialLadybird" class="oe-tutorial-marker" aria-hidden="true"></span>
+                                </div>
+                                <!-- Gold oval "next" button under the tabs.
+                                     Replaces the pencil at the bottom of the
+                                     screen — same gold styling as the done /
+                                     retry buttons in the other sub-activities. -->
+                                <button type="button" id="oeTutorialNextBtn" class="oe-done-circle oe-tutorial-next" data-i18nkey="doorway.btn.next">next</button>
+                            </div>
+                        </div>
+                        <!-- Congratulations (page 4) — Flash frame_07.as:101
+                             attaches the congratulations clip (Awesome bubble +
+                             balloons) on top of the existing tutorial scene.
+                             Balloons are the Flash sprites
+                             (balloonYellow/Purple/Green from sprite_81/85/89)
+                             biased to the left and right of the central card
+                             so they don't cover the message. The bubble matches
+                             the Flash congratulations.svg glyph copy; Repeat
+                             button removed — end-state is celebration-only,
+                             with Back the only escape via the host nav bar.
+                             The Flash tutorial-specific congratulationsTutorial
+                             glyph is no longer used: project policy now uses
+                             the shared congratulations bubble across all five
+                             sub-activities. -->
+                        <div id="oeTutorialCongrats" class="oe-congratulations oe-tutorial-congrats hidden_panel">
+                            <div class="oe-balloons" aria-hidden="true">
+                                <img class="oe-balloon oe-balloon-1" src="pictures/balloonYellow.svg" alt="">
+                                <img class="oe-balloon oe-balloon-2" src="pictures/balloonPurple.svg" alt="">
+                                <img class="oe-balloon oe-balloon-3" src="pictures/balloonGreen.svg" alt="">
+                                <img class="oe-balloon oe-balloon-4" src="pictures/balloonYellow.svg" alt="">
+                                <img class="oe-balloon oe-balloon-5" src="pictures/balloonPurple.svg" alt="">
+                                <img class="oe-balloon oe-balloon-6" src="pictures/balloonGreen.svg" alt="">
+                            </div>
+                            <div class="oe-tutorial-congrats-card">
+                                <div class="oe-feedback oe-correct" aria-live="polite" aria-atomic="true">
+                                    <img class="oe-feedback-frame" src="pictures/messageCorrect.svg" alt="" aria-hidden="true">
+                                    <span class="oe-feedback-text" data-i18nkey="odd-and-even.tutorial.congrats-bubble">Awesome! You finished the activity! well done!</span>
+                                </div>
+                                <p class="oe-congrats-text" data-i18nkey="odd-and-even.tutorial.panel.4">4. Well done! You have finished this tutorial. Press back to choose another exercise.</p>
+                                <button type="button" id="oeTutorialCongratsBackBtn" class="pencil_btn" data-pencil-dir="left" data-i18nkey="doorway.btn.back">back</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-activity E: Coconut shy (Flash frame_08).
+                         Layout mirrors Flash: green curtain at top, sky-blue
+                         background with horizon strip and ochre ground at bottom,
+                         coconuts on blue posts arranged in two rows of 5. Lives
+                         (hearts) bottom-left, level pyramid bottom-right. -->
+                    <div id="oeCoconutShyArea" class="oe-sub-activity hidden_panel" aria-label="Coconut shy activity" data-i18nkey-aria-label="odd-and-even.aria.coconut-shy-area">
+                        <!-- The whole sub-activity is a scene with the curtain
+                             and coconuts; status overlay sits on top. -->
+                        <div id="oeCoconutScene" class="oe-coconut-scene" aria-label="Coconut shy" data-i18nkey-aria-label="odd-and-even.aria.coconut-scene">
+                            <!-- Curtain (Flash sprite_311 — green theatre curtain
+                                 covers top corners). Decorative. -->
+                            <img class="oe-curtain-bg" src="pictures/coconutCurtain.svg" alt="" aria-hidden="true">
+                            <!-- Instruction text (top centre, sits over the sky). -->
+                            <p id="oeCoconutInstruction" class="oe-coconut-instruction"></p>
+                            <!-- 10 coconut targets added by JS -->
+                            <!-- Ball animation layer — mirrors Flash throwBall (frame_08.as:477). -->
+                            <div id="oeBallLayer" class="oe-ball-layer" aria-hidden="true"></div>
+                            <!-- Curtain transition — drops down between
+                                 levels and after Try Again so the user
+                                 doesn't see the next round's coconuts
+                                 pop in. Driven by JS adding/removing
+                                 oe-transition-active. Decorative — the
+                                 outcome is also conveyed by the
+                                 level-complete feedback bubble + spoken
+                                 announcement. -->
+                            <img id="oeCoconutCurtainTransition" class="oe-curtain-transition" src="pictures/coconutCurtain.svg" alt="" aria-hidden="true">
+                            <!-- Lives (hearts) — bottom-left, with label -->
+                            <div class="oe-coconut-lives-wrap" role="status">
+                                <div id="oeCoconutLivesDisplay" class="oe-lives-display" aria-label="Lives remaining" data-i18nkey-aria-label="odd-and-even.aria.coconut-lives-display">
+                                    <!-- 3 life icons populated by JS -->
+                                </div>
+                                <span id="oeCoconutLivesLabel" class="oe-coconut-status-label">Lives: 3</span>
+                            </div>
+                            <!-- Level pyramid — bottom-right, with label.
+                                 Label text is set by JS each level render so
+                                 the {count} placeholder resolves to the
+                                 current level. -->
+                            <div class="oe-coconut-level-wrap" role="status">
+                                <div id="oeCoconutLevelIcons" class="oe-level-icons oe-level-pyramid" aria-label="Levels completed" data-i18nkey-aria-label="odd-and-even.aria.coconut-level-icons">
+                                    <!-- 10 mini-coconut icons in a pyramid populated by JS -->
+                                </div>
+                                <span id="oeCoconutLevelLabel" class="oe-coconut-status-label">Level: 1</span>
+                            </div>
+                            <!-- Level-complete feedback — sits on top of the
+                                 graphic, white background. Centred in the
+                                 scene via absolute positioning (CSS). -->
+                            <div id="oeCoconutLevelFeedback" class="oe-feedback oe-level-complete hidden_panel" aria-live="assertive" aria-atomic="true">
+                                <img class="oe-feedback-frame" alt="" aria-hidden="true">
+                                <span class="oe-feedback-text"></span>
+                            </div>
+                        </div>
+                        <!-- Game over — wraps the messageIncorrect.svg
+                             bubble (Flash uses the same sprite for fail
+                             states) around the dynamic "Out of lives!"
+                             text and the Try Again button. -->
+                        <div id="oeCoconutGameOver" class="oe-game-over hidden_panel">
+                            <div class="oe-feedback oe-incorrect">
+                                <img class="oe-feedback-frame" src="pictures/messageIncorrect.svg" alt="" aria-hidden="true">
+                                <span class="oe-feedback-text" data-i18nkey="odd-and-even.coconut.game-over">Out of lives! Try again?</span>
+                            </div>
+                            <button type="button" id="oeCoconutRetryBtn" class="main_button" data-i18nkey="odd-and-even.coconut.btn.retry">Try again</button>
+                        </div>
+                        <!-- Congratulations — overlays the coconut scene
+                             (Flash frame_08.as attaches the congratulations
+                             clip on top of the existing scene). Balloons are
+                             the Flash sprites (balloonYellow/Purple/Green
+                             from sprite_81/85/89) biased to the left and
+                             right of the central card so they don't cover
+                             the message. The bubble matches the Flash
+                             congratulations.svg glyph copy; Repeat button
+                             removed — end-state is celebration-only, with
+                             Back the only escape via the host nav bar. -->
+                        <div id="oeCoconutCongrats" class="oe-congratulations oe-coconut-end hidden_panel">
+                            <div class="oe-balloons" aria-hidden="true">
+                                <img class="oe-balloon oe-balloon-1" src="pictures/balloonYellow.svg" alt="">
+                                <img class="oe-balloon oe-balloon-2" src="pictures/balloonPurple.svg" alt="">
+                                <img class="oe-balloon oe-balloon-3" src="pictures/balloonGreen.svg" alt="">
+                                <img class="oe-balloon oe-balloon-4" src="pictures/balloonYellow.svg" alt="">
+                                <img class="oe-balloon oe-balloon-5" src="pictures/balloonPurple.svg" alt="">
+                                <img class="oe-balloon oe-balloon-6" src="pictures/balloonGreen.svg" alt="">
+                            </div>
+                            <div class="oe-coconut-congrats-card">
+                                <div class="oe-feedback oe-correct" aria-live="polite" aria-atomic="true">
+                                    <img class="oe-feedback-frame" src="pictures/messageCorrect.svg" alt="" aria-hidden="true">
+                                    <span class="oe-feedback-text" data-i18nkey="odd-and-even.coconut.congrats-bubble">Awesome! You finished the activity! well done!</span>
+                                </div>
+                                <p class="oe-congrats-text" data-i18nkey="odd-and-even.coconut.congrats">Well done! You have finished the game. Click back to choose another exercise.</p>
+                                <button type="button" id="oeCoconutCongratsBackBtn" class="pencil_btn" data-pencil-dir="left" data-i18nkey="doorway.btn.back">back</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Shared framework elements -->
+                <div id="dwMainApp" style="display:none;"></div>
+                <div id="dwDarkenedPanel" class="darkened_panel hidden_panel"></div>
+                <div id="dwWellDone" class="well_done_message hidden_panel">
+                    <p class="instruction_message"></p>
+                </div>
+
+            </main>
+
+            <!-- Shared page footer (contentinfo landmark). Sibling of <main>,
+                 so <footer> gets its implicit contentinfo role. Action buttons
+                 visibility per screen via CSS: enter on welcome; home+start on
+                 options; whole footer hidden on activity. -->
+            <footer class="dw-app-footer">
+                <div class="dw-action-footer">
+                    <button id="dwEnterButton" class="pencil_btn" data-i18nkey="doorway.btn.enter">enter</button>
+                    <button type="button" id="dwHomeButton" class="pencil_btn" data-pencil-dir="left" data-i18nkey="doorway.btn.home">home</button>
+                    <button type="button" id="dwSubmitUserOptions" class="pencil_btn" data-i18nkey="doorway.btn.start">start</button>
+                </div>
+                <p class="copyright_message" data-i18nkey="doorway.copyright">© CALL Scotland, University of Edinburgh 2026</p>
+            </footer>
+            </div><!-- doorway_aspect_div -->
+        </div><!-- doorway_aspect_outer_div -->
+    </div><!-- doorway_fullscreen_div -->
+</div><!-- doorway_application -->
+</body>
+</html>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 124" width="21" height="124">
+  <!-- Minute hand: 4 vertices (tip 10.5,1 / right widest 20,25 / pivot 10.5,123 / left widest 1,25)
+       with quadratic Bezier edges curving inward (concave) between each pair. -->
+  <path d="M 10.5 1
+           Q 13.5 14, 20 25
+           Q 12 75, 10.5 123
+           Q 9 75, 1 25
+           Q 7.5 14, 10.5 1
+           Z"
+        fill="#d8302a" stroke="#000" stroke-width="3" stroke-linejoin="miter" stroke-miterlimit="10"/>
+</svg>

@@ -1,0 +1,1568 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:ffdec="https://www.free-decompiler.com/flash" xmlns:xlink="http://www.w3.org/1999/xlink" ffdec:objectType="frame" height="67.5px" width="90.6px" xmlns="http://www.w3.org/2000/svg">
+  <g transform="matrix(1.0, 0.0, 0.0, 1.0, 36.15, 62.0)">
+    <use ffdec:characterId="39" height="59.1" transform="matrix(1.0, 0.0, 0.0, 1.0, 17.05, -5.1)" width="56.4" xlink:href="#sprite0"/>
+    <use ffdec:characterId="39" height="59.1" transform="matrix(1.0, 0.0, 0.0, 1.0, -10.55, -1.5)" width="56.4" xlink:href="#sprite35"/>
+    <use ffdec:characterId="39" height="59.1" transform="matrix(1.0, 0.0, 0.0, 1.0, 23.65, 3.3)" width="56.4" xlink:href="#sprite70"/>
+  </g>
+  <defs>
+    <g id="sprite0">
+      <use ffdec:characterId="35" height="59.1" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="51.65" xlink:href="#shape0"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2243, 0.0, 0.0, 0.2071, 19.2, -13.75)" width="35.8" xlink:href="#sprite1"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0581, 0.2, -0.2167, -0.0536, 15.8, -13.8)" width="35.8" xlink:href="#sprite2"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2167, 0.0536, -0.0581, 0.2, 17.7, -4.15)" width="35.8" xlink:href="#sprite3"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1943, -0.1036, 0.1122, 0.1794, 21.55, -19.55)" width="35.8" xlink:href="#sprite4"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2167, 0.0536, -0.0581, 0.2, -20.35, -18.5)" width="35.8" xlink:href="#sprite5"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0581, 0.2001, -0.2167, 0.0536, -23.2, -15.8)" width="35.8" xlink:href="#sprite6"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0581, 0.2001, -0.2167, -0.0536, -22.9, -12.7)" width="35.8" xlink:href="#sprite7"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0912, 0.1892, -0.205, 0.0842, -22.65, -5.9)" width="35.8" xlink:href="#sprite8"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1712, 0.1339, -0.145, 0.158, -16.7, -18.85)" width="35.8" xlink:href="#sprite9"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.224, -0.0114, 0.0124, 0.2068, -15.8, -12.75)" width="35.8" xlink:href="#sprite10"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0876, 0.1907, -0.2066, 0.0808, -18.3, -10.05)" width="35.8" xlink:href="#sprite11"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1815, 0.1218, -0.1319, 0.1675, -16.65, -3.05)" width="35.8" xlink:href="#sprite12"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0982, 0.1862, -0.2017, -0.0907, -11.35, -12.8)" width="35.8" xlink:href="#sprite13"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0506, 0.2018, -0.2186, 0.0467, -12.5, -6.15)" width="35.8" xlink:href="#sprite14"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1405, 0.1615, -0.1749, 0.1297, -3.95, -17.85)" width="35.8" xlink:href="#sprite15"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2223, 0.0281, -0.0305, 0.2052, -5.05, -12.0)" width="35.8" xlink:href="#sprite16"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.2237, -0.016, 0.0174, -0.2065, 7.9, -23.9)" width="35.8" xlink:href="#sprite17"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.1848, 0.1175, -0.1272, -0.1705, 0.5, -18.7)" width="35.8" xlink:href="#sprite18"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.1112, 0.1799, -0.1948, -0.1026, 11.25, -16.1)" width="35.8" xlink:href="#sprite19"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0532, 0.2012, -0.2179, 0.0491, 4.6, -17.3)" width="35.8" xlink:href="#sprite20"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2243, 0.0, 0.0, 0.2071, 0.45, -8.95)" width="35.8" xlink:href="#sprite21"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0581, 0.2, -0.2167, -0.0536, -2.95, -9.05)" width="35.8" xlink:href="#sprite22"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2167, 0.0536, -0.0581, 0.2, -2.35, -0.6)" width="35.8" xlink:href="#sprite23"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.1112, 0.1799, -0.1948, -0.1026, -7.45, -8.9)" width="35.8" xlink:href="#sprite24"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0581, 0.2001, -0.2167, -0.0536, -13.85, -17.9)" width="35.8" xlink:href="#sprite25"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.224, -0.0114, 0.0124, 0.2068, -6.45, -17.3)" width="35.8" xlink:href="#sprite26"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1405, 0.1615, -0.1749, 0.1297, 6.25, -11.0)" width="35.8" xlink:href="#sprite27"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2223, 0.0281, -0.0305, 0.2052, 5.2, -5.15)" width="35.8" xlink:href="#sprite28"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2243, 0.0, 0.0, 0.2071, 11.05, -1.4)" width="35.8" xlink:href="#sprite29"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1405, 0.1615, -0.1749, 0.1297, 11.05, -19.0)" width="35.8" xlink:href="#sprite30"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2223, 0.0281, -0.0305, 0.2052, 4.05, -1.1)" width="35.8" xlink:href="#sprite31"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1943, 0.1036, -0.1122, 0.1794, 12.05, -5.05)" width="35.8" xlink:href="#sprite32"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1356, 0.1649, -0.1787, 0.1252, -0.5, -18.85)" width="35.8" xlink:href="#sprite33"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1531, 0.1514, -0.164, 0.1413, -11.1, -2.25)" width="35.8" xlink:href="#sprite34"/>
+      <use ffdec:characterId="38" height="10.0" transform="matrix(1.05, 0.0, 0.0, 1.05, -75.65, -40.5)" width="51.45" xlink:href="#text0"/>
+    </g>
+    <g id="shape0">
+      <path d="M-23.7 -52.45 Q-22.1 -53.7 -17.4 -54.75 L-9.85 -56.0 0.25 -56.4 10.35 -56.0 17.7 -54.75 Q22.4 -53.7 24.15 -52.45 23.55 -51.9 22.5 -51.5 L20.45 -50.9 19.3 -51.5 15.45 -52.75 Q9.1 -54.35 0.2 -54.35 -8.75 -54.35 -15.05 -52.75 L-18.9 -51.5 -20.15 -50.9 -22.1 -51.5 Q-23.1 -51.9 -23.7 -52.45 -23.1 -51.9 -22.1 -51.5 L-20.15 -50.9 -18.9 -51.5 -15.05 -52.75 Q-8.75 -54.35 0.2 -54.35 9.1 -54.35 15.45 -52.75 L19.3 -51.5 20.45 -50.9 22.5 -51.5 Q23.55 -51.9 24.15 -52.45 L24.9 -51.5 25.0 -50.9 24.95 -50.55 24.9 -50.35 Q24.55 -49.65 23.6 -49.05 21.75 -47.9 17.7 -47.05 10.45 -45.5 0.25 -45.5 -10.05 -45.5 -17.4 -47.05 -21.35 -47.9 -23.1 -49.05 -24.2 -49.75 -24.45 -50.55 L-24.55 -50.85 -24.55 -51.1 -24.45 -51.3 -24.4 -51.5 -23.7 -52.45 M24.55 -8.2 Q25.55 -7.15 25.55 -5.95 25.55 -2.85 18.2 -0.65 10.75 1.7 0.25 1.7 -10.2 1.7 -17.6 -0.65 -25.1 -2.85 -25.1 -5.95 -25.1 -7.0 -24.25 -8.0 L-24.25 -7.9 Q-24.25 -4.75 -17.1 -2.55 -9.9 -0.25 0.25 -0.25 10.3 -0.25 17.45 -2.55 24.6 -4.75 24.6 -7.9 L24.55 -8.2 M-20.15 -50.9 L-17.4 -50.05 -11.5 -49.05 0.25 -48.4 11.9 -49.05 17.7 -50.05 Q19.3 -50.4 20.45 -50.9 19.3 -50.4 17.7 -50.05 L11.9 -49.05 0.25 -48.4 -11.5 -49.05 -17.4 -50.05 -20.15 -50.9" fill="#cccccc" fill-rule="evenodd" stroke="none"/>
+      <path d="M24.7 -25.25 L24.55 -8.2 24.6 -7.9 Q24.6 -4.75 17.45 -2.55 10.3 -0.25 0.25 -0.25 -9.9 -0.25 -17.1 -2.55 -24.25 -4.75 -24.25 -7.9 L-24.25 -8.0 -24.3 -27.0 -24.3 -25.25 -11.95 -25.25 0.25 -24.5 12.35 -25.25 24.7 -25.25" fill="url(#gradient0)" fill-rule="evenodd" stroke="none"/>
+      <path d="M24.95 -50.35 L24.85 -43.1 24.8 -43.1 24.85 -42.8 24.85 -40.65 24.8 -40.85 -24.35 -40.85 -24.35 -40.25 -24.45 -40.25 -24.55 -50.55 -24.45 -50.55 Q-24.2 -49.75 -23.1 -49.05 -21.35 -47.9 -17.4 -47.05 -10.05 -45.5 0.25 -45.5 10.45 -45.5 17.7 -47.05 21.75 -47.9 23.6 -49.05 24.55 -49.65 24.9 -50.35 L24.95 -50.35 M-24.4 -43.1 L-24.45 -43.1 -24.45 -42.15 -24.45 -41.15 -24.4 -41.15 -24.4 -42.05 -24.35 -42.05 -24.35 -42.15 -24.35 -43.1 -24.4 -43.1" fill="url(#gradient1)" fill-rule="evenodd" stroke="none"/>
+      <path d="M-24.45 -51.3 L-24.45 -51.5 -24.4 -51.5 -24.45 -51.3" fill="url(#gradient2)" fill-rule="evenodd" stroke="none"/>
+      <path d="M24.75 -29.6 L24.7 -25.25 12.35 -25.25 17.7 -26.25 Q23.45 -27.8 24.75 -29.6 M-24.3 -27.0 L-24.3 -30.1 -24.0 -29.55 Q-22.65 -27.65 -17.4 -26.25 L-11.95 -25.25 -24.3 -25.25 -24.3 -27.0" fill="url(#gradient3)" fill-rule="evenodd" stroke="none"/>
+      <path d="M24.85 -40.65 L24.85 -40.55 24.85 -40.45 24.8 -34.6 24.8 -37.1 -24.35 -37.1 -24.4 -39.7 -24.4 -39.8 -24.35 -39.8 -24.35 -40.25 -24.35 -40.85 24.8 -40.85 24.85 -40.65" fill="url(#gradient4)" fill-rule="evenodd" stroke="none"/>
+      <path d="M24.85 -43.1 L24.85 -42.8 24.8 -43.1 24.85 -43.1 M-24.45 -43.1 L-24.4 -43.1 -24.4 -42.15 -24.45 -42.15 -24.45 -43.1" fill="url(#gradient5)" fill-rule="evenodd" stroke="none"/>
+      <path d="M-24.4 -43.1 L-24.35 -43.1 -24.35 -42.15 -24.4 -43.1" fill="url(#gradient6)" fill-rule="evenodd" stroke="none"/>
+      <path d="M-24.35 -42.15 L-24.35 -42.05 -24.4 -42.05 -24.4 -42.15 -24.4 -43.1 -24.35 -42.15" fill="url(#gradient7)" fill-rule="evenodd" stroke="none"/>
+      <path d="M-24.4 -42.05 L-24.4 -41.15 -24.45 -41.15 -24.45 -42.15 -24.4 -42.15 -24.4 -42.05" fill="url(#gradient8)" fill-rule="evenodd" stroke="none"/>
+      <path d="M24.75 -33.4 L24.8 -33.4 24.8 -32.85 24.75 -32.85 24.75 -33.4 M24.75 -31.0 L24.75 -29.6 Q23.45 -27.8 17.7 -26.25 L12.35 -25.25 0.25 -24.5 -11.95 -25.25 -17.4 -26.25 Q-22.65 -27.65 -24.0 -29.55 L-24.3 -30.1 -24.35 -30.15 -24.35 -31.0 24.75 -31.0" fill="url(#gradient9)" fill-rule="evenodd" stroke="none"/>
+      <path d="M24.8 -34.6 L24.75 -33.4 24.75 -32.85 24.75 -31.0 -24.35 -31.0 -24.35 -34.6 -24.35 -36.45 -24.35 -36.75 -24.35 -37.1 24.8 -37.1 24.8 -34.6" fill="url(#gradient10)" fill-rule="evenodd" stroke="none"/>
+      <path d="M24.15 -52.45 Q22.4 -53.7 17.7 -54.75 L10.35 -56.0 0.25 -56.4 -9.85 -56.0 -17.4 -54.75 Q-22.1 -53.7 -23.7 -52.45 -23.1 -51.9 -22.1 -51.5 L-20.15 -50.9 -18.9 -51.5 -15.05 -52.75 Q-8.75 -54.35 0.2 -54.35 9.1 -54.35 15.45 -52.75 L19.3 -51.5 20.45 -50.9 22.5 -51.5 Q23.55 -51.9 24.15 -52.45 L24.9 -51.5 25.0 -50.9 24.95 -50.55 24.95 -50.35 24.85 -43.1 M24.85 -42.8 L24.85 -40.65 M24.85 -40.45 L24.8 -34.6 24.75 -33.4 24.75 -32.85 24.75 -31.0 24.75 -29.6 24.7 -25.25 24.55 -8.2 Q25.55 -7.15 25.55 -5.95 25.55 -2.85 18.2 -0.65 10.75 1.7 0.25 1.7 -10.2 1.7 -17.6 -0.65 -25.1 -2.85 -25.1 -5.95 -25.1 -7.0 -24.25 -8.0 L-24.3 -27.0 -24.3 -30.1 -24.35 -30.15 -24.35 -31.0 -24.35 -34.6 -24.35 -36.45 -24.35 -36.75 -24.35 -37.1 -24.4 -39.7 M24.8 -33.4 L24.8 -32.85 M-24.45 -40.25 L-24.55 -50.55 -24.55 -50.85 -24.55 -51.1 -24.45 -51.3 -24.45 -51.5 M-24.4 -51.5 L-23.7 -52.45 M24.95 -50.55 L24.9 -50.35 Q24.55 -49.65 23.6 -49.05 21.75 -47.9 17.7 -47.05 10.45 -45.5 0.25 -45.5 -10.05 -45.5 -17.4 -47.05 -21.35 -47.9 -23.1 -49.05 -24.2 -49.75 -24.45 -50.55 L-24.55 -50.85 M20.45 -50.9 Q19.3 -50.4 17.7 -50.05 L11.9 -49.05 0.25 -48.4 -11.5 -49.05 -17.4 -50.05 -20.15 -50.9 M24.8 -34.6 L24.8 -37.1 M12.35 -25.25 L17.7 -26.25 Q23.45 -27.8 24.75 -29.6 M-24.25 -8.0 L-24.25 -7.9 Q-24.25 -4.75 -17.1 -2.55 -9.9 -0.25 0.25 -0.25 10.3 -0.25 17.45 -2.55 24.6 -4.75 24.6 -7.9 L24.55 -8.2 M12.35 -25.25 L0.25 -24.5 -11.95 -25.25 -17.4 -26.25 Q-22.65 -27.65 -24.0 -29.55 L-24.3 -30.1 M-24.3 -25.25 L-24.3 -27.0 M-24.4 -51.5 L-24.45 -51.3 M-24.35 -42.15 L-24.35 -42.05 M-24.45 -41.15 L-24.45 -42.15 -24.45 -43.1 M-24.4 -42.05 L-24.4 -42.15 -24.4 -43.1 -24.35 -42.15" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.0"/>
+    </g>
+    <linearGradient gradientTransform="matrix(0.0302, 0.0, 0.0, 0.0513, 0.2, -42.3)" gradientUnits="userSpaceOnUse" id="gradient0" spreadMethod="pad" x1="-819.2" x2="819.2">
+      <stop offset="0.0" stop-color="#eecb04"/>
+      <stop offset="0.3333333333333333" stop-color="#fafe56"/>
+      <stop offset="0.6235294117647059" stop-color="#f3fc5a"/>
+      <stop offset="0.9921568627450981" stop-color="#efd10d"/>
+    </linearGradient>
+    <linearGradient gradientTransform="matrix(0.0302, 0.0, 0.0, 0.0226, 0.15, -32.0)" gradientUnits="userSpaceOnUse" id="gradient1" spreadMethod="pad" x1="-819.2" x2="819.2">
+      <stop offset="0.0" stop-color="#438047"/>
+      <stop offset="0.3333333333333333" stop-color="#63b759"/>
+      <stop offset="0.6235294117647059" stop-color="#60b457"/>
+      <stop offset="1.0" stop-color="#48814b"/>
+    </linearGradient>
+    <linearGradient gradientTransform="matrix(0.0302, 0.0, 0.0, 0.0707, 0.2, -18.5)" gradientUnits="userSpaceOnUse" id="gradient2" spreadMethod="pad" x1="-819.2" x2="819.2">
+      <stop offset="0.0" stop-color="#03aed2"/>
+      <stop offset="0.3333333333333333" stop-color="#07d1fc"/>
+      <stop offset="0.6235294117647059" stop-color="#07cffa"/>
+      <stop offset="1.0" stop-color="#03aed2"/>
+    </linearGradient>
+    <linearGradient gradientTransform="matrix(0.0302, 0.0, 0.0, 0.0584, 0.2, -42.65)" gradientUnits="userSpaceOnUse" id="gradient3" spreadMethod="pad" x1="-819.2" x2="819.2">
+      <stop offset="0.0" stop-color="#eecb04"/>
+      <stop offset="0.3333333333333333" stop-color="#fafe56"/>
+      <stop offset="0.6235294117647059" stop-color="#f3fc5a"/>
+      <stop offset="0.9921568627450981" stop-color="#efd10d"/>
+    </linearGradient>
+    <linearGradient gradientTransform="matrix(0.0302, 0.0, 0.0, 0.0399, 0.15, -53.95)" gradientUnits="userSpaceOnUse" id="gradient4" spreadMethod="pad" x1="-819.2" x2="819.2">
+      <stop offset="0.0" stop-color="#438047"/>
+      <stop offset="0.3333333333333333" stop-color="#63b759"/>
+      <stop offset="0.6235294117647059" stop-color="#60b457"/>
+      <stop offset="1.0" stop-color="#48814b"/>
+    </linearGradient>
+    <linearGradient gradientTransform="matrix(0.0302, 0.0, 0.0, 0.0341, 0.15, -30.7)" gradientUnits="userSpaceOnUse" id="gradient5" spreadMethod="pad" x1="-819.2" x2="819.2">
+      <stop offset="0.0" stop-color="#438047"/>
+      <stop offset="0.3333333333333333" stop-color="#63b759"/>
+      <stop offset="0.6235294117647059" stop-color="#60b457"/>
+      <stop offset="1.0" stop-color="#48814b"/>
+    </linearGradient>
+    <linearGradient gradientTransform="matrix(0.0302, 0.0, 0.0, 0.0321, 0.15, -52.65)" gradientUnits="userSpaceOnUse" id="gradient6" spreadMethod="pad" x1="-819.2" x2="819.2">
+      <stop offset="0.0" stop-color="#438047"/>
+      <stop offset="0.3333333333333333" stop-color="#63b759"/>
+      <stop offset="0.6235294117647059" stop-color="#60b457"/>
+      <stop offset="1.0" stop-color="#48814b"/>
+    </linearGradient>
+    <linearGradient gradientTransform="matrix(0.0302, 0.0, 0.0, 0.0365, 0.15, -54.1)" gradientUnits="userSpaceOnUse" id="gradient7" spreadMethod="pad" x1="-819.2" x2="819.2">
+      <stop offset="0.0" stop-color="#438047"/>
+      <stop offset="0.3333333333333333" stop-color="#63b759"/>
+      <stop offset="0.6235294117647059" stop-color="#60b457"/>
+      <stop offset="1.0" stop-color="#48814b"/>
+    </linearGradient>
+    <linearGradient gradientTransform="matrix(0.0302, 0.0, 0.0, 0.0388, 0.15, -29.1)" gradientUnits="userSpaceOnUse" id="gradient8" spreadMethod="pad" x1="-819.2" x2="819.2">
+      <stop offset="0.0" stop-color="#438047"/>
+      <stop offset="0.3333333333333333" stop-color="#63b759"/>
+      <stop offset="0.6235294117647059" stop-color="#60b457"/>
+      <stop offset="1.0" stop-color="#48814b"/>
+    </linearGradient>
+    <linearGradient gradientTransform="matrix(0.0302, 0.0, 0.0, 0.0265, 0.15, -46.25)" gradientUnits="userSpaceOnUse" id="gradient9" spreadMethod="pad" x1="-819.2" x2="819.2">
+      <stop offset="0.0" stop-color="#438047"/>
+      <stop offset="0.3333333333333333" stop-color="#63b759"/>
+      <stop offset="0.6235294117647059" stop-color="#60b457"/>
+      <stop offset="1.0" stop-color="#48814b"/>
+    </linearGradient>
+    <linearGradient gradientTransform="matrix(0.0302, 0.0, 0.0, 0.0875, 0.15, -81.3)" gradientUnits="userSpaceOnUse" id="gradient10" spreadMethod="pad" x1="-819.2" x2="819.2">
+      <stop offset="0.0" stop-color="#438047"/>
+      <stop offset="0.3333333333333333" stop-color="#63b759"/>
+      <stop offset="0.6235294117647059" stop-color="#60b457"/>
+      <stop offset="1.0" stop-color="#48814b"/>
+    </linearGradient>
+    <g id="sprite1">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape1"/>
+    </g>
+    <g id="shape1">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient11)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639156542224855"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient11" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite2">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape2"/>
+    </g>
+    <g id="shape2">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient12)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient12" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite3">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape3"/>
+    </g>
+    <g id="shape3">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient13)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient13" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite4">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape4"/>
+    </g>
+    <g id="shape4">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient14)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638896494084946"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient14" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite5">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape5"/>
+    </g>
+    <g id="shape5">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient15)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient15" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite6">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape6"/>
+    </g>
+    <g id="shape6">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient16)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639091825375772"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient16" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite7">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape7"/>
+    </g>
+    <g id="shape7">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient17)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639050995179636"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient17" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite8">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape8"/>
+    </g>
+    <g id="shape8">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient18)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638729203101209"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient18" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite9">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape9"/>
+    </g>
+    <g id="shape9">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient19)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639311522656769"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient19" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite10">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape10"/>
+    </g>
+    <g id="shape10">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient20)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639487967948528"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient20" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite11">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape11"/>
+    </g>
+    <g id="shape11">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient21)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.6390978111057235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient21" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite12">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape12"/>
+    </g>
+    <g id="shape12">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient22)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638968815039081"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient22" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite13">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape13"/>
+    </g>
+    <g id="shape13">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient23)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.6389021187976125"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient23" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite14">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape14"/>
+    </g>
+    <g id="shape14">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient24)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638867255205748"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient24" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite15">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape15"/>
+    </g>
+    <g id="shape15">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient25)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639195759535716"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient25" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite16">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape16"/>
+    </g>
+    <g id="shape16">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient26)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639357741983607"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient26" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite17">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape17"/>
+    </g>
+    <g id="shape17">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient27)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.6388676038377765"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient27" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite18">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape18"/>
+    </g>
+    <g id="shape18">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient28)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639473470728872"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient28" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite19">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape19"/>
+    </g>
+    <g id="shape19">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient29)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639269803228286"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient29" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite20">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape20"/>
+    </g>
+    <g id="shape20">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient30)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639592172893664"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient30" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite21">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape21"/>
+    </g>
+    <g id="shape21">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient31)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639156542224855"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient31" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite22">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape22"/>
+    </g>
+    <g id="shape22">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient32)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient32" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite23">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape23"/>
+    </g>
+    <g id="shape23">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient33)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient33" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite24">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape24"/>
+    </g>
+    <g id="shape24">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient34)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639269803228286"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient34" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite25">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape25"/>
+    </g>
+    <g id="shape25">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient35)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639050995179636"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient35" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite26">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape26"/>
+    </g>
+    <g id="shape26">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient36)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639487967948528"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient36" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite27">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape27"/>
+    </g>
+    <g id="shape27">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient37)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639195759535716"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient37" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite28">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape28"/>
+    </g>
+    <g id="shape28">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient38)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639357741983607"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient38" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite29">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape29"/>
+    </g>
+    <g id="shape29">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient39)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639156542224855"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient39" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite30">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape30"/>
+    </g>
+    <g id="shape30">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient40)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639195759535716"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient40" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite31">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape31"/>
+    </g>
+    <g id="shape31">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient41)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639357741983607"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient41" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite32">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape32"/>
+    </g>
+    <g id="shape32">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient42)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638896494084946"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient42" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite33">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape33"/>
+    </g>
+    <g id="shape33">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient43)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639894666267543"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient43" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite34">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape34"/>
+    </g>
+    <g id="shape34">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient44)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639109027147529"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient44" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="text0">
+      <g transform="matrix(1.0, 0.0, 0.0, 1.0, 49.45, 0.0)">
+        <use fill="#ffffff" height="10.0" transform="matrix(0.0091, 0.0, 0.0, 0.0091, 0.0, 9.0)" width="51.45" xlink:href="#font_Arial_S0"/>
+        <use fill="#ffffff" height="10.0" transform="matrix(0.0091, 0.0, 0.0, 0.0091, 6.35, 9.0)" width="51.45" xlink:href="#font_Arial_w0"/>
+        <use fill="#ffffff" height="10.0" transform="matrix(0.0091, 0.0, 0.0, 0.0091, 13.2, 9.0)" width="51.45" xlink:href="#font_Arial_e0"/>
+        <use fill="#ffffff" height="10.0" transform="matrix(0.0091, 0.0, 0.0, 0.0091, 18.5, 9.0)" width="51.45" xlink:href="#font_Arial_e0"/>
+        <use fill="#ffffff" height="10.0" transform="matrix(0.0091, 0.0, 0.0, 0.0091, 23.8, 9.0)" width="51.45" xlink:href="#font_Arial_t0"/>
+        <use fill="#ffffff" height="10.0" transform="matrix(0.0091, 0.0, 0.0, 0.0091, 26.45, 9.0)" width="51.45" xlink:href="#font_Arial_c0"/>
+        <use fill="#ffffff" height="10.0" transform="matrix(0.0091, 0.0, 0.0, 0.0091, 31.2, 9.0)" width="51.45" xlink:href="#font_Arial_o0"/>
+        <use fill="#ffffff" height="10.0" transform="matrix(0.0091, 0.0, 0.0, 0.0091, 36.5, 9.0)" width="51.45" xlink:href="#font_Arial_r0"/>
+        <use fill="#ffffff" height="10.0" transform="matrix(0.0091, 0.0, 0.0, 0.0091, 39.65, 9.0)" width="51.45" xlink:href="#font_Arial_n0"/>
+      </g>
+    </g>
+    <g id="font_Arial_S0">
+      <path d="M46.85 -239.85 Q48.9 -165.0 88.1 -105.4 126.8 -46.35 195.55 -16.8 263.75 12.75 365.1 12.75 445.05 12.75 509.2 -16.3 572.85 -45.85 607.0 -98.3 641.1 -151.25 641.1 -210.8 641.1 -270.9 610.05 -316.75 578.95 -363.05 513.8 -393.1 469.0 -413.5 348.8 -440.45 228.15 -467.95 199.6 -493.95 170.6 -519.9 170.6 -560.15 170.6 -606.45 211.85 -639.05 252.55 -672.15 342.2 -672.15 428.25 -672.15 472.55 -636.0 516.35 -599.85 524.0 -529.05 L618.7 -536.2 Q616.15 -601.9 582.05 -653.8 547.9 -705.75 484.75 -732.25 421.1 -759.25 338.1 -759.25 262.75 -759.25 201.15 -733.75 139.5 -708.3 107.45 -658.9 75.35 -610.05 75.35 -553.5 75.35 -502.1 101.85 -460.3 127.8 -419.1 181.3 -391.05 222.5 -369.2 325.4 -344.25 428.25 -319.8 458.3 -308.05 505.15 -290.25 525.5 -263.75 545.85 -237.8 545.85 -202.65 545.85 -168.05 525.0 -138.5 503.6 -109.5 460.3 -92.7 417.05 -75.85 360.5 -75.85 296.85 -75.85 245.95 -97.75 195.05 -120.15 171.1 -155.8 146.65 -191.95 140.05 -248.0 L46.85 -239.85" fill-rule="evenodd" stroke="none"/>
+    </g>
+    <g id="font_Arial_w0">
+      <path d="M168.55 0.0 L264.3 0.0 373.75 -416.0 394.65 -323.85 480.7 0.0 575.9 0.0 744.95 -540.8 655.85 -540.8 563.2 -228.15 532.1 -123.75 505.15 -227.1 424.15 -540.8 329.95 -540.8 243.9 -224.05 Q217.95 -121.2 215.9 -112.55 L183.8 -228.65 97.75 -540.8 3.05 -540.8 168.55 0.0" fill-rule="evenodd" stroke="none"/>
+    </g>
+    <g id="font_Arial_e0">
+      <path d="M138.0 -322.35 Q142.6 -393.1 185.85 -435.35 228.65 -477.65 291.8 -477.65 361.55 -477.65 405.35 -424.7 433.85 -390.55 439.95 -322.35 L138.0 -322.35 M438.95 -174.15 Q418.05 -116.1 382.4 -89.6 346.75 -63.15 296.35 -63.15 228.65 -63.15 183.3 -110.5 138.0 -157.85 132.9 -246.95 L536.2 -246.95 Q536.7 -263.25 536.7 -271.4 536.7 -405.35 467.95 -479.15 399.2 -553.0 290.75 -553.0 178.75 -553.0 108.45 -477.65 38.2 -402.25 38.2 -265.8 38.2 -133.9 107.95 -60.6 177.2 12.2 295.85 12.2 390.05 12.2 450.65 -33.6 511.25 -79.45 533.65 -162.45 L438.95 -174.15" fill-rule="evenodd" stroke="none"/>
+    </g>
+    <g id="font_Arial_t0">
+      <path d="M268.85 -82.0 Q243.9 -78.4 228.65 -78.4 208.25 -78.4 197.55 -85.05 186.35 -91.65 181.8 -102.85 176.7 -114.05 176.7 -153.25 L176.7 -469.5 268.85 -469.5 268.85 -540.8 176.7 -540.8 176.7 -729.7 85.55 -674.7 85.55 -540.8 18.35 -540.8 18.35 -469.5 85.55 -469.5 85.55 -158.35 Q85.55 -75.85 96.75 -49.9 107.95 -24.45 135.45 -8.65 162.95 7.15 212.85 7.15 243.4 7.15 282.1 -1.0 L268.85 -82.0" fill-rule="evenodd" stroke="none"/>
+    </g>
+    <g id="font_Arial_c0">
+      <path d="M421.6 -198.1 Q411.95 -129.35 375.8 -96.25 339.65 -63.15 285.65 -63.15 218.45 -63.15 176.7 -112.55 134.95 -161.95 134.95 -270.9 134.95 -378.35 178.2 -427.75 221.5 -477.65 290.75 -477.65 336.6 -477.65 369.2 -450.15 401.25 -422.65 414.0 -368.15 L503.1 -381.9 Q487.3 -463.9 431.3 -508.2 375.3 -553.0 287.2 -553.0 217.45 -553.0 158.35 -519.9 98.8 -487.3 69.75 -421.6 40.75 -355.95 40.75 -268.35 40.75 -132.9 108.45 -60.1 175.7 12.2 286.7 12.2 375.3 12.2 436.4 -40.25 497.0 -93.2 511.75 -186.35 L421.6 -198.1" fill-rule="evenodd" stroke="none"/>
+    </g>
+    <g id="font_Arial_o0">
+      <path d="M128.85 -270.4 Q128.85 -374.25 174.15 -425.7 219.45 -477.15 288.2 -477.15 355.95 -477.15 401.75 -425.2 447.1 -373.75 447.1 -273.45 447.1 -167.0 401.75 -115.1 356.45 -63.15 288.2 -63.15 219.45 -63.15 174.15 -114.55 128.85 -166.5 128.85 -270.4 M34.65 -270.4 Q34.65 -133.4 104.9 -60.6 174.65 12.2 288.2 12.2 359.0 12.2 419.1 -20.9 478.65 -54.0 510.25 -113.55 541.3 -173.65 541.3 -278.05 541.3 -406.85 470.5 -479.65 399.75 -553.0 288.2 -553.0 187.9 -553.0 118.15 -492.9 34.65 -420.6 34.65 -270.4" fill-rule="evenodd" stroke="none"/>
+    </g>
+    <g id="font_Arial_r0">
+      <path d="M67.7 0.0 L159.4 0.0 159.4 -283.1 Q159.4 -341.15 174.65 -390.05 184.85 -422.15 208.8 -439.95 232.7 -458.3 262.75 -458.3 296.35 -458.3 329.95 -438.45 L361.55 -523.45 Q313.65 -553.0 267.35 -553.0 235.25 -553.0 208.8 -534.65 181.8 -516.35 150.2 -458.8 L150.2 -540.8 67.7 -540.8 67.7 0.0" fill-rule="evenodd" stroke="none"/>
+    </g>
+    <g id="font_Arial_n0">
+      <path d="M68.75 0.0 L160.4 0.0 160.4 -295.35 Q160.4 -399.2 203.15 -436.4 245.45 -473.55 304.0 -473.55 340.65 -473.55 368.15 -456.75 395.15 -440.45 405.85 -412.45 416.55 -384.95 416.55 -328.95 L416.55 0.0 508.2 0.0 508.2 -332.5 Q508.2 -396.15 503.1 -421.6 494.95 -460.85 474.6 -489.35 454.2 -517.85 413.5 -535.2 372.25 -553.0 323.35 -553.0 210.8 -553.0 151.25 -463.9 L151.25 -540.8 68.75 -540.8 68.75 0.0" fill-rule="evenodd" stroke="none"/>
+    </g>
+    <g id="sprite35">
+      <use ffdec:characterId="35" height="59.1" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="51.65" xlink:href="#shape0"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2243, 0.0, 0.0, 0.2071, 19.2, -13.75)" width="35.8" xlink:href="#sprite36"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0581, 0.2, -0.2167, -0.0536, 15.8, -13.8)" width="35.8" xlink:href="#sprite37"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2167, 0.0536, -0.0581, 0.2, 17.7, -4.15)" width="35.8" xlink:href="#sprite38"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1943, -0.1036, 0.1122, 0.1794, 21.55, -19.55)" width="35.8" xlink:href="#sprite39"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2167, 0.0536, -0.0581, 0.2, -20.35, -18.5)" width="35.8" xlink:href="#sprite40"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0581, 0.2001, -0.2167, 0.0536, -23.2, -15.8)" width="35.8" xlink:href="#sprite41"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0581, 0.2001, -0.2167, -0.0536, -22.9, -12.7)" width="35.8" xlink:href="#sprite42"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0912, 0.1892, -0.205, 0.0842, -22.65, -5.9)" width="35.8" xlink:href="#sprite43"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1712, 0.1339, -0.145, 0.158, -16.7, -18.85)" width="35.8" xlink:href="#sprite44"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.224, -0.0114, 0.0124, 0.2068, -15.8, -12.75)" width="35.8" xlink:href="#sprite45"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0876, 0.1907, -0.2066, 0.0808, -18.3, -10.05)" width="35.8" xlink:href="#sprite46"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1815, 0.1218, -0.1319, 0.1675, -16.65, -3.05)" width="35.8" xlink:href="#sprite47"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0982, 0.1862, -0.2017, -0.0907, -11.35, -12.8)" width="35.8" xlink:href="#sprite48"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0506, 0.2018, -0.2186, 0.0467, -12.5, -6.15)" width="35.8" xlink:href="#sprite49"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1405, 0.1615, -0.1749, 0.1297, -3.95, -17.85)" width="35.8" xlink:href="#sprite50"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2223, 0.0281, -0.0305, 0.2052, -5.05, -12.0)" width="35.8" xlink:href="#sprite51"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.2237, -0.016, 0.0174, -0.2065, 7.9, -23.9)" width="35.8" xlink:href="#sprite52"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.1848, 0.1175, -0.1272, -0.1705, 0.5, -18.7)" width="35.8" xlink:href="#sprite53"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.1112, 0.1799, -0.1948, -0.1026, 11.25, -16.1)" width="35.8" xlink:href="#sprite54"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0532, 0.2012, -0.2179, 0.0491, 4.6, -17.3)" width="35.8" xlink:href="#sprite55"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2243, 0.0, 0.0, 0.2071, 0.45, -8.95)" width="35.8" xlink:href="#sprite56"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0581, 0.2, -0.2167, -0.0536, -2.95, -9.05)" width="35.8" xlink:href="#sprite57"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2167, 0.0536, -0.0581, 0.2, -2.35, -0.6)" width="35.8" xlink:href="#sprite58"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.1112, 0.1799, -0.1948, -0.1026, -7.45, -8.9)" width="35.8" xlink:href="#sprite59"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0581, 0.2001, -0.2167, -0.0536, -13.85, -17.9)" width="35.8" xlink:href="#sprite60"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.224, -0.0114, 0.0124, 0.2068, -6.45, -17.3)" width="35.8" xlink:href="#sprite61"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1405, 0.1615, -0.1749, 0.1297, 6.25, -11.0)" width="35.8" xlink:href="#sprite62"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2223, 0.0281, -0.0305, 0.2052, 5.2, -5.15)" width="35.8" xlink:href="#sprite63"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2243, 0.0, 0.0, 0.2071, 11.05, -1.4)" width="35.8" xlink:href="#sprite64"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1405, 0.1615, -0.1749, 0.1297, 11.05, -19.0)" width="35.8" xlink:href="#sprite65"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2223, 0.0281, -0.0305, 0.2052, 4.05, -1.1)" width="35.8" xlink:href="#sprite66"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1943, 0.1036, -0.1122, 0.1794, 12.05, -5.05)" width="35.8" xlink:href="#sprite67"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1356, 0.1649, -0.1787, 0.1252, -0.5, -18.85)" width="35.8" xlink:href="#sprite68"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1531, 0.1514, -0.164, 0.1413, -11.1, -2.25)" width="35.8" xlink:href="#sprite69"/>
+      <use ffdec:characterId="38" height="10.0" transform="matrix(1.05, 0.0, 0.0, 1.05, -75.65, -40.5)" width="51.45" xlink:href="#text0"/>
+    </g>
+    <g id="sprite36">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape35"/>
+    </g>
+    <g id="shape35">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient45)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639156542224855"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient45" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite37">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape36"/>
+    </g>
+    <g id="shape36">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient46)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient46" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite38">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape37"/>
+    </g>
+    <g id="shape37">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient47)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient47" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite39">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape38"/>
+    </g>
+    <g id="shape38">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient48)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638896494084946"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient48" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite40">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape39"/>
+    </g>
+    <g id="shape39">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient49)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient49" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite41">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape40"/>
+    </g>
+    <g id="shape40">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient50)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639091825375772"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient50" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite42">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape41"/>
+    </g>
+    <g id="shape41">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient51)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639050995179636"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient51" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite43">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape42"/>
+    </g>
+    <g id="shape42">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient52)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638729203101209"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient52" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite44">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape43"/>
+    </g>
+    <g id="shape43">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient53)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639311522656769"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient53" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite45">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape44"/>
+    </g>
+    <g id="shape44">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient54)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639487967948528"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient54" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite46">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape45"/>
+    </g>
+    <g id="shape45">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient55)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.6390978111057235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient55" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite47">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape46"/>
+    </g>
+    <g id="shape46">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient56)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638968815039081"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient56" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite48">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape47"/>
+    </g>
+    <g id="shape47">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient57)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.6389021187976125"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient57" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite49">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape48"/>
+    </g>
+    <g id="shape48">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient58)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638867255205748"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient58" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite50">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape49"/>
+    </g>
+    <g id="shape49">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient59)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639195759535716"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient59" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite51">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape50"/>
+    </g>
+    <g id="shape50">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient60)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639357741983607"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient60" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite52">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape51"/>
+    </g>
+    <g id="shape51">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient61)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.6388676038377765"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient61" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite53">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape52"/>
+    </g>
+    <g id="shape52">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient62)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639473470728872"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient62" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite54">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape53"/>
+    </g>
+    <g id="shape53">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient63)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639269803228286"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient63" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite55">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape54"/>
+    </g>
+    <g id="shape54">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient64)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639592172893664"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient64" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite56">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape55"/>
+    </g>
+    <g id="shape55">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient65)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639156542224855"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient65" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite57">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape56"/>
+    </g>
+    <g id="shape56">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient66)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient66" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite58">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape57"/>
+    </g>
+    <g id="shape57">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient67)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient67" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite59">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape58"/>
+    </g>
+    <g id="shape58">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient68)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639269803228286"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient68" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite60">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape59"/>
+    </g>
+    <g id="shape59">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient69)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639050995179636"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient69" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite61">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape60"/>
+    </g>
+    <g id="shape60">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient70)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639487967948528"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient70" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite62">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape61"/>
+    </g>
+    <g id="shape61">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient71)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639195759535716"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient71" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite63">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape62"/>
+    </g>
+    <g id="shape62">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient72)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639357741983607"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient72" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite64">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape63"/>
+    </g>
+    <g id="shape63">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient73)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639156542224855"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient73" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite65">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape64"/>
+    </g>
+    <g id="shape64">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient74)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639195759535716"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient74" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite66">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape65"/>
+    </g>
+    <g id="shape65">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient75)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639357741983607"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient75" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite67">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape66"/>
+    </g>
+    <g id="shape66">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient76)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638896494084946"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient76" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite68">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape67"/>
+    </g>
+    <g id="shape67">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient77)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639894666267543"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient77" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite69">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape68"/>
+    </g>
+    <g id="shape68">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient78)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639109027147529"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient78" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite70">
+      <use ffdec:characterId="35" height="59.1" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="51.65" xlink:href="#shape0"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2243, 0.0, 0.0, 0.2071, 19.2, -13.75)" width="35.8" xlink:href="#sprite71"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0581, 0.2, -0.2167, -0.0536, 15.8, -13.8)" width="35.8" xlink:href="#sprite72"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2167, 0.0536, -0.0581, 0.2, 17.7, -4.15)" width="35.8" xlink:href="#sprite73"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1943, -0.1036, 0.1122, 0.1794, 21.55, -19.55)" width="35.8" xlink:href="#sprite74"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2167, 0.0536, -0.0581, 0.2, -20.35, -18.5)" width="35.8" xlink:href="#sprite75"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0581, 0.2001, -0.2167, 0.0536, -23.2, -15.8)" width="35.8" xlink:href="#sprite76"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0581, 0.2001, -0.2167, -0.0536, -22.9, -12.7)" width="35.8" xlink:href="#sprite77"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0912, 0.1892, -0.205, 0.0842, -22.65, -5.9)" width="35.8" xlink:href="#sprite78"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1712, 0.1339, -0.145, 0.158, -16.7, -18.85)" width="35.8" xlink:href="#sprite79"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.224, -0.0114, 0.0124, 0.2068, -15.8, -12.75)" width="35.8" xlink:href="#sprite80"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0876, 0.1907, -0.2066, 0.0808, -18.3, -10.05)" width="35.8" xlink:href="#sprite81"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1815, 0.1218, -0.1319, 0.1675, -16.65, -3.05)" width="35.8" xlink:href="#sprite82"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0982, 0.1862, -0.2017, -0.0907, -11.35, -12.8)" width="35.8" xlink:href="#sprite83"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0506, 0.2018, -0.2186, 0.0467, -12.5, -6.15)" width="35.8" xlink:href="#sprite84"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1405, 0.1615, -0.1749, 0.1297, -3.95, -17.85)" width="35.8" xlink:href="#sprite85"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2223, 0.0281, -0.0305, 0.2052, -5.05, -12.0)" width="35.8" xlink:href="#sprite86"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.2237, -0.016, 0.0174, -0.2065, 7.9, -23.9)" width="35.8" xlink:href="#sprite87"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.1848, 0.1175, -0.1272, -0.1705, 0.5, -18.7)" width="35.8" xlink:href="#sprite88"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.1112, 0.1799, -0.1948, -0.1026, 11.25, -16.1)" width="35.8" xlink:href="#sprite89"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.0532, 0.2012, -0.2179, 0.0491, 4.6, -17.3)" width="35.8" xlink:href="#sprite90"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2243, 0.0, 0.0, 0.2071, 0.45, -8.95)" width="35.8" xlink:href="#sprite91"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0581, 0.2, -0.2167, -0.0536, -2.95, -9.05)" width="35.8" xlink:href="#sprite92"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2167, 0.0536, -0.0581, 0.2, -2.35, -0.6)" width="35.8" xlink:href="#sprite93"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.1112, 0.1799, -0.1948, -0.1026, -7.45, -8.9)" width="35.8" xlink:href="#sprite94"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(-0.0581, 0.2001, -0.2167, -0.0536, -13.85, -17.9)" width="35.8" xlink:href="#sprite95"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.224, -0.0114, 0.0124, 0.2068, -6.45, -17.3)" width="35.8" xlink:href="#sprite96"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1405, 0.1615, -0.1749, 0.1297, 6.25, -11.0)" width="35.8" xlink:href="#sprite97"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2223, 0.0281, -0.0305, 0.2052, 5.2, -5.15)" width="35.8" xlink:href="#sprite98"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2243, 0.0, 0.0, 0.2071, 11.05, -1.4)" width="35.8" xlink:href="#sprite99"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1405, 0.1615, -0.1749, 0.1297, 11.05, -19.0)" width="35.8" xlink:href="#sprite100"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.2223, 0.0281, -0.0305, 0.2052, 4.05, -1.1)" width="35.8" xlink:href="#sprite101"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1943, 0.1036, -0.1122, 0.1794, 12.05, -5.05)" width="35.8" xlink:href="#sprite102"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1356, 0.1649, -0.1787, 0.1252, -0.5, -18.85)" width="35.8" xlink:href="#sprite103"/>
+      <use ffdec:characterId="37" height="33.2" transform="matrix(0.1531, 0.1514, -0.164, 0.1413, -11.1, -2.25)" width="35.8" xlink:href="#sprite104"/>
+      <use ffdec:characterId="38" height="10.0" transform="matrix(1.05, 0.0, 0.0, 1.05, -75.65, -40.5)" width="51.45" xlink:href="#text0"/>
+    </g>
+    <g id="sprite71">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape69"/>
+    </g>
+    <g id="shape69">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient79)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639156542224855"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient79" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite72">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape70"/>
+    </g>
+    <g id="shape70">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient80)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient80" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite73">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape71"/>
+    </g>
+    <g id="shape71">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient81)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient81" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite74">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape72"/>
+    </g>
+    <g id="shape72">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient82)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638896494084946"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient82" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite75">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape73"/>
+    </g>
+    <g id="shape73">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient83)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient83" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite76">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape74"/>
+    </g>
+    <g id="shape74">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient84)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639091825375772"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient84" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite77">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape75"/>
+    </g>
+    <g id="shape75">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient85)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639050995179636"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient85" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite78">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape76"/>
+    </g>
+    <g id="shape76">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient86)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638729203101209"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient86" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite79">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape77"/>
+    </g>
+    <g id="shape77">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient87)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639311522656769"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient87" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite80">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape78"/>
+    </g>
+    <g id="shape78">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient88)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639487967948528"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient88" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite81">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape79"/>
+    </g>
+    <g id="shape79">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient89)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.6390978111057235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient89" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite82">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape80"/>
+    </g>
+    <g id="shape80">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient90)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638968815039081"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient90" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite83">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape81"/>
+    </g>
+    <g id="shape81">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient91)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.6389021187976125"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient91" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite84">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape82"/>
+    </g>
+    <g id="shape82">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient92)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638867255205748"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient92" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite85">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape83"/>
+    </g>
+    <g id="shape83">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient93)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639195759535716"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient93" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite86">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape84"/>
+    </g>
+    <g id="shape84">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient94)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639357741983607"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient94" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite87">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape85"/>
+    </g>
+    <g id="shape85">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient95)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.6388676038377765"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient95" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite88">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape86"/>
+    </g>
+    <g id="shape86">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient96)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639473470728872"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient96" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite89">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape87"/>
+    </g>
+    <g id="shape87">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient97)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639269803228286"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient97" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite90">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape88"/>
+    </g>
+    <g id="shape88">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient98)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639592172893664"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient98" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite91">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape89"/>
+    </g>
+    <g id="shape89">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient99)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639156542224855"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient99" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite92">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape90"/>
+    </g>
+    <g id="shape90">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient100)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient100" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite93">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape91"/>
+    </g>
+    <g id="shape91">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient101)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639216065985235"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient101" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite94">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape92"/>
+    </g>
+    <g id="shape92">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient102)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639269803228286"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient102" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite95">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape93"/>
+    </g>
+    <g id="shape93">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient103)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639050995179636"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient103" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite96">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape94"/>
+    </g>
+    <g id="shape94">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient104)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639487967948528"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient104" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite97">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape95"/>
+    </g>
+    <g id="shape95">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient105)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639195759535716"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient105" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite98">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape96"/>
+    </g>
+    <g id="shape96">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient106)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639357741983607"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient106" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite99">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape97"/>
+    </g>
+    <g id="shape97">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient107)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639156542224855"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient107" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite100">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape98"/>
+    </g>
+    <g id="shape98">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient108)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639195759535716"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient108" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite101">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape99"/>
+    </g>
+    <g id="shape99">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient109)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639357741983607"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient109" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite102">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape100"/>
+    </g>
+    <g id="shape100">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient110)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.638896494084946"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient110" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite103">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape101"/>
+    </g>
+    <g id="shape101">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient111)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639894666267543"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient111" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+    <g id="sprite104">
+      <use ffdec:characterId="36" height="33.2" transform="matrix(1.0, 0.0, 0.0, 1.0, 0.0, 0.0)" width="35.8" xlink:href="#shape102"/>
+    </g>
+    <g id="shape102">
+      <path d="M17.2 -15.65 Q13.4 -6.45 5.7 -0.8 0.5 1.2 -4.7 -1.65 L-16.95 -16.55 -17.25 -16.8 Q-17.65 -17.05 -16.8 -19.45 -9.55 -25.0 -5.2 -31.55 -3.35 -32.8 -1.55 -31.55 L12.95 -24.8 Q18.35 -21.15 17.2 -15.65" fill="url(#gradient112)" fill-rule="evenodd" stroke="none"/>
+      <path d="M17.2 -15.65 Q18.35 -21.15 12.95 -24.8 L-1.55 -31.55 Q-3.35 -32.8 -5.2 -31.55 -9.55 -25.0 -16.8 -19.45 -17.65 -17.05 -17.25 -16.8 L-16.95 -16.55 -4.7 -1.65 Q0.5 1.2 5.7 -0.8 13.4 -6.45 17.2 -15.65 Z" ffdec:has-small-stroke="true" ffdec:original-stroke-width="1.0" fill="none" stroke="#a67231" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.639109027147529"/>
+    </g>
+    <radialGradient cx="0" cy="0" gradientTransform="matrix(0.022, 0.0, 0.0, 0.022, 0.0, -16.1)" gradientUnits="userSpaceOnUse" id="gradient112" r="819.2" spreadMethod="pad">
+      <stop offset="0.0" stop-color="#ebe358"/>
+      <stop offset="0.34509803921568627" stop-color="#eeeb75"/>
+      <stop offset="0.7529411764705882" stop-color="#edd547"/>
+      <stop offset="1.0" stop-color="#eae05b"/>
+    </radialGradient>
+  </defs>
+</svg>

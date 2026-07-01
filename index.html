@@ -3,15 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Doorway Online Activities — Demo</title>
+  <title>Doorway Online Activities</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       max-width: 980px; margin: 60px auto; padding: 0 20px;
       color: #222; line-height: 1.5;
     }
-    h1 { margin-bottom: 0.5em; }
-    .intro { color: #555; margin-bottom: 2em; }
+    h1 { margin-bottom: 1.5em; }
+    h2 {
+      margin: 2em 0 1em; font-size: 1em; text-transform: uppercase;
+      color: #555; letter-spacing: 0.05em;
+      border-bottom: 1px solid #e0e0e0; padding-bottom: 0.4em;
+    }
     a { color: #0066cc; text-decoration: none; }
     a:hover { text-decoration: underline; }
 
@@ -29,9 +33,14 @@
     }
     .card-thumb img { display: block; width: 100%; height: auto; }
     .card-body { flex: 1 1 auto; min-width: 0; }
-    .card-body h2 { margin: 0 0 0.4em; font-size: 1.15em; }
-    .card-body h2 a { color: #0066cc; }
+    .card-body h3 { margin: 0 0 0.4em; font-size: 1.15em; }
+    .card-body h3 a { color: #0066cc; }
     .card-body p { margin: 0; color: #444; }
+
+    .legacy-note { color: #888; font-size: 0.85em; margin-left: 0.5em;
+      text-transform: none; letter-spacing: 0; }
+    .legacy-list { list-style: none; padding: 0; }
+    .legacy-list li { margin: 0.5em 0; }
 
     @media (max-width: 640px) {
       .card { flex-direction: column; }
@@ -41,25 +50,26 @@
 </head>
 <body>
   <h1>Doorway Online Activities</h1>
-  <p class="intro">A preview of accessible learning activities — work in progress.</p>
 
-  <ul class="card-grid">
+  <section class="category">
+    <h2>Numeracy</h2>
+    <ul class="card-grid">
     <li class="card">
       <a class="card-thumb" href="activities/add-and-subtract/add-and-subtract.html" aria-hidden="true" tabindex="-1">
         <img src="welcome-thumbnails/add-and-subtract.png" alt="" loading="lazy" width="800" height="450">
       </a>
       <div class="card-body">
-        <h2><a href="activities/add-and-subtract/add-and-subtract.html">Add and Subtract to 10</a></h2>
+        <h3><a href="activities/add-and-subtract/add-and-subtract.html">Add and Subtract to 10</a></h3>
         <p>Practise addition and subtraction in the range 1–10, using on-screen number blocks. Number Bonds and subtraction can be reinforced and tested.</p>
       </div>
     </li>
     <li class="card">
-      <a class="card-thumb" href="activities/find-the-pairs/find-the-pairs.html" aria-hidden="true" tabindex="-1">
-        <img src="welcome-thumbnails/find-the-pairs.png" alt="" loading="lazy" width="800" height="450">
+      <a class="card-thumb" href="activities/add-and-subtract-100/add-and-subtract-100.html" aria-hidden="true" tabindex="-1">
+        <img src="welcome-thumbnails/add-and-subtract-100.png" alt="" loading="lazy" width="800" height="450">
       </a>
       <div class="card-body">
-        <h2><a href="activities/find-the-pairs/find-the-pairs.html">Find the Pairs</a></h2>
-        <p>Classic “find the pairs” game (pelmanism) with up to 18 cards and a range of 24 different images with speech support. Vary the difficulty by choosing between 6 and 18 cards. One and two switch scanning is supported.</p>
+        <h3><a href="activities/add-and-subtract-100/add-and-subtract-100.html">Add and Subtract to 100</a></h3>
+        <p>The suite uses animated tens and units “blocks” to give learners experiences from place value to the full notation of addition and subtraction bridging ten.</p>
       </div>
     </li>
     <li class="card">
@@ -67,10 +77,106 @@
         <img src="welcome-thumbnails/count-me-in.png" alt="" loading="lazy" width="800" height="450">
       </a>
       <div class="card-body">
-        <h2><a href="activities/count-me-in/count-me-in.html">Count Me In</a></h2>
+        <h3><a href="activities/count-me-in/count-me-in.html">Count Me In</a></h3>
         <p>Familiarise learners with numbers to 20, 50 and 100 and the stations of the times tables. Reinforce learners’ understanding of two digit numbers and their relationships. In Times Tables Stations learners count on to build the patterns that underpin the times tables.</p>
       </div>
     </li>
-  </ul>
+    <li class="card">
+      <a class="card-thumb" href="activities/number-table/number-table.html" aria-hidden="true" tabindex="-1">
+        <img src="welcome-thumbnails/number-table.png" alt="" loading="lazy" width="800" height="450">
+      </a>
+      <div class="card-body">
+        <h3><a href="activities/number-table/number-table.html">Number Table</a></h3>
+        <p>Practise sequencing numbers by placing counters on a table. Users are shown a complete number table, then after some numbers are removed, the user fills in the blanks using counters. The number tables can be set to specific ranges including: 1–10, 1–20, 1–50 and 1–100.</p>
+      </div>
+    </li>
+    <li class="card">
+      <a class="card-thumb" href="activities/odd-and-even/odd-and-even.html" aria-hidden="true" tabindex="-1">
+        <img src="welcome-thumbnails/odd-and-even.png" alt="" loading="lazy" width="800" height="450">
+      </a>
+      <div class="card-body">
+        <h3><a href="activities/odd-and-even/odd-and-even.html">Odd and Even</a></h3>
+        <p>Practical activities to establish the essential concept of Odd and Even. The development of this activity has been funded by the RS McDonald Trust. We are very grateful for their support.</p>
+      </div>
+    </li>
+    <li class="card">
+      <a class="card-thumb" href="activities/up-to-10/up-to-10.html" aria-hidden="true" tabindex="-1">
+        <img src="welcome-thumbnails/up-to-10.png" alt="" loading="lazy" width="800" height="450">
+      </a>
+      <div class="card-body">
+        <h3><a href="activities/up-to-10/up-to-10.html">Up to 10</a></h3>
+        <p>Allows users to practise the essential skill of counting items within the range 1–10. Numbers are spoken as you count. Users can choose to use structured patterns for the numbers 1–10. This will enhance their ability to recognise number patterns.</p>
+      </div>
+    </li>
+    </ul>
+  </section>
+
+  <section class="category">
+    <h2>Time &amp; Money</h2>
+    <ul class="card-grid">
+    <li class="card">
+      <a class="card-thumb" href="activities/about-time/about-time.html" aria-hidden="true" tabindex="-1">
+        <img src="welcome-thumbnails/about-time.png" alt="" loading="lazy" width="800" height="450">
+      </a>
+      <div class="card-body">
+        <h3><a href="activities/about-time/about-time.html">About Time</a></h3>
+        <p>Three activities to develop the concept of time. Time passing supports the discussion of the passage of time during a day.</p>
+      </div>
+    </li>
+    <li class="card">
+      <a class="card-thumb" href="activities/till-we-meet-again/till-we-meet-again.html" aria-hidden="true" tabindex="-1">
+        <img src="welcome-thumbnails/till-we-meet-again.png" alt="" loading="lazy" width="800" height="450">
+      </a>
+      <div class="card-body">
+        <h3><a href="activities/till-we-meet-again/till-we-meet-again.html">Till We Meet Again</a></h3>
+        <p>Play the shopkeeper as you practice giving change for items costing from 20p to £10. Three options give varying levels of support.</p>
+      </div>
+    </li>
+    <li class="card">
+      <a class="card-thumb" href="activities/supermarket/supermarket.html" aria-hidden="true" tabindex="-1">
+        <img src="welcome-thumbnails/supermarket.png" alt="" loading="lazy" width="800" height="450">
+      </a>
+      <div class="card-body">
+        <h3><a href="activities/supermarket/supermarket.html">Supermarket</a></h3>
+        <p>A shopping simulation where users can choose items, round prices and pay with notes and coins. We are grateful for grants to develop Supermarket from: The Robertson Trust, The Agnes Hunter Trust and Charity Begins at Home (Kelso).</p>
+      </div>
+    </li>
+    </ul>
+  </section>
+
+  <section class="category">
+    <h2>Memory &amp; Matching</h2>
+    <ul class="card-grid">
+    <li class="card">
+      <a class="card-thumb" href="activities/moving-targets/moving-targets.html" aria-hidden="true" tabindex="-1">
+        <img src="welcome-thumbnails/moving-targets.png" alt="" loading="lazy" width="800" height="450">
+      </a>
+      <div class="card-body">
+        <h3><a href="activities/moving-targets/moving-targets.html">Moving Targets</a></h3>
+        <p>A suite of fun targeting activities in which the targets are progressively harder to hit. Ideal for both assessment and practice. Suitable for almost any direct selection from mouse to IWB. Switch access is also available, with some activities becoming cause and effect exercises, while the first two allow practice at scanning.</p>
+      </div>
+    </li>
+    <li class="card">
+      <a class="card-thumb" href="activities/same-or-different/same-or-different.html" aria-hidden="true" tabindex="-1">
+        <img src="welcome-thumbnails/same-or-different.png" alt="" loading="lazy" width="800" height="450">
+      </a>
+      <div class="card-body">
+        <h3><a href="activities/same-or-different/same-or-different.html">Same or Different</a></h3>
+        <p>Two speech supported activities that explore the concept of the same and different. In Two the Same the user matches two cards that are identical. In Odd One Out the user must find the one card that is different. The number of cards in each activity can be changed. One and two switch scanning is supported.</p>
+      </div>
+    </li>
+    <li class="card">
+      <a class="card-thumb" href="activities/find-the-pairs/find-the-pairs.html" aria-hidden="true" tabindex="-1">
+        <img src="welcome-thumbnails/find-the-pairs.png" alt="" loading="lazy" width="800" height="450">
+      </a>
+      <div class="card-body">
+        <h3><a href="activities/find-the-pairs/find-the-pairs.html">Find the Pairs</a></h3>
+        <p>Classic “find the pairs” game (pelmanism) with up to 18 cards and a range of 24 different images with speech support. Vary the difficulty by choosing between 6 and 18 cards. One and two switch scanning is supported.</p>
+      </div>
+    </li>
+    </ul>
+  </section>
+
+
 </body>
 </html>

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 560 220" role="img" aria-hidden="true">
+
+  <!-- === Conveyor belt / counter strip === -->
+  <!-- Dark belt surface -->
+  <rect x="160" y="130" width="560" height="22" rx="0" fill="#3a3a3a"/>
+  <!-- Belt highlight lines -->
+  <rect x="160" y="130" width="560" height="4" fill="#555"/>
+  <rect x="160" y="148" width="560" height="4" fill="#222"/>
+  <!-- Counter support -->
+  <rect x="0" y="152" width="560" height="8" rx="2" fill="#999"/>
+
+  <!-- === Trolley body (left side) === -->
+  <!-- Trolley basket - main body -->
+  <polygon points="15,55 135,55 120,150 5,150" fill="#e0e0e0" stroke="#aaa" stroke-width="2.5"/>
+  <!-- Trolley basket inner shading -->
+  <polygon points="20,62 128,62 115,143 10,143" fill="#f5f5f5" stroke="none"/>
+  <!-- Trolley grid lines horizontal -->
+  <line x1="12" y1="80" x2="130" y2="80" stroke="#bbb" stroke-width="1.5"/>
+  <line x1="10" y1="100" x2="127" y2="100" stroke="#bbb" stroke-width="1.5"/>
+  <line x1="8" y1="120" x2="124" y2="120" stroke="#bbb" stroke-width="1.5"/>
+  <!-- Trolley grid lines vertical -->
+  <line x1="40" y1="58" x2="32" y2="148" stroke="#bbb" stroke-width="1.5"/>
+  <line x1="65" y1="57" x2="58" y2="148" stroke="#bbb" stroke-width="1.5"/>
+  <line x1="90" y1="57" x2="84" y2="148" stroke="#bbb" stroke-width="1.5"/>
+  <line x1="115" y1="57" x2="110" y2="148" stroke="#bbb" stroke-width="1.5"/>
+  <!-- Trolley handle -->
+  <line x1="12" y1="55" x2="-5" y2="38" stroke="#aaa" stroke-width="5" stroke-linecap="round"/>
+  <line x1="-5" y1="38" x2="135" y2="38" stroke="#aaa" stroke-width="5" stroke-linecap="round"/>
+  <!-- Trolley frame bottom bar -->
+  <line x1="5" y1="150" x2="120" y2="150" stroke="#aaa" stroke-width="4"/>
+  <!-- Trolley lower cross bar -->
+  <line x1="15" y1="168" x2="115" y2="168" stroke="#bbb" stroke-width="3"/>
+  <!-- Trolley legs -->
+  <line x1="22" y1="150" x2="18" y2="178" stroke="#aaa" stroke-width="4" stroke-linecap="round"/>
+  <line x1="108" y1="150" x2="112" y2="178" stroke="#aaa" stroke-width="4" stroke-linecap="round"/>
+  <!-- Trolley wheels -->
+  <circle cx="18" cy="182" r="12" fill="#fff" stroke="#999" stroke-width="2.5"/>
+  <circle cx="18" cy="182" r="5" fill="#bbb"/>
+  <circle cx="112" cy="182" r="12" fill="#fff" stroke="#999" stroke-width="2.5"/>
+  <circle cx="112" cy="182" r="5" fill="#bbb"/>
+
+  <!-- Items inside trolley - using actual product images -->
+  <!-- Baked Beans (back left) -->
+  <image href="pictures/itemBaked_Beans.svg" x="8" y="60" width="50" height="65"/>
+  <!-- Cereal box (back right, taller) -->
+  <image href="pictures/itemCereal.svg" x="68" y="45" width="48" height="80"/>
+  <!-- Noodles (front left) -->
+  <image href="pictures/itemNoodles.svg" x="5" y="95" width="48" height="55"/>
+  <!-- Juice carton (front middle) -->
+  <image href="pictures/itemJuice.svg" x="50" y="95" width="42" height="55"/>
+  <!-- Pepper (front right) -->
+  <image href="pictures/itemPepper.svg" x="92" y="88" width="42" height="58"/>
+
+  <!-- === Items on conveyor belt === -->
+  <!-- Carrots on belt -->
+  <image href="pictures/itemCarrots.svg" x="200" y="82" width="90" height="68"/>
+  <!-- Milk bottle on belt -->
+  <image href="pictures/itemMilk.svg" x="320" y="78" width="48" height="74"/>
+
+  <!-- === Checkout till machine (right side) === -->
+  <!-- Till base/body -->
+  <rect x="430" y="90" width="100" height="75" rx="4" fill="#c0c0c0" stroke="#888" stroke-width="2"/>
+  <!-- Till screen -->
+  <rect x="440" y="98" width="80" height="45" rx="3" fill="#222" stroke="#666" stroke-width="1.5"/>
+  <!-- Screen inner content -->
+  <rect x="445" y="103" width="70" height="35" rx="2" fill="#1a1a1a"/>
+  <!-- Screen display lines -->
+  <line x1="450" y1="112" x2="510" y2="112" stroke="#444" stroke-width="1"/>
+  <line x1="450" y1="118" x2="510" y2="118" stroke="#444" stroke-width="1"/>
+  <!-- Till body bottom -->
+  <rect x="445" y="155" width="90" height="14" rx="3" fill="#aaa" stroke="#888" stroke-width="1.5"/>
+  <!-- Till stand -->
+  <rect x="468" y="165" width="44" height="18" rx="3" fill="#b0b0b0" stroke="#888" stroke-width="1.5"/>
+  <rect x="455" y="183" width="70" height="8" rx="2" fill="#aaa" stroke="#888" stroke-width="1.5"/>
+
+</svg>

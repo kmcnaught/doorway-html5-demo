@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 200" role="img" aria-hidden="true">
+  <!-- Sky background -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#92b3fe"/>
+      <stop offset="100%" stop-color="#e2effa"/>
+    </linearGradient>
+    <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#63ad30"/>
+      <stop offset="100%" stop-color="#325728"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect x="0" y="0" width="350" height="120" fill="url(#sky)"/>
+  <!-- Grass -->
+  <rect x="0" y="120" width="350" height="80" fill="url(#grass)"/>
+  <!-- Road -->
+  <rect x="0" y="130" width="350" height="40" fill="#999"/>
+  <!-- Road dashes -->
+  <rect x="0"   y="148" width="40" height="4" fill="#fff" rx="2"/>
+  <rect x="60"  y="148" width="40" height="4" fill="#fff" rx="2"/>
+  <rect x="120" y="148" width="40" height="4" fill="#fff" rx="2"/>
+  <rect x="180" y="148" width="40" height="4" fill="#fff" rx="2"/>
+  <rect x="240" y="148" width="40" height="4" fill="#fff" rx="2"/>
+  <rect x="300" y="148" width="40" height="4" fill="#fff" rx="2"/>
+
+  <!-- Van 1 (simple rectangle van shape) -->
+  <g transform="translate(30, 108)">
+    <!-- van body -->
+    <rect x="0" y="8" width="52" height="28" rx="4" fill="#e05c2a"/>
+    <!-- cab bump -->
+    <rect x="32" y="0" width="20" height="18" rx="3" fill="#c94b1e"/>
+    <!-- wheels -->
+    <circle cx="12" cy="36" r="8" fill="#333"/>
+    <circle cx="12" cy="36" r="4" fill="#888"/>
+    <circle cx="40" cy="36" r="8" fill="#333"/>
+    <circle cx="40" cy="36" r="4" fill="#888"/>
+    <!-- window -->
+    <rect x="34" y="3" width="15" height="12" rx="2" fill="#a8d4f0"/>
+  </g>
+
+  <!-- Van 2 (ahead, partially clipped) -->
+  <g transform="translate(170, 108)">
+    <rect x="0" y="8" width="52" height="28" rx="4" fill="#2a7de0"/>
+    <rect x="32" y="0" width="20" height="18" rx="3" fill="#1e6bc9"/>
+    <circle cx="12" cy="36" r="8" fill="#333"/>
+    <circle cx="12" cy="36" r="4" fill="#888"/>
+    <circle cx="40" cy="36" r="8" fill="#333"/>
+    <circle cx="40" cy="36" r="4" fill="#888"/>
+    <rect x="34" y="3" width="15" height="12" rx="2" fill="#a8d4f0"/>
+  </g>
+
+  <!-- Firework burst (top right) -->
+  <g transform="translate(290, 55)">
+    <circle cx="0" cy="0" r="18" fill="none" stroke="#ffdd00" stroke-width="2" opacity="0.7"/>
+    <line x1="0" y1="-22" x2="0" y2="-28" stroke="#ffdd00" stroke-width="2"/>
+    <line x1="22" y1="0" x2="28" y2="0" stroke="#ff6600" stroke-width="2"/>
+    <line x1="-22" y1="0" x2="-28" y2="0" stroke="#ff6600" stroke-width="2"/>
+    <line x1="0" y1="22" x2="0" y2="28" stroke="#ffdd00" stroke-width="2"/>
+    <line x1="16" y1="-16" x2="20" y2="-20" stroke="#ff3399" stroke-width="2"/>
+    <line x1="-16" y1="-16" x2="-20" y2="-20" stroke="#ff3399" stroke-width="2"/>
+    <line x1="16" y1="16" x2="20" y2="20" stroke="#ffdd00" stroke-width="2"/>
+    <line x1="-16" y1="16" x2="-20" y2="20" stroke="#ff6600" stroke-width="2"/>
+    <circle cx="0" cy="0" r="6" fill="#ff9900"/>
+  </g>
+
+  <!-- Fish (underwater hint, bottom left) -->
+  <g transform="translate(40, 175)">
+    <ellipse cx="16" cy="0" rx="20" ry="10" fill="#4ab8e0"/>
+    <polygon points="0,0 -14,-8 -14,8" fill="#3aa0c8"/>
+    <circle cx="22" cy="-3" r="3" fill="#fff"/>
+    <circle cx="23" cy="-3" r="1.5" fill="#333"/>
+  </g>
+
+  <!-- Balloon (popping scene hint) -->
+  <g transform="translate(155, 30)">
+    <ellipse cx="0" cy="0" rx="18" ry="24" fill="#ff4488" opacity="0.85"/>
+    <line x1="0" y1="24" x2="0" y2="40" stroke="#666" stroke-width="1.5"/>
+  </g>
+</svg>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  Firework explosion — pink/cyan "willow rain" with trailing streaks
+  hanging from the burst. Used by launcher C (magenta).
+  Replaces the broken Flash extracted SVG.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="mtFwRainCore" cx="0" cy="0" r="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0"   stop-color="#ffe0ff" stop-opacity="0.9"/>
+      <stop offset="0.5" stop-color="#ff66ff" stop-opacity="0.5"/>
+      <stop offset="1"   stop-color="#aa00aa" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Soft halo -->
+  <circle cx="0" cy="0" r="38" fill="url(#mtFwRainCore)"/>
+  <!-- Streaks (curved trails hanging down/sideways like a weeping willow) -->
+  <g stroke="#ff77ff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.9">
+    <path d="M0 0 Q-6 20 -16 38"/>
+    <path d="M0 0 Q-2 22 -6 40"/>
+    <path d="M0 0 Q2  22  6 40"/>
+    <path d="M0 0 Q6  20  16 38"/>
+    <path d="M0 0 Q-12 18 -28 34"/>
+    <path d="M0 0 Q12  18  28 34"/>
+    <path d="M0 0 Q-18 12 -36 22"/>
+    <path d="M0 0 Q18  12  36 22"/>
+    <path d="M0 0 Q-18 -8 -36 -12"/>
+    <path d="M0 0 Q18  -8  36 -12"/>
+    <path d="M0 0 Q-10 -18 -22 -30"/>
+    <path d="M0 0 Q10  -18  22 -30"/>
+    <path d="M0 0 Q0 -20 0 -36"/>
+  </g>
+  <!-- Streak tip dots -->
+  <g fill="#ffccff">
+    <circle cx="-16" cy="38"  r="2"/>
+    <circle cx="-6"  cy="40"  r="2"/>
+    <circle cx="6"   cy="40"  r="2"/>
+    <circle cx="16"  cy="38"  r="2"/>
+    <circle cx="-28" cy="34"  r="2"/>
+    <circle cx="28"  cy="34"  r="2"/>
+    <circle cx="-36" cy="22"  r="2"/>
+    <circle cx="36"  cy="22"  r="2"/>
+    <circle cx="-36" cy="-12" r="2"/>
+    <circle cx="36"  cy="-12" r="2"/>
+    <circle cx="-22" cy="-30" r="2"/>
+    <circle cx="22"  cy="-30" r="2"/>
+    <circle cx="0"   cy="-36" r="2"/>
+  </g>
+  <!-- Bright cyan-pink core -->
+  <circle cx="0" cy="0" r="5" fill="#ffffff"/>
+</svg>

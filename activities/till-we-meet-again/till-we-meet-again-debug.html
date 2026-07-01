@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="../shared/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../shared/doorway.css">
+    <link rel="stylesheet" type="text/css" href="till-we-meet-again.css">
+    <script type="module" src="./till-we-meet-again.js"></script>
+    <title>Doorway Till We Meet Again (debug)</title>
+</head>
+<body id="bodyId" onload="TillWeMeetAgain_init();">
+<div id="dwWholeApp" class="doorway_application">
+    <div id="dwFullScreenDiv" class="doorway_fullscreen_div">
+        <div id="dwAspectOuterDiv" class="doorway_aspect_outer_div">
+            <div id="dwAspectDiv" class="doorway_aspect_div">
+
+                <div id="dwLiveRegion" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+                <!-- Navigation header -->
+                <nav id="dwNavigationHeader" class="navigation_header" data-i18nkey-aria-label="nav.toolbar.label">
+                    <button type="button" class="teacher_button hidden_panel" id="dwOptionsButton" data-i18nkey-aria-label="nav.settings.label">
+                        <img src="../shared/settings.svg" width="100%" height="100%" alt="Options" aria-hidden="true">
+                    </button>
+                    <button type="button" class="teacher_button" id="dwFullScreenButton" data-i18nkey-aria-label="nav.fullscreen.label">
+                        <img src="../shared/full-screen.svg" width="100%" height="100%" alt="Fullscreen" aria-hidden="true">
+                    </button>
+
+                </nav>
+
+                <!-- Shared page header (banner landmark). Sibling of <main>, so
+                     <header> gets its implicit banner role. Content varies per
+                     screen via CSS visibility: logo shows on welcome; title
+                     shows on options; whole header hidden on activity. -->
+                <header class="dw-screen-header">
+                    <a href="http://www.doorwayonline.org.uk/" class="doorway_logo">
+                        <img src="../shared/doorwayLogo.svg" alt="Doorway Online">
+                    </a>
+                    <h1 class="title_message" tabindex="-1" data-i18nkey="options.heading">Options</h1>
+                </header>
+
+                <main>
+
+                <!-- Welcome screen -->
+                <div id="dwWelcomeScreen" class="doorway_welcome">
+                    <div class="dw-welcome-body">
+                        <div class="dw-welcome-titles">
+                            <p class="dw-app-label" data-i18nkey="doorway.brand">Doorway</p>
+                            <h1 class="title_message" tabindex="-1" data-i18nkey="till-we-meet-again.welcome.title">Till We Meet Again</h1>
+                        </div>
+                        <div class="welcome_image">
+                            <img src="till-we-meet-again-welcome.svg" alt="Cash register">
+                        </div>
+                        <p class="sub_title" data-i18nkey="till-we-meet-again.welcome.subtitle">Play the shopkeeper and learn to work out how much change to give.</p>
+                    </div>
+                </div>
+
+                <!-- Options screen -->
+                <form name="options_form" id="dwUserOptions" class="hidden_panel user_options">
+                    <div class="user_options">
+                        <fieldset class="options_group game_options">
+                            <legend class="options_group_title" data-i18nkey="till-we-meet-again.options.activity.legend">Activity</legend>
+                            <div class="twma-activity-grid">
+                                <fieldset>
+                                    <legend data-i18nkey="till-we-meet-again.options.questions.legend">Number of Questions</legend>
+                                    <input type="radio" name="max_questions" value="5" id="radio-questions-5" checked>
+                                    <label for="radio-questions-5" class="user_options_radio button_div">5</label>
+                                    <input type="radio" name="max_questions" value="10" id="radio-questions-10">
+                                    <label for="radio-questions-10" class="user_options_radio button_div">10</label>
+                                </fieldset>
+                                <fieldset>
+                                    <legend data-i18nkey="till-we-meet-again.options.pays-with.legend">Change up to...</legend>
+                                    <input type="radio" name="max_price" value="20" id="radio-price-20">
+                                    <label for="radio-price-20" class="user_options_radio button_div">20p</label>
+                                    <input type="radio" name="max_price" value="50" id="radio-price-50">
+                                    <label for="radio-price-50" class="user_options_radio button_div">50p</label>
+                                    <input type="radio" name="max_price" value="100" id="radio-price-100">
+                                    <label for="radio-price-100" class="user_options_radio button_div">£1</label>
+                                    <input type="radio" name="max_price" value="200" id="radio-price-200">
+                                    <label for="radio-price-200" class="user_options_radio button_div">£2</label>
+                                    <input type="radio" name="max_price" value="500" id="radio-price-500" checked>
+                                    <label for="radio-price-500" class="user_options_radio button_div">£5</label>
+                                    <input type="radio" name="max_price" value="1000" id="radio-price-1000">
+                                    <label for="radio-price-1000" class="user_options_radio button_div">£10</label>
+                                </fieldset>
+                                <fieldset class="twma-grid-span-all">
+                                    <legend data-i18nkey="till-we-meet-again.options.till-display.label">Till Screen</legend>
+                                    <input type="radio" name="till_screen_mode" value="priceAndChange" id="radio-till-mode-price-and-change" checked>
+                                    <label for="radio-till-mode-price-and-change" class="user_options_radio button_div">
+                                        <strong data-i18nkey="till-we-meet-again.options.till-mode.price-and-change">Price + change</strong>
+                                        <span class="user_options_radio_subtitle" data-i18nkey="till-we-meet-again.options.till-mode.subtitle.price-and-change">(most help)</span>
+                                    </label>
+                                    <input type="radio" name="till_screen_mode" value="shopkeeper" id="radio-till-mode-shopkeeper">
+                                    <label for="radio-till-mode-shopkeeper" class="user_options_radio button_div">
+                                        <strong data-i18nkey="till-we-meet-again.options.till-mode.shopkeeper">Shopkeeper Method</strong>
+                                        <span class="user_options_radio_subtitle" data-i18nkey="till-we-meet-again.options.till-mode.subtitle.shopkeeper">(count up)</span>
+                                    </label>
+                                    <input type="radio" name="till_screen_mode" value="price" id="radio-till-mode-price">
+                                    <label for="radio-till-mode-price" class="user_options_radio button_div">
+                                        <strong data-i18nkey="till-we-meet-again.options.till-mode.price">Price</strong>
+                                        <span class="user_options_radio_subtitle" data-i18nkey="till-we-meet-again.options.till-mode.subtitle.price">(least help)</span>
+                                    </label>
+                                </fieldset>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="options_group">
+                            <legend class="options_group_title" data-i18nkey="options.audio.legend">Audio</legend>
+                            <input type="radio" name="audio_mode" value="webspeech" id="radio-audio-webspeech" checked>
+                            <label for="radio-audio-webspeech" class="user_options_radio button_div" data-i18nkey="options.audio.webspeech">Computer voice</label>
+                            <input type="radio" name="audio_mode" value="none" id="radio-audio-none">
+                            <label for="radio-audio-none" class="user_options_radio button_div" data-i18nkey="options.audio.none">No audio</label>
+                        </fieldset>
+
+                        <fieldset class="options_group accessibility_options">
+                            <legend class="options_group_title" data-i18nkey="accessibility.heading">Accessibility</legend>
+                            <div class="twma-scan-onoff">
+                                <p class="twma-scan-label" data-i18nkey="accessibility.scanning.label">Scanning</p>
+                                <input type="radio" name="enable_scanning" value="true" id="radio-scanning-on">
+                                <label for="radio-scanning-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.on">On</label>
+                                <input type="radio" name="enable_scanning" value="false" id="radio-scanning-off" checked>
+                                <label for="radio-scanning-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.off">Off</label>
+                            </div>
+                            <!-- Scan sub-panel: shown only when scanning is On -->
+                            <div id="twmaScanSubPanel" class="hidden_panel dw-scan-subpanel">
+                                <fieldset class="twma-scan-switches-cell">
+                                    <legend class="sr-only" data-i18nkey="accessibility.switches.label">Number of switches</legend>
+                                    <input type="radio" name="num_switches" value="2" id="radio-switches-2">
+                                    <label for="radio-switches-2" class="user_options_radio button_div" data-i18nkey="accessibility.switches.two">Two switch</label>
+                                    <input type="radio" name="num_switches" value="1" id="radio-switches-1" checked>
+                                    <label for="radio-switches-1" class="user_options_radio button_div" data-i18nkey="accessibility.switches.one">One switch (auto)</label>
+                                </fieldset>
+                                <div id="twmaScanDelayRow" class="twma-scan-delay-cell">
+                                    <p id="twma-scan-delay-label" data-i18nkey="accessibility.scan-delay.label">Scan delay (seconds)</p>
+                                    <div class="spinner_select" id="scan_delay_spinner">
+                                        <button type="button" class="spinner_down" id="scan_delay_spin_down" aria-label="Shorter scan delay" data-i18nkey-aria-label="accessibility.scan-delay.decrease">-</button>
+                                        <select name="scan_delay" id="scan_delay_sel" aria-labelledby="twma-scan-delay-label">
+                                            <option value="1000">1</option>
+                                            <option value="1500">1.5</option>
+                                            <option value="2000" selected>2</option>
+                                            <option value="2500">2.5</option>
+                                            <option value="3000">3</option>
+                                            <option value="3500">3.5</option>
+                                            <option value="4000">4</option>
+                                            <option value="4500">4.5</option>
+                                            <option value="5000">5</option>
+                                        </select>
+                                        <div class="spinner_display button_div" id="scan_delay_display">2</div>
+                                        <button type="button" class="spinner_up" id="scan_delay_spin_up" aria-label="Longer scan delay" data-i18nkey-aria-label="accessibility.scan-delay.increase">+</button>
+                                    </div>
+                                </div>
+                                <fieldset class="twma-scan-back-group">
+                                    <legend data-i18nkey="accessibility.scanback.legend">Scan back button</legend>
+                                    <input type="radio" name="twma_scan_back" value="true" id="radio-scanback-on">
+                                    <label for="radio-scanback-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.on">On</label>
+                                    <input type="radio" name="twma_scan_back" value="false" id="radio-scanback-off" checked>
+                                    <label for="radio-scanback-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.off">Off</label>
+                                </fieldset>
+                            </div>
+                        </fieldset>
+
+                    </div>
+                </form>
+
+                <!-- Audio elements -->
+                <audio src="beep.wav" preload="auto" id="twBeep"></audio>
+                <audio src="coin2.wav" preload="auto" id="twCoin2"></audio>
+                <audio src="till.wav" preload="auto" id="twTill"></audio>
+                <audio src="amazing.wav" preload="auto" id="twAmazing"></audio>
+                <audio src="fantastic.wav" preload="auto" id="twFantastic"></audio>
+                <audio src="great.wav" preload="auto" id="twGreat"></audio>
+
+                <!-- Activity screen -->
+                <div id="dwActivityScreen" class="hidden_panel tw-scene">
+                    <h1 class="sr-only" tabindex="-1" data-i18nkey="till-we-meet-again.welcome.title">Till We Meet Again</h1>
+
+                    <!-- Scene background: green floor (stand-in for Flash sprite_225/228 counter) -->
+                    <img class="tw-floor-bg" src="pictures/floor.svg" aria-hidden="true" alt="">
+
+                    <!-- Till assembly (Flash sprite_172 body + LCD bezel, check button, drawer overlay) -->
+                    <div class="tw-till-assembly">
+                        <!-- Till body, BACKGROUND copy: full uncropped sprite painted
+                             below the drawer. Provides the till silhouette behind the
+                             drawer animation so the area between body and drawer never
+                             reads as empty stage. -->
+                        <img class="tw-till-bg tw-till-bg-back" src="pictures/till-body.svg" aria-hidden="true" alt="">
+
+                        <!-- Till body, MASK copy: same SVG but clipped at the open-drawer's
+                             top line and painted ABOVE the drawer in z-order so the drawer
+                             reads as sliding out from behind the body. -->
+                        <img class="tw-till-bg" src="pictures/till-body.svg" aria-hidden="true" alt="">
+
+                        <!-- Black LCD monitor area: shows "cost + change = ..." or price.
+                             Positioned over the black monitor cutout in till-body.svg. -->
+                        <div id="twTillBezel" class="tw-till-bezel">
+                            <p id="twBezelLine1" class="tw-till-bezel-line"></p>
+                            <p id="twBezelLine2" class="tw-till-bezel-line"></p>
+                        </div>
+
+                        <!-- Check button (sits on the till body just below the monitor) -->
+                        <button type="button" id="twCheckBtn" class="tw-till-check" data-i18nkey="till-we-meet-again.btn.check">check</button>
+
+                        <!-- Static "Tendered:" label, printed on the till body to the right of check -->
+                        <p class="tw-till-tendered-label" data-i18nkey="till-we-meet-again.till.tendered-label">Tendered:</p>
+
+                        <!-- Tendered-money destination box: the customer's payment fly-lands
+                             here from the palm and remains until the next question. -->
+                        <div id="twTillTenderedBox" class="tw-till-tendered-box" aria-hidden="true"></div>
+
+                        <!-- Cash drawer overlay: covers the closed-drawer area of till-body.svg with
+                             the Flash open-drawer SVG (sprite_171) when the drawer is open. -->
+                        <img id="twDrawerOpenImg" class="tw-drawer-open-img hidden_panel" src="pictures/till-drawer-open.svg" aria-hidden="true" alt="">
+
+                        <!-- Closed-drawer front face: a clipped view of the drawer-open SVG
+                             showing just the front lip. Visible only when the drawer is
+                             closed; sits over the till body's bottom edge so the closed
+                             till reads as having a drawer flush against it. CSS sibling
+                             selector hides it when .tw-drawer-open-img loses .hidden_panel. -->
+                        <img id="twDrawerClosedFront" class="tw-drawer-closed-front" src="pictures/till-drawer-open.svg" aria-hidden="true" alt="">
+
+                        <!-- Coins tray (Flash coinsImage.svg) — appears once the drawer is fully open.
+                             Sits inside the open drawer area; transparent hit-target buttons are
+                             absolutely positioned over each coin denomination. -->
+                        <div id="twDrawer" class="tw-drawer hidden_panel">
+                            <!-- 3-layer stack: each denomination looks like 3 coins
+                                 piled up. Back/mid copies are offset left+down so the
+                                 painted front coin reads as the top of the stack. -->
+                            <img class="tw-coins-image tw-coins-image-back" src="pictures/coins-image.svg" aria-hidden="true" alt="">
+                            <img class="tw-coins-image tw-coins-image-mid" src="pictures/coins-image.svg" aria-hidden="true" alt="">
+                            <img class="tw-coins-image" src="pictures/coins-image.svg" aria-hidden="true" alt="">
+                            <div id="twCoinButtons" class="tw-coin-buttons" role="group" data-i18nkey-aria-label="till-we-meet-again.aria.coin-buttons" aria-label="Denominations to give as change">
+                                <!-- Hit targets positioned over each coin in coins-image.svg.
+                                     Positions read from the <use> declarations in coinsImage.svg
+                                     (denomination → centre as % of the 354.75×189.5 image box). -->
+                                <button type="button" class="tw-denom-btn tw-denom-coin tw-denom-p1"   data-value="1"   aria-label="1 penny"   data-i18nkey-aria-label="till-we-meet-again.aria.denom.1p"></button>
+                                <button type="button" class="tw-denom-btn tw-denom-coin tw-denom-p2"   data-value="2"   aria-label="2 pence"   data-i18nkey-aria-label="till-we-meet-again.aria.denom.2p"></button>
+                                <button type="button" class="tw-denom-btn tw-denom-coin tw-denom-p5"   data-value="5"   aria-label="5 pence"   data-i18nkey-aria-label="till-we-meet-again.aria.denom.5p"></button>
+                                <button type="button" class="tw-denom-btn tw-denom-coin tw-denom-p10"  data-value="10"  aria-label="10 pence"  data-i18nkey-aria-label="till-we-meet-again.aria.denom.10p"></button>
+                                <button type="button" class="tw-denom-btn tw-denom-coin tw-denom-p20"  data-value="20"  aria-label="20 pence"  data-i18nkey-aria-label="till-we-meet-again.aria.denom.20p"></button>
+                                <button type="button" class="tw-denom-btn tw-denom-coin tw-denom-p50"  data-value="50"  aria-label="50 pence"  data-i18nkey-aria-label="till-we-meet-again.aria.denom.50p"></button>
+                                <button type="button" class="tw-denom-btn tw-denom-coin tw-denom-p100" data-value="100" aria-label="1 pound"   data-i18nkey-aria-label="till-we-meet-again.aria.denom.1pound"></button>
+                                <button type="button" class="tw-denom-btn tw-denom-coin tw-denom-p200" data-value="200" aria-label="2 pounds"  data-i18nkey-aria-label="till-we-meet-again.aria.denom.2pounds"></button>
+                            </div>
+
+                            <!-- £5 note button: sits inside the open drawer (its dedicated `t500` slot
+                                 in Flash). Disabled until money is taken; hidden while in the palm. -->
+                            <button type="button" id="twNoteBtn" class="tw-denom-btn tw-denom-note" data-value="500" aria-label="5 pounds" data-i18nkey-aria-label="till-we-meet-again.aria.denom.5pounds">
+                                <img src="../pictures/note-gbp-500.svg" alt="" aria-hidden="true">
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Item sitting on the counter under the customer's hand (Flash places at 650,470) -->
+                    <img id="twItemImg" class="tw-item-on-counter" src="" alt="" aria-hidden="true">
+
+                    <!-- Price tag pinned near the item — white rect with black writing
+                         (shopkeeper-style price label). Populated by _renderQuestion. -->
+                    <p id="twItemPriceLabel" class="tw-item-price-label" aria-hidden="true"></p>
+
+                    <!-- Speech bubble (upper right, above hand) -->
+                    <div class="tw-speech-area">
+                        <div class="tw-speech-bubble">
+                            <p id="twSpeechText"></p>
+                        </div>
+                    </div>
+
+                    <!-- Hand wrapper: slides in from right at question start, out on correct answer -->
+                    <!-- Coin slots are children of this wrapper so they travel with the hand. -->
+                    <!-- Inner .tw-hand-rotator carries the rotation so hand+coins+tendered all tilt together. -->
+                    <div id="twHand" class="tw-hand-wrapper">
+                        <div class="tw-hand-rotator">
+                            <img class="tw-hand-img" src="pictures/hand.svg" alt="" aria-hidden="true">
+                        </div>
+                        <!-- Customer payment and change slots live OUTSIDE the rotator
+                             so they sit on the visible palm in stage-aligned coords
+                             (not tilted with the hand). All position values in CSS / JS
+                             are in non-rotated wrapper coords. -->
+                        <div id="twTenderedMoney" class="tw-tendered-money" role="group" data-i18nkey-aria-label="till-we-meet-again.aria.tendered-money" aria-label="Customer's payment"></div>
+                        <div id="twCoinSlots" class="tw-coin-slots" role="group" data-i18nkey-aria-label="till-we-meet-again.aria.coin-slots" aria-label="Change given so far"></div>
+                    </div>
+
+                    <!-- SR-only live region for feedback announcements. Visible feedback
+                         is shown via the speech bubble (Flash-faithful); this region keeps
+                         screen-reader users in the loop without duplicating the bubble text. -->
+                    <p id="twFeedback" class="sr-only" aria-live="assertive"></p>
+
+                    <!-- Next pencil button (Flash sprite_24): bottom-right, hidden until correct -->
+                    <button type="button" id="twNextBtn" class="pencil_btn tw-next-btn hidden_panel" data-i18nkey="till-we-meet-again.btn.next">next</button>
+                </div>
+
+                <!-- Results screen -->
+                <div id="dwResultsScreen" class="hidden_panel tw-screen">
+                    <h2 class="tw-screen-title" tabindex="-1" data-i18nkey="till-we-meet-again.results.heading">Results</h2>
+                    <!-- Mode caption (Flash frame_05.as sets tillScreenOptionText to the mode label) -->
+                    <p id="twResultsModeLabel" class="tw-results-mode-label"></p>
+                    <!-- Random praise word — populated by sayWellDone() 1.4s after results screen mounts. -->
+                    <p id="twCongratText" class="tw-congrat-text" aria-live="polite"></p>
+                    <table class="tw-results-table" data-i18nkey-aria-label="till-we-meet-again.results.aria.table" aria-label="Score summary">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="tw-col-num"></th>
+                                <th scope="col" data-i18nkey="till-we-meet-again.results.col.tendered">Tendered</th>
+                                <th scope="col" data-i18nkey="till-we-meet-again.results.col.change">Change</th>
+                                <th scope="col" data-i18nkey="results.col.tries">Tries</th>
+                            </tr>
+                        </thead>
+                        <tbody id="twResultsBody"></tbody>
+                    </table>
+                    <p id="twScorePercent" class="tw-score-percent"></p>
+                    <div class="tw-action-buttons">
+                        <button type="button" id="twRepeatBtn" class="pencil_btn tw-repeat-btn" data-i18nkey="till-we-meet-again.btn.repeat">repeat</button>
+                    </div>
+                </div>
+
+                <!-- Shared framework elements -->
+                <div id="dwMainApp" style="display:none;"></div>
+                <div id="dwDarkenedPanel" class="darkened_panel hidden_panel"></div>
+                <div id="dwWellDone" class="well_done_message hidden_panel">
+                    <p class="instruction_message"></p>
+                </div>
+
+            </main>
+
+            <!-- Shared page footer (contentinfo landmark). Sibling of <main>,
+                 so <footer> gets its implicit contentinfo role. Action buttons
+                 visibility per screen via CSS: enter on welcome; home+start on
+                 options; whole footer hidden on activity. -->
+            <footer class="dw-app-footer">
+                <div class="dw-action-footer">
+                    <button id="dwEnterButton" class="pencil_btn" data-i18nkey="doorway.btn.enter">enter</button>
+                    <button type="button" id="dwHomeButton" class="pencil_btn" data-pencil-dir="left" data-i18nkey="doorway.btn.home">home</button>
+                    <button type="button" id="dwSubmitUserOptions" class="pencil_btn" data-i18nkey="doorway.btn.start">start</button>
+                </div>
+                <p class="copyright_message" data-i18nkey="doorway.copyright">© CALL Scotland, University of Edinburgh 2026</p>
+            </footer>
+            </div><!-- doorway_aspect_div -->
+        </div><!-- doorway_aspect_outer_div -->
+    </div><!-- doorway_fullscreen_div -->
+</div><!-- doorway_application -->
+</body>
+</html>

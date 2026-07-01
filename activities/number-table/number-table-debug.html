@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="../shared/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../shared/doorway.css">
+    <link rel="stylesheet" type="text/css" href="number-table.css">
+    <script type="module" src="./number-table.js"></script>
+    <title>Doorway Number Table (debug)</title>
+</head>
+<body id="bodyId" onload="NumberTable_init();">
+<div id="dwWholeApp" class="doorway_application">
+    <div id="dwFullScreenDiv" class="doorway_fullscreen_div">
+        <div id="dwAspectOuterDiv" class="doorway_aspect_outer_div">
+            <div id="dwAspectDiv" class="doorway_aspect_div">
+
+                <div id="dwLiveRegion" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+                <!-- Navigation header -->
+                <nav id="dwNavigationHeader" class="navigation_header" data-i18nkey-aria-label="nav.toolbar.label">
+                    <button type="button" class="teacher_button hidden_panel" id="dwOptionsButton" data-i18nkey-aria-label="nav.settings.label">
+                        <img src="../shared/settings.svg" width="100%" height="100%" alt="Options" aria-hidden="true">
+                    </button>
+                    <button type="button" class="teacher_button" id="dwFullScreenButton" data-i18nkey-aria-label="nav.fullscreen.label">
+                        <img src="../shared/full-screen.svg" width="100%" height="100%" alt="Fullscreen" aria-hidden="true">
+                    </button>
+
+                </nav>
+
+                <!-- Shared page header (banner landmark). Sibling of <main>, so
+                     <header> gets its implicit banner role. Content varies per
+                     screen via CSS visibility: logo shows on welcome; title
+                     shows on options; whole header hidden on activity. -->
+                <header class="dw-screen-header">
+                    <a href="http://www.doorwayonline.org.uk/" class="doorway_logo">
+                        <img src="../shared/doorwayLogo.svg" alt="Doorway Online">
+                    </a>
+                    <h1 class="title_message" tabindex="-1" data-i18nkey="options.heading">Options</h1>
+                </header>
+
+                <main>
+
+                <!-- Welcome screen -->
+                <div id="dwWelcomeScreen" class="doorway_welcome">
+                    <div class="dw-welcome-body">
+                        <div class="dw-welcome-titles">
+                            <p class="dw-app-label" data-i18nkey="doorway.brand">Doorway</p>
+                            <h1 class="title_message" tabindex="-1" data-i18nkey="number-table.welcome.title">Number Table</h1>
+                        </div>
+                        <div class="welcome_image">
+                            <img src="number-table-welcome.svg" alt="Hand placing a number six chip into a row of numbers">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Options screen -->
+                <form name="options_form" id="dwUserOptions" class="hidden_panel user_options">
+                    <div class="user_options">
+                        <fieldset class="options_group game_options">
+                            <legend class="options_group_title" data-i18nkey="number-table.options.activity.legend">Activity</legend>
+                            <div class="nt-activity-grid">
+                                <fieldset>
+                                    <legend data-i18nkey="number-table.options.range.legend">Number range</legend>
+                                    <input type="radio" name="number_range" value="10" id="radio-range-10" checked>
+                                    <label for="radio-range-10" class="user_options_radio button_div" data-i18nkey="number-table.options.range.10">1 to 10</label>
+                                    <input type="radio" name="number_range" value="20" id="radio-range-20">
+                                    <label for="radio-range-20" class="user_options_radio button_div" data-i18nkey="number-table.options.range.20">1 to 20</label>
+                                    <input type="radio" name="number_range" value="50" id="radio-range-50">
+                                    <label for="radio-range-50" class="user_options_radio button_div" data-i18nkey="number-table.options.range.50">1 to 50</label>
+                                    <input type="radio" name="number_range" value="100" id="radio-range-100">
+                                    <label for="radio-range-100" class="user_options_radio button_div" data-i18nkey="number-table.options.range.100">1 to 100</label>
+                                </fieldset>
+                                <fieldset>
+                                    <legend data-i18nkey="number-table.options.tables.legend">Number of tables to complete?</legend>
+                                    <input type="radio" name="tables_to_complete" value="1" id="radio-tables-1">
+                                    <label for="radio-tables-1" class="user_options_radio button_div">1</label>
+                                    <input type="radio" name="tables_to_complete" value="2" id="radio-tables-2" checked>
+                                    <label for="radio-tables-2" class="user_options_radio button_div">2</label>
+                                    <input type="radio" name="tables_to_complete" value="3" id="radio-tables-3">
+                                    <label for="radio-tables-3" class="user_options_radio button_div">3</label>
+                                    <input type="radio" name="tables_to_complete" value="4" id="radio-tables-4">
+                                    <label for="radio-tables-4" class="user_options_radio button_div">4</label>
+                                    <input type="radio" name="tables_to_complete" value="5" id="radio-tables-5">
+                                    <label for="radio-tables-5" class="user_options_radio button_div">5</label>
+                                </fieldset>
+                                <fieldset class="nt-grid-span-all">
+                                    <legend data-i18nkey="number-table.options.missing.legend">No. of counters removed</legend>
+                                    <div class="spinner_select" id="number_missing_spinner">
+                                        <button type="button" class="spinner_down" id="number_missing_spin_down" aria-label="Fewer missing numbers" data-i18nkey-aria-label="number-table.options.number-missing.decrease">-</button>
+                                        <select name="number_missing" id="number_missing_sel">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5" selected>5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                        <div class="spinner_display button_div" id="number_missing_display">5</div>
+                                        <button type="button" class="spinner_up" id="number_missing_spin_up" aria-label="More missing numbers" data-i18nkey-aria-label="number-table.options.number-missing.increase">+</button>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="nt-grid-span-all">
+                                    <legend data-i18nkey="number-table.options.tick.legend">Tick as you go</legend>
+                                    <input type="radio" name="tick_mode" value="true" id="radio-tick-on" checked>
+                                    <label for="radio-tick-on" class="user_options_radio button_div" data-i18nkey="number-table.options.tick.on">On</label>
+                                    <input type="radio" name="tick_mode" value="false" id="radio-tick-off">
+                                    <label for="radio-tick-off" class="user_options_radio button_div" data-i18nkey="number-table.options.tick.off">Off</label>
+                                </fieldset>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="options_group">
+                            <legend class="options_group_title" data-i18nkey="options.audio.legend">Audio</legend>
+                            <input type="radio" name="audio_mode" value="webspeech" id="radio-audio-webspeech" checked>
+                            <label for="radio-audio-webspeech" class="user_options_radio button_div" data-i18nkey="options.audio.webspeech">Computer voice</label>
+                            <input type="radio" name="audio_mode" value="none" id="radio-audio-none">
+                            <label for="radio-audio-none" class="user_options_radio button_div" data-i18nkey="options.audio.none">No audio</label>
+                        </fieldset>
+
+                        <fieldset class="options_group accessibility_options">
+                            <legend class="options_group_title" data-i18nkey="accessibility.heading">Accessibility</legend>
+                            <div class="nt-scan-onoff">
+                                <p class="nt-scan-label" data-i18nkey="accessibility.scanning.label">Scanning</p>
+                                <input type="radio" name="enable_scanning" value="true" id="radio-scanning-on">
+                                <label for="radio-scanning-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.on">On</label>
+                                <input type="radio" name="enable_scanning" value="false" id="radio-scanning-off" checked>
+                                <label for="radio-scanning-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.off">Off</label>
+                            </div>
+                            <!-- Scan sub-panel (shown only when scanning is On) -->
+                            <div id="ntScanSubPanel" class="hidden_panel dw-scan-subpanel">
+                                <fieldset class="nt-scan-switches-cell">
+                                    <legend class="sr-only" data-i18nkey="accessibility.switches.label">Number of switches</legend>
+                                    <input type="radio" name="num_switches" value="2" id="radio-switches-2">
+                                    <label for="radio-switches-2" class="user_options_radio button_div" data-i18nkey="accessibility.switches.two">Two switch</label>
+                                    <input type="radio" name="num_switches" value="1" id="radio-switches-1" checked>
+                                    <label for="radio-switches-1" class="user_options_radio button_div" data-i18nkey="accessibility.switches.one">One switch (auto)</label>
+                                    <!-- Flash-faithful helper text (frame_03.as:95,100): toggles between
+                                         "Key: Space" (one switch) and "Key: Space and Enter" (two switch). -->
+                                    <p id="ntSwitchKeysHelp" class="dw-scan-note" data-i18nkey="number-table.options.switches.keys.one">Key: Space</p>
+                                </fieldset>
+                                <div id="ntScanDelayRow" class="nt-scan-delay-cell">
+                                    <p id="nt-scan-delay-label" data-i18nkey="accessibility.scan-delay.label">Scan delay (seconds)</p>
+                                    <div class="spinner_select" id="scan_delay_spinner">
+                                        <button type="button" class="spinner_down" id="scan_delay_spin_down" aria-label="Shorter scan delay" data-i18nkey-aria-label="accessibility.scan-delay.decrease">-</button>
+                                        <select name="scan_delay" id="scan_delay_sel" aria-labelledby="nt-scan-delay-label">
+                                            <option value="1000">1</option>
+                                            <option value="1500">1.5</option>
+                                            <option value="2000" selected>2</option>
+                                            <option value="2500">2.5</option>
+                                            <option value="3000">3</option>
+                                            <option value="3500">3.5</option>
+                                            <option value="4000">4</option>
+                                            <option value="4500">4.5</option>
+                                            <option value="5000">5</option>
+                                        </select>
+                                        <div class="spinner_display button_div" id="scan_delay_display">2</div>
+                                        <button type="button" class="spinner_up" id="scan_delay_spin_up" aria-label="Longer scan delay" data-i18nkey-aria-label="accessibility.scan-delay.increase">+</button>
+                                    </div>
+                                </div>
+
+                                <fieldset class="nt-scan-back-group">
+                                    <legend data-i18nkey="accessibility.scanback.legend">Scan back button</legend>
+                                    <input type="radio" name="nt_scan_back" value="true" id="radio-scanback-on">
+                                    <label for="radio-scanback-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.on">On</label>
+                                    <input type="radio" name="nt_scan_back" value="false" id="radio-scanback-off" checked>
+                                    <label for="radio-scanback-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.off">Off</label>
+                                </fieldset>
+                            </div>
+                        </fieldset>
+
+                    </div>
+                </form>
+
+                <!-- Audio elements -->
+                <audio src="audio/incorrectSound.mp3" preload="auto" id="ntIncorrectSound"></audio>
+
+                <!-- Activity screen -->
+                <div id="dwActivityScreen" class="hidden_panel nt-screen">
+                    <h1 class="sr-only" tabindex="-1" data-i18nkey="number-table.welcome.title">Number Table</h1>
+                    <h2 class="nt-activity-title" data-i18nkey="number-table.activity.title">Complete the table</h2>
+                    <div class="nt-activity-layout">
+
+                        <!-- Table progress label -->
+                        <p id="ntTableCounter" class="nt-table-counter"></p>
+
+                        <!-- Grid area -->
+                        <div id="ntGrid" class="nt-grid" role="group" aria-label="Number grid" data-i18nkey-aria-label="number-table.aria.grid"></div>
+
+                        <!-- Chip holding area (chips waiting to be placed) -->
+                        <div id="ntHoldingArea" class="nt-holding-area" role="group" aria-label="Chips to place" data-i18nkey-aria-label="number-table.aria.holding-area"></div>
+
+                        <!-- Hand pointer (Flash 'hand' movie clip) — slides between chips and
+                             flies with the chip to a slot when one is chosen. -->
+                        <img id="ntHand" class="nt-hand" src="pictures/hand.svg" alt="" aria-hidden="true">
+
+                        <!-- Scan error overlay -->
+                        <div id="ntScanError" class="nt-overlay hidden_panel" aria-live="assertive">
+                            <p data-i18nkey="number-table.scan-error">Use switch to select, not mouse</p>
+                        </div>
+
+                        <!-- Scan incorrect overlay -->
+                        <div id="ntScanIncorrect" class="nt-overlay hidden_panel" aria-live="assertive">
+                            <p data-i18nkey="number-table.scan-incorrect">Incorrect — try again</p>
+                        </div>
+
+                        <!-- Well Done overlay -->
+                        <div id="ntWellDone" class="nt-well-done hidden_panel" aria-live="polite">
+                            <p data-i18nkey="number-table.well-done">Well Done!</p>
+                        </div>
+
+                        <!-- Action buttons -->
+                        <div class="nt-action-buttons">
+                            <button type="button" id="ntStartBtn" class="nt-go-btn" data-i18nkey="number-table.btn.go">go</button>
+                            <button type="button" id="ntCheckBtn" class="main_button hidden_panel" data-i18nkey="number-table.btn.check">Check</button>
+                            <button type="button" id="ntNextBtn" class="pencil_btn hidden_panel" data-i18nkey="doorway.btn.next">next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results screen -->
+                <div id="dwResultsScreen" class="hidden_panel nt-screen">
+                    <h2 class="nt-screen-title" tabindex="-1" data-i18nkey="number-table.results.heading">Number Table Scoreboard</h2>
+                    <div class="nt-results-topblock">
+                        <div id="ntResultsSummary" class="nt-results-summary">
+                            <p id="ntResultsRange" class="nt-results-meta"></p>
+                            <p id="ntResultsMissing" class="nt-results-meta"></p>
+                        </div>
+                        <div class="nt-results-fields">
+                            <label class="nt-field-label" for="ntResultsName" data-i18nkey="number-table.results.name">Name:</label>
+                            <input type="text" id="ntResultsName" class="nt-text-input" autocomplete="off">
+                            <label class="nt-field-label" for="ntResultsDate" data-i18nkey="number-table.results.date">Date:</label>
+                            <input type="text" id="ntResultsDate" class="nt-text-input nt-date-input" autocomplete="off">
+                        </div>
+                    </div>
+                    <table class="nt-results-table" aria-label="Score summary" data-i18nkey-aria-label="number-table.aria.score-table">
+                        <thead>
+                            <tr>
+                                <th scope="col" data-i18nkey="number-table.results.col.table">Table</th>
+                                <th scope="col" data-i18nkey="number-table.results.col.moves">Errors</th>
+                                <th scope="col" data-i18nkey="number-table.results.col.score">Score<span class="nt-score-asterisk" aria-hidden="true">*</span></th>
+                                <th scope="col" data-i18nkey="number-table.results.col.percent">Percent</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ntResultsBody"></tbody>
+                    </table>
+                    <p class="nt-results-footnote" data-i18nkey="number-table.results.footnote">* Two points are awarded for each correctly placed counter. One point is taken away for each incorrect move. You also lose one point for each "check" performed while all the counters are not placed correctly.</p>
+                    <div class="nt-action-buttons">
+                        <button type="button" id="ntRepeatBtn" class="pencil_btn" data-i18nkey="doorway.btn.repeat">repeat</button>
+                        <button type="button" id="ntPrintBtn" class="main_button" data-i18nkey="number-table.results.print">Print</button>
+                    </div>
+                    <p class="nt-print-hint" data-i18nkey="shared.print.hint">Tip: choose 'Save as PDF' in the print dialog to keep a digital copy.</p>
+                </div>
+
+                <!-- Shared framework elements -->
+                <div id="dwMainApp" style="display:none;"></div>
+                <div id="dwDarkenedPanel" class="darkened_panel hidden_panel"></div>
+                <div id="dwWellDone" class="well_done_message hidden_panel">
+                    <p class="instruction_message"></p>
+                </div>
+
+            </main>
+
+            <!-- Shared page footer (contentinfo landmark). Sibling of <main>,
+                 so <footer> gets its implicit contentinfo role. Action buttons
+                 visibility per screen via CSS: enter on welcome; home+start on
+                 options; whole footer hidden on activity. -->
+            <footer class="dw-app-footer">
+                <div class="dw-action-footer">
+                    <button id="dwEnterButton" class="pencil_btn" data-i18nkey="doorway.btn.enter">enter</button>
+                    <button type="button" id="dwHomeButton" class="pencil_btn" data-pencil-dir="left" data-i18nkey="doorway.btn.home">home</button>
+                    <button type="button" id="dwSubmitUserOptions" class="pencil_btn" data-i18nkey="doorway.btn.start">start</button>
+                </div>
+                <p class="copyright_message" data-i18nkey="doorway.copyright">© CALL Scotland, University of Edinburgh 2026</p>
+            </footer>
+            </div><!-- doorway_aspect_div -->
+        </div><!-- doorway_aspect_outer_div -->
+    </div><!-- doorway_fullscreen_div -->
+</div><!-- doorway_application -->
+</body>
+</html>

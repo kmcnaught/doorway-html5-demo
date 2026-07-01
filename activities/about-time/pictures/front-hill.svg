@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="58.098354mm"
+   height="10.04854mm"
+   viewBox="0 0 58.098354 10.04854"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   sodipodi:docname="front-hill.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.0289352"
+     inkscape:cx="-153.07087"
+     inkscape:cy="-163.76153"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="2872"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-145.52083,-191.82292)">
+    <path
+       style="fill:#509d39;fill-opacity:1;stroke:#000000;stroke-width:0.212142;stroke-dasharray:none;stroke-opacity:1"
+       d="m 145.72543,196.75084 c 0,0 4.98646,-0.3012 7.52178,-0.46608 2.28847,-0.14886 4.66384,-0.32568 6.94316,-0.5786 2.47867,-0.27506 4.95241,-0.465 7.42535,-0.78755 2.57393,-0.33572 5.1501,-0.65933 7.71462,-1.06076 2.38605,-0.3735 4.74085,-0.94409 7.13603,-1.25363 1.72745,-0.22325 3.4683,-0.33648 5.20738,-0.43394 1.66959,-0.0936 3.34249,-0.12054 5.01452,-0.14465 6.33995,-0.0914 9.91095,-0.0944 10.80048,-0.0964 l 0.0241,9.83616 h -57.88389 z"
+       id="path2"
+       sodipodi:nodetypes="cssssssscccc" />
+  </g>
+</svg>

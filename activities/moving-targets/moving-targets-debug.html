@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="../shared/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../shared/doorway.css">
+    <link rel="stylesheet" type="text/css" href="moving-targets.css">
+    <script type="module" src="./moving-targets.js"></script>
+    <title>Doorway Moving Targets (debug)</title>
+</head>
+<body id="bodyId" onload="MovingTargets_init();">
+<div id="dwWholeApp" class="doorway_application">
+    <div id="dwFullScreenDiv" class="doorway_fullscreen_div">
+        <div id="dwAspectOuterDiv" class="doorway_aspect_outer_div">
+            <div id="dwAspectDiv" class="doorway_aspect_div">
+
+                <div id="dwLiveRegion" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+                <!-- Navigation header -->
+                <nav id="dwNavigationHeader" class="navigation_header" data-i18nkey-aria-label="nav.toolbar.label">
+                    <button type="button" class="teacher_button hidden_panel" id="dwOptionsButton" data-i18nkey-aria-label="nav.settings.label">
+                        <img src="../shared/settings.svg" width="100%" height="100%" alt="Options" aria-hidden="true">
+                    </button>
+                    <button type="button" class="teacher_button" id="dwFullScreenButton" data-i18nkey-aria-label="nav.fullscreen.label">
+                        <img src="../shared/full-screen.svg" width="100%" height="100%" alt="Fullscreen" aria-hidden="true">
+                    </button>
+
+                </nav>
+
+                <!-- Shared page header (banner landmark). Sibling of <main>, so
+                     <header> gets its implicit banner role. Content varies per
+                     screen via CSS visibility: logo shows on welcome; title
+                     shows on options; whole header hidden on activity. -->
+                <header class="dw-screen-header">
+                    <a href="http://www.doorwayonline.org.uk/" class="doorway_logo">
+                        <img src="../shared/doorwayLogo.svg" alt="Doorway Online">
+                    </a>
+                    <h1 class="title_message" tabindex="-1" data-i18nkey="options.heading">Options</h1>
+                </header>
+
+                <main>
+
+                <!-- Welcome screen -->
+                <div id="dwWelcomeScreen" class="doorway_welcome">
+                    <div class="dw-welcome-body">
+                        <div class="dw-welcome-titles">
+                            <p class="dw-app-label" data-i18nkey="doorway.brand">Doorway</p>
+                            <h1 class="title_message" tabindex="-1" data-i18nkey="moving-targets.welcome.title">Moving Targets</h1>
+                        </div>
+                        <div class="welcome_image">
+                            <img src="pictures/welcome-scene.svg" alt="Fish swimming through weeds" class="mt-welcome-image">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Options screen -->
+                <form name="options_form" id="dwUserOptions" class="hidden_panel user_options">
+                    <div class="user_options">
+                        <fieldset class="options_group game_options mt-activity-group">
+                            <legend class="options_group_title" data-i18nkey="moving-targets.options.activity.legend">Activity</legend>
+                            <input type="radio" name="mt_selected_activity" value="vans" id="radio-activity-vans" checked>
+                            <label for="radio-activity-vans" class="user_options_radio button_div mt-activity-choice">
+                                <span class="mt-activity-thumb mt-thumb-vans" aria-hidden="true"></span>
+                                <span class="mt-activity-name" data-i18nkey="moving-targets.options.activity.vans">Vans Upon a Time</span>
+                            </label>
+                            <input type="radio" name="mt_selected_activity" value="fireworks" id="radio-activity-fireworks">
+                            <label for="radio-activity-fireworks" class="user_options_radio button_div mt-activity-choice">
+                                <span class="mt-activity-thumb mt-thumb-fireworks" aria-hidden="true"></span>
+                                <span class="mt-activity-name" data-i18nkey="moving-targets.options.activity.fireworks">Fireworks</span>
+                            </label>
+                            <input type="radio" name="mt_selected_activity" value="footballer" id="radio-activity-footballer">
+                            <label for="radio-activity-footballer" class="user_options_radio button_div mt-activity-choice">
+                                <span class="mt-activity-thumb mt-thumb-footballer" aria-hidden="true"></span>
+                                <span class="mt-activity-name" data-i18nkey="moving-targets.options.activity.footballer">Footballer</span>
+                            </label>
+                            <input type="radio" name="mt_selected_activity" value="popping" id="radio-activity-popping">
+                            <label for="radio-activity-popping" class="user_options_radio button_div mt-activity-choice">
+                                <span class="mt-activity-thumb mt-thumb-popping" aria-hidden="true"></span>
+                                <span class="mt-activity-name" data-i18nkey="moving-targets.options.activity.popping">Popping Outside</span>
+                            </label>
+                            <input type="radio" name="mt_selected_activity" value="fish" id="radio-activity-fish">
+                            <label for="radio-activity-fish" class="user_options_radio button_div mt-activity-choice">
+                                <span class="mt-activity-thumb mt-thumb-fish" aria-hidden="true"></span>
+                                <span class="mt-activity-name" data-i18nkey="moving-targets.options.activity.fish">Tanks for all the Fish</span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="options_group game_options">
+                            <legend class="options_group_title" data-i18nkey="moving-targets.options.difficulty.legend">Object Size</legend>
+                            <input type="radio" name="mt_difficulty" value="1" id="radio-difficulty-1">
+                            <label for="radio-difficulty-1" class="user_options_radio button_div" data-i18nkey="moving-targets.options.difficulty.small">Small</label>
+                            <input type="radio" name="mt_difficulty" value="2" id="radio-difficulty-2" checked>
+                            <label for="radio-difficulty-2" class="user_options_radio button_div" data-i18nkey="moving-targets.options.difficulty.medium">Medium</label>
+                            <input type="radio" name="mt_difficulty" value="3" id="radio-difficulty-3">
+                            <label for="radio-difficulty-3" class="user_options_radio button_div" data-i18nkey="moving-targets.options.difficulty.large">Large</label>
+                            <p class="mt-difficulty-description" data-i18nkey="moving-targets.options.difficulty.description">Change the size and speed of the target objects.</p>
+                        </fieldset>
+
+                        <fieldset class="options_group">
+                            <legend class="options_group_title" data-i18nkey="options.audio.legend">Audio</legend>
+                            <input type="radio" name="audio_mode" value="webspeech" id="radio-audio-webspeech" checked>
+                            <label for="radio-audio-webspeech" class="user_options_radio button_div" data-i18nkey="options.audio.webspeech">Computer voice</label>
+                            <input type="radio" name="audio_mode" value="none" id="radio-audio-none">
+                            <label for="radio-audio-none" class="user_options_radio button_div" data-i18nkey="options.audio.none">No audio</label>
+                            <fieldset class="mt-sfx-subgroup">
+                                <legend data-i18nkey="moving-targets.options.sfx.legend">Sound Effects</legend>
+                                <input type="radio" name="mt_enable_sfx" value="true" id="radio-sfx-on" checked>
+                                <label for="radio-sfx-on" class="user_options_radio button_div" data-i18nkey="moving-targets.options.sfx.on">On</label>
+                                <input type="radio" name="mt_enable_sfx" value="false" id="radio-sfx-off">
+                                <label for="radio-sfx-off" class="user_options_radio button_div" data-i18nkey="moving-targets.options.sfx.off">Off</label>
+                            </fieldset>
+                        </fieldset>
+
+                        <fieldset class="options_group accessibility_options">
+                            <legend class="options_group_title" data-i18nkey="accessibility.heading">Accessibility</legend>
+                            <div class="mt-scan-onoff">
+                                <p class="mt-scan-label" data-i18nkey="accessibility.scanning.label">Scanning</p>
+                                <input type="radio" name="enable_scanning" value="true" id="radio-scanning-on">
+                                <label for="radio-scanning-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.on">On</label>
+                                <input type="radio" name="enable_scanning" value="false" id="radio-scanning-off" checked>
+                                <label for="radio-scanning-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanning.off">Off</label>
+                            </div>
+                            <!-- Scan sub-panel: shown only when scanning is On -->
+                            <div id="mtScanSubPanel" class="hidden_panel dw-scan-subpanel">
+                                <fieldset class="mt-scan-switches-cell">
+                                    <legend class="sr-only" data-i18nkey="accessibility.switches.label">Number of switches</legend>
+                                    <input type="radio" name="num_switches" value="2" id="radio-switches-2">
+                                    <label for="radio-switches-2" class="user_options_radio button_div" data-i18nkey="accessibility.switches.two">Two switch</label>
+                                    <input type="radio" name="num_switches" value="1" id="radio-switches-1" checked>
+                                    <label for="radio-switches-1" class="user_options_radio button_div" data-i18nkey="accessibility.switches.one">One switch (auto)</label>
+                                </fieldset>
+                                <div id="mtScanDelayRow" class="mt-scan-delay-cell">
+                                    <p id="mt-scan-delay-label" data-i18nkey="accessibility.scan-delay.label">Scan delay (seconds)</p>
+                                    <div class="spinner_select" id="scan_delay_spinner">
+                                        <button type="button" class="spinner_down" id="scan_delay_spin_down" aria-label="Shorter scan delay" data-i18nkey-aria-label="accessibility.scan-delay.decrease">-</button>
+                                        <select name="scan_delay" id="scan_delay_sel" aria-labelledby="mt-scan-delay-label">
+                                            <option value="1000">1</option>
+                                            <option value="1500">1.5</option>
+                                            <option value="2000" selected>2</option>
+                                            <option value="2500">2.5</option>
+                                            <option value="3000">3</option>
+                                            <option value="3500">3.5</option>
+                                            <option value="4000">4</option>
+                                            <option value="4500">4.5</option>
+                                            <option value="5000">5</option>
+                                        </select>
+                                        <div class="spinner_display button_div" id="scan_delay_display">2</div>
+                                        <button type="button" class="spinner_up" id="scan_delay_spin_up" aria-label="Longer scan delay" data-i18nkey-aria-label="accessibility.scan-delay.increase">+</button>
+                                    </div>
+                                </div>
+
+                                <fieldset class="mt-scan-back-group">
+                                    <legend data-i18nkey="accessibility.scanback.legend">Scan back button</legend>
+                                    <input type="radio" name="mt_scan_back" value="true" id="radio-scanback-on">
+                                    <label for="radio-scanback-on" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.on">On</label>
+                                    <input type="radio" name="mt_scan_back" value="false" id="radio-scanback-off" checked>
+                                    <label for="radio-scanback-off" class="user_options_radio button_div" data-i18nkey="accessibility.scanback.off">Off</label>
+                                </fieldset>
+                            </div>
+                        </fieldset>
+
+                    </div>
+                </form>
+
+                <!-- Audio elements (known explicit references from ActionScript) -->
+                <audio src="audio/harp.wav" preload="auto" id="mtAudioHarp"></audio>
+                <audio src="audio/underwater.mp3" preload="auto" id="mtAudioUnderwater"></audio>
+                <audio src="audio/bubblepop.mp3" preload="auto" id="mtAudioPop"></audio>
+                <audio src="audio/sound_074.mp3" preload="auto" id="mtAudioRocket"></audio>
+                <audio src="audio/sound_096.mp3" preload="auto" id="mtAudioBang"></audio>
+                <audio src="audio/sound_236.mp3" preload="auto" id="mtAudioEngine"></audio>
+                <audio src="audio/sound_259.mp3" preload="auto" id="mtAudioKick"></audio>
+
+                <!-- Activity screen -->
+                <div id="dwActivityScreen" class="hidden_panel mt-screen">
+                    <h1 class="sr-only" tabindex="-1" data-i18nkey="moving-targets.welcome.title">Moving Targets</h1>
+
+                    <!-- Vans sub-activity -->
+                    <div id="mtVansArea" class="mt-sub-activity hidden_panel" aria-label="Vans activity" data-i18nkey-aria-label="moving-targets.aria.vans-area">
+                        <p class="mt-prompt" data-i18nkey="moving-targets.prompt.vans">Click on the cars to make them move</p>
+                        <div class="mt-vans-scene">
+                            <button type="button" id="mtVan1" class="mt-van-target" aria-label="Van 1" data-i18nkey-aria-label="moving-targets.aria.van-1">
+                                <img src="pictures/van.svg" alt="" aria-hidden="true" class="mt-van-img" id="mtVan1Img">
+                            </button>
+                            <button type="button" id="mtVan2" class="mt-van-target" aria-label="Van 2" data-i18nkey-aria-label="moving-targets.aria.van-2">
+                                <img src="pictures/van.svg" alt="" aria-hidden="true" class="mt-van-img" id="mtVan2Img">
+                            </button>
+                            <button type="button" id="mtVan3" class="mt-van-target" aria-label="Van 3" data-i18nkey-aria-label="moving-targets.aria.van-3">
+                                <img src="pictures/van.svg" alt="" aria-hidden="true" class="mt-van-img" id="mtVan3Img">
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Fireworks sub-activity -->
+                    <div id="mtFireworksArea" class="mt-sub-activity hidden_panel" aria-label="Fireworks activity" data-i18nkey-aria-label="moving-targets.aria.fireworks-area">
+                        <p class="mt-prompt mt-prompt-light" data-i18nkey="moving-targets.prompt.fireworks">Click on the coloured boxes to set off the fireworks.</p>
+                        <div class="mt-fireworks-scene" id="mtFireworksScene">
+                            <!-- Decorative sparklers on each side, planted in the grass and
+                                 angled inward toward the launchers. Flash sprite_256. -->
+                            <img src="pictures/sparkler.svg" alt="" aria-hidden="true" class="mt-sparkler mt-sparkler-left">
+                            <img src="pictures/sparkler.svg" alt="" aria-hidden="true" class="mt-sparkler mt-sparkler-right">
+                            <!-- Coloured launcher "boxes" (slim cylinder + curly fuse).
+                                 Mirrors Flash sprites 248/251/254 — body is a
+                                 gently-domed capsule, fuse curls out from the
+                                 lower-left side. Inline SVG so CSS can recolour
+                                 the body and animate the fuse when firing.
+                                 Rockets are spawned from the box top by JS. -->
+                            <button type="button" id="mtLauncher1" class="mt-launcher-target mt-launcher-green" aria-label="Launcher 1" data-i18nkey-aria-label="moving-targets.aria.launcher-1">
+                                <svg class="mt-launcher-svg" viewBox="0 0 60 130" preserveAspectRatio="xMidYMax meet" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                                    <g class="mt-launcher-body" transform="translate(30 1)">
+                                        <path d="M-23 3 L-23 80 Q-0.5 85.95 22 80 L22 3 Q-2.5 -2.95 -23 3 Z"/>
+                                        <path class="mt-launcher-body-outline" d="M-23 3 Q-2.5 -2.95 22 3 L22 80 Q-0.5 85.95 -23 80 L-23 3 Z" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                    </g>
+                                    <path class="mt-launcher-fuse" d="M17.5 68 Q-35.53 69.59 -30.87 94.49" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                    <circle class="mt-launcher-fuse-tip" cx="-30.87" cy="94.49" r="0"/>
+                                </svg>
+                            </button>
+                            <button type="button" id="mtLauncher2" class="mt-launcher-target mt-launcher-orange" aria-label="Launcher 2" data-i18nkey-aria-label="moving-targets.aria.launcher-2">
+                                <svg class="mt-launcher-svg" viewBox="0 0 60 130" preserveAspectRatio="xMidYMax meet" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                                    <g class="mt-launcher-body" transform="translate(30 1)">
+                                        <path d="M-23 3 L-23 80 Q-0.5 85.95 22 80 L22 3 Q-2.5 -2.95 -23 3 Z"/>
+                                        <path class="mt-launcher-body-outline" d="M-23 3 Q-2.5 -2.95 22 3 L22 80 Q-0.5 85.95 -23 80 L-23 3 Z" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                    </g>
+                                    <path class="mt-launcher-fuse" d="M17.5 68 Q-35.53 69.59 -30.87 94.49" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                    <circle class="mt-launcher-fuse-tip" cx="-30.87" cy="94.49" r="0"/>
+                                </svg>
+                            </button>
+                            <button type="button" id="mtLauncher3" class="mt-launcher-target mt-launcher-magenta" aria-label="Launcher 3" data-i18nkey-aria-label="moving-targets.aria.launcher-3">
+                                <svg class="mt-launcher-svg" viewBox="0 0 60 130" preserveAspectRatio="xMidYMax meet" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                                    <g class="mt-launcher-body" transform="translate(30 1)">
+                                        <path d="M-23 3 L-23 80 Q-0.5 85.95 22 80 L22 3 Q-2.5 -2.95 -23 3 Z"/>
+                                        <path class="mt-launcher-body-outline" d="M-23 3 Q-2.5 -2.95 22 3 L22 80 Q-0.5 85.95 -23 80 L-23 3 Z" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                    </g>
+                                    <path class="mt-launcher-fuse" d="M17.5 68 Q-35.53 69.59 -30.87 94.49" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                    <circle class="mt-launcher-fuse-tip" cx="-30.87" cy="94.49" r="0"/>
+                                </svg>
+                            </button>
+                            <!-- Explosion/rocket clip area (populated by JS) -->
+                            <div id="mtExplosionsArea" class="mt-explosions-area" aria-hidden="true"></div>
+                        </div>
+                    </div>
+
+                    <!-- Footballer sub-activity -->
+                    <div id="mtFootballerArea" class="mt-sub-activity hidden_panel" aria-label="Footballer activity" data-i18nkey-aria-label="moving-targets.aria.footballer-area">
+                        <p class="mt-prompt" data-i18nkey="moving-targets.prompt.footballer">Click on the football to kick the ball.</p>
+                        <div class="mt-footballer-scene">
+                            <button type="button" id="mtBall" class="mt-ball-target" aria-label="Football" data-i18nkey-aria-label="moving-targets.aria.ball">
+                                <img src="pictures/football.svg" alt="" aria-hidden="true" class="mt-ball-img">
+                            </button>
+                            <!-- Runner GIF: plays once on ball click; the figure inside the GIF
+                                 jogs in from off-screen left and arrives at the ball at the last
+                                 visible frame (~1.0 s at 50 fps). Then hidden so the kicker takes
+                                 over. Mirrors Flash sprite 273 ("runner"). -->
+                            <img id="mtFootballerRunner" class="mt-footballer-runner hidden_panel" src="pictures/runner.gif" alt="" aria-hidden="true">
+                            <!-- Kicker figure: shown at handoff. Cycles A → B → C as a single
+                                 250 ms kick (footballer-stand.svg = wind-up, then two extracted
+                                 mango poses for contact and follow-through). Mirrors Flash
+                                 sprite 278 ("mango"). -->
+                            <img id="mtFootballer" class="mt-footballer-img hidden_panel" src="pictures/footballer-stand.svg" alt="" aria-hidden="true">
+                        </div>
+                    </div>
+
+                    <!-- Popping sub-activity -->
+                    <div id="mtPoppingArea" class="mt-sub-activity hidden_panel" aria-label="Popping activity" data-i18nkey-aria-label="moving-targets.aria.popping-area">
+                        <p class="mt-prompt" data-i18nkey="moving-targets.prompt.popping">Click on the balloon to pop it</p>
+                        <div class="mt-popping-scene" id="mtPoppingScene">
+                            <button type="button" id="mtBalloon" class="mt-balloon-target" aria-label="Balloon" data-i18nkey-aria-label="moving-targets.aria.balloon">
+                                <!-- Balloon graphic from Flash sprite_293; inline SVG so `currentColor`
+                                     on the body path picks up the CSS-driven colour (set by JS via
+                                     --mt-balloon-colour). -->
+                                <span class="mt-balloon-shape" aria-hidden="true">
+                                    <svg viewBox="-58 -71 117 194" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <radialGradient id="mtBalloonHi" cx="0" cy="0" r="55"
+                                                            gradientUnits="userSpaceOnUse"
+                                                            gradientTransform="matrix(0.55, 0, 0, 0.7, -13, -36)">
+                                                <stop offset="0" stop-color="#ffffff" stop-opacity="0.55"/>
+                                                <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+                                            </radialGradient>
+                                        </defs>
+                                        <path d="M40.5 -50.75 Q56.7 -34.55 56.7 -11.6 Q56.7 -0.45 52.2 11.4 Q47.9 22.6 40.5 32.1 Q30.0 47.65 23.4 55.8 Q11.3 70.65 1.8 70.75 L1.4 70.75 Q-8.25 70.75 -20.45 55.95 Q-24.3 51.25 -29.95 43.2 L-37.8 32.1 Q-54.0 11.05 -54.0 -11.6 Q-54.0 -34.55 -37.8 -50.75 Q-21.55 -66.95 1.4 -66.95 Q24.3 -66.95 40.5 -50.75 Z"
+                                              fill="currentColor"/>
+                                        <path d="M40.5 -50.75 Q56.7 -34.55 56.7 -11.6 Q56.7 -0.45 52.2 11.4 Q47.9 22.6 40.5 32.1 Q30.0 47.65 23.4 55.8 Q11.3 70.65 1.8 70.75 L1.4 70.75 Q-8.25 70.75 -20.45 55.95 Q-24.3 51.25 -29.95 43.2 L-37.8 32.1 Q-54.0 11.05 -54.0 -11.6 Q-54.0 -34.55 -37.8 -50.75 Q-21.55 -66.95 1.4 -66.95 Q24.3 -66.95 40.5 -50.75 Z"
+                                              fill="url(#mtBalloonHi)"/>
+                                        <path d="M1.85 119.2 Q4.9 112.0 4.6 106.95 Q4.35 101.95 2.95 97.15 Q1.6 92.4 1.05 87.95 Q0.45 83.5 1.85 71.0 L1.45 71.0 Q-8.2 71.0 -20.4 56.2 Q-24.25 51.5 -29.9 43.45 Q-36.1 34.45 -37.75 32.35 Q-53.95 11.3 -53.95 -11.35 Q-53.95 -34.3 -37.75 -50.5 Q-21.5 -66.7 1.45 -66.7 Q24.35 -66.7 40.55 -50.5 Q56.75 -34.3 56.75 -11.35 Q56.75 -0.2 52.25 11.65 Q47.95 22.85 40.55 32.35 Q30.05 47.9 23.45 56.05 Q11.35 70.9 1.85 71.0"
+                                              fill="none" stroke="#000000" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </button>
+                            <!-- Pop effect: a sketchy starburst of tapered black spikes
+                                 around a bold "pop!" word. JS positions the wrapper at
+                                 the balloon's centre, regenerates the spike paths with
+                                 jittered angles/lengths/thickness per click (to mimic
+                                 Flash's hand-drawn variability), then adds
+                                 .mt-pop-bursting to fire the keyframes. Hides on
+                                 animationend. -->
+                            <div id="mtPopEffect" class="mt-pop-effect hidden_panel" aria-hidden="true">
+                                <svg class="mt-pop-burst-lines" viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <defs>
+                                        <filter id="mtPopBlur" x="-20%" y="-20%" width="140%" height="140%">
+                                            <feGaussianBlur stdDeviation="0.35"/>
+                                        </filter>
+                                    </defs>
+                                    <g class="mt-pop-spikes" filter="url(#mtPopBlur)"></g>
+                                </svg>
+                                <span class="mt-pop-text" data-i18nkey="moving-targets.popping.poptext">pop!</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fish sub-activity -->
+                    <div id="mtFishArea" class="mt-sub-activity hidden_panel" aria-label="Fish activity" data-i18nkey-aria-label="moving-targets.aria.fish-area">
+                        <p class="mt-prompt" data-i18nkey="moving-targets.prompt.fish">Click on the fish.</p>
+                        <div class="mt-fish-scene" id="mtFishScene">
+                            <button type="button" id="mtFish" class="mt-fish-target" aria-label="Fish" data-i18nkey-aria-label="moving-targets.aria.fish">
+                                <img src="pictures/fish.svg" alt="" aria-hidden="true" class="mt-fish-img">
+                            </button>
+                            <!-- Bubble spawn area (populated by JS) -->
+                            <div id="mtBubblesArea" class="mt-bubbles-area" aria-hidden="true"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Shared framework elements -->
+                <div id="dwMainApp" style="display:none;"></div>
+                <div id="dwDarkenedPanel" class="darkened_panel hidden_panel"></div>
+                <div id="dwWellDone" class="well_done_message hidden_panel">
+                    <p class="instruction_message"></p>
+                </div>
+
+            </main>
+
+            <!-- Shared page footer (contentinfo landmark). Sibling of <main>,
+                 so <footer> gets its implicit contentinfo role. Action buttons
+                 visibility per screen via CSS: enter on welcome; home+start on
+                 options; whole footer hidden on activity. -->
+            <footer class="dw-app-footer">
+                <div class="dw-action-footer">
+                    <button id="dwEnterButton" class="pencil_btn" data-i18nkey="doorway.btn.enter">enter</button>
+                    <button type="button" id="dwHomeButton" class="pencil_btn" data-pencil-dir="left" data-i18nkey="doorway.btn.home">home</button>
+                    <button type="button" id="dwSubmitUserOptions" class="pencil_btn" data-i18nkey="doorway.btn.start">start</button>
+                </div>
+                <p class="copyright_message" data-i18nkey="doorway.copyright">© CALL Scotland, University of Edinburgh 2026</p>
+            </footer>
+            </div><!-- doorway_aspect_div -->
+        </div><!-- doorway_aspect_outer_div -->
+    </div><!-- doorway_fullscreen_div -->
+</div><!-- doorway_application -->
+</body>
+</html>
