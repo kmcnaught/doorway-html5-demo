@@ -3,40 +3,44 @@
    All sizing in em; no px except borders.
 */
 
-/* --- Welcome screen --- */
+/* --- Welcome screen ---
+   Welcome chrome (logo, enter button, copyright) lives in the shared
+   <header>/<footer>. The body group below uses the shared flow-mode
+   layout; only the activity-specific illustration sizing is here. */
 
-.doorway_welcome h1.title_message {
-    font-size: 2em;
-    text-align: center;
-    margin: 0.3em 0 0.1em;
-    flex-shrink: 0;
-}
-
+/* Welcome illustration slot: wrap the absolute-positioned card scatter in
+   a sized box so the wrapper participates in the centred flex column.
+   max-width keeps the scatter from blowing past the body width on wide
+   viewports; the inner .ftp-welcome-cards keeps its em-based fixed
+   geometry so the rotated cards stay in their carefully tuned positions. */
 .welcome_image {
-    width: 92%;
-    max-width: 44em;
-    height: 16em;
-    margin: 0.3em auto 0.2em;
-    flex-shrink: 0;
+    width: 100%;
+    max-width: 34em;
+    margin: 0.4em auto 0.2em;
     position: relative;
+    display: flex;
+    justify-content: center;
 }
 
 /* Scattered card display on welcome screen.
-   Fixed-width container centred inside .welcome_image. */
+   Fixed-em geometry preserves Flash-faithful rotations and offsets. */
 .ftp-welcome-cards {
     position: relative;
     width: 34em;
     height: 14em;
-    margin: 0.5em auto 0;
+    flex-shrink: 0;
 }
 
-/* Base card style for welcome cards */
+/* Base card style for welcome cards (picture cards).
+   Flash-faithful: thin black outline, rounded corners. Card-back variants
+   override these (see .ftp-wc.ftp-wc-has-back below) because the SVG
+   already includes its own outline. */
 .ftp-wc {
     position: absolute;
     width: 5.8em;
     height: 7.5em;
-    border: 0.15em solid #888;
-    border-radius: 0.5em;
+    border: 0.1em solid #000;
+    border-radius: 0.8em;
     background: #fff;
     box-shadow: 0.15em 0.15em 0.5em rgba(0,0,0,0.3);
     display: flex;
@@ -52,6 +56,16 @@
     object-fit: contain;
 }
 
+/* Card-back welcome variants: the SVG already has its own dark outline, so
+   strip the wrapper border (and the white background that would peek through
+   at the rounded corners) to avoid a double outline. */
+.ftp-wc.ftp-wc-has-back {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+}
+
 /* Welcome and activity-screen card backs both use the extracted Flash sprite
    (svgs/sprite_39 → ./card-back.svg). Sized 100% of the card so the lavender
    field meets the card border; the SVG already includes its own dark outline. */
@@ -60,6 +74,7 @@
     height: 100%;
     background: url(./card-back.svg) no-repeat center / 100% 100%;
     border-radius: 0.3em;
+    filter: drop-shadow(0.15em 0.15em 0.4em rgba(0,0,0,0.3));
 }
 
 /* 15 cards: 4 pairs (hen, orange, fish, cat) + 1 apple + 6 face-down.
@@ -82,43 +97,26 @@
 .ftp-wc-15 { left: 26em;   top: 6.4em;  transform: rotate(4deg);   z-index: 2; }
 
 /* --- Options form layout ---
-   The shared CSS targets div.options_group / h3.options_group_title.
-   Here we make the semantic fieldset/legend equivalents look the same,
-   and use flex so the groups fill the available screen height.
+   Use flex so the groups fill the available screen height.
 */
 
-/* The inner div.user_options is position:absolute 100%×100% (doorway.css).
-   Give it flex layout so fieldsets and button share vertical space. */
+/* Inner column: flex column with gaps between option groups.
+   Shared flow-mode CSS overrides height/overflow so the page can scroll. */
 #dwUserOptions .user_options {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    padding: 0.3em 0.5em 0.5em; /* top: shared doorway.css offsets div.user_options by 1.5em */
+    padding: 0.3em 0.5em 0.5em;
     gap: 0.4em;
-    overflow: hidden;
-}
-
-#dwUserOptions h1.title_message {
-    flex-shrink: 0;
-    margin: 0 0 0.2em;
-    font-size: 1.5em;
 }
 
 fieldset.options_group {
-    border: 0.1em solid CornflowerBlue;
     margin: 0;
     padding: 0 1em 0.5em;
     flex: 1;
     min-height: 0;
     text-align: left;
     box-sizing: border-box;
-}
-
-legend.options_group_title {
-    font-size: 100%;
-    font-weight: normal;
-    padding: 0 0.5em;
-    color: inherit;
 }
 
 /* Wrapper div: push content down from the legend */
@@ -147,22 +145,6 @@ legend.options_group_title {
     display: flex;
     gap: 0.3em;
     margin-top: 0.4em;
-}
-
-.ftp-scan-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 1.5em;
-    align-items: start;
-}
-
-/* Stop the flex-column layout from stretching the pencil start button to fill
-   the form width (the SVG background scales 100% 100%, so a wide button shows
-   a flat rectangle with no visible pencil tip). align-self:center keeps it at
-   intrinsic width so the SVG renders with its natural aspect. */
-#dwUserOptions .pencil_btn {
-    flex-shrink: 0;
-    align-self: center;
 }
 
 /* --- Screen layout --- */
@@ -217,7 +199,7 @@ legend.options_group_title {
     max-height: 9.75em;
     max-width: 7.15em;
     cursor: pointer;
-    perspective: 600px;
+    perspective: 37.5em;
     border-radius: 0.5em;
     flex-shrink: 0;
 }
@@ -271,7 +253,7 @@ legend.options_group_title {
 
 .ftp-card.ftp-matched .ftp-card-up {
     border-color: #007700;
-    border-width: 3px;
+    border-width: 0.2em;
 }
 
 .ftp-card:focus-visible,
@@ -315,24 +297,44 @@ legend.options_group_title {
     margin: 0;
 }
 
-/* --- Results screen --- */
+/* --- Results screen ---
+   Layout mirrors same-or-different: heading, praise, stats, action button,
+   stacked and centred. */
+
+.ftp-results-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 0.5em;
+    text-align: center;
+}
+
+.ftp-results-heading {
+    font-size: 1.6em;
+    font-weight: bold;
+    margin: 0 0 0.3em;
+}
 
 .ftp-congrat-text {
     font-size: 2.5em;
     font-weight: bold;
     text-align: center;
     margin: 0;
-    padding-top: 1em;
-}
-
-.ftp-stats {
-    text-align: center;
-    margin: 0.5em 0;
+    color: #007700;
 }
 
 .ftp-stat-text {
-    font-size: 1.5em;
-    margin: 0.2em 0;
+    font-size: 1.3em;
+    margin: 0;
+}
+
+.ftp-results-nav {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    padding-top: 0.5em;
 }
 
 /* --- Navigation --- */
@@ -354,4 +356,36 @@ legend.options_group_title {
         animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
     }
+}
+
+/* --- Options-screen overrides for the flow-mode layout ---
+   Shared rules live in shared/doorway.css. These are activity-specific
+   refinements scoped to the options screen (body.dw-screen-options). */
+
+/* The Activity options group has two side-by-side cells (Number of cards,
+   Reveal time). Drop the 2-col CSS Grid for a centred wrap-flex row so
+   the cells stack cleanly when the viewport is narrow. */
+body.dw-screen-options .ftp-activity-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em 2.5em;
+    justify-content: center;
+    align-items: flex-start;
+}
+body.dw-screen-options .ftp-activity-cell {
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+/* Accessibility scan sub-panel: switches fieldset and scan-delay row
+   should wrap rather than overflow when both are visible together. */
+body.dw-screen-options #ftpScanSubPanel {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1.5em;
+    row-gap: 0.5em;
+    align-items: flex-start;
+}
+body.dw-screen-options #ftpScanSubPanel.hidden_panel {
+    display: none;
 }

@@ -3,16 +3,32 @@
    All sizing in em; no px except borders.
 */
 
-/* --- Welcome screen image --- */
+/* --- Welcome screen image ---
+   Constrained max-width / max-height so the illustration stays at a sensible
+   size when the activity is rendered in flow mode (the parent is no longer
+   letterboxed, so a percent-based width could blow up at large viewports). */
 
-.welcome_image { width: 75%; margin: 0.5em auto; }
+.welcome_image {
+    width: 75%;
+    max-width: 30em;
+    max-height: 12em;
+    margin: 0.5em auto;
+}
 
-/* --- Welcome description text --- */
+.welcome_image svg {
+    width: 100%;
+    height: auto;
+    max-height: 12em;
+    display: block;
+}
 
-.welcome_description {
+/* --- Welcome subtitle (was .welcome_description; now uses shared .sub_title) --- */
+
+.doorway_welcome .sub_title {
     text-align: center;
     font-size: 1.25em;
-    margin: 0.4em 1em;
+    margin: 0.4em auto 0.5em;
+    max-width: 30em;
     line-height: 1.4;
 }
 
@@ -30,129 +46,142 @@
     height: 100%;
     overflow-y: auto;
     box-sizing: border-box;
-    padding: 1.5em 1em 1em;
-    gap: 0.5em;
+    padding: 0.2em 0.5em 0.4em;
+    gap: 0.3em;
 }
 
-.cmi-screen-title {
-    text-align: center;
-    font-size: 2em;
-    margin: 0.5em 0;
-}
-
-/* --- Mode selection screen --- */
-
-.cmi-mode-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1em;
-    margin-top: 1em;
-}
-
-.cmi-mode-btn {
-    width: 20em;
-    font-size: 1.4em;
-    padding: 0.6em 1em;
-}
-
-/* --- Options screen navigation --- */
-
-.cmi-options-nav {
-    display: flex;
-    gap: 1em;
-    justify-content: center;
-    padding-top: 0.5em;
-}
-
-/* --- Activity screen layout --- */
-
+/* --- Activity screen layout ---
+   Vertical block (topbar + grid) is centred together in the available height
+   so the guide text, Found/Score readouts and number grid shift down as one
+   unit (matches Flash where the prompt sits ~140 px above a centred grid).
+   `justify-content: center` requires the children to be content-sized, so the
+   grid drops `flex:1` below and uses its own `--cmi-avail-h`-driven max-width.
+*/
 .cmi-activity-layout {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
-    gap: 0.5em;
+    gap: 0.3em;
     box-sizing: border-box;
-    padding: 0.5em;
+    padding: 0;
+    min-height: 0;
+    justify-content: center;
 }
 
 /* --- Guide text ---
-   Flash places the guide text as plain black text over the white stage —
-   no header band. The #c6d7ff band visible in some captured frames is the
-   loader progress bar (frame_01), not the activity background.
+   Lives inline in the activity topbar (alongside the nav-header buttons)
+   rather than on its own row, so the grid below can claim the remaining
+   vertical space. text-align:center centres the prompt in the flex slot.
 */
 
 .cmi-guide-text {
+    flex: 1;
     text-align: center;
-    font-size: 1.6em;
+    font-size: 1em;
     font-weight: bold;
-    margin: 0.2em 0;
-    min-height: 1.5em;
-    padding: 0.2em 0.5em;
+    margin: 0;
+    padding: 0;
+    min-height: 0;
 }
 
 /* --- Number grid ---
-   10 columns × N rows. Cells are square (aspect-ratio: 1) and shrink to fit.
-   The grid is capped at a width that lets the tallest layout (10 rows for ranges 70–100)
-   fit inside the activity area's vertical space.
+   10 columns × N rows of square (aspect-ratio:1) cells. The grid claims the
+   leftover vertical space (flex:1) and is centred horizontally (align-self:
+   center). To keep cells from overflowing vertically, max-width is clamped by
+   both 44em and the height-based budget: cell_height = (avail_h - (N-1)*gap)/N,
+   total_width = 10*cell_height + 9*gap. JS sets --cmi-rows on the grid each
+   time it builds (Math.ceil(numberRange/10)) so the height budget tracks the
+   chosen range. --cmi-avail-h is a conservative estimate of the height left
+   after the topbar + padding (activity area is ~28em high; topbar ~2.2em,
+   gap+padding ~1em → ~25em).
 */
 
 .cmi-number-grid {
+    --cmi-rows: 2;
+    --cmi-avail-h: 25em;
+    --cmi-gap: 0.3em;
+
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    gap: 0.3em;
-    padding: 0.3em;
-    align-content: start;
-    justify-self: center;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: var(--cmi-gap);
+    padding: 0;
+    /* Centre rows vertically within the available height (flex:1 above gives
+     * the grid the leftover vertical space; align-content:center centres the
+     * row block, instead of pinning it to the top with align-content:start). */
+    align-content: center;
+    align-self: center;
+    /* Grid sizes to content so .cmi-activity-layout's `justify-content: center`
+       can vertically centre the topbar + grid as a unified block.  The
+       --cmi-avail-h-driven max-width clamp below still caps cell height. */
+    flex: 0 1 auto;
+    min-height: 0;
     width: 100%;
-    max-width: 44em;
+    max-width: min(
+        44em,
+        calc(
+            (var(--cmi-avail-h) - var(--cmi-gap) * (var(--cmi-rows) - 1))
+            / var(--cmi-rows) * 10 + var(--cmi-gap) * 9
+        )
+    );
 }
 
-/* Compact: ranges 70–100 need 7–10 rows; narrow the grid so square cells fit vertically. */
-.cmi-number-grid:has(.cmi-number-btn.cmi-compact) {
-    max-width: 28em;
-}
-
+/* Number-grid buttons match the welcome page illustration: flat solid-colour
+   squares, no rounded corners, no orange highlight border. Odd tiles use the
+   salmon pink fill (#ffb0b0) and even tiles the sky-blue fill (#a4e1ff) — same
+   palette as the welcome SVG `<rect>` elements (which use `stroke="none"`),
+   hence no border here either. Hover/active variants use a brightness filter;
+   switch-access focus-visible keeps the separate orange focus ring so scanning
+   is still clearly indicated. */
 .cmi-number-btn {
     aspect-ratio: 1;
     min-width: 0;
     width: 100%;
     font-size: 1.2em;
     font-weight: bold;
-    border: 2px solid #555;
+    border: none;
     border-radius: 0;
+    box-sizing: border-box;
+    background: transparent;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
+    color: #000;
 }
 
 .cmi-number-btn.cmi-compact {
     font-size: 1em;
 }
 
-/* Odd buttons — Flash buttonO: salmon/pink fill, orange border.
-   Hover (#fd9393) and pressed (#f78282) shades match buttonO.svg shape1/2/3. */
+/* Odd buttons — welcome-page pink. */
 .cmi-number-btn.cmi-odd {
-    background: #ffb0b0;
-    border-color: #fe9301;
+    background-color: #ffb0b0;
 }
-.cmi-number-btn.cmi-odd:hover  { background: #fd9393; }
-.cmi-number-btn.cmi-odd:active { background: #f78282; }
 
-/* Even buttons — Flash buttonE: sky-blue fill, orange border.
-   Hover (#6fc9ff) and pressed (#0099ff) shades match buttonE.svg shape1/2/3. */
+/* Even buttons — welcome-page light blue. */
 .cmi-number-btn.cmi-even {
-    background: #a4e1ff;
-    border-color: #fe9301;
+    background-color: #a4e1ff;
 }
-.cmi-number-btn.cmi-even:hover  { background: #6fc9ff; }
-.cmi-number-btn.cmi-even:active { background: #0099ff; }
 
-.cmi-number-btn:hover,
-.cmi-number-btn:focus {
+/* Hover/active states: darken the sprite slightly. Flash uses 3 distinct fill
+   colours per state; here we approximate with a brightness filter so we keep
+   using the single sprite asset. Already-claimed (aria-disabled) tiles skip
+   the hover feedback so they read as "done", not "still pressable". */
+.cmi-number-btn:hover  { filter: brightness(0.92); }
+.cmi-number-btn:active { filter: brightness(0.82); }
+
+.cmi-number-btn[aria-disabled="true"] {
+    cursor: default;
+}
+.cmi-number-btn[aria-disabled="true"]:hover,
+.cmi-number-btn[aria-disabled="true"]:active {
+    filter: none;
+}
+
+/* Focus ring for keyboard / switch-access scanning. */
+.cmi-number-btn:focus-visible {
     outline: 0.25em solid #ffaa00;
     outline-offset: 0.1em;
 }
@@ -166,52 +195,60 @@
    Flash reference (frame_06.as): a "highlight" MovieClip is attached at the button position
    on a correct answer, then fades out via setInterval(removeHighlight, 300) which plays the
    clip's fade-out frames. Replicated here as a single CSS keyframe animation that pulses
-   gold/yellow and fades back. JS adds .cmi-highlight and listens for animationend to remove
-   the class — no setTimeout sequencing.
+   Flash green (#009900) and fades back. JS adds .cmi-highlight and listens for animationend
+   to remove the class — no setTimeout sequencing.
    Informational content: the result (correct vs wrong) is carried by audio + live region
    + score/done DOM state. The pulse is decorative reinforcement only. */
 @keyframes cmi-highlight-pulse {
-    0%   { background: #ffe066; border-color: #cc9900; outline: 0.3em solid #cc9900; transform: scale(1); }
-    30%  { background: #ffe066; border-color: #cc9900; outline: 0.3em solid #cc9900; transform: scale(1.12); }
-    100% { background: inherit; border-color: inherit; outline: 0 solid transparent; transform: scale(1); }
+    0%   { outline: 0.3em solid #009900; transform: scale(1);    filter: brightness(1.25) saturate(1.4); }
+    30%  { outline: 0.3em solid #009900; transform: scale(1.12); filter: brightness(1.25) saturate(1.4); }
+    100% { outline: 0 solid transparent; transform: scale(1);    filter: brightness(1); }
 }
 
 .cmi-number-btn.cmi-highlight {
     animation: cmi-highlight-pulse 0.6s ease-out;
 }
 
-/* Mode 3: already-pressed buttons in sequence. Smooth fade to the done state
-   reinforces the sequence progression visually; meaning is still carried by
-   `disabled` + `aria-disabled` + live region. */
+/* Mode 3: already-pressed buttons in the times-table-stations sequence get a
+   thick green border (matching the welcome-page highlight stations) rather
+   than being greyed out — the tile reads as "claimed/done", not "disabled".
+   Meaning is carried by `aria-disabled` + live region; the green border is
+   decorative reinforcement. The button stays focusable (no native `disabled`)
+   so the learner Tabs across the intermediate numbers to reach the next
+   station themselves — the counting motion the exercise is meant to teach.
+   `box-sizing: border-box` on .cmi-number-btn keeps the tile footprint
+   constant when the border thickens. The border colour fades in via
+   `transition: border-color`. */
 .cmi-number-btn {
-    transition: opacity 0.25s ease-out;
+    transition: border-color 0.25s ease-out;
+    border: 0.25em solid transparent;
 }
 
 .cmi-number-btn.cmi-done {
-    opacity: 0.5;
+    border-color: #2a9300;
 }
 
 /* --- Activity-screen top bar ---
    Flash: top strip has back-pencil (left), "Found:0" + Repeat (right).
    HTML5 reproduces the right-hand side here; the back is provided by the shared
-   navigation header. The bar is always present (otherwise the grid jumps when
-   Found/Repeat appear); items toggle individually via .hidden_panel.
+   navigation header. The guide text fills the row alongside the nav buttons
+   (flex:1 on .cmi-guide-text) so Repeat/Found/Score sit at the right edge.
+   padding-left clears the absolutely-positioned nav-header buttons.
 */
 .cmi-activity-topbar {
     display: flex;
     align-items: center;
-    gap: 0.6em;
+    gap: 0.5em;
     min-height: 2.2em;
-}
-
-.cmi-topbar-spacer {
-    flex: 1;
+    padding-left: 6.5em;
+    padding-right: 0.5em;
 }
 
 .cmi-found-counter {
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: bold;
     padding: 0.1em 0.4em;
+    white-space: nowrap;
 }
 
 .cmi-found-label {
@@ -239,60 +276,106 @@
     animation: cmi-repeat-appear 0.35s ease-out;
 }
 
-/* --- Prompt-replay button (mouth icon) ---
-   Flash places a red mouth/lips clip at bottom-right of the activity area; clicking
-   it re-fires the current mode's prompt (sayPressAnyNumber / sayFindTheNumber /
-   sayCountIn). We reuse the shared audio-on icon as the visual; positioned bottom-right
-   over the activity area so it is reachable but not on the grid.
+/* --- Prompt-replay button (mouth/lips icon) ---
+   Flash places a red mouth/lips clip at bottom-right of the activity area;
+   clicking it re-fires the current mode's prompt (sayPressAnyNumber /
+   sayFindTheNumber / sayCountIn). We use the Flash sprite (pictures/mouth.svg)
+   directly — no chrome around it, just the lips on the white stage.
 */
 .cmi-replay-btn {
     position: absolute;
     right: 1em;
     bottom: 1em;
-    width: 2.4em;
+    width: 3.2em;
     height: 2.4em;
-    padding: 0.2em;
-    border: 2px solid #888;
-    border-radius: 50%;
-    background: #fffff0;
+    padding: 0;
+    border: none;
+    background: transparent;
     cursor: pointer;
 }
 
-.cmi-replay-btn:hover,
-.cmi-replay-btn:focus {
-    background: #ddeeff;
+.cmi-replay-btn img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.cmi-replay-btn:hover  { filter: brightness(0.9); }
+.cmi-replay-btn:active { filter: brightness(0.8); }
+
+.cmi-replay-btn:focus-visible {
     outline: 0.2em solid #0066cc;
+    outline-offset: 0.15em;
 }
 
 /* --- Score area (mode 2) --- */
 
 .cmi-score-toggle-btn {
-    align-self: flex-end;
-    padding: 0.3em 0.8em;
-    font-size: 1.1em;
+    padding: 0.2em 0.6em;
+    font-size: 1em;
     border: 2px solid #555;
     border-radius: 0.3em;
     background: #eee;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .cmi-score-toggle-btn:hover,
-.cmi-score-toggle-btn:focus {
+.cmi-score-toggle-btn:focus-visible {
     background: #ddd;
     outline: 0.2em solid #0066cc;
 }
 
+/* Score overlay — speech-bubble that "pops down" from the Score toggle button
+   at the top-right of the activity topbar.  The toggle button sits at the right
+   edge of the topbar (~2.2em tall, starting near the top of the activity area).
+   Place the panel just under the button (top: 2.6em) with the same right inset
+   (~0.5em) so the bubble's upper-right corner visually anchors to the button.
+   `width: max-content` lets the panel size to the longest row ("Total Found:")
+   rather than overflowing or wrapping.  The ::after pseudo-element draws the
+   upward-pointing triangle indicator using the standard border-triangle trick. */
 .cmi-score-panel {
     position: absolute;
-    top: 4em;
-    right: 1em;
+    top: 2.6em;
+    right: 0.5em;
     background: #fffff0;
     border: 2px solid #888;
     border-radius: 0.5em;
-    padding: 0.6em 1em;
+    padding: 0.5em 0.9em;
     z-index: 10;
-    font-size: 1.2em;
-    line-height: 1.6;
+    font-size: 1em;
+    line-height: 1.45;
+    width: max-content;
+    max-width: calc(100% - 1em);
+    box-sizing: border-box;
+}
+
+/* Speech-bubble triangle — overlapping pair of CSS triangles so the inner
+   (#fffff0) wedge sits over the outer (#888) wedge with a 2px offset, matching
+   the panel's grey 2px border.  Positioned at the top-right of the bubble so it
+   visually points up to the Score toggle button. */
+.cmi-score-panel::before,
+.cmi-score-panel::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    right: 0.6em;
+}
+
+.cmi-score-panel::before {
+    /* Outer (border) triangle */
+    top: -0.6em;
+    border-width: 0 0.55em 0.6em 0.55em;
+    border-color: transparent transparent #888 transparent;
+}
+
+.cmi-score-panel::after {
+    /* Inner (fill) triangle — sits 2px below the outer to mimic 2px border */
+    top: calc(-0.6em + 2px);
+    border-width: 0 0.55em 0.6em 0.55em;
+    border-color: transparent transparent #fffff0 transparent;
 }
 
 /* Score panel entry animation: fade + slight slide when toggled on.
@@ -315,27 +398,10 @@
     font-weight: bold;
 }
 
-/* --- Back button (used on the options nav) --- */
-
-.cmi-back-btn {
-    padding: 0.4em 0.9em;
-    font-size: 1.2em;
-    border: 2px solid #888;
-    border-radius: 0.4em;
-    background: #eee;
-    cursor: pointer;
-}
-
-.cmi-back-btn:hover,
-.cmi-back-btn:focus {
-    background: #ddd;
-    outline: 0.2em solid #0066cc;
-}
-
 /* --- Scan highlight --- */
 
 
-/* --- Phase 2V: Flash stage scene layout ---
+/* --- Flash stage scene layout ---
    Flash stage: 800×600 px, white background (#ffffff).
    Flash activity frame layout:
      - Top strip (y 0–65 px / 0–4 em): back button (left), guide text (centre), score button (right)
@@ -352,7 +418,14 @@
     background: #ffffff;
 }
 
-/* --- Options grid layout (replaces legacy <table class="options_layout_grid">) --- */
+/* --- Options grid layout --- */
+
+/* Headphones/speakers banner above the first fieldset (Flash options-screen header). */
+.cmi-headphones-notice {
+    text-align: center;
+    margin: 0 0 0.6em;
+    font-style: italic;
+}
 
 .cmi-scan-onoff {
     display: flex;

@@ -8,75 +8,25 @@
      (0.75 factor because Flash stage was 4:3 but HTML5 container is 16:9)
 */
 
-/* dwAspectDiv has display:flex; the flex container sets a white background.
-   Setting white here covers the gap when content doesn't fill full height. */
-/* Ensure hidden_panel wins over the ID-level display:flex rule */
-#dwWelcomeScreen.hidden_panel {
-    display: none;
-}
-
-/* Welcome screen: white background, flex column from top.
-   Flash layout: "Welcome to Doorway" at y≈97px, title at y≈130px, image at y≈200px,
-   button at y≈440px (all scaled ×0.75 for 450px stage, ÷16 for em). */
-#dwWelcomeScreen {
-    width: 100%;
-    height: 100%;
-    align-self: stretch;
-    background: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    box-sizing: border-box;
-    padding: 0 1em 1em;
-}
-
-/* The h1.title_message holds the absolutely-positioned Doorway logo — give it
-   minimal height so it doesn't push content down before the h3. */
-#dwWelcomeScreen h1.title_message {
-    height: 0;
-    overflow: visible;
-    margin: 0;
-    padding: 0;
-    font-size: 0;
-    line-height: 0;
-}
-
-/* "Welcome to Doorway" small heading above the main title.
-   margin-top matches Flash y≈97px × 0.75 / 16. Rendered as h2 (matching the
-   sibling Add-and-Subtract-100 pattern of two h2s) but visually smaller and
-   indented left of the main title, so it reads as a pre-heading caption. */
-#dwWelcomeScreen .aas-welcome-sub {
-    font-size: 1.5em;
-    font-weight: normal;
-    margin: 4em 0 0.1em;
-    text-align: left;
-    padding-left: 12%;
-    width: 80%;
-}
-
-/* Main title: large, matching Flash proportions */
-#dwWelcomeScreen .aas-welcome-title {
-    font-size: 2.5em;
-    margin: 0 0 0.5em;
-    text-align: center;
-}
-
-/* Flash blue panel: y≈195–387px × 0.75 ≈ 146–290px.
-   SVG viewBox 470×175; aspect ≈ 2.69:1.
-   Sized to ≈60% of previous so the panel reads as a small inset illustration
-   below the title rather than dominating the screen (matches Flash proportions
-   where the blue panel is roughly half stage width / quarter stage height). */
+/* --- Welcome illustration ---
+   Flow-mode welcome layout (header / body / footer chrome) lives in
+   shared/doorway.css. Only the activity-specific illustration sizing is
+   defined here. The SVG renders the Flash blue number-line panel; sized
+   so it reads as an inset illustration rather than dominating the screen.
+   `max-width` / `max-height` constraints keep it from blowing up at large
+   viewports in flow mode where the parent is no longer letterboxed. */
 .welcome_image {
-    width: 55%;
+    width: 100%;
+    max-width: 28em;
     max-height: 9em;
-    margin: 0.5em auto 2.5em;
-    flex-shrink: 0;
+    margin: 0.4em auto 0.6em;
 }
 
-.welcome_image img {
+.welcome_image svg {
+    display: block;
     width: 100%;
     height: 100%;
+    max-height: 9em;
     object-fit: contain;
 }
 
@@ -92,7 +42,10 @@
     flex-direction: column;
     width: 100%;
     height: 100%;
-    overflow-y: auto;
+    /* Aspect-locked; never scrolls. Keeps off-screen animation paths
+       (answer bar from below, b2 block flying out top-right) invisible
+       while tweens are in flight. */
+    overflow: hidden;
     box-sizing: border-box;
     padding: 1.5em 1em 1em;
     gap: 0.5em;
@@ -134,7 +87,9 @@
    width here and using the same auto margins puts the left edge in the same
    horizontal position. */
 .aas-question-area {
-    width: 23.3em;
+    /* Matches .aas-number-line outer width so question + info text align to the
+       left edge of the blue panel above the ruler. */
+    width: 25.7em;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -185,29 +140,52 @@
 .aas-number-line-row > #aasNextBtn {
     position: absolute;
     top: 50%;
-    /* Sit just to the right of the centred 23.3em number line, with a small gap. */
-    left: calc(50% + 11.65em + 0.8em);
+    /* Sit just to the right of the centred 25.7em number line, with a small gap.
+       The button inherits .pencil_btn's font-size: 1.4em, so the em values in
+       this `left:` calc are in BUTTON-em (1em-button = 1.4em-parent). The
+       number line is 25.7em wide in PARENT-em (half = 12.85em); converting to
+       button-em gives 12.85/1.4 ≈ 9.18em. Same conversion for the 0.8em gap
+       (≈ 0.57em button-em). The previous calc used parent-em values directly,
+       which pushed the button ~3em further right than intended and let it
+       overflow the activity area. */
+    left: calc(50% + 9.18em + 0.57em);
     transform: translateY(-50%);
 }
 
 /* Flash: rounded blue panel (shape0) at x=149–616px, y=103–234px.
    Colour: fill #d9e8ff, stroke #aabfff.
-   Width: 23.3em = block-10 rendered width (403.3px SVG × 40/43.3 scale / 16px per em)
-   so block N spans exactly N/10 of the line.
-   Labels (0–10), ruler and ticks sit inside the blue rectangle. */
+   Labels (0–10), ruler and ticks sit inside the blue rectangle.
+
+   Panel width allows horizontal breathing room around the ruler track so the
+   two-digit "10" label clears the right border instead of being squashed
+   against it. The TRACK (block-area + labels) is sized to exactly match the
+   rendered width of block-10 so cell stride and tick stride coincide — this
+   is what keeps the placed blocks aligned with the labels below them. */
 .aas-number-line {
     position: relative;
-    width: 23.3em;
+    width: 25.7em;
     background: #d9e8ff;
     border: 2px solid #aabfff;
     border-radius: 0.5em;
-    padding: 0 0.3em;
+    padding: 0 1.2em;
     flex-shrink: 0;
 }
 
+/* Track width = block-10 rendered width.
+   Block-N SVG intrinsic dims are (40N + 3.3)px × 43.3px (1.9px border padding
+   on each side around 40px-stride cells). At height 2.5em, block-10 renders
+   at width 2.5em × 403.3/43.3 = 23.286em. Anchoring the track to this width
+   guarantees a block placed at left:0 in the block-area ends exactly at the
+   right edge of the track — and so tick N (at N×10% of the track) lines up
+   with the right edge of a block-N placed at left:0. The container's content
+   width (25.7em) is wider than the track, so the track is centred — that
+   leaves ~1.2em of blue panel on either side as breathing room (and the
+   "10" label, anchored to the right edge of the track, can extend its
+   pencilled glyph leftward without clipping). */
 .aas-number-line-track {
     position: relative;
-    width: 100%;
+    width: calc(2.5em * 403.3 / 43.3);
+    margin: 0 auto;
 }
 
 /* Block placement area: transparent, inside the blue .aas-number-line panel.
@@ -316,14 +294,34 @@
    SVG's intrinsic aspect ratio (N cells wide × 1 cell tall).
    Bottom-anchored so the block sits just above the ruler line — in subtract mode
    the .aas-block-area is taller and the extra space appears above the block.
-   `transition: opacity` carries the b3 fade-out animation (Phase 5 — A2);
-   `transition: transform` carries the b2 fly-away animation (Phase 5 — A3). */
+   `transition: opacity` carries the b3 fade-out animation;
+   `transition: transform` carries the b2 fly-away animation. */
 .aas-placed-block {
     position: absolute;
     width: auto;
     height: 2.5em;
     bottom: 0;
     transition: opacity 2s ease-out, transform 3s ease-in-out;
+}
+
+/* b2 and b3 are real <button>s — strip the browser-default chrome (background,
+   border, padding, native font) so they paint identically to the surrounding
+   <div> blocks. Cursor: pointer preserves the click affordance. */
+button.aas-placed-block {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+button.aas-placed-block:focus-visible {
+    outline: 0.2em dotted black;
+    outline-offset: 0.15em;
+}
+
+button.aas-placed-block:disabled {
+    cursor: not-allowed;
 }
 
 /* Subtract-mode hover tooltips above the block area (Flash: cutter / subtractArrow
@@ -338,22 +336,28 @@
    onto the block. pointer-events: none so hover/click pass through to the block
    underneath (the tooltip is informational only). */
 .aas-block-tooltip {
+    /* Flash used pictorial sprites (cutter / subtractArrow) above the number
+       line. We render a text label with a downward arrow as the HTML5
+       equivalent so the hint is still readable when paired with a screen
+       reader. Larger / weightier font + a more contrasting border to read
+       at a glance like the Flash sprite. */
     position: absolute;
     bottom: 2.6em;
     left: 0;
     transform: translateX(-50%);
-    background: #ffffe0;
-    border: 1px solid #555;
-    border-radius: 0.25em;
-    padding: 0.1em 0.5em;
-    font-size: 1em;
+    background: #fff7c2;
+    border: 2px solid #b58900;
+    border-radius: 0.3em;
+    padding: 0.15em 0.7em;
+    font-size: 1.2em;
     font-weight: bold;
-    color: #222;
+    color: #663c00;
     white-space: nowrap;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.15s ease-out;
     z-index: 6;
+    box-shadow: 0 0.1em 0.25em rgba(0, 0, 0, 0.18);
 }
 
 .aas-block-tooltip.aas-block-tooltip-visible {
@@ -362,7 +366,8 @@
 
 /* Downward arrow on the bottom edge — solid triangle with a matching border
    colour. Two pseudo-elements: the larger triangle is the dark border, the
-   smaller (offset by 1px) is the yellow fill. */
+   smaller (offset by 1px) is the yellow fill. Made larger to read as a
+   pointer (closer to the Flash cutter/arrow sprite). */
 .aas-block-tooltip::before,
 .aas-block-tooltip::after {
     content: '';
@@ -372,17 +377,17 @@
     transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left:  0.4em solid transparent;
-    border-right: 0.4em solid transparent;
+    border-left:  0.55em solid transparent;
+    border-right: 0.55em solid transparent;
 }
 
 .aas-block-tooltip::before {
-    border-top: 0.5em solid #555;
+    border-top: 0.7em solid #b58900;
 }
 
 .aas-block-tooltip::after {
     margin-top: -1px;
-    border-top: 0.45em solid #ffffe0;
+    border-top: 0.65em solid #fff7c2;
 }
 
 /* Subtraction: short vertical "cut" mark shown at the split boundary
@@ -392,17 +397,23 @@
    Bottom-anchored to track the blocks (which are also bottom-anchored) — extends
    slightly below the block area into the ruler tick marks. */
 .aas-split-line {
+    /* Flash `splitLine.gotoAndPlay(1)` — a vertical "cut" mark that animates
+       in once the user clicks b3 to split. Made thicker and more contrasty
+       so it reads as a deliberate boundary marker, closer to the Flash
+       cutter visual. */
     position: absolute;
-    bottom: -0.25em;
-    width: 0.15em;
-    height: 3em;
-    background: #222;
-    border-radius: 0.05em;
+    bottom: -0.4em;
+    width: 0.3em;
+    height: 4em;
+    background: #b58900;
+    border: 1px solid #663c00;
+    border-radius: 0.08em;
     transform: translateX(-50%) scaleY(0);
     transform-origin: center;
     z-index: 4;
     pointer-events: none;
-    animation: aas-split-line-appear 0.3s ease-out forwards;
+    animation: aas-split-line-appear 0.35s ease-out forwards;
+    box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.25);
 }
 
 @keyframes aas-split-line-appear {
@@ -410,7 +421,7 @@
     to   { transform: translateX(-50%) scaleY(1); opacity: 1; }
 }
 
-/* Subtraction b3 fade-out endpoint (Phase 5 — A2). Class is added on click;
+/* Subtraction b3 fade-out endpoint. Class is added on click;
    `transition: opacity 1s ease-out` on .aas-placed-block animates 1 → 0.
    pointer-events: none is a secondary safety; the JS _blockPhase guard is primary. */
 .aas-block-hidden {
@@ -418,7 +429,7 @@
     pointer-events: none;
 }
 
-/* Subtraction b2 fly-away endpoint (Phase 5 — A3). Flash tween moved b2 to
+/* Subtraction b2 fly-away endpoint. Flash tween moved b2 to
    x = 420 + (320 - block._width), y = 80 over ~1.5 s easeInOut — top-right of stage.
    In HTML5 the block area sits inside the number-line panel near the top of the
    activity. A translate to (20em, -6em) carries the block to the right edge of
@@ -431,7 +442,7 @@
     pointer-events: none;
 }
 
-/* Addition: incoming block fly-in animation (Phase 5 — A1).
+/* Addition: incoming block fly-in animation.
    Flash tween animated x and y from the bank button to the number-line position
    over 1 s easeOut. JS sets --aas-fly-from-x / --aas-fly-from-y as a px offset
    from the clicked bank button to the target slot; fallback 0px / 8em preserves
@@ -451,7 +462,7 @@
     }
 }
 
-/* Phase 5 — A5 (Flash `fadeInAnswerBlock`). On a correct add-mode answer, a
+/* Flash `fadeInAnswerBlock`. On a correct add-mode answer, a
    block of value v3 in the answer number's colour fades in at position 0 over
    the existing v1+v2 stack — so the row visually adopts the answer colour. */
 .aas-block-fade-in {
@@ -559,14 +570,15 @@
 
 /* --- Correct feedback overlay --- */
 
-/* Flash messageCorrect sprite (extracted/Add and Subtract/swf_graphics/sprites_svg/
-   messageCorrect.svg): "Correct!" text in black on a white semi-transparent
-   rounded-corner panel with a black 2px outline and an offset drop shadow
-   (the darker translation behind the white path in the SVG).
-   Phase 5 — A7: pop-in (scale + fade) when the overlay is revealed. The
-   animation is applied via the `.aas-message-correct-shown` class which the
-   JS adds when the overlay is unhidden (and removes when it's hidden again,
-   so the keyframe re-triggers on the next correct answer). */
+/* Flash messageCorrect sprite (pictures/messageCorrect.svg, copied verbatim
+   from extracted/Add and Subtract/swf_graphics/sprites_svg/messageCorrect.svg).
+   The sprite is the full "Correct!" graphic — white rounded panel with the
+   text and drop shadow baked in — so the wrapper only needs to position
+   and scale it.
+   Pop-in (scale + fade) plays when the overlay is revealed. The animation
+   is applied via the `.aas-message-correct-shown` class which the JS adds
+   when the overlay is unhidden (and removes when it's hidden again, so the
+   keyframe re-triggers on the next correct answer). */
 .aas-message-correct {
     position: absolute;
     top: 50%;
@@ -574,16 +586,15 @@
     transform: translate(-50%, -50%);
     z-index: 10;
     pointer-events: none;
-    padding: 0.4em 1.2em;
-    background: rgba(255, 255, 255, 0.8);
-    border: 2px solid black;
-    border-radius: 0.4em;
-    box-shadow: 0.25em 0.3em 0 rgba(0, 0, 0, 0.3);
-    color: black;
-    font-size: 2em;
-    font-weight: bold;
-    line-height: 1;
-    white-space: nowrap;
+}
+
+.aas-message-correct img {
+    /* Sprite natural size is 217 × 58 px on the 800-px Flash stage
+       (~27% of stage width). 1em = 1/50th of activity width, so
+       width: 13.5em ≈ 216 px matches the Flash overlay proportions. */
+    display: block;
+    width: 13.5em;
+    height: auto;
 }
 
 .aas-message-correct-shown {
@@ -604,8 +615,8 @@
 
 /* Positioned absolutely so it overlays the bottom of the activity rather than
    pushing the block bank upward — matches Flash where answer box overlaid the stage.
-   Phase 5 — A4: slide-in animation when revealed. Flash tween moved answerBar._y
-   from y+62 to y over 1 s easeOut. We translate from below the stage to 0.
+   Slide-in animation when revealed. Flash tween moved answerBar._y from
+   y+62 to y over 1 s easeOut. We translate from below the stage to 0.
    The keyframe is applied via the `.aas-answer-bar-shown` class so it re-triggers
    on each question (otherwise the animation would only play on first reveal).
    Styled as a light-blue number-line panel (matching .aas-number-line) with a
@@ -624,8 +635,6 @@
     padding: 0.4em 0.6em;
     box-sizing: border-box;
     z-index: 5;
-    /* Suppress the global dotted :focus outline if focus lands on the bar. */
-    outline: none;
 }
 
 .aas-answer-bar-shown {
@@ -637,13 +646,14 @@
     to   { transform: translateY(0);    }
 }
 
-/* Override hidden_panel for answer bar — it uses its own show/hide */
+/* Specificity bump so `hidden_panel` beats `.aas-answer-bar { position: absolute }`. */
 .aas-answer-bar.hidden_panel {
     display: none;
 }
 
 .aas-answer-bar-question {
-    font-size: 1.2em;
+    /* Sized to match the answer-line digits below. */
+    font-size: 1.5em;
     font-weight: normal;
     text-align: center;
     margin: 0 0 0.3em 0;
@@ -666,7 +676,9 @@
 .aas-answer-line {
     flex: 1 1 0;
     min-width: 0;
-    font-size: 1.1em;
+    /* Sized to match Flash's weighty answer-bar digit without enlarging the
+       button squares themselves (aspect-ratio handles the cell sizing). */
+    font-size: 1.6em;
     font-weight: bold;
     aspect-ratio: 1 / 1;
     border: 2px solid #6688cc;
@@ -697,10 +709,10 @@
     z-index: 2;
 }
 
-/* Phase 5 — A6: brief flash on the correct line when revealed.
-   Flash's lineSelected sprite was a green tint that played from frame 1
-   (a short green pulse). The persistent green is the meaning carrier; the
-   pulse is decorative reinforcement. */
+/* Brief flash on the correct line when revealed. Flash's lineSelected
+   sprite was a green tint that played from frame 1 (a short green pulse).
+   The persistent green is the meaning carrier; the pulse is decorative
+   reinforcement. */
 .aas-answer-line.aas-answer-correct {
     background: #c0ffcc;
     border-color: #007700;
@@ -734,51 +746,138 @@
     display: none;
 }
 
-/* --- Results screen --- */
+/* --- Results screen ---
+   Layout mirrors the Flash original (screenshots/add-and-subtract/05_results_flash.png):
+     - Heading "Add and Subtract Results" centred at the top
+     - Results table on the left (1–2 columns of Sum / Tries rows, with a
+       leading "question number" column showing "1." "2." …)
+     - Thumbs-up illustration on the right
+     - Total + "Well done!" stacked below the table on the left
+     - "repeat" pencil button bottom-right
+   No borders or stripes on the results table — Flash uses plain text rows.
+*/
+
+.aas-results-body {
+    display: grid;
+    /* Two columns: tables column (auto) + thumbs column (fills remaining
+       space). The thumbs-up sits centred in the right column to match the
+       Flash placement (right-of-table, above the repeat button). */
+    grid-template-columns: auto 1fr;
+    column-gap: 1.5em;
+    align-items: start;
+    flex: 1 1 auto;
+    min-height: 0;
+}
 
 .aas-results-columns {
     display: flex;
-    gap: 2em;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 1em;
+    gap: 2.2em;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .aas-results-table {
     border-collapse: collapse;
     font-size: 1.1em;
-    min-width: 12em;
 }
 
 .aas-results-table th,
 .aas-results-table td {
-    padding: 0.3em 0.7em;
-    border-bottom: 1px solid #ddd;
+    padding: 0.15em 0.6em;
+    /* Plain rows — Flash has no borders or row stripes. */
+    border: none;
     text-align: left;
+    line-height: 1.15;
+    white-space: nowrap;
 }
 
 .aas-results-table th {
-    background: #f0f0f0;
-    font-weight: bold;
+    font-weight: normal; /* Flash heading is plain, not bold */
+    padding-bottom: 0.4em;
+}
+
+/* Column zero: the "question number" (e.g. "1.", "2.") — narrow, right-aligned
+   with a trailing dot, no header label (Flash leaves the cell empty). */
+.aas-results-table th.aas-col-num,
+.aas-results-table td.aas-col-num {
+    text-align: right;
+    padding-right: 0.6em;
+    padding-left: 0.2em;
+    color: #222;
+    /* Wide enough to hold "20." without wrap */
+    min-width: 1.6em;
 }
 
 .aas-results-table.hidden_panel {
     display: none;
 }
 
-.aas-score-text {
-    font-size: 1.5em;
-    font-weight: bold;
-    text-align: center;
-    margin: 0.5em 0;
+/* Thumbs-up picture on the right of the table (Flash original uses a static
+   thumbs-up illustration centred vertically against the table block). */
+.aas-results-thumb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
+.aas-results-thumb img {
+    /* Sized relative to the activity (1em = 1/50th of activity width). The
+       Flash thumb occupies roughly 240×220 px of the 800×600 stage; ~10em
+       (≈160 px) is close once the 800→800 stage scale matches. */
+    width: 10em;
+    height: auto;
+}
+
+/* Total / Well done — stacked on the left, below the tables, matching the
+   Flash placement directly under the table block. */
+.aas-results-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3em;
+    padding-left: 2em;
+    margin-top: 0.4em;
+}
+
+.aas-total-text {
+    font-size: 1.2em;
+    margin: 0;
+    color: #222;
+}
+
+.aas-well-done {
+    font-size: 1.2em;
+    margin: 0;
+    color: #222;
+}
+
+/* Hide the legacy score text — it duplicated the Flash "Total" line and was
+   centred in the wrong place; the per-element rendering (Total / Well done)
+   replaces it. The element is still present in the DOM as an aria-live target
+   for screen readers, so visibility is controlled here rather than removing
+   the node. */
+.aas-score-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Repeat button: bottom-right corner, away from the back pencil top-left.
+   margin-top:auto pushes this row to the bottom of the .aas-screen flex
+   column; justify-content:flex-end aligns the pencil to the right edge. */
 .aas-action-buttons {
     display: flex;
     gap: 1em;
-    justify-content: center;
+    justify-content: flex-end;
     margin-top: auto;
-    padding-top: 0.5em;
+    padding-top: 0.3em;
 }
 
 /* --- Activity options group: two-column CSS grid for the four cells
@@ -853,6 +952,186 @@
     clip: rect(0,0,0,0);
     white-space: nowrap;
     border: 0;
+}
+
+/* --- Colour Set picker on options screen ---
+   Replaces the inline radios with a "Choose Block Colours" button + small
+   "Colour set N" label, mirroring the Flash modal entry point. */
+.aas-colour-set-field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3em;
+}
+
+.aas-choose-colours-btn {
+    /* Wrap text on two lines like the Flash button does. */
+    white-space: normal;
+    text-align: center;
+    max-width: 9em;
+    line-height: 1.15;
+}
+
+/* Small label under the "Choose Block Colours" button echoing the active
+   colour-set choice. Live-region attribute on the element itself ensures
+   screen readers announce the change when JS re-renders the text. */
+.aas-current-colour-label {
+    margin: 0.2em 0 0 0;
+    font-size: 0.95em;
+    color: #444;
+    text-align: center;
+    max-width: 9em;
+    line-height: 1.15;
+}
+
+/* --- Colour Set modal (overlay over options screen) ---
+   Backdrop dims the options form; centred white panel holds the arrow row,
+   the staircase preview, and the footer (caption + Done). Fixed-positioned
+   so it covers the viewport regardless of whether the options screen is in
+   flow mode (scrollable static layout) or letterboxed mode (positioned
+   .doorway_aspect_div). */
+.aas-colour-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aas-colour-modal.hidden_panel {
+    display: none;
+}
+
+.aas-colour-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+/* White rounded panel centred on the stage. ~36em wide fits inside the
+   50em-wide activity area with breathing room. Heightwise (10 × 2.2em tower
+   + arrows + footer ≈ 30em) the panel can slightly exceed the 28em letterbox;
+   max-height: 95% lets the browser scroll if the viewport is too short,
+   rather than clipping content silently. */
+.aas-colour-modal-panel {
+    position: relative;
+    background: #ffffff;
+    border: 2px solid #666;
+    border-radius: 0.6em;
+    width: 36em;
+    max-width: 92%;
+    max-height: 95%;
+    padding: 0.8em 1em 0.8em;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    box-shadow: 0 0.4em 1.2em rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+}
+
+/* Arrow row: prev triangle | bordered label | next triangle.
+   Label is fixed-width so the row layout doesn't reflow when the
+   text "Colour set 1/2/3" changes. */
+.aas-colour-modal-arrows {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8em;
+}
+
+.aas-colour-arrow-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 4em;
+    height: 3em;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aas-colour-arrow-btn svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: #c8c8c8;
+}
+
+.aas-colour-arrow-btn:hover svg { fill: #888; }
+.aas-colour-arrow-btn:focus-visible {
+    outline: 0.2em dotted black;
+    outline-offset: 0.1em;
+}
+
+.aas-colour-modal-label {
+    border: 1px solid #000;
+    border-radius: 0.05em;
+    padding: 0.2em 0.6em;
+    width: 11em;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: normal;
+    font-family: "Courier New", monospace;
+    color: #222;
+    background: #fff;
+}
+
+/* Preview staircase: 10 rows (top = block 1, bottom = block 10).
+   Bottom row of 10 blocks = 10 × 2.2em = 22em wide, fits inside the
+   36em-wide panel with breathing room. Each row is left-aligned so the
+   staircase grows diagonally down-right, matching the Flash reference. */
+.aas-colour-modal-tower {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 22em;
+    margin: 0 auto;
+    gap: 0;
+}
+
+.aas-colour-modal-row {
+    display: flex;
+    flex-direction: row;
+    /* Row N contains exactly one <img> element whose intrinsic aspect ratio
+       is N:1 (N cells wide × 1 tall). Each row gets the same height. */
+    height: 2.2em;
+}
+
+.aas-colour-modal-block {
+    display: block;
+    height: 100%;
+    width: auto;
+}
+
+/* Footer: left-aligned caption + right-aligned Done button. */
+.aas-colour-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    margin-top: 0.2em;
+}
+
+.aas-colour-modal-caption {
+    margin: 0;
+    font-size: 1em;
+    color: #222;
+    text-align: left;
+    flex: 1 1 auto;
+}
+
+.aas-colour-modal-done {
+    flex-shrink: 0;
 }
 
 /* --- Reduced motion --- */

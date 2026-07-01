@@ -22,7 +22,7 @@
       <path d="M-0.4 -0.4 L39.9 -0.4 39.9 39.9 -0.4 39.9 -0.4 -0.4 Z" fill="none" stroke="#d55500" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.0"/>
     </g>
     <g id="shape1">
-      <path d="M397.95 37.8 L1.4 37.8 1.4 1.65 397.95 1.65 397.95 37.8" fill="#ff9900" fill-opacity="1" fill-rule="evenodd" stroke="none"/>
+      <path d="M397.95 37.8 L1.4 37.8 1.4 1.65 397.95 1.65 397.95 37.8" fill="#ff9900" fill-opacity="0.44313726" fill-rule="evenodd" stroke="none"/>
     </g>
   </defs>
 </svg>

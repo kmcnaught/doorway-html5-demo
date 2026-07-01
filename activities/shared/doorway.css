@@ -23,6 +23,13 @@ div.doorway_fullscreen_div:-webkit-full-screen, div.doorway_fullscreen_div:-moz-
     height: 100vh;
 }
 
+/* Canvas sizing. Maintains 16:9 aspect by capping width via viewport height
+   (177.78vh = vh × 16/9) and height via viewport width (56.25vw = vw × 9/16).
+   Whichever dimension is smaller relative to 16:9 wins, so the canvas always
+   fills as much of the viewport as 16:9 allows, with letterbox padding on the
+   other axis. Browser zoom shrinks the CSS-px viewport, which both shrinks the
+   canvas and triggers flow mode for welcome / options once the viewport is
+   narrow enough that reflowing beats scaling down (see section 2). */
 div.doorway_aspect_outer_div {
     width: 100%;
     height: 100%;
@@ -157,7 +164,14 @@ div.welcome_image img
 
 .copyright_message
 {
-    padding: 0em;
+    /* auto top margin pushes the footer to the bottom of the flex-column welcome screen */
+    margin: auto 0 0;
+    padding: 0.5em 0 0.2em;
+    font-size: 65%;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+    user-select: none;
 }
 
 .activity_description
@@ -318,33 +332,19 @@ div.darkened_panel {
 }
 */
 
-div.user_options div.options_group {
-    /* border: 0.1em solid CornflowerBlue; */
-    margin: 0.5em;
-	margin-left: 1em;
-	margin-right: 1em;
-	height: 18em;
+div.user_options .options_group {
+    margin: 0.5em 1em;
     position: relative;
     text-align: left;
-	justify-content: space-between;
+    justify-content: space-between;
 }
 
-/*noinspection CssOptimizeSimilarProperties*/
-div.user_options h3.options_group_title {
-    position: relative;
-    top: -1em;
-    left: 1em;
+div.user_options .options_group_title {
     text-align: left;
-    background-color: white;
-    display: inline;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
     margin: 0;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0 0.5em;
     font-size: 100%;
     font-weight: normal;
-
 }
 
 div.user_options .options_layout_grid tr td {
@@ -372,11 +372,59 @@ div.user_options label.user_options_radio {
     margin: 0.1em;
     padding: 0.1em;
     border-radius: 0.5em;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 input[type="radio"]:checked + label.user_options_radio {
     background-color: chartreuse;
+}
+
+/* Voice picker sits under the audio-mode radios. Hidden by default —
+   .hidden_panel wins when set; .shown_panel switches us to flex so the
+   label + <select> line up. Specificity (0,2,0) beats .hidden_panel. */
+.dw_voice_picker {
+    align-items: center;
+    gap: 0.5em;
+    margin: 0.3em 0.1em 0;
+    padding: 0.2em 0.4em;
+    flex-wrap: wrap;
+}
+
+.dw_voice_picker.shown_panel {
+    display: flex;
+}
+
+.dw_voice_picker_label {
+    font-weight: bold;
+}
+
+/* Override `div.user_options select { display: none }` above — the legacy
+   pattern is custom spinners, but the voice picker uses a native <select>. */
+div.user_options select.dw_voice_select,
+.dw_voice_select {
+    display: inline-block;
+    font-size: inherit;
+    padding: 0.2em 0.3em;
+    border-radius: 0.3em;
+    border: 0.1em solid grey;
+    max-width: 12em;
+    /* Long voice names ("Microsoft Hazel Desktop - English (Great Britain)")
+       overflow the row; truncate gracefully so the spinner doesn't blow out. */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Voice-picker spinner row: lay out [<] <select> [>] inline so the buttons
+   read as a familiar spinner widget. Scoped to .dw_voice_spinner so the
+   numeric-spinner rows (scan_delay, max_questions) are unaffected. */
+.dw_voice_picker .dw_voice_spinner {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2em;
 }
 
 input[type="radio"] {
@@ -387,7 +435,25 @@ input[type="radio"] {
     margin: 0;
 }
 
+/* Three-line :focus / :focus-visible pattern (used here and in the global :focus
+   rule below, the custom checkbox, and the toggle grid). The goal: keyboard
+   users get the dotted outline, mouse users don't get a sticky ring after click.
+   - Line 1 (:focus): fallback for browsers without :focus-visible support —
+     iOS Safari < 15.4 (incl. the iOS 12 quirks already mitigated above).
+     Always shows the ring whenever focus lands, like the old behaviour.
+   - Line 2 (:focus:not(:focus-visible)): in modern browsers, suppress the ring
+     when focus came from a non-keyboard source (mouse click, programmatic).
+   - Line 3 (:focus-visible): in modern browsers, show the ring when the
+     browser decides this is a keyboard / AT-driven focus. Outline matches the
+     fallback so the visual is the same for keyboard users on either path. */
 input[type="radio"]:focus + label {
+    outline: 0.5vw dotted black;
+    outline-offset: 0.1em;
+}
+input[type="radio"]:focus:not(:focus-visible) + label {
+    outline: none;
+}
+input[type="radio"]:focus-visible + label {
     outline: 0.5vw dotted black;
     outline-offset: 0.1em;
 }
@@ -406,7 +472,19 @@ input
 }
 */
 
+/* Global keyboard-focus ring. See the three-line pattern comment on the
+   input[type="radio"] rule above for what each line does and why we keep the
+   :focus fallback alongside :focus-visible. */
 :focus
+{
+	outline: 0.5vw dotted black;
+	outline-offset: 0.1em;
+}
+:focus:not(:focus-visible)
+{
+	outline: none;
+}
+:focus-visible
 {
 	outline: 0.5vw dotted black;
 	outline-offset: 0.1em;
@@ -476,7 +554,16 @@ input.dw-check-input:checked + .dw-check-label::after {
     transform: rotate(45deg);
 }
 
+/* Three-line :focus / :focus-visible pattern — see comment above the
+   input[type="radio"] rule for the rationale. */
 input.dw-check-input:focus + .dw-check-label::before {
+    outline: 0.3vw dotted black;
+    outline-offset: 0.15em;
+}
+input.dw-check-input:focus:not(:focus-visible) + .dw-check-label::before {
+    outline: none;
+}
+input.dw-check-input:focus-visible + .dw-check-label::before {
     outline: 0.3vw dotted black;
     outline-offset: 0.15em;
 }
@@ -538,7 +625,16 @@ input.dw-check-input:focus + .dw-check-label::before {
     border-color: #66a;
 }
 
+/* Three-line :focus / :focus-visible pattern — see comment above the
+   input[type="radio"] rule for the rationale. */
 .dw-toggle-grid input[type="checkbox"]:focus + .dw-toggle-btn {
+    outline: 0.2em solid #0066cc;
+    outline-offset: 0.1em;
+}
+.dw-toggle-grid input[type="checkbox"]:focus:not(:focus-visible) + .dw-toggle-btn {
+    outline: none;
+}
+.dw-toggle-grid input[type="checkbox"]:focus-visible + .dw-toggle-btn {
     outline: 0.2em solid #0066cc;
     outline-offset: 0.1em;
 }
@@ -604,16 +700,21 @@ div.user_options .spinner_display {
     padding: 0 1.4em 0 0.4em;
     line-height: 1.85em;
     text-align: center;
+    /* SVG background uses preserveAspectRatio=none, so don't let flex parents stretch us */
+    align-self: center;
+    flex-shrink: 0;
 }
+/* Use the same background shorthand as .pencil_btn so the global
+   button:hover rule (line 467) doesn't reset position/size/repeat. */
 .pencil_btn:hover {
-    background-image: url(./pencil-right-hover.svg);
+    background: url(./pencil-right-hover.svg) no-repeat center / 100% 100%;
 }
 .pencil_btn[data-pencil-dir="left"] {
     background-image: url(./pencil-left.svg);
     padding: 0 0.4em 0 1.4em;
 }
 .pencil_btn[data-pencil-dir="left"]:hover {
-    background-image: url(./pencil-left-hover.svg);
+    background: url(./pencil-left-hover.svg) no-repeat center / 100% 100%;
 }
 .pencil_btn:disabled,
 .pencil_btn[disabled] {
@@ -711,4 +812,426 @@ fieldset.invisible_fieldset legend
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
+}
+
+/* ============================================================================
+   Welcome / Options screen layout — three orthogonal body classes + landmark
+   page chrome.
+
+   Structure (HTML): the per-activity HTML has page-level <header> and <footer>
+   as siblings of <main>, inside the aspect-div wrapper. Because they're not
+   nested inside <main>/<article>/<aside>/<nav>/<section>, both get their
+   implicit ARIA roles (banner + contentinfo) automatically — they show up as
+   real navigable landmarks for screen reader users.
+
+       <div id="dwAspectDiv">
+         <nav>…</nav>                              <!-- navigation landmark -->
+         <header class="dw-screen-header">         <!-- banner landmark -->
+           <a class="doorway_logo">…</a>           <!-- visible on welcome -->
+           <h1 class="title_message">Options</h1>  <!-- visible on options -->
+         </header>
+         <main>                                    <!-- main landmark -->
+           <div id="dwWelcomeScreen">…</div>
+           <form id="dwUserOptions">…</form>
+           <div id="dwActivityScreen">…</div>
+           <div id="dwResultsScreen">…</div>
+         </main>
+         <footer class="dw-app-footer">            <!-- contentinfo landmark -->
+           <div class="dw-action-footer">…buttons…</div>
+           <p class="copyright_message">©…</p>
+         </footer>
+       </div>
+
+   `Doorway.showScreen()` (in doorway.js) manages three body classes. Flow
+   mode is the DEFAULT — the aspect-locked behaviour is now the opt-out:
+
+     dw-aspect-locked  — opt out of flow mode back to the 16:9 letterbox + JS-
+                         driven em font. Set on:
+                         (a) the activity and results screens always (their
+                             gameplay layouts are em-positioned and need the
+                             stable stage), and
+                         (b) every screen on un-migrated activities (those
+                             missing the page-level <footer.dw-app-footer>),
+                             so they keep working unchanged until migrated.
+
+     dw-screen-welcome — welcome-only chrome (centred body group, corner
+                         logo visible in the header, enter visible in footer).
+
+     dw-screen-options — options-only chrome (title visible in the header,
+                         home + start visible in the footer).
+
+   Per-activity stylesheets should override the *body* of an option group or
+   the welcome illustration — anything inside `.dw-welcome-body` or inside
+   an `<fieldset>`. Page chrome (header, footer, action buttons) is shared.
+   ============================================================================ */
+
+
+/* ---- 1. dw-flow-mode: shared layout primitives ---------------------------- */
+
+/* Only html is the scroll container — keep body's overflow visible so it
+   doesn't form its own scroll context (which would break position:sticky on
+   the page-level <footer>). */
+html:not(.dw-aspect-locked) {
+    overflow: auto;
+    height: auto;
+    min-height: 100%;
+    /* Reserve scrollbar space up-front whether or not content overflows.
+       Without this, when content grows past the viewport the vertical
+       scrollbar appears and steals ~15 px of horizontal space, but layouts
+       sized for the pre-scrollbar width then induce a horizontal scrollbar
+       too — endless oscillation at "just-overflowing" viewports. */
+    scrollbar-gutter: stable;
+    /* Reserve viewport edges for the absolute nav header (top) and the sticky
+       page footer (bottom) when the browser auto-scrolls a focused element
+       into view. Without this, scroll-margin on focusable elements isn't
+       enough — the browser considers them "in view" even when they're behind
+       the sticky footer. scroll-padding actually shrinks the scrollport for
+       scroll-into-view calculations. */
+    scroll-padding-top: 3em;
+    scroll-padding-bottom: 6em;
+}
+html:not(.dw-aspect-locked) body {
+    overflow: visible;
+    height: auto;
+    min-height: 100%;
+}
+
+body:not(.dw-aspect-locked) div.doorway_application,
+body:not(.dw-aspect-locked) div.doorway_fullscreen_div {
+    height: auto;
+    min-height: 100vh;
+    justify-content: flex-start;
+}
+
+/* Flow-mode canvas is a fixed-width text column (rem-based, like accessible
+   web sites: gov.uk, NHS.uk, WebAIM). On viewports wider than the column,
+   the canvas sits centred with whitespace on either side; on viewports
+   narrower than the column it shrinks to fit. Text and layout dimensions
+   are rem-based on welcome/options screens, so browser zoom and the
+   browser's default-font-size setting both physically grow the content
+   in the standard accessible way. */
+body:not(.dw-aspect-locked) div.doorway_aspect_outer_div {
+    max-width: 60rem;
+    max-height: none;
+    height: auto;
+    min-height: 100vh;
+}
+
+/* Aspect-div fills the column and uses a column-flex so the chrome stacks
+   naturally:
+       <nav>   (absolute, doesn't take flex space)
+       <header.dw-screen-header>
+       <main>                   (flex: 1, grows to fill)
+       <footer.dw-app-footer>   (sticky, see section 2)
+   Font size clamps between 1rem on narrow viewports and 2rem on wide ones,
+   with a fluid term that takes over between (hits the ceiling around
+   ~2400 CSS-px wide). Rem floor and ceiling are what let browser zoom keep
+   physically growing text — vw shrinks under zoom but the rem bounds
+   catch it, so net effect is "smaller on small screens, larger on wide
+   screens, and zoom-grows-text on top of either". Same accessible-web
+   pattern gov.uk uses, with a viewport-responsive twist that doesn't
+   fight zoom. Tuned via the side-by-side comparison in
+   scripts/clamp_compare.spec.js — D in that comparison (16–32 px).
+   doorway.js:onResize clears the inline font-size in flow mode so this
+   rule wins. */
+body:not(.dw-aspect-locked) div.doorway_aspect_div {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    box-sizing: border-box;
+    font-size: clamp(1rem, 0.5rem + 1vw, 2rem);
+}
+
+/* Override base `display: contents` on main so it participates in the column
+   layout (main is the flex item that grows between header and footer). */
+body:not(.dw-aspect-locked) div.doorway_aspect_div > main {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    width: 100%;
+}
+
+/* Page footer is the contentinfo landmark; sticks to viewport bottom in flow
+   mode (see section 2). Header / main / footer all sized to their content
+   or grown to fill, via the flex column. */
+body:not(.dw-aspect-locked) .dw-screen-header,
+body:not(.dw-aspect-locked) footer.dw-app-footer {
+    flex: 0 0 auto;
+}
+
+/* Options form: base CSS makes it absolute + 100% to fill the activity-
+   screen letterbox. In flow mode let it lay out naturally inside main. */
+body:not(.dw-aspect-locked) form#dwUserOptions.user_options {
+    position: static;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    overflow: visible;
+}
+body:not(.dw-aspect-locked) #dwUserOptions .user_options {
+    height: auto;
+    overflow: visible;
+}
+body:not(.dw-aspect-locked) #dwUserOptions fieldset.options_group {
+    /* Base CSS gives this a fixed 18em height + flex:1 for the letterbox —
+       neither makes sense once the page can scroll. */
+    flex: 0 0 auto;
+    min-height: 0;
+    height: auto;
+}
+
+/* Tab-focus autoscroll: keep focused elements out of the absolute-positioned
+   nav header (top) and the sticky page footer (bottom). */
+body:not(.dw-aspect-locked) :focus-visible {
+    scroll-margin-top: 4em;
+    scroll-margin-bottom: 6em;
+}
+
+/* Programmatic focus on the tabindex="-1" headings used for SPA route-change
+   announcements (see Doorway.showScreen). The focus move is for screen-reader
+   users — sighted users didn't navigate there with Tab, so suppress the
+   visible focus ring. SRs still announce the heading on focus. */
+.title_message[tabindex="-1"]:focus,
+.sr-only[tabindex="-1"]:focus,
+h2[tabindex="-1"]:focus {
+    outline: none;
+}
+
+
+/* ---- 2. dw-app-footer: sticky page footer + overflow fade ---------------- */
+
+/* Page <footer> sticks to the viewport bottom in flow mode so the action area
+   and copyright stay reachable as the user scrolls. Once they reach the
+   natural bottom of the page, the footer settles into place.
+   On the activity screen (no flow mode) the footer is hidden entirely (see
+   section 5 visibility rules). */
+body:not(.dw-aspect-locked) footer.dw-app-footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75em 0 0.6em;
+    background: white;
+    z-index: 5;
+}
+
+/* The action buttons row — flex so the home + start pencils sit side-by-side
+   centred, and wrap to two rows when there's not enough width.
+   The horizontal gap uses clamp() to give roughly one-button-width (6em)
+   breathing space on desktop, squeezing down to 1em at high zoom. The 0.5em
+   vertical gap kicks in only when buttons wrap to two rows. */
+body:not(.dw-aspect-locked) .dw-action-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em clamp(1em, 8vw, 6em);
+}
+
+/* Copyright sits below the action area inside the same sticky footer. */
+body:not(.dw-aspect-locked) footer.dw-app-footer .copyright_message {
+    margin: 0.6em 0 0;
+    text-align: center;
+    font-size: 0.7em;
+    color: #666;
+}
+
+/* Fade above the footer's top edge, signalling "there's content scrolled
+   behind here." `dw-has-overflow` body class is toggled by doorway.js based
+   on scroll position. */
+body:not(.dw-aspect-locked) footer.dw-app-footer::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    height: 2.5em;
+    pointer-events: none;
+    background: linear-gradient(to top, white, rgba(255, 255, 255, 0));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+body:not(.dw-aspect-locked).dw-has-overflow footer.dw-app-footer::before {
+    opacity: 1;
+}
+/* Reduced motion: keep the fade itself (it conveys "more content below" — not
+   purely decorative), but make it appear/disappear instantly. */
+@media (prefers-reduced-motion: reduce) {
+    body:not(.dw-aspect-locked) footer.dw-app-footer::before {
+        transition: none;
+    }
+}
+
+/* Short or narrow viewport: release stickiness so the footer doesn't eat too
+   much vertical space. Two triggers:
+     - max-width: 22em  — buttons start to crowd the viewport edges.
+     - max-height: 30em — footer becomes ~20%+ of viewport. At 30em (480px),
+                          a typical 4-5em footer is 13-17% of the viewport;
+                          anything shorter and it dominates. Roughly equals
+                          150% browser zoom on a 720-tall window. */
+@media (max-width: 22em), (max-height: 30em) {
+    body:not(.dw-aspect-locked) footer.dw-app-footer {
+        position: static;
+    }
+    body:not(.dw-aspect-locked) footer.dw-app-footer::before {
+        display: none;
+    }
+}
+
+
+/* ---- 3. dw-screen-header: shared page header (banner landmark) ---------- */
+
+/* 3-col grid: [nav-slot] | [title centred] | [logo right-aligned].
+   Both title and logo elements live in the markup, but only the
+   screen-relevant ones are visible — see section 5 visibility rules.
+
+   nav-slot is 11em wide to fit three teacher buttons (settings, fullscreen,
+   audio) at 3em each + margins + breathing room. The audio button is JS-
+   injected so it isn't visible in the source HTML — keep the slot wide
+   enough to cover all three or the title will overlap the rightmost one
+   at high zoom. */
+body:not(.dw-aspect-locked) .dw-screen-header {
+    display: grid;
+    grid-template-columns: 11em minmax(0, 1fr) 7em;
+    grid-template-rows: auto;
+    align-items: center;
+    gap: 0.5em;
+    margin: 0 0 0.5em 0;
+    padding: 0.25em 0.5em;
+    min-height: 2.5em;
+    width: 100%;
+}
+body:not(.dw-aspect-locked) .dw-screen-header .title_message {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    text-align: center;
+    font-size: 1.95em;
+    line-height: 1.2;
+    min-width: 0;
+}
+body:not(.dw-aspect-locked) .dw-screen-header .doorway_logo {
+    /* Override base .doorway_logo absolute positioning. */
+    position: static;
+    grid-column: 3;
+    grid-row: 1;
+    width: auto;
+    height: 2em;
+    margin: 0;
+    justify-self: end;
+}
+body:not(.dw-aspect-locked) .dw-screen-header .doorway_logo img {
+    height: 100%;
+    width: auto;
+    display: block;
+}
+
+
+/* ---- 4. dw-screen-welcome: welcome-only layout --------------------------- */
+
+/* Welcome screen container fills its slot inside main, lays out as a flex
+   column so the body group can centre in spare vertical space. */
+body.dw-screen-welcome #dwWelcomeScreen.doorway_welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1 0 auto;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+/* Welcome body: title stack flush above illustration, subtitle flush below.
+   `safe center` centres the trio vertically when there's room, but falls back
+   to top-alignment whenever content would overflow — so on a tall monitor it
+   sits in the middle (balanced top/bottom) and on a short viewport it pins to
+   the top instead of pushing the title off the page. */
+body.dw-screen-welcome #dwWelcomeScreen > .dw-welcome-body {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: safe center;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    padding: 1em 0;
+}
+
+/* Title stack: small "Doorway" brand label + h1 title, stacked tight. */
+body.dw-screen-welcome .dw-welcome-titles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    line-height: 1.1;
+}
+body.dw-screen-welcome .dw-welcome-titles .title_message {
+    margin: 0 0 0.1em 0;
+    font-size: 1.95em;
+}
+
+/* Small "Doorway" brand label sitting above the welcome title.
+   Sized via the project's "major third" type scale (ratio 1.25): each step is
+   1.25× the previous. Consolidate other text-sizing decisions onto this
+   scale as we standardise — the steps at 2dp are:
+       0.51em  0.64em  0.80em  1.00em  1.25em  1.56em  1.95em  2.44em  3.05em
+   See https://www.modularscale.com/?1&em&1.25 for reference. */
+body.dw-screen-welcome .dw-app-label {
+    margin: 0;
+    font-size: 1.56em;
+    font-weight: normal;
+    color: #555;
+    letter-spacing: 0.04em;
+}
+
+/* Welcome subtitle (top-aligned just below the illustration; OPTIONAL —
+   activities can omit the <p class="sub_title"> entirely). */
+body.dw-screen-welcome #dwWelcomeScreen .sub_title {
+    margin: 0.5em 0 0 0;
+    padding: 0 1em;
+    text-align: center;
+}
+
+
+/* ---- 5. Per-screen visibility of header / footer contents ---------------- */
+
+/* Header content: logo only on welcome, title only on options. */
+.dw-screen-header .doorway_logo,
+.dw-screen-header .title_message {
+    display: none;
+}
+body.dw-screen-welcome .dw-screen-header .doorway_logo {
+    display: block;
+}
+body.dw-screen-options .dw-screen-header .title_message {
+    display: block;
+}
+
+/* Action buttons: enter on welcome, home + start on options. */
+.dw-action-footer #dwEnterButton,
+.dw-action-footer #dwHomeButton,
+.dw-action-footer #dwSubmitUserOptions {
+    display: none;
+}
+body.dw-screen-welcome .dw-action-footer #dwEnterButton {
+    display: inline-block;
+}
+body.dw-screen-options .dw-action-footer #dwHomeButton,
+body.dw-screen-options .dw-action-footer #dwSubmitUserOptions {
+    display: inline-block;
+}
+
+/* Copyright: visible on welcome (as a brand anchor on the landing screen);
+   hidden on options where it's redundant noise next to the action buttons. */
+body.dw-screen-options footer.dw-app-footer .copyright_message {
+    display: none;
+}
+
+/* Activity & results screens: hide the page chrome entirely. */
+/* Activity & results screens (aspect-locked): hide the page chrome entirely. */
+body.dw-aspect-locked .dw-screen-header,
+body.dw-aspect-locked footer.dw-app-footer {
+    display: none;
 }
